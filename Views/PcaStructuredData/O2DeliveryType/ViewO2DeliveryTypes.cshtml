@@ -1,0 +1,81 @@
+@model List<IS_Proj_HIT.Entities.O2deliveryType>
+
+@{
+    ViewData["Title"] = "O2 Delivery Types";
+    var userPermissions = ViewData["UserPermissions"] as List<string>;
+}
+
+<div class="row my-3">
+    <h3>
+        <a class="btn btn-primary" asp-controller="PCAStructuredData" asp-action="Index">
+            <i class="fa fa-arrow-left "></i>
+        </a>
+        O2 Delivery Types
+    </h3>
+</div>
+<!-- banner displays used when deleting an item  -->
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success">
+            @TempData["SuccessMessage"]
+        </div>
+    }
+
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger">
+            @TempData["ErrorMessage"]
+        </div>
+    }
+    
+<div>
+    @if (userPermissions != null && (userPermissions.Contains("StructuredDataAdd")) )
+    {
+        <a class="btn btn-primary mb-3" asp-controller="PCAStructuredData" asp-action="CreateO2DeliveryType">Create New</a>
+    }
+</div>
+
+<table class="stripe nowrap" id="O2deliveryType">
+    <thead>
+        <tr>
+            <th>O2 Delivery Type Name</th>
+            <th style="text-align: center;">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var o2deliveryType in Model)
+        {
+            <tr>
+                <td>@o2deliveryType.O2deliveryTypeName</td>
+                <td>
+                    @if (userPermissions != null && (userPermissions.Contains("StructuredDataEdit")) )
+                    {
+                        <a class="btn btn-primary" asp-controller="PCAStructuredData" asp-action="EditO2DeliveryType" asp-route-id="@o2deliveryType.O2deliveryTypeId">Edit</a>
+                    }
+                    @if (userPermissions != null && (userPermissions.Contains("StructuredDataDelete")) )
+                    {
+                        <a class="btn btn-danger" onclick="return confirm('Are you sure?')" asp-controller="PCAStructuredData" asp-action="DeleteO2DeliveryType" asp-route-id="@o2deliveryType.O2deliveryTypeId">Delete</a>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section scripts{
+    <script>
+        // DataTable Documentation found here: https://datatables.net/
+        $(document).ready(function () {
+            // Creates DataTable
+            $('#O2deliveryType').DataTable({
+                columns: [null, { orderable: false }],
+                order: [[0, 'asc']],
+                pageLength: 10,
+                searching: true,
+                language: {
+                    emptyTable: 'None found'
+                }
+            });
+        });
+    </script>
+}

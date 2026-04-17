@@ -1,0 +1,75 @@
+@model IS_Proj_HIT.ViewModels.UserManagement.UserManagementStructuredDataViewModel
+
+@{
+    ViewData["Title"] = "View Users";
+}
+
+<div class="row my-3">
+<h3>
+    <a class="btn btn-primary" asp-controller="UserManagementStructuredData" asp-action="Index">
+        <i class="fa fa-arrow-left "></i>
+    </a>
+    Users
+</h3>
+</div>
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["Message"]
+    </div>
+}
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["Error"]
+    </div>
+}
+<table class="table stripe" id="usersTable">
+    <thead>
+        <tr>
+            <th hidden>Last Name</th>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model.Users)
+        {
+            <tr>
+                <td hidden>@user.LastName</td>
+                <td>@user.UserId</td>
+                <td>@($"{user.FirstName} {user.LastName}")</td>
+                <td>@user.Email</td>
+                <td>
+                    <a class="btn btn-info" asp-controller="UserManagementStructuredData" asp-action="DetailsUser" asp-route-id="@user.UserId">Details</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section scripts{
+    <script>
+        // DataTable Documentation found here: https://datatables.net/
+        $(document).ready(function () {
+            // Creates DataTable
+            $('#usersTable').DataTable({
+                columns: [
+                    { visible: false, orderable: true }, // Hidden, but sortable
+                    null, // ID column
+                    null, // Name column
+                    null, // Email column
+                    { orderable: false } // Action column (Details button)
+                ],
+                order: [[0, 'asc']],
+                pageLength: 10,
+                searching: true,
+                language: {
+                    emptyTable: 'None found.'
+                }
+            });
+        });
+    </script>
+}

@@ -1,0 +1,204 @@
+@model IS_Proj_HIT.ViewModels.ViewEncounterPageModel
+
+@{
+    ViewData["Title"] = "Physician Notes";
+    var userPermissions = ViewData["UserPermissions"] as List<string>;
+}
+<partial name="PatientBannerPartial" model="ViewBag.Patient" />
+<partial name="_EncounterMenu" model="Model.Encounter"/>
+
+@* ---- Progress notes done, might need small changes as the next group sees fit. *@
+@{
+    var classNoteType = "fa fa-angle-right margin 1em";
+    var classDate = "fa fa-angle-down";
+    var classPhysician = "fa fa-angle-right";
+    var classCoPhysician = "fa fa-angle-right";
+
+
+    if (TempData["msg"].Equals("Sort order is by Note Type Ascending"))
+    {
+        classNoteType = "fa fa-angle-down";
+        classDate = "fa fa-angle-right";
+        classPhysician = "fa fa-angle-right";
+        classCoPhysician = "fa fa-angle-right";
+        
+    }
+    else if (TempData["msg"].Equals("Sort order is by Note Type Descending"))
+    {
+        classNoteType = "fa fa-angle-up";
+        classDate = "fa fa-angle-right";
+        classPhysician = "fa fa-angle-right";
+        classCoPhysician = "fa fa-angle-right";
+    }
+    if (TempData["msg"].Equals("Sort order is by Date Ascending"))
+    {
+        classNoteType = "fa fa-angle-right";
+        classDate = "fa fa-angle-up";
+        classPhysician = "fa fa-angle-right";
+        classCoPhysician = "fa fa-angle-right";
+    }
+    else if (TempData["msg"].Equals("Sort order is by Date Descending"))
+    {
+        classNoteType = "fa fa-angle-right";
+        classDate = "fa fa-angle-down";
+        classPhysician = "fa fa-angle-right";
+        classCoPhysician = "fa fa-angle-right";
+    }
+    if (TempData["msg"].Equals("Sort order is by Physician Ascending"))
+    {
+        classNoteType = "fa fa-angle-right";
+        classDate = "fa fa-angle-right";
+        classPhysician = "fa fa-angle-up";
+        classCoPhysician = "fa fa-angle-right";
+    }
+    else if (TempData["msg"].Equals("Sort order is by Physician Descending"))
+    {
+        classNoteType = "fa fa-angle-right";
+        classDate = "fa fa-angle-right";
+        classPhysician = "fa fa-angle-down";
+        classCoPhysician = "fa fa-angle-right";
+    }
+    if (TempData["msg"].Equals("Sort order is by CoPhysician Ascending"))
+    {
+        classNoteType = "fa fa-angle-right";
+        classDate = "fa fa-angle-right";
+        classPhysician = "fa fa-angle-right";
+        classCoPhysician = "fa fa-angle-up";
+    }
+    else if (TempData["msg"].Equals("Sort order is by CoPhysician Descending"))
+    {
+        classNoteType = "fa fa-angle-right ";
+        classDate = "fa fa-angle-right";
+        classPhysician = "fa fa-angle-right";
+        classCoPhysician = "fa fa-angle-down";
+    }
+}
+
+<div class="card">
+    <div class="card-header bg-primary text-white">
+        <h4>
+            Integrated Notes
+            @if (userPermissions != null && (userPermissions.Contains("ProgressNotesAdd")) )
+            {
+                <a class="btn btn-info btn-sm float-right" asp-controller="Encounter" asp-action="AddProgressNotes" asp-route-id="@Model.Encounter.EncounterId">
+                    Add New
+                </a>
+            }
+        </h4>
+    </div>
+    <div class="card-body bg-white">
+        <div class="container">
+            <table class="table table-striped table-bordered">
+                <thead class="bg-primary text-white">
+                    <tr>
+                        <th scope="col" ><i class="@classDate" aria-hidden="true"></i>@Html.ActionLink("   Date/Time", "ProgressNotes", new {sortOrder = ViewBag.DateSortParm}, new {@style="color:#FFFFFF" })</th>
+                        <th scope="col"><i class="@classNoteType" aria-hidden="true"></i>@Html.ActionLink("   Note Type", "ProgressNotes", new {sortOrder = ViewBag.NoteTypeSortParm}, new {@style="color:#FFFFFF" })</th>
+                        <th scope="col"><i class="@classPhysician" aria-hidden="true"></i>@Html.ActionLink("   Physician", "ProgressNotes", new {sortOrder = ViewBag.PhysicianSortParm}, new {@style="color:#FFFFFF" })</th>
+                        <th scope="col"><i class="@classCoPhysician" aria-hidden="true"></i>@Html.ActionLink("   Co-Physician", "ProgressNotes", new {sortOrder = ViewBag.CoPhysicianSortParm}, new {@style="color:#FFFFFF" })</th>
+                        <th scope="col">Options</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        var counter = 0;
+                    }
+                    @foreach (var prog in Model.ProgressNotes)
+                    {
+                        <tr @(counter++)>
+                            <td>@prog.LastUpdated</td>
+                            <td>@prog.NoteType.NoteType1</td>
+                            <td>@prog.Physician.LastName</td>
+                            <td>@prog.CoPhysician?.LastName</td>
+                            <td>
+                                 @if (userPermissions != null && (userPermissions.Contains("ProgressNotesView")) )
+                                {
+                                    
+                                    <button id="modalButton" class="btn btn-sm btn-info details btn-nav" data-toggle="modal" data-target="#myModal-@counter">Details</button>
+
+                                    <div class="modal fade" tabindex="-1" role="dialog" id="myModal-@counter">
+                                        <div class="modal-dialog modal-xl" id="@counter">
+                                            <div class="modal-content">
+                                                <div class="modal-header table-primary">
+                                                    <div class="col-md-4">
+                                                        <h5 class="modal-title">@prog.NoteType.NoteType1</h5>
+                                                    </div>
+                                                    <button type="button" class="close btn-danger" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <h4 class="">
+                                                        @if (userPermissions != null && (userPermissions.Contains("ProgressNotesEdit")) )
+                                                        {
+                                                            <a asp-action="EditProgressNote"
+                                                                asp-route-id="@Model.Encounter.EncounterId"
+                                                                asp-route-pId="@prog.ProgressNoteId"
+                                                                class="btn btn-info btn-sm flex-right float-right">
+                                                                Edit
+                                                            </a>
+                                                        }
+                                                    </h4>   
+                                                    <div>
+                                                        Physician: <b class="ml-2">@prog.Physician.FirstName @prog.Physician.LastName</b>
+                                                        <br>
+                                                        <br>
+                                                        Date/Time: <b class="ml-2">@prog.LastUpdated</b>
+                                                        <hr>
+                                                        <div class="note">
+                                                            @* @prog.Note *@
+                                                            @Html.Raw(prog.Note)
+                                                        </div> 
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                                @if (userPermissions != null && (userPermissions.Contains("ProgressNotesDelete")) )
+                                {
+                                    <a onclick="return confirm('Are you sure you want to delete this order?')" class="btn btn-danger btn-sm"  asp-controller="Encounter" asp-action="DeleteProgressNote" asp-route-id="@Model.Encounter.EncounterId" asp-route-pId="@prog.ProgressNoteId" > Delete </a>
+                                }
+                            </td>
+                        </tr>
+                    }
+                    @if (counter == 0) {
+                        <tr class="red">
+                            <td>No progress notes available</td>
+                        </tr>
+                    }
+                </tbody>
+
+            </table>
+        </div>
+    </div>
+
+</div>
+
+<style>
+.modal-body {
+    padding: 15px;
+    @* font-family: Arial, sans-serif; *@
+}
+
+.modal-body div {
+    margin-bottom: 10px;
+}
+
+.modal-body .note {
+    resize: vertical;
+    height: 300px; /* Adjust the height as needed */
+    overflow-y: auto;
+    border: 1px solid #ccc;
+    padding: 10px;
+    background-color: #f9f9f9;
+    white-space: pre-wrap; /* Preserve formatting */
+}
+
+.modal-dialog {
+    top: 0px;
+}
+
+.modal-xl {
+    max-width: 70%;
+}
+</style>

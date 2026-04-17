@@ -1,0 +1,68 @@
+@model List<IS_Proj_HIT.Entities.DocumentRequested>
+
+@{
+    ViewData["Title"] = "Disclosure Documents Requested";
+}
+
+<div class="row my-3">
+<h3>
+    <a class="btn btn-primary" asp-controller="DisclosureStructuredData" asp-action="Index">
+        <i class="fa fa-arrow-left "></i>
+    </a>
+    Disclosure Documents Requested
+</h3>
+</div>
+
+<p>
+    <a class="btn btn-primary" asp-controller="DisclosureStructuredData" asp-action="CreateDocumentRequested">Create New</a>
+</p>
+
+<table class="stripe nowrap" id="documentRequestedTable">
+    <thead>
+        <tr>
+            <th>
+                Document Requested
+            </th>
+            <th>
+                Document Description
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var documentRequested in Model)
+        {
+            <tr>
+                <td>
+                    @documentRequested.DocumentRequested1
+                </td>
+                <td>
+                    @documentRequested.DocumentRequestedDescription
+                </td>
+                <td>
+                   
+                    <a class="btn btn-primary" asp-controller="DisclosureStructuredData" asp-action="EditDocumentRequested" asp-route-id="@documentRequested.DocumentRequestedId">Edit</a>
+                    <a class="btn btn-danger" asp-controller="DisclosureStructuredData" asp-action="DeleteDocumentRequested" asp-route-id="@documentRequested.DocumentRequestedId">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section scripts{
+    <script>
+        // Creates DataTable
+        // DataTable Documentation found here: https://datatables.net/
+        $(function () {
+            $('#documentRequestedTable').DataTable({
+                columns: [null,null, { orderable: false }],
+                order: [[0, 'asc']],
+                pageLength: 10,
+                searching: true,
+                language: {
+                    emptyTable: 'No data found'
+                }
+            });
+        });
+    </script>
+}

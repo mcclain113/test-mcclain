@@ -1,0 +1,70 @@
+@model List<IS_Proj_HIT.Entities.Requester>
+
+@{
+    ViewData["Title"] = "Requesters";
+    var userPermissions = ViewData["UserPermissions"] as List<string>;
+}
+
+<div class="card mt-1">
+    <div class="card-header bg-primary text-white">
+        <h3>
+            <a class="btn btn-primary" asp-controller="Disclosure" asp-action="RequestList">
+                <i class="fa fa-arrow-left"></i>
+            </a>
+            Requesters
+            @if (userPermissions != null && (userPermissions.Contains("RequesterAdd") ) )
+            {
+                <a asp-action="CreateRequester" asp-controller="Requester" class="btn btn-outline-primary float-right mt-2"><i class="fas fa-plus"></i>Add New Requester</a>
+            }
+        </h3>
+    </div>
+</div>
+
+<table class="table table-striped" id="requesterTable">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Company Name</th>
+            <th>Requester Type</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var requester in Model)
+        {
+            <tr>
+                <td>@requester.FirstName @requester.LastName</td>
+                <td>@requester.CompanyName</td>
+                <td>@requester.RequesterType.RequesterType1</td>
+                <td>@requester.RequesterStatus.RequesterStatus1</td>
+                <td>
+                    <a class="btn btn-nav" asp-controller="Requester" asp-action="DetailsRequester" asp-route-id="@requester.RequesterId">Details</a>
+
+                    @if (userPermissions != null && (userPermissions.Contains("RequesterDelete") ) )
+                    {
+                        <a class="btn btn-danger" asp-controller="Requester" asp-action="DeleteRequester" asp-route-id="@requester.RequesterId">Delete</a>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section scripts{
+    <script>
+        // DataTable Documentation found here: https://datatables.net/
+        $(document).ready(function () {
+            // Creates DataTable
+            $('#requesterTable').DataTable({
+                columns: [null, null, null, null, { orderable: false }],
+                order: [[0, 'asc']],
+                pageLength: 10,
+                searching: true,
+                language: {
+                    emptyTable: 'None found.'
+                }
+            });
+        });
+    </script>
+}

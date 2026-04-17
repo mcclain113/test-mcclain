@@ -1,0 +1,173 @@
+@model IS_Proj_HIT.ViewModels.PhysicianStructuredData.PhysicianStructuredDataViewModel
+@{
+    ViewBag.Title = "Details - Physician";
+}
+
+<div class="header-container">
+    <h1>Details</h1>
+    <a asp-controller="PhysicianStructuredData" asp-action="EditPhysician"  asp-route-id="@Model.Physician.PhysicianId" class="btn btn-primary">Edit</a>
+</div>
+
+<h4>Physician</h4>
+<hr />
+
+<div class="row">
+    <div class="col-md-10">
+        <form method="post">
+            @Html.AntiForgeryToken()
+            <div class="form-row">
+                <input type="hidden" asp-for="Physician.PhysicianId" value="@Model.Physician.PhysicianId" readonly/>
+                <input type="hidden" asp-for="Address.AddressId" readonly/>
+                <input type="hidden" asp-for="AddressState.StateID" readonly/>
+                
+                <div class="form-group col-sm-6">
+                    <label asp-for="Physician.FirstName" class="control-label">First Name</label>
+                    <span class="form-control">@Model.Physician.FirstName</span>
+                </div>
+                <div class="form-group col-sm-6">
+                    <label asp-for="Physician.LastName" class="control-label">Last Name</label>
+                    <span class="form-control">@Model.Physician.LastName</span>
+                </div>
+            </div>
+ 
+            <div class="form-row">
+                <div class="form-group col-sm-4">
+                    <label asp-for="Physician.AddressId" class="control-label">Street Address</label>
+                    @if(Model.Address != null)
+                    {
+                        <span class="form-control">@Model.Address.Address1</span>
+                    }
+                    else
+                    {
+                        <span class="form-control"></span>
+                    }    
+                </div>            
+                <div class="form-group col-sm-2">
+                    <label asp-for="Physician.AddressId" class="control-label">Suite or Apt #</label>
+                    @if(Model.Address != null)
+                    {
+                        <span class="form-control">@Model.Address.Address2</span>
+                    }
+                    else
+                    {
+                        <span class="form-control"></span>
+                    }
+                </div>
+                <div class="form-group col-sm-4">
+                    <label asp-for="Physician.AddressId" class="control-label">City</label>
+                    @if(Model.Address != null)
+                    {
+                        <span class="form-control">@Model.Address.City</span>
+                    }
+                    else
+                    {
+                        <span class="form-control"></span>
+                    }
+                </div>
+                <div class="form-group col-sm-2">
+                    <label asp-for="Physician.AddressId" class="control-label">State</label>
+                    @if(Model.Address != null)
+                    {
+                        <span class="form-control">@Model.AddressState.StateAbbreviation</span>
+                    }
+                    else
+                    {
+                        <span class="form-control"></span>
+                    }
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col-sm-2">
+                    <label asp-for="Physician.AddressId" class="control-label">Zip Code</label>
+                    @if(Model.Address != null)
+                    {
+                        <span class="form-control">@Model.Address.PostalCode</span>
+                    }
+                    else
+                    {
+                        <span class="form-control"></span>
+                    }
+                </div>
+                <div class="form-group col-sm-4">
+                    <label asp-for="Physician.AddressId" class="control-label">County</label>
+                    @if(Model.Address != null)
+                    {
+                        <span class="form-control">@Model.Address.County</span>
+                    }
+                    else
+                    {
+                        <span class="form-control"></span>
+                    }
+                </div>
+                <div class="form-group col-sm-6">
+                    <label  class="control-label" asp-for="Address.Country">Country</label>
+                    @if(Model.Address != null)
+                    {
+                        <span class="form-control">@Model.Country.Name</span>
+                    }
+                    else
+                    {
+                        <span class="form-control"></span>
+                    }
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col-sm-6">
+                    <label asp-for="Physician.PhoneNumber" class="control-label">Phone Number</label>
+                    @if (Model.Physician.PhoneNumber != null){
+                        <span class="form-control">@string.Format("{0:(###) ###-####}", long.Parse(Model.Physician.PhoneNumber))</span>
+                        } else {
+                            <span class="form-control"></span>
+                        }
+                </div>
+                <div class="form-group col-sm-6">
+                    <label asp-for="Physician.EmailAddress" class="control-label"></label>
+                    <span class="form-control">@Model.Physician.EmailAddress</span>
+                </div>                
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col-sm-6">
+                    <label asp-for="Physician.Credentials" class="control-label">Credentials</label>
+                    <span class="form-control">@Model.Physician.Credentials</span>
+                </div>
+                <div class="form-group col-sm-6">
+                    <label asp-for="Physician.License" class="control-label">License</label>
+                    <span class="form-control">@Model.Physician.License</span>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col-sm-4">
+                    <label asp-for="Physician.SpecialtyId" class="control-label">Provider Specialty</label>
+                    <span class="form-control">@Model.Specialty.Name</span>
+                </div>
+                <div class="form-group col-sm-4">
+                    <label asp-for="Physician.ProviderTypeId" class="control-label">Select Provider Type</label>
+                    <span class="form-control">@Model.ProviderType.Name</span>
+                </div>
+                <div class="form-group col-sm-4">
+                    <label asp-for="Physician.ProviderStatusId" class="control-label">Select Provider Status</label>
+                    <span class="form-control">@Model.ProviderStatus.Status</span>
+                    
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<div>
+    <a asp-controller="PhysicianStructuredData" asp-action="ViewPhysicians">Back to List</a>
+</div>
+
+<style>
+    .header-container { 
+        display: flex; 
+        justify-content: space-between; 
+        align-items: center; 
+        margin-bottom: 20px; /* Adjust as needed for spacing */ 
+        }    
+</style>

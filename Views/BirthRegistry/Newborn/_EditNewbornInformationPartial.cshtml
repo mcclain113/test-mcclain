@@ -1,0 +1,102 @@
+@model IS_Proj_HIT.ViewModels.BirthRegistry.NewbornViewModel
+
+@{
+    var hasNewbornLinked = Model.IsExistingPatient && !string.IsNullOrEmpty(Model.NewbornMrn);
+    var isEditMode = ViewBag.Mode == "edit";
+}
+
+<input type="hidden" id="newbornMrn" value="@Model.NewbornMrn" />
+<input type="hidden" id="newbornIsExistingPatient" value="@Model.IsExistingPatient.ToString().ToLower()" />
+<input type="hidden" id="newbornId" value="@Model.NewbornId" />
+
+<div class="card">
+    <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+        <h4 class="mb-0"><i class="fas fa-baby mr-2"></i>Newborn Information</h4>
+        @if (isEditMode)
+        {
+            <span class="badge badge-warning text-white">Edit Mode</span>
+        }
+    </div>
+    <div class="card-body">
+
+        @if (hasNewbornLinked)
+        {
+            <div class="alert alert-info d-flex align-items-center mb-3" role="alert">
+                <i class="fas fa-info-circle fa-2x mr-3"></i>
+                <div>
+                    <strong>Editing Existing Record:</strong> 
+                    Newborn information for patient record with MRN: <strong>@Model.NewbornMrn</strong>
+                </div>
+            </div>
+        }
+
+        <!-- Search wrapper - only show if no newborn linked -->
+        <div id="newbornSelectionWrapper" class="@(hasNewbornLinked ? "d-none" : "")">
+            <div class="row mb-4 border-bottom pb-3">
+                <div class="col-md-12">
+                    <h5>Newborn Patient Status</h5>
+                    <div class="form-group">
+                        <div class="form-check">
+                            <input class="form-check-input validation-trigger" type="radio" 
+                                   name="newbornPatientStatus" id="newbornInDatabase" value="inDatabase" 
+                                   data-validation-group="newbornStatus" checked />
+                            <label class="form-check-label" for="newbornInDatabase">
+                                Newborn is in patient database
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input validation-trigger" type="radio" name="newbornPatientStatus"
+                                id="newbornNotInDatabase" value="notInDatabase" data-validation-group="newbornStatus" disabled/>
+                            <label class="form-check-label" for="newbornNotInDatabase">
+                                Newborn is not in patient database
+                            </label>
+                            <i class="fas fa-info-circle info-icon" data-toggle="tooltip" data-placement="top" data-html="true" title="This feature is not currently available."></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Patient Search Section -->
+            <div id="newbornSearchSection" class="row mb-4 border-bottom pb-3">
+                <div class="col-md-12">
+                    <h5>Search Existing Newborn or Create New</h5>
+                    <div class="input-group mb-3">
+                        <input type="text" id="newbornSearchTerm" class="form-control"
+                            placeholder="Search by name, MRN, or SSN" value="@Model.SearchTerm" />
+                        <div class="input-group-append">
+                            <button class="btn btn-primary" id="searchNewbornBtn" type="button">
+                                <i class="fas fa-search"></i> Search
+                            </button>
+                            <button class="btn btn-success" id="createNewNewbornBtn" type="button">
+                                <i class="fas fa-plus"></i> Create New Patient
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Search Results Table -->
+                    <div id="newbornSearchResults" class="mt-2 d-none">
+                        <div class="table-responsive">
+                            <table class="table table-sm table-hover">
+                                <thead class="table-dark">
+                                    <tr>
+                                        <th>MRN</th>
+                                        <th>Name</th>
+                                        <th>Date of Birth</th>
+                                        <th>SSN</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="newbornSearchResultsBody"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Accordion - show if newborn linked, otherwise hidden -->
+        <div id="newbornInformationAccordion" class="@(hasNewbornLinked ? "" : "d-none")">
+            @await Html.PartialAsync("Newborn/_NewbornAccordionSections", Model)
+        </div>
+    </div>
+</div>

@@ -1,0 +1,51 @@
+@model IS_Proj_HIT.Entities.FetalPresentationAtBirth
+@{
+    ViewBag.Title = "Edit Fetal Presentation At Birth";
+}
+
+<h1>Edit</h1>
+
+<h4>Fetal Presentation At Birth</h4>
+<hr />
+
+<div class="row">
+    <div class="col-md-10">
+        <form method="post">
+            @Html.AntiForgeryToken()
+            <div class="form-row">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="FetalPresentationAtBirthId" value="@Model.FetalPresentationAtBirthId" readonly/>
+                <div class="form-group col-sm-6">
+                    <label asp-for="FetalPresentationName" class="control-label">Fetal Presentation Name</label>
+                    <input asp-for="FetalPresentationName" 
+                        class="form-control" maxlength="50" required
+                        placeholder="Example:  Breech" />
+                    <span asp-validation-for="FetalPresentationName" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-sm-12">
+                    <label asp-for="FetalPresentationDescription" class="control-label">Fetal Presentation Description</label>
+                    <textarea asp-for="FetalPresentationDescription" 
+                        class="form-control" maxlength="200"
+                        placeholder="Example:  Presenting part..." ></textarea>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <input type="submit" value="Save Changes" class="btn btn-primary" />
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<div>
+    <a asp-controller="BirthRegistryStructuredData" asp-action="ViewFetalPresentationAtBirths">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

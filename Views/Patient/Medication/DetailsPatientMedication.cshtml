@@ -1,0 +1,15 @@
+@model IS_Proj_HIT.Entities.PatientMedicationList
+
+@{
+    ViewData["Title"] = "Patient Medication Details";
+    var userPermissions = ViewData["UserPermissions"] as List<string>;
+}
+
+<partial name="PatientBannerPartial" model="Model.Patients"/>
+<partial name="_PatientMenu" model="Model.Patients"/>
+
+<div class="card">
+    @{
+        await Html.RenderPartialAsync("Medication/_DetailsPatientMedicationPartial");
+    }
+</div>

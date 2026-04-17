@@ -1,0 +1,455 @@
+@model IS_Proj_HIT.ViewModels.BirthRegistry.MothersInformationViewModel
+
+<div id="motherAccordion">
+
+    <div class="card">
+        <div class="card-header custom-header bg-primary text-white d-flex justify-content-between align-items-center"
+            id="headingDemographics">
+            <h5 class="mb-0 w-100">
+                <button class="btn btn-block text-left text-white" type="button" data-toggle="collapse"
+                    data-target="#collapseDemographics" aria-expanded="true" aria-controls="collapseDemographics">
+                    <i class="fas fa-id-card"></i> Mother's Identification
+                </button>
+            </h5>
+            <span class="checkmark accordion-checkmark @(Model.IsExistingPatient ? "show" : "")">&#10004;</span>
+        </div>
+
+        <div id="collapseDemographics" class="collapse show" aria-labelledby="headingDemographics"
+            data-parent="#motherAccordion">
+            <div class="card-body">
+                <input type="hidden" asp-for="IsExistingPatient" id="isExistingPatient" />
+                <input type="hidden" asp-for="Mrn" id="motherMrn" />
+                <div class="row mb-2">
+                    @if (Model.IsExistingPatient)
+                    {
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="control-label font-weight-bold">Mother's MRN </label>
+                                <input asp-for="Mrn" name="Mother.Mrn" class="form-control" id="motherMrnDisplay" readonly />
+                            </div>
+                        </div>
+                    }
+                </div>
+                <h6 class="mt-3 mb-2">Mother’s Current Legal Name </h6>
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label asp-for="FirstName" class="control-label">First Name</label>
+                            <input asp-for="FirstName" name="Mother.FirstName" class="form-control" id="motherFirstName" />
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label asp-for="MiddleName" class="control-label">Middle Name</label>
+                            <input asp-for="MiddleName" name="Mother.MiddleName" class="form-control" id="motherMiddleName" />
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label asp-for="LastName" class="control-label">Last Name</label>
+                            <input asp-for="LastName" name="Mother.LastName" class="form-control" id="motherLastName" />
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label asp-for="Suffix" class="control-label">Suffix</label>
+                            <input asp-for="Suffix" name="Mother.Suffix" class="form-control" id="motherSuffix" />
+                        </div>
+                    </div>
+                </div>
+                <hr />
+                <h6>Mother’s Given Name at Birth (Optional)</h6>
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label asp-for="BirthFirstName" class="control-label">First Name</label>
+                            <input asp-for="BirthFirstName" name="Mother.BirthFirstName" class="form-control" id="birthFirstName" />
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label asp-for="BirthMiddleName" class="control-label">Middle Name</label>
+                            <input asp-for="BirthMiddleName" name="Mother.BirthMiddleName" class="form-control" id="birthMiddleName" />
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label asp-for="BirthLastName" class="control-label">Last Name</label>
+                            <input asp-for="BirthLastName" name="Mother.BirthLastName" class="form-control" id="birthLastName" />
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label asp-for="BirthSuffix" class="control-label">Suffix</label>
+                            <input asp-for="BirthSuffix" name="Mother.BirthSuffix" class="form-control" id="birthSuffix" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label asp-for="DateOfBirth" class="control-label">Date of Birth @(!Model.IsExistingPatient ? "*" : "")</label>
+                            <input asp-for="DateOfBirth" name="Mother.DateOfBirth" class="form-control @(!Model.IsExistingPatient ? "validation-trigger" : "")" type="date" id="motherDob" data-validation-group="motherDemo" readonly="@(Model.IsExistingPatient)" />
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label asp-for="BirthPlace" class="control-label">Birth Place</label>
+                            <input asp-for="BirthPlace" name="Mother.BirthPlace" class="form-control" id="motherBirthPlace" readonly="@(Model.IsExistingPatient)" />
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label asp-for="SSN" class="control-label">Social Security Number</label>
+                            <input asp-for="SSN" name="Mother.SSN" class="form-control" id="motherSSN" readonly="@(Model.IsExistingPatient)" />
+                        </div>
+                    </div>
+                </div>
+
+                @if (ViewBag.Mode != "edit")
+                {
+                    <div class="next-button-container text-right">
+                        <button type="button" class="btn btn-primary next-accordion-btn"
+                            data-target-collapse="#collapseAddress">
+                            Next <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header custom-header bg-primary text-white d-flex justify-content-between align-items-center"
+            id="headingCultural">
+            <h5 class="mb-0 w-100">
+                <button class="btn btn-block text-left text-white collapsed" type="button" data-toggle="collapse"
+                    data-target="#collapseCultural" aria-expanded="false" aria-controls="collapseCultural">
+                    <i class="fas fa-globe"></i> Mother's Demographics @(!Model.IsExistingPatient ? "(Optional)" : "")
+                </button>
+            </h5>
+            <span class="checkmark accordion-checkmark @(Model.IsExistingPatient ? "show" : "")">&#10004;</span>
+        </div>
+
+        <div id="collapseCultural" class="collapse" aria-labelledby="headingCultural" data-parent="#motherAccordion">
+            <div class="card-body">
+                @if (Model.IsExistingPatient)
+                {
+                    <div class="alert alert-info mb-3">
+                        <i class="fas fa-lock"></i> Address from patient record (read-only)
+                    </div>
+                }
+
+                <h6><i class="fas fa-home"></i> Residential Address</h6>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label asp-for="ResidentialAddress.Address1" class="control-label">Address Line 1
+                                @(!Model.IsExistingPatient ? "*" : "")</label>
+                            <input asp-for="ResidentialAddress.Address1" name="Mother.ResidentialAddress.Address1"
+                                class="form-control @(!Model.IsExistingPatient ? "validation-trigger" : "")"
+                                data-validation-group="motherAddress" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label asp-for="ResidentialAddress.Address2" class="control-label">Address Line 2</label>
+                            <input asp-for="ResidentialAddress.Address2" name="Mother.ResidentialAddress.Address2"
+                                class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label asp-for="ResidentialApartmentNumber" class="control-label">Apartment #</label>
+                            <input asp-for="ResidentialApartmentNumber" name="Mother.ResidentialApartmentNumber" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label asp-for="ResidentialAddress.City" class="control-label">City
+                                @(!Model.IsExistingPatient ? "*" : "")</label>
+                            <input asp-for="ResidentialAddress.City" name="Mother.ResidentialAddress.City"
+                                class="form-control @(!Model.IsExistingPatient ? "validation-trigger" : "")"
+                                data-validation-group="motherAddress" />
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label asp-for="ResidentialAddress.AddressStateID" class="control-label">State
+                                @(!Model.IsExistingPatient ? "*" : "")</label>
+                            <select asp-for="ResidentialAddress.AddressStateID"
+                                name="Mother.ResidentialAddress.AddressStateID" asp-items="Model.States"
+                                class="form-control @(!Model.IsExistingPatient ? "validation-trigger" : "")"
+                                data-validation-group="motherAddress">
+                                <option value="">-- Select State --</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label asp-for="ResidentialAddress.PostalCode" class="control-label">Postal Code
+                                @(!Model.IsExistingPatient ? "*" : "")</label>
+                            <input asp-for="ResidentialAddress.PostalCode" name="Mother.ResidentialAddress.PostalCode"
+                                class="form-control @(!Model.IsExistingPatient ? "validation-trigger zipcode" : "")"
+                                data-validation-group="motherAddress" />
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label asp-for="ResidentialCounty" class="control-label">County</label>
+                            <input asp-for="ResidentialCounty" name="Mother.ResidentialCounty" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label asp-for="ResidentialCountry" class="control-label">Country</label>
+                            <input asp-for="ResidentialCountry" name="Mother.ResidentialCountry" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label asp-for="HouseholdInsideCityLimits" class="control-label">Is this household inside city limits?</label>
+                            <select asp-for="HouseholdInsideCityLimits" name="Mother.HouseholdInsideCityLimits" asp-items="Model.HouseholdInsideCityLimitsOptions" class="form-control"></select>
+                        </div>
+                    </div>
+                </div>
+
+                <hr />
+                <h6><i class="fas fa-phone"></i> Mother's Contact Information Address</h6>
+                <div class="form-check mb-3">
+                    <input class="form-check-input" type="checkbox" asp-for="MailingAddressSameAsResidential" 
+                           name="Mother.MailingAddressSameAsResidential" id="sameAsResidential" 
+                           data-special-trigger="sameAddress" checked />
+                    <label class="form-check-label" for="sameAsResidential">
+                        Mailing address is the same as the residential address
+                    </label>
+                </div>
+                <div id="mailingAddressSection" class="@(Model.MailingAddressSameAsResidential ? "d-none" : "")">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label asp-for="MailingAddress.Address1" class="control-label">Address</label>
+                                <input asp-for="MailingAddress.Address1" name="Mother.MailingAddress.Address1" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="MailingApartmentNumber" class="control-label">Apartment #</label>
+                                <input asp-for="MailingApartmentNumber" name="Mother.MailingApartmentNumber" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="MailingAddress.City" class="control-label">City</label>
+                                <input asp-for="MailingAddress.City" name="Mother.MailingAddress.City" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="MailingAddress.AddressStateID" class="control-label">State</label>
+                                <select asp-for="MailingAddress.AddressStateID" name="Mother.MailingAddress.AddressStateID" 
+                                        asp-items="Model.States" class="form-control">
+                                    <option value="">-- Select State --</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="MailingAddress.PostalCode" class="control-label">Postal Code</label>
+                                <input asp-for="MailingAddress.PostalCode" name="Mother.MailingAddress.PostalCode" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="MailingCounty" class="control-label">County</label>
+                                <input asp-for="MailingCounty" name="Mother.MailingCounty" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="MailingCountry" class="control-label">Country</label>
+                                <input asp-for="MailingCountry" name="Mother.MailingCountry" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="MotherTelephoneNumber" class="control-label">Mother’s Telephone Number</label>
+                                <input asp-for="MotherTelephoneNumber" name="Mother.MotherTelephoneNumber" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <hr />
+                @if (Model.IsExistingPatient)
+                {
+                    <div class="alert alert-info mb-3">
+                        <i class="fas fa-lock"></i> Demographics from patient record (read-only)
+                    </div>
+                }
+                else
+                {
+                    <div class="card border-left-warning mb-3">
+                        <div class="card-body py-2">
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input validation-trigger" id="skipMotherDemo"
+                                    data-validation-group="motherCultural" data-special-trigger="skipDemo">
+                                <label class="form-check-label" for="skipMotherDemo">
+                                    <i class="fas fa-forward"></i>
+                                    <strong>Skip demographic information</strong>
+                                    <small class="text-muted">(information not available)</small>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label asp-for="ReligionId" class="control-label">Religion</label>
+                            <select asp-for="ReligionId" name="Mother.ReligionId"
+                                asp-items="Model.Religions"
+                                class="form-control @(!Model.IsExistingPatient ? "validation-trigger" : "")"
+                                data-validation-group="motherCultural">
+                                <option value="">-- Not Specified --</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label asp-for="EthnicityId" class="control-label">Ethnicity</label>
+                            <select asp-for="EthnicityId" name="Mother.EthnicityId"
+                                asp-items="Model.Ethnicities"
+                                class="form-control @(!Model.IsExistingPatient ? "validation-trigger" : "")"
+                                data-validation-group="motherCultural">
+                                <option value="">-- Not Specified --</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label asp-for="EducationId" class="control-label">Education Level</label>
+                            <select asp-for="EducationId" name="Mother.EducationId"
+                                asp-items="Model.EducationLevels"
+                                class="form-control @(!Model.IsExistingPatient ? "validation-trigger" : "")"
+                                data-validation-group="motherCultural">
+                                <option value="">-- Not Specified --</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label class="control-label">Race <small class="text-muted">(Select all that
+                                    apply)</small></label>
+                            <div class="checkbox-group">
+                                @foreach (var race in Model.Races)
+                                {
+                                    <div class="form-check">
+                                        <input
+                                            class="form-check-input race-checkbox @(!Model.IsExistingPatient ? "validation-trigger" : "")"
+                                            type="checkbox" name="Mother.SelectedRaceIds" value="@race.Value"
+                                            id="race_@race.Value" data-validation-group="motherCultural"
+                                            
+                                            @(Model.SelectedRaceIds.Contains(byte.Parse(race.Value)) ? "checked" : "") />
+                                        <label class="form-check-label @(Model.IsExistingPatient ? "text-muted" : "")"
+                                            for="race_@race.Value">
+                                            @race.Text
+                                        </label>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                @if (ViewBag.Mode != "edit")
+                {
+                    <div class="next-button-container text-right">
+                        <button type="button" class="btn btn-primary next-accordion-btn"
+                            data-target-collapse="#collapseMarriage">
+                            Next <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header custom-header bg-primary text-white d-flex justify-content-between align-items-center" id="headingMarriage">
+            <h5 class="mb-0 w-100">
+                <button class="btn btn-block w-100 text-left text-white @(ViewBag.Mode == "edit" ? "no-collapse" : "collapsed")" type="button" 
+                        data-toggle="collapse" data-target="#collapseMarriage" 
+                        aria-expanded="@(ViewBag.Mode == "edit" ? "true" : "false")" aria-controls="collapseMarriage">
+                    <i class="fas fa-ring"></i> Legal Parent Status
+                </button>
+            </h5>
+            <span class="checkmark accordion-checkmark show">&#10004;</span>
+        </div>
+
+        <div id="collapseMarriage" class="collapse" aria-labelledby="headingMarriage" data-parent="#motherAccordion">
+            <div class="card-body">
+                <div class="alert alert-info mb-3">
+                    <i class="fas fa-info-circle"></i>
+                    <strong>Marital Status</strong><br />
+                    In the state of Wisconsin if the mother was married at the time of delivery, then the legal spouse at the time of delivery is considered the legal second parent and their information must be provided.
+                </div>
+                <div class="form-group">
+                    <label class="font-weight-bold">Was the mother legally married at the time of delivery?</label>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="Mother.MaritalStatusAtDelivery" id="marriedYes" value="Yes" />
+                        <label class="form-check-label" for="marriedYes">Yes – Enter legal spouse information</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="Mother.MaritalStatusAtDelivery" id="marriedNo" value="No" />
+                        <label class="form-check-label" for="marriedNo">No – Mother was not married at the time of delivery</label>
+                    </div>
+                </div>
+                <div class="form-group ml-4" id="parent2Options" style="display:none;">
+                    <label class="font-weight-bold">If No, select one:</label>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="Mother.Parent2Option" id="aopCompleted" value="AOPCompleted" />
+                        <label class="form-check-label" for="aopCompleted">An Acknowledgement of Paternity (AOP) has been completed</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="Mother.Parent2Option" id="courtOrder" value="CourtOrder" />
+                        <label class="form-check-label" for="courtOrder">A court order establishing paternity exists.</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="Mother.Parent2Option" id="aopNotCompleted" value="AOPNotCompleted" />
+                        <label class="form-check-label" for="aopNotCompleted">An AOP has not been completed</label>
+                    </div>
+                </div>
+                <script>
+                <!-- JS for parent2Options show/hide is now in wwwroot/js/BirthRegistry/mother.js -->
+                </script>
+
+                <div class="next-button-container text-right">
+                    @if (ViewBag.Mode == "edit")
+                    {
+                        <button type="button" class="btn btn-success btn-lg save-tab-btn">
+                            <i class="fas fa-save"></i> Save Mother Information
+                        </button>
+                    }
+                    else
+                    {
+                        <button type="button" class="btn btn-primary next-tab-btn" data-next-tab="#newborn-tab">
+                            Next: Newborn Information <i class="fas fa-arrow-right"></i>
+                        </button>
+
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

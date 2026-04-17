@@ -1,0 +1,51 @@
+@model IS_Proj_HIT.Entities.FinalRouteAndMethodOfDelivery
+@{
+    ViewBag.Title = "Edit Final Route And Method Of Delivery";
+}
+
+<h1>Edit</h1>
+
+<h4>Final Route And Method Of Delivery</h4>
+<hr />
+
+<div class="row">
+    <div class="col-md-10">
+        <form method="post">
+            @Html.AntiForgeryToken()
+            <div class="form-row">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="FinalRouteAndMethodId" value="@Model.FinalRouteAndMethodId" readonly/>
+                <div class="form-group col-sm-6">
+                    <label asp-for="FinalRouteAndMethodName" class="control-label">Final Route And Method Name</label>
+                    <input asp-for="FinalRouteAndMethodName" 
+                        class="form-control" maxlength="50" required
+                        placeholder="Example:  Vaginal/Forceps" />
+                    <span asp-validation-for="FinalRouteAndMethodName" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-sm-12">
+                    <label asp-for="FinalRouteAndMethodDescription" class="control-label">Final Route And Method Description</label>
+                    <textarea asp-for="FinalRouteAndMethodDescription" 
+                        class="form-control" maxlength="200"
+                        placeholder="Example:  Delivery of the..." ></textarea>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <input type="submit" value="Save Changes" class="btn btn-primary" />
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<div>
+    <a asp-controller="BirthRegistryStructuredData" asp-action="ViewFinalRoutesAndMethodOfDeliveries">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

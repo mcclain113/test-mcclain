@@ -1,0 +1,104 @@
+@model List<IS_Proj_HIT.Entities.PainRating>
+
+@{
+    ViewData["Title"] = "Pain Ratings";
+    var userPermissions = ViewData["UserPermissions"] as List<string>;
+}
+
+<div class="row my-3">
+    <h3>
+        <a class="btn btn-primary" asp-controller="PCAStructuredData" asp-action="Index">
+            <i class="fa fa-arrow-left "></i>
+        </a>
+        Pain Ratings
+    </h3>
+</div>
+<!-- banner displays used when deleting an item  -->
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success">
+            @TempData["SuccessMessage"]
+        </div>
+    }
+
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger">
+            @TempData["ErrorMessage"]
+        </div>
+    }
+    
+<div>
+    @if (userPermissions != null && (userPermissions.Contains("StructuredDataAdd")) )
+    {
+        <a class="btn btn-primary mb-3" asp-controller="PCAStructuredData" asp-action="CreatePainRating">Create New</a>
+    }
+</div>
+
+<table class="stripe nowrap" id="painRatingTable">
+    <thead>
+        <tr>
+            <th style="text-align: center;">Value</th>
+            <th>Description</th>
+            <th>Pain Parameter</th>
+            <th style="text-align: center;">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var painRating in Model)
+        {
+            <tr>
+                <td style="text-align: center;">@painRating.Value</td>
+                <td>@painRating.Description</td>
+                <td>@($"{painRating.PainParameter.ParameterName}:  {painRating.PainParameter.Description}")</td>
+                <td>
+                    @if (userPermissions != null && (userPermissions.Contains("StructuredDataEdit")) )
+                    {
+                        <a class="btn btn-primary" asp-controller="PCAStructuredData" asp-action="EditPainRating" asp-route-id="@painRating.PainRatingId">Edit</a>
+                    }
+                    @if (userPermissions != null && (userPermissions.Contains("StructuredDataDelete")) )
+                    {
+                        <a class="btn btn-danger" onclick="return confirm('Are you sure?')" asp-controller="PCAStructuredData" asp-action="DeletePainRating" asp-route-id="@painRating.PainRatingId">Delete</a>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<style>
+    /* Ensure the entire table fits within the view screen */
+    #painRatingTable {
+        table-layout: auto;
+        width: 100%; /* Adjusts the table width to fit the viewport */
+    }
+
+    /* Apply text wrapping to the second column */
+    #painRatingTable td:nth-child(2) {
+        white-space: normal; /* Allows text to wrap within the cell */
+        word-wrap: break-word; /* Break long words if necessary */
+    }
+
+    /* Apply text wrapping to the third column */
+    #painRatingTable td:nth-child(3) {
+        white-space: normal; /* Allows text to wrap within the cell */
+        word-wrap: break-word; /* Break long words if necessary */
+    }
+</style>
+@section scripts{
+    <script>
+        // DataTable Documentation found here: https://datatables.net/
+        $(document).ready(function () {
+            // Creates DataTable
+            $('#painRatingTable').DataTable({
+                columns: [null,null,null, { orderable: false }],
+                ordering: true,
+                order: [],
+                pageLength: 10,
+                searching: true,
+                language: {
+                    emptyTable: 'None found'
+                }
+            });
+        });
+    </script>
+}

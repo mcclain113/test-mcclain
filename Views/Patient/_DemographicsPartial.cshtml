@@ -1,0 +1,362 @@
+@model IS_Proj_HIT.ViewModels.PatientVm.PatientViewModel
+@{
+    var userPermissions = ViewData["UserPermissions"] as List<string>;
+}
+
+<div class="card-body" @(ViewBag.ViewPatientDetails ? "hidden" : "")> <!-- this is the Create/Edit code  -->
+    <fieldset>
+        <div class="row d-flex justify-content-between align-items-center mb-3">
+                <!-- if ViewBag.CreatingPatient is true, need input  -->
+                <!-- auto-assign if User has only one Facility -->
+            @if(ViewBag.UserFacilities != null && ViewBag.UserFacilities.Count == 1 && ViewBag.CreatingPatient)
+            {
+                <div class="col-4 ml-auto">
+                    <span style="color: lightgray"><i>Facility: @ViewBag.UserFacilities[0].Text</i></span>
+                    <input type="hidden" name="Patient.FacilityId" value="@ViewBag.UserFacilities[0].Value" />
+                </div>
+            }
+            else if(ViewBag.UserFacilities != null && ViewBag.UserFacilities.Count > 1 && ViewBag.CreatingPatient)
+            {
+                <!-- if ViewBag.CreatingPatient is true, need input  -->
+                <!-- provide select list when User has multiple facilities -->
+                <div class="form-inline col-4 ml-auto">
+                    <label for="Patient.FacilityId" class="mr-2">Facility: </label>
+                    <select class="form-control dropdowns" asp-for="Patient.FacilityId" 
+                            asp-items="ViewBag.UserFacilities" id="Patient.FacilityId">
+                            <option value="">Select Facility</option>
+                    </select>
+                    <span asp-validation-for="Patient.FacilityId" class="text-danger"></span>
+                </div>
+            }
+            else if( (userPermissions != null && (userPermissions.Contains("SecurityChangeFacility")) ) && !ViewBag.CreatingPatient && !ViewBag.ViewPatientDetails)
+            {
+                <!-- If both ViewBag.CreatingPatient & ViewBag.ViewPatientDetails are false, this is in Edit mode;  Allow the Role with the permission SecurityChangeFacility, in Edit mode, to select any Facility  -->
+                <div class="form-inline col-4 ml-auto">
+                    <label for="Patient.FacilityId" class="mr-2">Facility: </label>
+                    <select class="form-control dropdowns" asp-for="Patient.FacilityId" 
+                            asp-items="ViewBag.Facilities" id="Patient.FacilityId">
+                            @* <option value="">Select Facility</option> *@
+                    </select>
+                    <span asp-validation-for="Patient.FacilityId" class="text-danger"></span>
+                </div>
+            }
+            else 
+            {
+                <!-- ViewBag.CreatingPatient is not true, just display the existing value  -->
+                <div class="col-4 ml-auto">
+                    <span style="color: lightgray"><i>Facility: @Model.Patient.Facility.Name</i></span>
+                </div>
+            }
+        </div>
+        <div class="row">
+            <div class="col-4">
+                <div class="form-group">
+                    <label>First Name*</label><br/>
+                    <!-- The site.js includes form validation but requires the 'asp-for' to match exactly what is in the javascript function and also needs the <span class="error"></span> for the validation to work properly -->
+                    <input class="form-control" asp-for="Person.FirstName" maxlength="50"  placeholder="First Name" required/>
+                    <span class="error"></span>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="form-group">
+                    <label>Middle Name</label><br/>
+                    <input class="form-control" asp-for="Person.MiddleName"  maxlength="50" placeholder="Middle Name"/>
+                    <span class="error"></span>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="form-group">
+                    <label>Last Name*</label><br/>
+                    <input class="form-control" asp-for="Person.LastName" maxlength="50"  placeholder="Last Name" required/>
+                    <span class="error"></span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-2 form-group">
+                <label>SSN</label><br/>
+                <input asp-for="Person.Ssn" class="form-control ssn" maxlength="11" placeholder="SSN"/>
+                <span class="error"></span>
+            </div>
+            <div class="col-2 form-group">
+                <label>DOB</label><br/>
+                <input asp-for="Person.Dob" type="date" class="form-control dob" placeholder="MM-DD-YYYY"/>
+                <span class="error"></span>
+            </div>
+            <div class="col-2 form-group">
+                <label>Date Expired</label>
+                <input type="date" class="form-control" id="DeathDate" asp-for="Person.DeathDate"/>
+                <label class="checkbox-label">
+                <input type="checkbox" id="deceasedCheck" asp-for="Person.DeceasedLiving" class="custom-checkbox">Patient is deceased</label>
+            </div>
+            <div class="col-2 form-group">
+                <label>Legal Status</label>
+                <select class="form-control dropdowns" asp-for="Patient.LegalStatusId" 
+                        asp-items="ViewBag.LegalStatuses" id="LegalStatusId"><option value="">Select Legal Status</option></select>
+                <span asp-validation-for="Patient.LegalStatusId" class="text-danger"></span>
+            </div>
+            <div class="col-4 form-group">
+                <label>Maiden Name</label>
+                <input class="form-control" asp-for="Person.MaidenName" maxlength="50" placeholder="Maiden Name"/>
+                <span class="error"></span>
+            </div>    
+        </div>
+        <div class="row">
+            <div class="col-4 form-group">
+                <label>Mother's Maiden Name</label>
+                <input class="form-control" asp-for="Person.MothersMaidenName" maxlength="50" placeholder="Mother's Maiden Name"/>
+                <span class="error"></span>
+            </div>
+            <div class="col-2 form-group">
+                <label>Sex</label>
+                <select class="form-control dropdowns" asp-for="Person.SexId" asp-items="ViewBag.Sexes">
+                    <option value="">Select Sex</option>
+                </select>
+            </div>
+            <div class="col-2 form-group">
+                <label>Gender</label>
+                <select class="form-control dropdowns" asp-for="Person.GenderId" asp-items="ViewBag.Gender">
+                    <option value="">Select Gender</option>
+                </select>
+            </div>
+            <div class="col-2 form-group">
+                <label>Gender Pronoun</label>
+                <select class="form-control dropdowns" asp-for="Person.GenderPronounId" asp-items="ViewBag.GenderPronouns">
+                    <option value="">Select Gender Pronoun</option>
+                </select>
+            </div>
+            <div class="col-2 form-group">
+                <label>Marital Status</label>
+                <select class="form-control dropdowns" asp-for="Person.MaritalStatusId" 
+                        asp-items="ViewBag.MaritalStatus"><option value="">Select Marital Status</option></select>
+            </div>    
+        </div>
+        <div class="row">
+            <div class="col-4 form-group">
+                <label>Religion</label>
+                <select class="form-control dropdowns" asp-for="Person.ReligionId" 
+                        asp-items="ViewBag.Religions"><option value="">Select Religion</option></select>
+            </div>
+            <div class="col-4 form-group">
+                <label>Race</label> <br />
+                <select multiple="multiple" class="form-control dropdowns select-2 races" asp-for="SelectedRaceIds"
+                        asp-items="ViewBag.Races">
+                </select>
+            </div>
+            
+            <div class="col-2 form-group">
+                <label>Language</label>
+                <select multiple="multiple" class="form-control dropdowns languages" asp-for="SelectedLanguageIds"
+                        asp-items="ViewBag.Languages">
+                </select>
+            </div>
+            
+            <div class="col-2 form-group">
+                <label class="checkbox-label"><input type="checkbox" id="interpreterCheck" asp-for="@Model.Person.InterpreterNeeded" class="custom-checkbox">Interpreter Needed?</label>
+            </div>           
+        </div>
+        <fieldset>
+            @* <legend>Military Status</legend> *@
+            <div class="row">
+                <div class="col-sm-4 form-group">
+                    <label>Birthplace</label>
+                    <input class="form-control" asp-for="Person.Birthplace" maxlength="100" placeholder="Place of Birth"/>
+                </div>
+                <div class="form-group col-sm-4">
+                <label asp-for="Person.EducationId" class="control-label">Select Education Level</label>
+                <select asp-for="Person.EducationId" class ="form-control" asp-items="ViewBag.EducationId">
+                    <option value="">Select Education Level</option>
+                </select>
+            </div>
+                <div class="form-group col-2">
+                    <label class="checkbox-label">
+                    <input type="checkbox" asp-for="Person.IsVeteran" class="custom-checkbox">Patient is a US Veteran</label>
+                </div>
+                <div class="form-group col-2">
+                    <label class="checkbox-label">
+                    <input type="checkbox" asp-for="Person.IsCurrentMilitaryServiceMember" class="custom-checkbox">Patient is Active Duty</label>
+                </div>
+            </div>
+        </fieldset>
+
+        <!-- Alias section:  presents a button for adding an Alias
+            when clicked, a script runs which uses AJAX to access a controller method which bring back a partial view and manages the index -->        
+        <fieldset id="Aliases">
+            @for (int i = 0; i < Model.PatientAliases.Count; i++)
+            {
+                <partial name="_AliasPartial" for="@Model.PatientAliases[i]" view-data="@(new ViewDataDictionary(ViewData) { {"indexPA", i} })" />
+            }
+            <!-- The button click runs a script which is an ajax call to a controller method;  it needs this hidden input to pass the ViewBag data through  -->
+            <input type="hidden" id="ViewPatientDetails" value="@ViewBag.ViewPatientDetails" />
+            <button type="button" id="addAliasButton" class="btn btn-primary mb-2" novalidate>
+                <i class="fas fa-plus pr-2"></i>Add Alias
+            </button>
+        </fieldset>
+    </fieldset>
+</div>
+
+<div @(!ViewBag.ViewPatientDetails ? "hidden" : "")>    <!-- this is the Details View -->
+    <fieldset>
+        @if(Model.Patient != null)
+        {
+            <div class="row d-flex justify-content-between align-items-center mb-3">
+                <div @(!Model.Person.InterpreterNeeded ? "hidden" : "")  class="col-4">
+                    <h4 class="error">Interpreter needed</h4>
+                </div>
+                <div @(!Model.Person.DeceasedLiving ? "hidden" : "")  class="col-4">
+                    <h4 class="error">Patient is Deceased  @(Model.Person == null || Model.Person.DeathDate == null ? "" : Model.Person.DeathDate?.ToString("MM/dd/yyyy"))</h4>
+                </div>
+                <div class="col-4 ml-auto">
+                    <span style="color: lightgray"><i>Facility: @Model.Patient.Facility.Name</i></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4">
+                    <div class="form-group">
+                        <label>Name:</label>
+                        <span class="data ml-2">@Model.Person.FirstName @Model.Person.MiddleName @Model.Person.LastName</span>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="form-group">
+                        <label>Maiden Name:</label>
+                        <span class="data ml-2">@Model.Person.MaidenName</span>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="form-group">
+                        <label>Mother's Maiden Name:</label>
+                        <span class="data ml-2">@Model.Person.MothersMaidenName</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-2 form-group">
+                    <label>SSN:</label>
+                    @if (Model.Person.Ssn != null) 
+                    {
+                        <span class="data ml-2 ssn">@Model.Person.Ssn</span>
+                    } else {
+                        <span class="data ml-2"></span>
+                    }
+                </div>
+                <div class="col-2 form-group">
+                    <label>DOB:</label>
+                    <span class="data ml-2">@(Model.Person.Dob?.ToString("MM/dd/yyyy") ?? "")</span>
+                </div>
+                
+                <div class="col-2 form-group">
+                    <label>Legal Status:</label>
+                    <span class="data ml-2">@(Model.Patient.LegalStatus?.LegalStatusName ?? "")</span>
+                </div>
+                <div class="col-2 form-group">
+                    <label>Sex:</label>
+                    <span class="data ml-2">@(Model.Person.Sex?.Name ?? "")</span>
+                </div>
+                <div class="col-2 form-group">
+                    <label>Gender: </label>
+                    <span class="data ml-2">@(Model.Person.Gender?.Name ?? "")</span>
+                </div>
+                <div class="col-2 form-group">
+                    <label>Pronoun:</label>
+                    <span class="data ml-2">@(Model.Person.GenderPronoun?.GenderPronouns ?? "")</span>
+                </div>    
+            </div>
+            <div class="row">
+                <div class="col-4 form-group">
+                    <label>Marital Status:</label>
+                    <span class="data ml-2">@(Model.Person.MaritalStatus?.Name ?? "")</span>
+                </div>
+                <div class="col-4 form-group">
+                    <label>Race(s):</label><Br>
+                    @if (Model.PersonRaces != null
+                            && Model.PersonRaces.Count >= 1)
+                    {
+                        <ul class="data">
+                            @foreach (var race in 
+                                Model.PersonRaces)
+                            {
+                                <li>@race.Race.Name</li>
+                            }
+                        </ul>
+                    }
+                    else
+                    {
+                        <span class="data"></span>
+                    }
+                </div>
+                <div class="col-4 form-group">
+                    <label>Language(s):</label><Br>
+                    @if (Model.PersonLanguages != null
+                            && Model.PersonLanguages.Count >= 1)
+                    {
+                        <ul class="data">
+                            @foreach (var language in 
+                                Model.PersonLanguages)
+                            {
+                                <li>@language.Language.Name</li>
+                            }
+                        </ul>
+                    }
+                    else
+                    {
+                        <span class="data"></span>
+                    }
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4 form-group">
+                    <label>Birthplace:</label>
+                    <span class="data ml-2">@(Model.Person.Birthplace ?? "")</span>
+                </div>
+                <div class="form-group col-sm-4">
+                    <label>Education Level:</label>
+                    <span class="data ml-2">@(Model.Person.EducationLevel?.EducationLevelName ?? "")</span>
+                </div>
+                <div class="col-4 form-group">
+                    <label>Religion:</label>
+                    <span class="data ml-2">@(Model.Person.Religion?.Name ?? "")</span>
+                </div>
+                           
+            </div>
+            
+            <div class="row">
+                <div @(!Model.Person.IsVeteran ? "hidden" : "")  class="col-4">
+                    <h5><i>Patient is a Military Veteran</i></h5>
+                </div>
+                <div @(!Model.Person.IsCurrentMilitaryServiceMember ? "hidden" : "")  class="col-4">
+                    <h5><i>Patient is Active Duty Military</i></h5>
+                </div>
+            </div>
+            
+        
+            <fieldset id="Aliases">
+                @for (int i = 0; i < Model.PatientAliases.Count; i++)
+                {
+                    <partial name="_AliasPartial" for="@Model.PatientAliases[i]" view-data="@(new ViewDataDictionary(ViewData) { {"indexPA", i} })" />
+                }
+                <!-- The button click runs a script which is an ajax call to a controller method;  it needs this hidden input to pass the ViewBag data through  -->
+                <input type="hidden" id="ViewPatientDetails" value="@ViewBag.ViewPatientDetails" />
+                <button type="button" id="addAliasButton" class="btn btn-primary mb-2" novalidate hidden>
+                    <i class="fas fa-plus pr-2"></i>Add Alias
+                </button>
+            </fieldset>    
+                
+        }        
+    </fieldset>
+</div>
+
+<style>
+    .checkbox-label {
+        margin-left: 0.5rem; /* Adjust the space as needed */
+        display: flex;
+        align-items: center;
+    }
+    .custom-checkbox {
+        width: 20px; /* Adjust the width as needed */
+        height: 20px; /* Adjust the height as needed */
+        flex: none;
+        margin-left: .5rem;
+        margin-right: .5rem;
+    }
+</style>

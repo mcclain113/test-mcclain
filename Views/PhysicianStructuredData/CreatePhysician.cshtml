@@ -1,0 +1,137 @@
+@model IS_Proj_HIT.ViewModels.PhysicianStructuredData.PhysicianStructuredDataViewModel
+@{
+    ViewBag.Title = "Create Physician";
+}
+
+<h1>Create</h1>
+
+<h4>Physician</h4>
+<hr />
+
+<div class="row">
+    <div class="col-md-10">
+        <form method="post">
+            @Html.AntiForgeryToken()
+            <div class="form-row">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                
+                <div class="form-group col-sm-6">
+                    <label asp-for="Physician.FirstName" class="control-label">First Name</label>
+                    <input asp-for="Physician.FirstName" 
+                        class="form-control" maxlength="100" required
+                        placeholder="Example:  George" />
+                    <span asp-validation-for="Physician.FirstName" class="text-danger"></span>
+                </div>
+                <div class="form-group col-sm-6">
+                    <label asp-for="Physician.LastName" class="control-label">Last Name</label>
+                    <input asp-for="Physician.LastName" 
+                        class="form-control" maxlength="100" required 
+                        placeholder="Example:  Jetson"/>
+                    <span asp-validation-for="Physician.LastName" class="text-danger"></span>
+                </div>
+            </div>
+ 
+            <fieldset class="validate-address">
+                <div class="form-row">
+                    <div class="form-group col-sm-4">
+                        <label asp-for="Physician.AddressId" class="control-label">Street Address</label>
+                        <input asp-for="@Model.Address.Address1" class="validate form-control" maxlength="50" placeholder="Example:  1757 Nightinggale Avenue"/>
+                        <span asp-validation-for="Address.Address1" class="invalid-summary text-danger" style="display:none">Please enter an Address</span>
+                    </div>            
+                    <div class="form-group col-sm-2">
+                        <label asp-for="Physician.AddressId" class="control-label">Suite or Apt #</label>
+                        <input asp-for="@Model.Address.Address2" class="validate not-required form-control"maxlength="25" placeholder="Example:  Apt. 14"/>
+                    </div>
+                    <div class="form-group col-sm-4">
+                        <label asp-for="Physician.AddressId" class="control-label">City</label>
+                        <input asp-for="@Model.Address.City" class="validate form-control"maxlength="50" placeholder="Example:  Platteville"/>
+                        <span asp-validation-for="Address.City" class="invalid-summary text-danger" style="display:none">Please enter a City</span>
+                    </div>
+                    <div class="form-group col-sm-2">
+                        <label  class="control-label" asp-for="Address.AddressStateID">Select State</label>
+                        <select class="form-control" asp-for="Address.AddressStateID" asp-items="ViewBag.StateId"></select>
+                    </div>
+                    <!-- both State and Country have default values so the 'validate' class is omitted  -->
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-sm-2">
+                        <label asp-for="Physician.AddressId" class="control-label">Zip Code</label>
+                        <input asp-for="@Model.Address.PostalCode" class="validate form-control zipcode"maxlength="11" placeholder="Example:  53036"/>
+                        <span asp-validation-for="Address.PostalCode" class="invalid-summary text-danger" style="display:none">Please enter a Postal Code</span>
+                    </div>
+                    <div class="form-group col-sm-4">
+                        <label asp-for="Physician.AddressId" class="control-label">County</label>
+                        <input asp-for="@Model.Address.County" class="validate not-required form-control"maxlength="50" placeholder="Example:  Jefferson"/>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label  class="control-label" asp-for="Address.CountryId">Select Country</label>
+                        <select class="form-control" asp-for="Address.CountryId" asp-items="ViewBag.CountryId"></select>
+                    </div>
+                </div>
+            </fieldset>
+
+            <div class="form-row">
+                <div class="form-group col-sm-6">
+                    <label asp-for="Physician.PhoneNumber" class="control-label">Phone Number</label>
+                    <input asp-for="Physician.PhoneNumber" class="form-control phone" maxlength="14" placeholder="Example:  (414)-223-5566"/>
+                    <span asp-validation-for="Physician.PhoneNumber" class="text-danger"></span>
+                </div>
+                <div class="form-group col-sm-6">
+                    <label asp-for="Physician.EmailAddress" class="control-label"></label>
+                    <input asp-for="Physician.EmailAddress" class="form-control" maxlength="50" 
+                        placeholder="Example:  personsaccount@mymail.com"/>
+                    <span asp-validation-for="Physician.EmailAddress" class="text-danger"></span>
+                </div>                
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col-sm-6">
+                    <label asp-for="Physician.Credentials" class="control-label">Credentials</label>
+                    <input asp-for="Physician.Credentials" class="form-control" maxlength="100" placeholder="Example:  MD"/>
+                    <span asp-validation-for="Physician.Credentials" class="text-danger"></span>
+                </div>
+                <div class="form-group col-sm-6">
+                    <label asp-for="Physician.License" class="control-label">License</label>
+                    <input asp-for="Physician.License" class="form-control" maxlength="50" placeholder="Example:  123XYZaab3475"/>
+                    <span asp-validation-for="Physician.License" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-row">
+            <div class="form-group col-sm-4">
+                <label asp-for="Physician.SpecialtyId" class="control-label">Select Provider Specialty</label>
+                <select asp-for="Physician.SpecialtyId" class ="form-control" asp-items="ViewBag.SpecialtyId"></select>
+                <span asp-validation-for="Physician.SpecialtyId" class="text-danger"></span>
+            </div>
+                <div class="form-group col-sm-4">
+                    <label asp-for="Physician.ProviderTypeId" class="control-label">Select Provider Type</label>
+                    <select asp-for="Physician.ProviderTypeId" class ="form-control" asp-items="ViewBag.ProviderTypeId"></select>
+                    <span asp-validation-for="Physician.ProviderTypeId" class="text-danger"></span>
+                </div>
+                <div class="form-group col-sm-4">
+                    <label asp-for="Physician.ProviderStatusId" class="control-label">Select Provider Status</label>
+                    <select asp-for="Physician.ProviderStatusId" class="form-control" asp-items="ViewBag.ProviderStatusId"></select>
+                    <span asp-validation-for="Physician.ProviderStatusId" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-row">            
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+
+<div>
+    <a asp-controller="PhysicianStructuredData" asp-action="ViewPhysicians">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+

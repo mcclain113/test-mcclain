@@ -1,0 +1,57 @@
+@model List<IS_Proj_HIT.Entities.FetalPresentationAtBirth>
+@{
+    ViewData["Title"] = "Fetal Presentation At Births";
+}
+
+<div class="row my-3">
+    <h3>
+        <a class="btn btn-primary" asp-controller="BirthRegistryStructuredData" asp-action="Index">
+            <i class="fa fa-arrow-left"></i>
+        </a>
+        Fetal Presentation At Births
+    </h3>
+</div>
+
+<p>
+    <a class="btn btn-primary" asp-controller="BirthRegistryStructuredData" asp-action="CreateFetalPresentationAtBirth">Create New</a>
+</p>
+
+<table class="stripe" id="fetalPresentationAtBirthTable">
+    <thead>
+        <tr>
+            <th>Fetal Presentation At Birth Name</th>
+            <th>Fetal Presentation At Birth Description</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var fetalPresentationAtBirth in Model)
+        {
+            <tr>
+                <td>@fetalPresentationAtBirth.FetalPresentationName</td>
+                <td>@fetalPresentationAtBirth.FetalPresentationDescription</td>
+                <td>
+                    <a class="btn btn-primary" asp-controller="BirthRegistryStructuredData" asp-action="EditFetalPresentationAtBirth" asp-route-id="@fetalPresentationAtBirth.FetalPresentationAtBirthId">Edit</a>
+                    <a class="btn btn-danger" asp-controller="BirthRegistryStructuredData" asp-action="DeleteFetalPresentationAtBirth" asp-route-id="@fetalPresentationAtBirth.FetalPresentationAtBirthId">Delete</a>
+                </td>
+            </tr>
+        }
+
+    </tbody>
+</table>
+
+@section scripts{
+    <script>
+    // DataTable Documentation found here:  https://datatables.net
+    $(function(){
+        // Create the data table
+        $('#fetalPresentationAtBirthTable').DataTable({
+            columns: [null, null, {orderable: false}],
+            order: [[0, 'asc'] ],
+            pageLength: 10,
+            searching: true,
+            language: { emptyTable: 'None found'}
+        });
+    });
+    </script>
+}

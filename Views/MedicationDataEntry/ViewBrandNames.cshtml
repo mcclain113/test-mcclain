@@ -1,0 +1,75 @@
+@model List<IS_Proj_HIT.Entities.MedicationBrandName>
+
+@{
+    ViewData["Title"] = "Medication Brand Names";
+}
+
+<div class="row my-3">
+<h3>
+    <a class="btn btn-primary" asp-controller="MedicationDataEntry" asp-action="Index">
+        <i class="fa fa-arrow-left "></i>
+    </a>
+    Medication Brand Names
+</h3>
+</div>
+
+<p>
+    <a class="btn btn-primary" asp-controller="MedicationDataEntry" asp-action="CreateBrandName">Create New</a>
+</p>
+
+<table class="stripe nowrap" id="brandNameTable">
+    <thead>
+        <tr>
+            <th>
+                Brand Name
+            </th>
+            <th>
+                Active
+            </th>
+            <th>
+                Last Modified
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var brandName in Model)
+        {
+            @* If the table is not active, grey out the row *@
+            <tr class=@(brandName.IsActive ? "" : "bg-secondary")>
+                <td>
+                    @brandName.BrandName
+                </td>
+                <td>
+                    @(brandName.IsActive ? "Yes" : "No")
+                </td>
+                <td>
+                    @brandName.ModifiedDate.ToString("MM/dd/yyyy")
+                </td>
+                <td>
+                    <a class="btn btn-primary" asp-controller="MedicationDataEntry" asp-action="EditBrandName" asp-route-id="@brandName.MedicationBrandId">Edit</a>
+                    <a class="btn btn-danger" asp-controller="MedicationDataEntry" asp-action="DeleteBrandName" asp-route-id="@brandName.MedicationBrandId">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section scripts{
+    <script>
+        // Creates DataTable
+        // DataTable Documentation found here: https://datatables.net/
+        $(function () {
+            $('#brandNameTable').DataTable({
+                columns: [null, null, null, { orderable: false }],
+                order: [[0, 'asc']],
+                pageLength: 10,
+                searching: true,
+                lengthChange: false,
+                language: {
+                    emptyTable: 'No medication brand names found'
+                }
+            });
+        });
+    </script>
+}

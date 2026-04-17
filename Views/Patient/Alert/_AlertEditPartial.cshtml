@@ -1,0 +1,96 @@
+@model IS_Proj_HIT.ViewModels.Alert.AlertEditViewModel
+
+<form asp-action="Edit" method="post">
+    @Html.AntiForgeryToken()
+    <input type="hidden" asp-for="PatientAlertId" />
+    <input type="hidden" asp-for="Mrn" />
+
+    <div class="card" data-modal-title="Edit Alert">
+        <div class="card-header bg-primary text-white">
+            <h4>Edit Alert</h4>
+        </div>
+
+        <div class="card-body bg-light">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-12 col-lg-4">
+                        <label>Alert Type:</label>
+                        <span class="font-weight-bold">@Model.AlertTypeName</span>
+                    </div>
+                    <div class="col-sm-12 col-lg-4">
+                        <label>Active:</label>
+                        <span class="font-weight-bold">@(Model.IsActive ? "Yes" : "No")</span>
+                    </div>
+                </div>
+
+                <hr />
+                <div class="row">
+                    <div class="col-sm-4">
+                        <label>Created:</label>
+                        <input type="text" class="form-control-plaintext font-weight-bold" readonly value="@Model.LastModified.ToString("MM-dd-yyyy HH:mm")" />
+                    </div>
+                    <div class="col-sm-4">
+                        <label>Start Date:</label>
+                        <input type="text" class="form-control-plaintext font-weight-bold" readonly value="@Model.StartDate.ToString("MM-dd-yyyy")" />
+                    </div>
+                    <div class="col-sm-4">
+                        <label>End Date:</label>
+                        <input asp-for="EndDate" class="form-control font-weight-bold" type="date" />
+                        <span asp-validation-for="EndDate" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <hr class="mt-0" />
+
+                @if (!string.IsNullOrWhiteSpace(Model.AllergenName) || !string.IsNullOrWhiteSpace(Model.ReactionName))
+                {
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <label>Allergen:</label>
+                            <span class="font-weight-bold ml-3">@Model.AllergenName</span>
+                        </div>
+                        <div class="col-sm-4">
+                            <label>Reaction:</label>
+                            <span class="font-weight-bold ml-3">@Model.ReactionName</span>
+                        </div>
+                    </div>
+                }
+
+                @if (!string.IsNullOrWhiteSpace(Model.FallRiskName))
+                {
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <label>Fall Risk:</label>
+                            <span class="font-weight-bold ml-3">@Model.FallRiskName</span>
+                        </div>
+                    </div>
+                }
+
+                @if (!string.IsNullOrWhiteSpace(Model.RestrictionName))
+                {
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <label>Restriction:</label>
+                            <span class="font-weight-bold ml-3">@Model.RestrictionName</span>
+                        </div>
+                    </div>
+                }
+
+                <hr />
+                <div class="row">
+                    <div class="col-sm-12">
+                        <label>Comments:</label>
+                        <textarea asp-for="Comments" class="form-control font-weight-bold" rows="3"></textarea>
+                        <span asp-validation-for="Comments" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <hr />
+                <div class="mt-3">
+                    <button type="submit" class="btn btn-primary btn-block">Update Alert</button>
+                    <a asp-action="AlertDetails" asp-route-id="@Model.PatientAlertId" asp-route-mrn="@Model.Mrn" class="btn btn-cancel back-to-list mt-3">Cancel</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

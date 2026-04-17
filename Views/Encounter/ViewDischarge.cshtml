@@ -1,0 +1,60 @@
+﻿@model IS_Proj_HIT.ViewModels.ViewEncounterPageModel
+
+@{
+    ViewData["Title"] = "Discharge";
+    var userPermissions = ViewData["UserPermissions"] as List<string>;
+}
+
+<partial name="PatientBannerPartial" model="Model.Patient" />
+<div class="card">
+    <div class="card-header bg-primary text-white">
+        <h4>
+            Discharge Information - @Model.Encounter.EncounterId
+
+            @if (userPermissions != null && (userPermissions.Contains("EncounterDischarge")) )
+            {
+                <a asp-action="DischargeEncounter"
+                    asp-route-encounterId="@Model.Encounter.EncounterId"                       
+                    class="btn btn-info float-right">
+                    Edit Discharge Information
+                </a>
+            }
+        </h4>
+    </div>
+    <div class="card-body bg-light">
+        <div class="container">
+            <div class="row">
+               <div class="col-sm-12">
+                  <label>Discharge Time/Date: </label>
+                  <span class="font-weight-bold">@(Model.Encounter.DischargeDateTime?.ToString() ?? "Not Discharged")</span>
+               </div>
+             </div>
+         <hr />
+            <div class="row">
+                 <div class="col-sm-12">
+                    <label>Discharge Disposition: </label>
+                    <span class="font-weight-bold">@(Model.Encounter.DischargeDispositionNavigation?.Name ?? "")</span>
+                 </div>
+            </div>
+         <hr />
+            <div class="row">
+                 <div class="col-sm-12">
+                    <label>Discharge Notes: </label>
+                    <span class="font-weight-bold">@(Model.Encounter.DischargeComment ?? "")</span>
+                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+<hr />
+
+<a asp-controller="Patient"
+   asp-action="ViewPatientDetails" 
+   asp-route-id="@Model.Patient.Mrn" 
+   class="btn btn-nav">
+    <i class="fas fa-arrow-left"></i> View Patient
+</a>
+<a asp-action="CheckedIn"
+   class="btn btn-nav m-l-1">
+    View Checked In Encounters
+</a>

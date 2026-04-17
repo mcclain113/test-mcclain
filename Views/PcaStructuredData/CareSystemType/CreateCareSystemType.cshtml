@@ -1,0 +1,45 @@
+@model IS_Proj_HIT.ViewModels.PcaStructuredDataViewModel
+@{
+    ViewBag.Title = "Create Care System Type";
+    var userPermissions = ViewData["UserPermissions"] as List<string>;
+}
+
+<h1>Create</h1>
+
+<h4>Care System Type</h4>
+<hr />
+
+<div class="row">
+    <div class="col-md-10">
+        <form method="post">
+            @Html.AntiForgeryToken()
+            <div class="form-row">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group col-sm-6">
+                    <label asp-for="CareSystemType.Name" class="control-label">Name</label>
+                    <input asp-for="CareSystemType.Name" 
+                        class="form-control" maxlength="100" required
+                        placeholder="Example:  Cardiovascular" />
+                    <span asp-validation-for="CareSystemType.Name" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-row">            
+                <div class="form-group">
+                    @if (userPermissions != null && (userPermissions.Contains("StructuredDataAdd")) )
+                    {               
+                        <input type="submit" value="Create" class="btn btn-primary" />
+                    }
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<div>
+    <a asp-controller="PcaStructuredData" asp-action="ViewCareSystemTypes">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

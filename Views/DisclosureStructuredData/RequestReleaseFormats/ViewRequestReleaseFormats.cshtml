@@ -1,0 +1,68 @@
+@model List<IS_Proj_HIT.Entities.RequestReleaseFormat>
+
+@{
+    ViewData["Title"] = "Disclosure Request Release Formats";
+}
+
+<div class="row my-3">
+<h3>
+    <a class="btn btn-primary" asp-controller="DisclosureStructuredData" asp-action="Index">
+        <i class="fa fa-arrow-left "></i>
+    </a>
+    Disclosure Request Release Formats
+</h3>
+</div>
+
+<p>
+    <a class="btn btn-primary" asp-controller="DisclosureStructuredData" asp-action="CreateRequestReleaseFormat">Create New</a>
+</p>
+
+<table class="stripe nowrap" id="requestReleaseFormatTable">
+    <thead>
+        <tr>
+            <th>
+                Request Release Format
+            </th>
+            <th>
+                Format Description
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var requestReleaseFormat in Model)
+        {
+            <tr>
+                <td>
+                    @requestReleaseFormat.RequestReleaseFormat1
+                </td>
+                <td>
+                    @requestReleaseFormat.ReleaseFormatDescription
+                </td>
+                <td>
+                   
+                    <a class="btn btn-primary" asp-controller="DisclosureStructuredData" asp-action="EditRequestReleaseFormat" asp-route-id="@requestReleaseFormat.ReleaseFormatId">Edit</a>
+                    <a class="btn btn-danger" asp-controller="DisclosureStructuredData" asp-action="DeleteRequestReleaseFormat" asp-route-id="@requestReleaseFormat.ReleaseFormatId">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section scripts{
+    <script>
+        // Creates DataTable
+        // DataTable Documentation found here: https://datatables.net/
+        $(function () {
+            $('#requestReleaseFormatTable').DataTable({
+                columns: [null, null, { orderable: false }],
+                order: [[0, 'asc']],
+                pageLength: 10,
+                searching: true,
+                language: {
+                    emptyTable: 'No request purposes found'
+                }
+            });
+        });
+    </script>
+}

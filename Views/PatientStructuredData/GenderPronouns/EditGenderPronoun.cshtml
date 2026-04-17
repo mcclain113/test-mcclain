@@ -1,0 +1,64 @@
+@model IS_Proj_HIT.ViewModels.PatientVm.PatientStructuredDataViewModel
+@{
+    ViewBag.Title = "Edit Gender Pronouns";
+}
+
+<h1>Edit</h1>
+
+<h4>Gender Pronouns</h4>
+<hr />
+
+<div class="row">
+    <div class="col-md-10">
+        <form method="post">
+            @Html.AntiForgeryToken()
+            <div class="form-row">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="GenderPronoun.GenderPronounId" value="@Model.GenderPronoun.GenderPronounId" readonly/>
+                
+                <div class="form-group col-sm-6">
+                    <label asp-for="GenderPronoun.GenderPronouns" class="control-label">Gender Pronouns</label>
+                    <input asp-for="GenderPronoun.GenderPronouns" 
+                        class="form-control" maxlength="30" required />
+                    <span asp-validation-for="GenderPronoun.GenderPronouns" class="text-danger"></span>
+                </div>
+
+                <div class="form-group col-sm-6">
+                    <label class="checkbox-label">
+                    <input type="checkbox" asp-for="@Model.GenderPronoun.IsActive" class="custom-checkbox">Gender Pronoun is Active</label>
+                </div>
+                
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <a asp-controller="PatientStructuredData" asp-action="ViewGenderPronouns" class="btn btn-outline-danger">Discard Changes</a>
+                </div>
+            
+                <div class="form-group">
+                    <input type="submit" value="Save Changes" class="btn btn-primary ml-3" />
+                </div>
+
+            </div>
+        </form>
+    </div>
+</div>
+
+<style>
+    .checkbox-label {
+        margin-left: 0.5rem; /* Adjust the space as needed */
+        display: flex;
+        align-items: center;
+    }
+    .custom-checkbox {
+        width: 20px; /* Adjust the width as needed */
+        height: 20px; /* Adjust the height as needed */
+        flex: none;
+        margin-left: .5rem;
+        margin-right: .5rem;
+    }
+</style>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

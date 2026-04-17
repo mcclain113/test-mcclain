@@ -1,0 +1,42 @@
+@model IS_Proj_HIT.ViewModels.UserManagement.UserManagementStructuredDataViewModel
+@{
+    ViewBag.Title = "Create Role";
+}
+
+<h1>Create</h1>
+
+<h4>Role</h4>
+<hr />
+
+<div class="row">
+    <div class="col-md-10">
+        <form method="post">
+            @Html.AntiForgeryToken()
+            <div class="form-row">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group col-sm-6">
+                    <label asp-for="IdentityRole.Name" class="control-label">Role Name</label>
+                    <input asp-for="IdentityRole.Name" 
+                        class="form-control" maxlength="256" required
+                        placeholder="Example:  Nursing Student" />
+                    <span asp-validation-for="IdentityRole.Name" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                </div>
+
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<div>
+    <a asp-controller="UserManagementStructuredData" asp-action="ViewRoles">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

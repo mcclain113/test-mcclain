@@ -1,0 +1,180 @@
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model IS_Proj_HIT.ViewModels.PatientVm.PatientViewModel
+
+<!-- The CreatePatient.cshtml is the foundation for creating, editing or viewing a patient
+        Any scripts needed for any portion of those should be added to this page if
+        they cannot be added to either the site.js or patientFormsAndDetails.js -->
+<!-- bring the User's permissions into the view -->
+@{
+    var userPermissions = ViewData["UserPermissions"] as List<string>;
+}
+
+<!-- The ViewBag.ViewPatientDetails is set in the controller Getter methods
+        when true, the UI is for Details -->
+@if(ViewBag.ViewPatientDetails)
+{
+    <!-- suppress these partials if rendering in a modal  -->
+    @if(!ViewBag.isModal)
+    {
+        ViewData["Title"] = "Patient Details";
+        <partial name="PatientBannerPartial" model="Model.Patient" />
+        <partial name="_PatientMenu" model="Model.Patient"/>
+    }
+    
+}
+else
+{
+    <!-- ViewBag.ViewPatientDetails is false, so the UI is for either Creating or Editing -->
+    <!-- The ViewBag.CreatingPatient is set in the Getter methods
+        when true, the UI is for Creating
+        when false, the UI is for Editing -->
+    @if(ViewBag.CreatingPatient)
+    {
+        ViewData["Title"] = "Create New Patient";
+    }
+    else
+    {
+        ViewData["Title"] = "Edit Patient";
+        <partial name="PatientBannerPartial" model="Model.Patient" />
+    }
+}
+
+
+<div class="patient-data card bg-secondary">
+    <!-- use the ViewBag.IsModal to suppress the header when rendering in a modal  --->
+    @if(!ViewBag.IsModal)
+    {
+        <div class="card-header custom-header bg-primary">
+            <!-- use the ViewBag toggles to set the header -->
+            @if(ViewBag.ViewPatientDetails)
+            {
+                <h4>
+                    Patient Details
+
+                    @if (userPermissions != null && (userPermissions.Contains("PatientEdit")) )
+                    {
+                        <a class="btn btn-info float-right" asp-controller="Patient" asp-action="EditPatient" asp-route-id="@Model.Patient.Mrn" asp-route-requestId="@Model.RequestId">Edit</a>
+                    }
+                    @if(Model.RequestId.HasValue)
+                    {
+                        <a class="btn btn-warning float-right mr-3" asp-controller="Disclosure" asp-action="RequestDetails" asp-route-id="@Model.RequestId.Value">Return to Request</a>
+                    }
+                </h4>
+            }
+            else
+            {
+
+                @if(ViewBag.CreatingPatient)
+                {
+                    <h4>Add Patient</h4>
+                }
+                else
+                {
+                    <h4>Edit Patient</h4>
+                }
+            }
+        </div>
+    }
+    <div class="card-body bg-light">
+        @if(ViewBag.ViewPatientDetails)
+        {
+            {
+                await Html.RenderPartialAsync("_PatientAccordianPartial");
+            }
+        }
+        else
+        {
+            <!-- the <form> must have the name='patient' for the form validation function in site.js to function properly  -->
+            <form method="post" id="patient" name="patient" asp-controller="Patient" asp-action="CreatePatient">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                @Html.AntiForgeryToken()
+                @{
+                    await Html.RenderPartialAsync("_PatientAccordianPartial");
+                }
+            </form>
+        }
+    </div>
+</div>
+
+<style>
+.custom-header {
+  color: white; /* Set text color to white */
+}
+
+.custom-header .btn-block {
+  color: white; /* Set button text color to white */
+  font-size: 1em;
+}
+
+</style>
+
+@section Scripts{
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <!-- Select2 initialization -->
+    <script>
+        $(document).ready(function () {
+            $('.select2').select2();
+        });
+    </script>
+
+    <script src="~/js/patientFormsAndDetails.js"></script>
+
+    <script>
+        var formSubmit = false;
+        var formChanged = false;
+
+        var setFormSubmit = function () {
+            formSubmit = true;
+        };
+
+        $(function() {
+            // Access the ViewBag.ViewPatientDetails value
+            // When 'true', no button or link click should have 'submit' behavior and the 'leave site' alert should not display
+            var isDetailsView = @ViewBag.ViewPatientDetails.ToString().ToLower();
+
+            if (!isDetailsView) {
+                $('#patient :input').change(function() {
+                    formChanged = true;
+                    console.log("Form changed");
+                });
+
+                $('#patient').on('submit', function (e) {
+                    var $invalidInputs = $(this).find(".invalid");
+                    if ($invalidInputs.length === 0) {
+                        formSubmit = true;
+                        console.log("Form submit event: Form is valid. Setting formSubmit to true.");
+                    } else {
+                        e.preventDefault();
+                        console.log("Form submit event: Form is invalid. Preventing submission.");
+                    }
+                });
+
+                // Add beforeunload listener after user interaction
+                $(document).on('click', 'input, button, textarea', function () {
+                    window.addEventListener('beforeunload', function(e) {
+                        if (!formSubmit) {
+                            var message = "If you leave before saving, your changes will be lost.";
+                            e.returnValue = message;
+                            return message;
+                        }
+                    });
+                });
+            }
+
+            // Ensure that no preventDefault or e.preventDefault() is applied to the accordians
+            $('.card-header button').on('click', function (e) {
+                var target = $(this).data('target');
+                $(target).collapse('toggle');
+            });
+
+            // Add beforeunload listener after user interaction
+            $(document).on('click', 'a', function (e) {
+                if (formChanged) {
+                    formSubmit = true;
+                    console.log("Form has changed, navigating away.");
+                }
+            });
+        });
+    </script>
+}
+

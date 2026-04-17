@@ -1,0 +1,237 @@
+﻿<!-- the code 'bool isModal' and 'ViewBag.IsModal' before the <!DOCTYPE> has been added to allow passing a boolean through from an ajax call in Views/Disclosure/PatientDetails.cshtml which will ultimately allow the header to be suppressed when the view is displayed in a modal -->
+@using IS_Proj_HIT.Entities
+@using Microsoft.AspNetCore.Http
+@using Microsoft.AspNetCore.Antiforgery
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@inject IS_Proj_HIT.Services.IRoleService RoleService  // checks to see if the User has any assigned Roles
+@inject IAntiforgery Antiforgery    // used by the Session expiry
+
+@{
+    bool isModal = HttpContextAccessor.HttpContext.Request.Query["isModal"] == "true";
+    ViewBag.IsModal = isModal;  // make this boolean available to other views
+    var userHasRoles = await RoleService.UserHasRolesAsync(User);   // boolean result for whether the User has any assigned Roles
+    var requiredDisclosurePermissions = new[]
+    {
+        "DisclosureRequestAdd","DisclosureRequestEdit","DisclosureRequestDelete","DisclosureRequestView","RequesterAdd","RequesterEdit","RequesterDelete","RequesterView"
+    };
+    var requiredBirthRegistryPermissions = new[]{"BirthRegistryAdd","BirthRegistryDelete","BirthRegistyEdit","BirthRegistryView"};
+    var requiredRevenueCyclePermissions = new[]{"RevenueCycleAdd","RevenueCycleDelete","RevenueCycleEdit","RevenueCycleView"};
+    var requiredReportHubPermissions = new[]{"ReportHubAdd","ReportHubDelete","ReportHubEdit","ReportHubView"};
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - WCTMC</title>
+    <link rel="shortcut icon" href="~/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="~/favicon.ico" type="image/x-icon">
+    <link href="~/css/chosen.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+        <!-- bootstrap-select css:  this may not be in use anywhere but not certain at this time so leaving it here.
+            More often used is the select2 css/plugin which is a little easier to implement.  kjb 9/9/2025 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
+    <!-- font awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+    <!-- google fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+    <!-- custom css -->
+    <link rel="stylesheet" href="~/css/site.css" />
+    <!-- dataTable css -->
+        <!-- this first link is the basic datatable css -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.css">
+        <!-- this second link is the DataTable Responsive extension designed to work with DataTables v1.10.7 and later 
+                it requires an additional script below as well -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.5.0/css/responsive.dataTables.min.css">
+    <!-- select2 -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <!-- Summernote CSS (wysiwyg for <textarea>-->
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+
+    <!-- jquery plugin:  this MUST be the first <script> as almost all of the following scripts rely on it; 
+            located in the header to ensure it is loaded before anything in the RenderBody section might need it;
+            written as shown here includes jQuery from CDN with a fallback to local -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        if (typeof jQuery == 'undefined') {
+            document.write('<script src="/lib/jquery/dist/jquery.min.js"><\/script>');
+        }
+    </script>
+    <!-- select2 script:  after jquery but before the <body> Remember to add the initialization script in the cshtml where select2 is applied-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"
+            integrity="sha512-2ImtlRlf2VVmiGZsjm9bEyhjGW4dU7B6TNwh/hx/iSByxNENtj3WVE6o/9Lj4TJeVXPi4bnOIMXFIJJAeufa0A=="
+            crossorigin="anonymous" referrerpolicy="no-referrer">
+    </script>
+
+</head>
+
+@{
+    // Expose session timeout seconds (set in the BaseController)
+    var sessionTimeoutSeconds = ViewBag.SessionTimeoutSeconds ?? 1800; // fallback
+    var tokens = Antiforgery.GetAndStoreTokens(HttpContextAccessor.HttpContext);
+}
+
+<body data-session-timeout-seconds="@sessionTimeoutSeconds">
+    @if(!isModal) // this is added to suppress the header when the views are used in a modal
+    {
+        <header>
+            <!-- Nav Bar -->
+            <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+                    @if (userHasRoles)
+                    {
+                    <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"><img style="max-height:60px" src="~/img/WCTMC Logo.jpg" /></a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                            aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    }
+                    else
+                    {
+                        <img style="max-height:60px" src="~/img/WCTMC Logo.jpg" />
+                    }
+                <div class="navbar-collapse collapse">
+                    @if (userHasRoles)
+                    {
+                        // Get user permissions from session
+                        var userPermissions = HttpContextAccessor.HttpContext?.Session.GetString("Permissions")?.Split(',') ?? new string[] { };
+
+                        <ul class="navbar-nav flex-grow-1">
+                            <li class="nav-item">
+                                        <a class="nav-link" asp-controller="Home" asp-action="Index"><i class="fas fa-home mr-1"></i> Home</a>
+                                    </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-controller="Patient" asp-action="PatientSearch"><i class="fas fa-search mr-1"></i>Patient Search</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-controller="Encounter" asp-action="CheckedIn"><i class="fas fa-users mr-1"></i>Checked in Patients</a>
+                            </li>
+                            @if(userPermissions.Any(permission => requiredDisclosurePermissions.Contains(permission)))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-controller="Disclosure" asp-action="RequestList"><i class="fas fa-list mr-1"></i>Disclosures</a>
+                                </li>
+                            }
+                            @if(userPermissions.Any(permission => requiredBirthRegistryPermissions.Contains(permission)))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-controller="BirthRegistry" asp-action="Index"><i class="fas fa-seedling mr-1"></i>Birth Registry</a>
+                                </li>
+                            }  
+                            @if(userPermissions.Any(permission => requiredRevenueCyclePermissions.Contains(permission)))
+                            {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-controller="RevenueCycle" asp-action="Index"><i class="fas fa-money-bill"></i> Revenue Cycle</a>
+                            </li>
+                            }
+                            @if(userPermissions.Any(permission => requiredReportHubPermissions.Contains(permission)))
+                            {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-controller="ReportHub" asp-action="Index"><i class="fas fa-solid fa-clipboard"></i> Report Hub</a>
+                            </li>
+                            }
+                        </ul><!--End Nav-->
+                    }   
+                    else
+                    {
+                        <ul class="navbar-nav flex-grow-1">
+                            <li class="nav-item">
+                                <a class="nav-link" asp-controller="Home" asp-action="Index"><i class="fas fa-home"></i> Home</a>
+                            </li>
+                        </ul>
+                    }
+                    <partial name="_LoginPartial" class="navbar-nav" />
+                </div>
+            </nav>
+        </header>
+    }
+    <div class="container">
+        <partial name="_CookieConsentPartial" />
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+    @if(!isModal)
+    {
+        <footer class="border-top footer text-muted text-center">
+            <div class="container">
+                <img src="~/img/WCTMC Logo header.jpg" />
+                &copy; WCTC @DateTime.Now.Year - ISProjectHIT - <a asp-controller="Home" asp-action="Privacy">Privacy</a>
+            </div>
+        </footer>
+    }
+
+    <!-- Session expiry warning modal (Bootstrap 4) -->
+    <div class="modal fade center-viewport" id="sessionExpiryModal" tabindex="-1" role="dialog" aria-labelledby="sessionExpiryModalLabel">
+        <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="sessionExpiryModalLabel" style="color:#000">Session expiring</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p id="sessionExpiryMessage">Your session will expire soon.</p>
+                    <p class="mb-0"><small id="sessionExpiryCountdown"></small></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="sessionStayBtn" class="btn btn-primary">Stay signed in</button>
+                    <button type="button" id="sessionSignOutBtn" class="btn btn-secondary" data-dismiss="modal">Sign out</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Small inline config and antiforgery token for JS for Session expiry -->
+    <script>
+        window.__appConfig = {
+        keepAliveUrl: "@Url.Action("KeepAlive", "Session")",
+        expiredUrl: "@Url.Action("Expired", "Session")"
+        };
+    </script>
+    <meta name="csrf-token" content="@tokens.RequestToken" />
+
+    <!-- This small script will center a modal in dynamic content.  See the .js file for the classes to apply -->
+    <script src="~/js/modal-center.js" defer></script> 
+
+    <!-- jquery validation plugin - must be loaded after the one in the header and before all others listed here -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
+
+    <!-- bootstrap plugin - includes popper.js - must load after jquery.js, but before any plugin that depends on it (like bootstrap-select) and before site.js -->
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.js"></script>
+
+    <!-- summernote plugin - can load anytime after jquery.js and before site.js - provide wysiwyg to <textarea> Remember to add the initialization script in the cshtml where editor is applied;  if want it on all <textarea>, add the initialization script to the site.js -->
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+
+    <!-- chosen plugin - can load anything after jquery.js and before site.js -->
+    <script src="~/js/chosen.jquery.min.js"></script>
+    
+    <!-- Input mask plugin - can load anytime after jquery.js and before site.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/inputmask/4.0.9/jquery.inputmask.bundle.min.js" referrerpolicy="no-referrer"></script>
+
+    <!-- data table plugin - can load anytime after jquery.js and before site.js -->
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js"></script>
+        <!-- DataTable Responsive extension - can load anytime after the base dataTables.js and before the site.js 
+            requires the additional link loaded above in the head section -->
+    <script src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script>
+
+    <!-- site.js provides javascript to every file so any scripts common to multiple files should be written here -->
+    <!--  site.js MUST LOAD LAST of all the scripts -->
+    
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    
+    <!-- this session-warning.js can and should be loaded after site.js because it should be the last scripts of any page and deals exclusively with Session Expiry.  The content could be included in site.js but isn't so it remains exclusive and is always loaded last -->
+    <script src="~/js/session-warning.js"></script>
+
+    @RenderSection("Scripts", required: false)
+
+    <!-- Initialize Tooltips and Popovers -->
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip();
+            $('[data-toggle="popover"]').popover();
+        });
+    </script>
+</body>
+</html>

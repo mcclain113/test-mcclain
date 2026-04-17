@@ -1,0 +1,13 @@
+@model IS_Proj_HIT.ViewModels.Allergy.AllergyDetailsViewModel
+@{
+    ViewData["Title"] = "Allergy Details";
+}
+
+<partial name="PatientBannerPartial" model="ViewBag.Patient" class="mw-100"/>
+<partial name="_PatientMenu" model="ViewBag.Patient"/>
+  
+<div class="card">
+    @{
+        await Html.RenderPartialAsync("Allergy/_DetailsAllergyPartial");
+    }
+</div>

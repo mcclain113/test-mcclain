@@ -1,0 +1,40 @@
+@model IS_Proj_HIT.ViewModels.AlertStructuredData.AlertStructuredDataViewModel
+@{
+    ViewBag.Title = "Delete Reaction";
+}
+
+<h1>Delete</h1>
+
+<h3>@ViewData["RegularMessage"]</h3>
+<h3 class="error">@ViewData["ErrorMessage"]</h3>
+
+<h4>Reaction</h4>
+<hr />
+
+<div class="row">
+    <div class="col-md-10">
+        <form method="post">
+            @Html.AntiForgeryToken()
+            <div class="form-row">
+                <input type="hidden" asp-for="Reaction.ReactionId" value="@Model.Reaction.ReactionId" readonly/>
+                <div class="form-group col-sm-6">
+                    <label asp-for="Reaction.Name" class="control-label">Reaction Name</label>
+                    <input asp-for="Reaction.Name" class="form-control" disabled />
+                </div>
+                <div class="form-group col-sm-6">
+                    <label asp-for="Reaction.Description" class="control-label">Description</label>
+                    <input asp-for="Reaction.Description" class="form-control" disabled />
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group">
+                    <input type="submit" value="Delete Item" class="ml-3 btn btn-primary" />
+                </div>
+            </div>            
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-controller="AlertStructuredData" asp-action="ViewReactions">Back to List</a>
+</div>

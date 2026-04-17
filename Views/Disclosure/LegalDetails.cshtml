@@ -1,0 +1,339 @@
+﻿@using IS_Proj_HIT.Entities
+@model IS_Proj_HIT.ViewModels.Disclosure.RequestDetailsViewModel
+
+@{
+    ViewData["Title"] = "Legal Details";
+    var userPermissions = ViewData["UserPermissions"] as List<string>;
+}
+
+<partial name="RequestBannerPartial" model="Model" />
+<partial name="_RequestMenu" model="Model" />
+
+<div class="card" style="border:none">
+    <div class="card-header requestDetailData">
+        <h3>
+
+            Legal Information
+
+            @if (userPermissions != null && (userPermissions.Contains("DisclosureRequestEdit") ) )
+            {
+                <a class="btn btn-info float-right" id="editBtn" onclick="toggleEdit()">Edit</a>
+            }
+        </h3>
+    </div>
+    <!--View Mode Content-->
+    <div class="card-body bg-light" id="viewMode">
+        <div class="container">
+            <div class="row">
+                <div class="col-4">
+                    @if (Model.Request.IsSubpoena == true)
+                    {
+                        <span>Subpoena? <b>Yes</b></span>
+                    }
+                    else
+                    {
+                        <span>Subpoena? <b>No</b></span>
+                    }
+                </div>
+                <div class="col-4">
+                    @if (Model.Request.IsCourtOrder == true)
+                    {
+                        <span>Court Order? <b>Yes</b></span>
+                    }
+                    else
+                    {
+                        <span>Court Order? <b>No</b></span>
+                    }
+                </div>
+            </div>
+            <hr />
+            <div class="row">
+                @if(Model.Request.CourtOrderIssueDate != null)
+                {
+                    <div class="col-4">
+                        Issue Date: <b>@Model.Request.CourtOrderIssueDate</b>
+                    </div>
+                }
+                else
+                {
+                    <div class="col-4">
+                        Issue Date: <b></b>
+                    </div>
+                }
+                @if(Model.Request.HearingDate != null)
+                {
+                    <div class="col-4">
+                        Hearing Date: <b>@Model.Request.HearingDate</b>
+                    </div>
+                }
+                else
+                {
+                    <div class="col-4">
+                        Hearing Date: <b></b>
+                    </div>
+                }
+                @if(Model.Request.CaseNumber != null){
+                    <div class="col-4">
+                        Case Number: <b>@Model.Request.CaseNumber</b>
+                    </div>
+                }
+                else
+                {
+                    <div class="col-4">
+                        Case Number: <b></b>
+                    </div>
+                }               
+            </div>
+            <hr />
+            <div class="row">
+                @if(Model.Request.Plaintiff != null)
+                {
+                    <div class="col-4">
+                        Plaintiff: <b>@Model.Request.Plaintiff</b>
+                    </div>
+                }
+                else
+                {
+                    <div class="col-4">
+                        Plaintiff: <b></b>
+                    </div>
+                }
+                @if(Model.Request.Defendant != null)
+                {
+                    <div class="col-4">
+                        Defendant: <b>@Model.Request.Defendant</b>
+                    </div>
+                }
+                else
+                {
+                    <div class="col-4">
+                        Defendant: <b></b>
+                    </div>
+                }                
+                <div class="col-4">
+                    @if (Model.Request.IsRequestForPersonalAppearance == true)
+                    {
+                        <span>Request For Personal Appearance? <b>Yes</b></span>
+                    }
+                    else
+                    {
+                        <span>Request For Personal Appearance? <b>No</b></span>
+                    }
+                </div>
+            </div>
+            <hr />
+            <div class="row">
+                <div class="col-4">
+                    @if (Model.Request.IsRequestForOriginalRecords == true)
+                    {
+                        <span>Request For Original Records? <b>Yes</b></span>
+                    }
+                    else
+                    {
+                        <span>Request For Original Records? <b>No</b></span>
+                    }
+                </div>
+                <div class="col-4">
+                    @if (Model.Request.IsRequestForCertifiedRecords == true)
+                    {
+                        <span>Request For Certified Records? <b>Yes</b></span>
+                    }
+                    else
+                    {
+                        <span>Request For Certified Records? <b>No</b></span>
+                    }
+                </div>
+                <div class="col-4">
+                    @if (Model.Request.IsRiskManagementAlert == true)
+                    {
+                        <span>Risk Management Alert? <b>Yes</b></span>
+                    }
+                    else
+                    {
+                        <span>Risk Management Alert? <b>No</b></span>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Edit Mode Content-->
+    <form method="post" id="editMode" asp-action="EditLegalDetails" style="display:none;">
+        @Html.AntiForgeryToken()
+        <div class="card-body bg-light">
+            <div class="container">
+                <input type="hidden" asp-for="@Model.RequestBeingEdited.RequestId" value="@Model.RequestBeingEdited.RequestId" />
+                <div class="row">
+                    <div class="col-4 d-flex">
+                        <div>
+                            <label class="mt-1">Subpoena? </label>
+                        </div>
+                        <div class="mx-2">
+                            <select asp-for="@Model.RequestBeingEdited.IsSubpoena" class="form-control">
+                                <option>Select</option>
+                                <option value="true">Yes</option>
+                                <option value="false">No</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-4 d-flex">
+                        <div>
+                            <label class="mt-1">Court Order? </label>
+                        </div>
+                        <div class="mx-2">
+                            <select asp-for="@Model.RequestBeingEdited.IsCourtOrder" class="form-control">
+                                <option>Select</option>
+                                <option value="true">Yes</option>
+                                <option value="false">No</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <hr />
+                <div class="row">
+                    <div class="col-4 d-flex">
+                        <div>
+                            <label for="CourtOrderIssueDate" class="mt-1">Issue Date: </label>
+                        </div>
+                        <div class="mx-2">
+                            <input class="form-control" placeholder="@Model.RequestBeingEdited.CourtOrderIssueDate"
+                                   type="date"
+                                   asp-for="RequestBeingEdited.CourtOrderIssueDate"
+                                   name="RequestBeingEdited.CourtOrderIssueDate" />
+                        </div>
+                    </div>
+                    <div class="col-4 d-flex">
+                        <div>
+                            <label for="HearingDate" class="mt-1">Hearing Date: </label>
+                        </div>
+                        <div class="mx-2">
+                            <input class="form-control" placeholder="@Model.RequestBeingEdited.HearingDate"
+                                   type="date"
+                                   asp-for="RequestBeingEdited.HearingDate"
+                                   name="RequestBeingEdited.HearingDate" />
+                        </div>
+                    </div>     
+                    <div class="col-4 d-flex">
+                        <div>
+                            <label for="CaseNumber" class="mt-1">Case Number: </label>
+                        </div>
+                        <div class="mx-2">
+                            <input class="form-control" placeholder="@Model.RequestBeingEdited.CaseNumber"
+                                   type="number"
+                                   asp-for="RequestBeingEdited.CaseNumber"
+                                   name="RequestBeingEdited.CaseNumber" />
+                        </div>
+                    </div>
+                </div>
+                <hr />
+                <div class="row">
+                    <div class="col-4 d-flex">
+                        <div>
+                            <label for="Plaintiff" class="mt-1">Plaintiff: </label>
+                        </div>
+                        <div class="mx-2">
+                            <input class="form-control" placeholder="@Model.RequestBeingEdited.Plaintiff"
+                                   type="text"
+                                   asp-for="RequestBeingEdited.Plaintiff"
+                                   name="RequestBeingEdited.Plaintiff" />
+                        </div>
+                    </div>
+                    <div class="col-4 d-flex">
+                        <div>
+                            <label for="Defendant" class="mt-1">Defendant: </label>
+                        </div>
+                        <div class="mx-2">
+                            <input class="form-control" placeholder="@Model.RequestBeingEdited.Defendant"
+                                   type="text"
+                                   asp-for="RequestBeingEdited.Defendant"
+                                   name="RequestBeingEdited.Defendant" />
+                        </div>
+                    </div>
+                    <div class="col-4 d-flex">
+                        <div>
+                            <label class="mt-1">Request For Personal Appearance? </label>
+                        </div>
+                        <div class="mx-2">
+                            <select asp-for="@Model.RequestBeingEdited.IsRequestForPersonalAppearance" class="form-control">
+                                <option>Select</option>
+                                <option value="true">Yes</option>
+                                <option value="false">No</option>
+                            </select>
+                        </div>
+                    </div>                    
+                </div>
+                <hr />
+                <div class="row">
+                    <div class="col-4 d-flex">
+                        <div>
+                            <label class="mt-1">Request For Original Records? </label>
+                        </div>
+                        <div class="mx-2">
+                            <select asp-for="@Model.RequestBeingEdited.IsRequestForOriginalRecords" class="form-control">
+                                <option>Select</option>
+                                <option value="true">Yes</option>
+                                <option value="false">No</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-4 d-flex">
+                        <div>
+                            <label class="mt-1">Request For Certified Records? </label>
+                        </div>
+                        <div class="mx-2">
+                            <select asp-for="@Model.RequestBeingEdited.IsRequestForCertifiedRecords" class="form-control">
+                                <option>Select</option>
+                                <option value="true">Yes</option>
+                                <option value="false">No</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-4 d-flex">
+                        <div>
+                            <label class="mt-1">Risk Management Alert? </label>
+                        </div>
+                        <div class="mx-2">
+                            <select asp-for="@Model.RequestBeingEdited.IsRiskManagementAlert" class="form-control">
+                                <option>Select</option>
+                                <option value="true">Yes</option>
+                                <option value="false">No</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button class="btn btn-primary btn-block" id="saveBtn" type="submit" style="display:none">Update Legal Details</button>
+        <h3 id="validation-failed-message" class="text-center font-weight-bold text-danger border border-danger mt-3 py-2 d-none">
+            Save Failed: Review and resolve errors to continue.
+        </h3>
+        <a class="btn btn-secondary text-white mt-3 float-right"
+           id="cancelBtn"
+           onclick="toggleEdit(); return confirm('Are you sure you want to Cancel? All changes will be lost.')"
+           asp-action="LegalDetails"
+           style="display:none">Cancel</a>
+    </form>
+</div>
+@section Scripts {
+    <script>
+        let editLegalDetails = false;
+
+        function toggleEdit() {
+            editLegalDetails = !editLegalDetails;
+
+            // Toggle visibility using jQuery
+            if (editLegalDetails) {
+                $("#viewMode").hide();
+                $("#editMode").show();
+                $("#editBtn").hide();
+                $("#cancelBtn").show();
+                $("#saveBtn").show();
+            } else {
+                $("#viewMode").show();
+                $("#editMode").hide();
+                $("#editBtn").show();
+                $("#cancelBtn").hide();
+                $("#saveBtn").hide();
+            }
+        }
+    </script>
+}

@@ -1,0 +1,49 @@
+@model IS_Proj_HIT.ViewModels.UserManagement.UserManagementStructuredDataViewModel
+@{
+    ViewBag.Title = "Create Program";
+}
+
+<h1>Create</h1>
+
+<h4>Program</h4>
+<hr />
+
+<div class="row">
+    <div class="col-md-10">
+        <form method="post">
+            @Html.AntiForgeryToken()
+            <div class="form-row">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group col-sm-6">
+                    <label asp-for="Program.Name" class="control-label">Program Name</label>
+                    <input asp-for="Program.Name" 
+                        class="form-control" maxlength="255" required
+                        placeholder="Example:  Nursing" />
+                    <span asp-validation-for="Program.Name" class="text-danger"></span>
+                </div>
+                <div class="form-group col-sm-6">
+                    <label asp-for="Program.IsActive" class="control-label">Program Status</label>
+                    <select asp-for="Program.IsActive" class="form-control">
+                        <option value="true">Active</option>
+                        <option value="false">Inactive</option>
+                    </select>
+                    <span asp-validation-for="Program.IsActive" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                </div>
+
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<div>
+    <a asp-controller="UserManagementStructuredData" asp-action="ViewPrograms">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

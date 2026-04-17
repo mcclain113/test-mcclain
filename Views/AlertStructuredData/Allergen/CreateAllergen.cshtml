@@ -1,0 +1,48 @@
+@model IS_Proj_HIT.ViewModels.AlertStructuredData.AlertStructuredDataViewModel
+@{
+    ViewBag.Title = "Create Allergen";
+}
+
+<h1>Create</h1>
+
+<h4>Allergen</h4>
+<hr />
+
+<div class="row">
+    <div class="col-md-10">
+        <form method="post">
+            @Html.AntiForgeryToken()
+            <div class="form-row">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group col-sm-6">
+                    <label asp-for="Allergen.AllergenName" class="control-label">Allergen Name</label>
+                    <input asp-for="Allergen.AllergenName" 
+                        class="form-control" maxlength="50" required
+                        placeholder="Example:  Food - Corn" />
+                    <span asp-validation-for="Allergen.AllergenName" class="text-danger"></span>
+                </div>
+                <div class="form-group col-sm-6">
+                    <label asp-for="Allergen.Description" class="control-label">Description</label>
+                    <input asp-for="Allergen.Description" 
+                        class="form-control"  
+                        placeholder="Example:  Food - corn"/>
+                    <span asp-validation-for="Allergen.Description" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                </div>
+
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<div>
+    <a asp-controller="AlertStructuredData" asp-action="ViewAllergens">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,60 @@
+@model List<IS_Proj_HIT.Entities.ProgramFacility>
+
+@{
+    ViewData["Title"] = "Program Facilities";
+}
+
+<div class="row my-3">
+<h3>
+    <a class="btn btn-primary" asp-controller="UserManagementStructuredData" asp-action="Index">
+        <i class="fa fa-arrow-left "></i>
+    </a>
+    Program Facilities
+</h3>
+</div>
+
+<p>
+    <a class="btn btn-primary" asp-controller="UserManagementStructuredData" asp-action="CreateProgramFacility">Create New</a>
+</p>
+
+<table class="stripe nowrap" id="programFacilityTable">
+    <thead>
+        <tr>
+            <th>Facility</th>
+            <th>Program</th>
+            
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var programFacility in Model)
+        {
+            <tr>
+                <td>@programFacility.Facility.Name</td>
+                <td>@programFacility.Program.Name</td>
+                <td>
+                    <a class="btn btn-primary" asp-controller="UserManagementStructuredData" asp-action="EditProgramFacility" asp-route-id="@programFacility.ProgramFacilitiesId">Edit</a>
+                    <a class="btn btn-danger" asp-controller="UserManagementStructuredData" asp-action="DeleteProgramFacility" asp-route-id="@programFacility.ProgramFacilitiesId">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section scripts{
+    <script>
+        // Creates DataTable
+        // DataTable Documentation found here: https://datatables.net/
+        $(function () {
+            $('#programFacilityTable').DataTable({
+                columns: [null, null, { orderable: false }],
+                order: [[0, 'asc']],
+                pageLength: 10,
+                searching: true,
+                language: {
+                    emptyTable: 'None found.'
+                }
+            });
+        });
+    </script>
+}

@@ -1,0 +1,263 @@
+﻿@using IS_Proj_HIT.Entities
+@model IS_Proj_HIT.ViewModels.Disclosure.RequestDetailsViewModel
+
+@{
+    ViewData["Title"] = "Requested Items Details";
+    var userPermissions = ViewData["UserPermissions"] as List<string>;
+}
+
+<style> 
+    .comment-row td { 
+        border-top: none !important; /* Remove the top border for comment rows */ 
+    } 
+    .no-bottom-border td { 
+        border-bottom: none !important; /* Remove the bottom border for the row above the comment */ 
+    } 
+</style>
+
+<partial name="RequestBannerPartial" model="Model" />
+<partial name="_RequestMenu" model="Model" />
+
+<div class="card" style="border:none">
+    <div class="card-header requestDetailData">
+        <h3>
+            Requested Items
+
+            @if (userPermissions != null && (userPermissions.Contains("DisclosureRequestEdit") ) )
+            {
+                <button type="button" id="addFormButton" class="btn btn-info float-right" onclick="toggleAddForm()">
+                    <i class="fas fa-plus"></i> Add Item
+                </button>
+            }
+        </h3>
+    </div>
+
+    <div class="card-body bg-light">
+        <table class="table table-striped table-bordered">
+            <thead class="bg-primary text-white">
+                <tr>
+                    <th>Document Requested</th>
+                    <th>Status</th>
+                    <th>Status Description</th>
+                    <th>Disclosed?</th>
+                    @if (userPermissions != null && (userPermissions.Contains("DisclosureRequestEdit") ) )
+                    {
+                        <th>Actions</th>
+                    }
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Request.RequestedItems)
+                {
+                    @if(item.RequestedItemId != Model.RequestedItemBeingEditedId)
+                    {
+                        <tr>
+                            <td style="font-size: 0.90em;">@item.DocumentRequested.DocumentRequested1</td>
+                            <td style="font-size: 0.90em;">@item.ItemStatus.ItemStatus1</td>
+                            <td style="font-size: 0.90em;">@item.ItemStatus.ItemStatusDescription</td>
+                            <td style="font-size: 0.90em;">@(item.IsDisclosed.HasValue ? (item.IsDisclosed.Value ? "Yes" : "No") : "N/A")</td>
+                            <td class="d-flex" style="border:none; font-size: 0.90em;">
+                                @if (userPermissions != null && (userPermissions.Contains("DisclosureRequestEdit") ) )
+                                {
+                                    <a asp-action="EnableEditRequestedItem"
+                                       asp-route-requestedItemId="@item.RequestedItemId"
+                                       asp-route-requestId="@Model.Request.RequestId"
+                                       class="btn btn-info text-white"
+                                       style="margin-right: 4px; font-size: 0.90em;">
+                                        Edit
+                                    </a>
+                                    <a onclick="return confirm('Are you sure you want to delete this item?')"
+                                       asp-action="DeleteRequestedItem"
+                                       asp-route-requestedItemId="@item.RequestedItemId"
+                                       asp-route-requestId="@Model.Request.RequestId"
+                                        style="font-size: 0.90em;"
+                                       class="btn btn-danger text-white">
+                                        Delete
+                                    </a>
+                                }
+                            </td>
+                        </tr>
+                        @if(item.Comments != null)
+                        {
+                            <tr class="comment-row">
+                                <td colspan="6">
+                                    <label class="mx-5" style="font-size: .8em;">Comments for @item.DocumentRequested.DocumentRequested1: <b class="ml-2" 
+                                        style="font-size: .9em;">@item.Comments</b></label>
+                                </td>
+                            </tr>
+                        }
+
+                    } else
+                    {
+                        @* Edit Requested Item Form *@
+                        <form method="post" id="requestedItem" name="requestedItem" asp-action="EditRequestedItem">
+                            @Html.AntiForgeryToken()
+                            <tr>
+                                <input type="hidden" value="@Model.RequestedItemBeingEditedId" asp-for="RequestedItemBeingEditedId" />
+                                <input type="hidden" value="@Model.Request.RequestId" asp-for="Request.RequestId" />
+                                <td class="col-3">
+                                    <select asp-for="RequestedItemBeingEdited.DocumentRequestedId" id="documentRequestedDropdown" class="form-control" required>
+                                        <option value="">Select Document</option>
+                                            @foreach (var descriptionItem in Model.DocumentRequestedOptions)
+                                            {
+                                            <option value="@descriptionItem.Value" data-description="@descriptionItem.DataAttributes["data-description"]">
+                                                    @descriptionItem.Text
+                                            </option>
+                                            }
+                                    </select>                                    
+                                </td>
+                                
+                                <td class="col-2">
+                                    <select asp-for="RequestedItemBeingEdited.ItemStatusId" id="statusDropdown" class="form-control" required>
+                                        <option value="">Select Status</option>
+                                            @foreach (var descriptionItem in Model.ItemStatusOptions)
+                                            {
+                                            <option value="@descriptionItem.Value" data-description="@descriptionItem.DataAttributes["data-description"]">
+                                                    @descriptionItem.Text
+                                            </option>
+                                            }
+                                    </select>
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control" id="statusDescription" readonly />
+                                </td>
+                                <td>
+                                    <select asp-for="RequestedItemBeingEdited.IsDisclosed" class="form-control">
+                                        <option value="true">Yes</option>
+                                        <option value="false">No</option>
+                                    </select>
+                                </td>
+                                <td class="d-flex">
+                                    @if (userPermissions != null && (userPermissions.Contains("DisclosureRequestEdit") ) )
+                                    {
+                                        <button type="submit" class="btn btn-success text-white" style="margin-right: 4px;">Save</button>
+                                        <a type="button" class="btn btn-secondary text-white" asp-action="DisableEditRequestedItem" asp-route-requestId="@Model.Request.RequestId">Cancel</a>
+                                    }
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="6">
+                                    <label for="Comments">Comments:</label>
+                                    <textarea asp-for="RequestedItemBeingEdited.Comments" class="form-control" maxlength="200"></textarea>
+                                </td>
+                            </tr>
+                        </form>
+                    }
+
+                }
+                @* Add Requested Item Form *@
+                <form method="post" id="requestedItem" name="requestedItem" asp-action="RequestedItemsDetails">
+                    @Html.AntiForgeryToken()
+                    <tr class="add-form-row row" style="display: none;">
+                        <input type="hidden" value="@Model.Request.RequestId" asp-for="Request.RequestId" />
+                        <td class="col-3">
+                            <select asp-for="RequestedItem.DocumentRequestedId" id="documentRequestedDropdown" class="form-control" data-val-required="Document Required" required>
+                                <option value="">Select Document</option>
+                                    @foreach (var item in Model.DocumentRequestedOptions)
+                                    {
+                                    <option value="@item.Value" data-description="@item.DataAttributes["data-description"]">
+                                            @item.Text
+                                    </option>
+                                    }
+                            </select>
+                        </td>
+                    
+                        <td class="col-2">
+                            <select asp-for="RequestedItem.ItemStatusId" id="statusDropdown" class="form-control" data-val-required="Status Document Required" required>
+                                <option value="">Select Status</option>
+                                    @foreach (var item in Model.ItemStatusOptions)
+                                    {
+                                    <option value="@item.Value" data-description="@item.DataAttributes["data-description"]">
+                                            @item.Text
+                                    </option>
+                                    }
+                            </select>
+                        </td>
+                        <td>
+                            <input type="text" class="form-control" id="statusDescription" readonly />
+                        </td>
+                        <td>
+                            <select asp-for="RequestedItem.IsDisclosed" class="form-control">
+                                <option value="true">Yes</option>
+                                <option value="false">No</option>
+                            </select>
+                        </td>
+                        <td class="d-flex">
+                            <button type="submit" class="btn btn-success text-white" style="margin-right: 4px;">Save</button>
+                            <button type="button" class="btn btn-secondary text-white" onclick="toggleAddForm()">Cancel</button>
+                        </td>
+                    </tr>
+                    <tr class="add-form-row" style="display: none;">
+                        <td colspan="6">
+                            <label for="Comments">Comments:</label>
+                            <textarea asp-for="RequestedItem.Comments" class="form-control" maxlength="200"></textarea>
+                        </td>
+                    </tr>
+                </form>
+
+
+            </tbody>
+        </table>
+        
+        <div id="requestDetailsContainer">
+            @await Html.PartialAsync("RequestDetails")
+        </div>
+        
+
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+
+        let showAddForm = false;
+        // need the toggleEdit function to support the partial view "RequestDetails"
+        let editRequest = false;
+
+        function toggleEdit() {
+            editRequest = !editRequest;
+
+            // Toggle visibility using jQuery
+            if (editRequest) {
+                $("#viewMode").hide();                
+                $("#editMode").show();
+                $("#editBtn").hide();
+                $("#cancelBtn").show();
+                $("#saveBtn").show();
+            } else {
+                $("#viewMode").show();
+                $("#editMode").hide();
+                $("#editBtn").show();
+                $("#cancelBtn").hide();
+                $("#saveBtn").hide();
+            }
+        }
+
+        function toggleAddForm() {
+            showAddForm = !showAddForm;
+            const formRows = document.querySelectorAll('.add-form-row');
+            const addButton = document.querySelector('#addFormButton');
+
+            formRows.forEach(function (row) {
+                row.style.display = showAddForm ? 'table-row' : 'none';
+            });
+
+            addButton.style.display = showAddForm ? 'none' : 'block';
+        }
+
+        document.getElementById('documentRequestedDropdown').addEventListener('change', function () {
+            const selectedOption = this.options[this.selectedIndex];
+            const description = selectedOption.getAttribute('data-description');
+            document.getElementById('documentDescription').value = description || '';
+        });
+
+        document.getElementById('statusDropdown').addEventListener('change', function () {
+            const selectedOption = this.options[this.selectedIndex];
+            const description = selectedOption.getAttribute('data-description');
+            document.getElementById('statusDescription').value = description || '';
+        });
+
+    </script>
+}
+
+

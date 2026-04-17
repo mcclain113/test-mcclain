@@ -1,0 +1,103 @@
+@model IS_Proj_HIT.ViewModels.Disclosure.RequestListViewModel
+
+
+@{
+    ViewData["Title"] = "List Requests";
+    var userPermissions = ViewData["UserPermissions"] as List<string>;
+}
+
+<div  class="card Requester-data">
+    <div class="card-header bg-primary text-white">
+        <h3>
+            <a class="btn btn-primary" asp-controller="Home" asp-action="Index">
+                <i class="fa fa-arrow-left "></i>
+            </a>
+            Request List
+            
+            @if (userPermissions != null && (userPermissions.Contains("RequesterView") ) )
+            {
+                <a asp-controller="Requester" asp-action="ViewRequesters" class="btn btn-outline-primary float-right mt-2">
+                    Requester List
+                </a>
+            }
+            @if (userPermissions != null && (userPermissions.Contains("DisclosureRequestAdd") ) )
+            {    
+                <a asp-controller="Disclosure" asp-action="CreateRequest" class="btn btn-outline-primary float-right mt-2 mr-3">
+                    <i class="fas fa-plus"></i> Create New Request
+                </a>
+                
+            }  
+        </h3>
+    </div>
+</div>
+
+<form method="post">
+    <div class="card">
+        <table class="table table-striped" id="requestTable">
+            <thead>
+                <tr>
+                    <th>Requestor</th>
+                    <th>Date of Request</th>
+                    <th>Patient</th>
+                    <th>Request Status</th>
+                    <th></th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @for (int i = 0; i < Model.Requests.Count; i++)
+                {
+                    <tr id="userRoleTableRow">
+                        <td>@Model.Requests[i].Requester.FirstName @Model.Requests[i].Requester.LastName</td> 
+                        <td>@Model.Requests[i].DateCreated</td>
+                        <td>@Model.Requests[i].PatientFirstName @Model.Requests[i].PatientLastName</td>
+                        <td>@Model.Requests[i].RequestStatus.RequestStatus1</td>
+                        <td> 
+                            <a asp-action="RequestDetails" asp-route-id="@Model.Requests[i].RequestId" class="btn btn-nav">Details</a>  
+
+                            @if (userPermissions != null && (userPermissions.Contains("DisclosureRequestDelete") ) )
+                            {
+                                <a  asp-controller="Disclosure"
+                                    asp-action="DeleteRequest"
+                                    asp-route-id="@Model.Requests[i].RequestId"
+                                    onclick="if (!confirm('Are you sure?')) return false"
+                                    class="btn btn-danger ml-3">Delete
+                                </a>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</form>
+
+@section scripts {
+    @* These first two scripts are plug-ins for the Datatable.js which allow sorting by Dates. *@
+    @* This is currently the only place in the application where this is used *@
+    @* If need to apply it in numerous cshtml files, move these two scripts to the _Layout.cshtml, making sure to locate them AFTER the script which loads the datatable.js plugin. *@
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
+    <script src="https://cdn.datatables.net/plug-ins/1.10.25/sorting/datetime-moment.js"></script>
+
+    <script>
+        // DataTable Documentation found here: https://datatables.net/
+        $(document).ready(function () {
+            // ensure the correct sorting format for the date column
+            $.fn.dataTable.moment('YYYY-MM-DD');
+            // Initialize DataTable
+            $('#requestTable').DataTable({
+                order: [[0, 'asc']],    // Initial page load is ordered by Requester name
+                columnDefs: [
+                    {targets: 1, type: 'date'}, 
+                    { targets: 4, orderable: false }
+                ],
+                pageLength: 10,
+                searching: true,
+                orderMulti: true,
+                language: {
+                    emptyTable: 'None found.'
+                }
+            });
+        });
+    </script>
+}

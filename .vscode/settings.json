@@ -1,0 +1,5 @@
+{
+    "appService.preDeployTask": "publish-release",
+    "appService.deploySubpath": "publish",
+    "appService.defaultWebAppToDeploy": "/subscriptions/380b19bd-0080-4c8b-be6f-d746ea2192dd/resourceGroups/appsvc_windows_centralus/providers/Microsoft.Web/sites/HIT-Spring-2026"
+}

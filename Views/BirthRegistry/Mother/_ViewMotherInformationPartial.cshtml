@@ -1,0 +1,357 @@
+@model IS_Proj_HIT.ViewModels.BirthRegistry.MothersInformationViewModel
+
+<div class="card">
+    <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+        <h4 class="mb-0"><i class="fas fa-female mr-2"></i>Mother's Information</h4>
+        <span class="badge badge-light text-dark">View Mode</span>
+    </div>
+    <div class="card-body">
+        
+        <!-- Mother Status Section (View) -->
+        <div class="row mb-4 border-bottom pb-3">
+            <div class="col-md-12">
+                <h5>Mother Patient Status</h5>
+                <div class="alert alert-primary">
+                    <strong>Patient Status:</strong> 
+                    @if (Model.IsExistingPatient)
+                    {
+                        <span>Existing Patient - MRN: @Model.Mrn</span>
+                    }
+                    else
+                    {
+                        <span>New Patient - Information entered manually</span>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <!-- Mother Information Display (mirroring accordion structure) -->
+        <div id="motherInformationDisplay">
+            <div id="motherAccordion">
+
+                <!-- Basic Demographics Section -->
+                <div class="card">
+                    <div class="card-header bg-primary text-white" id="headingDemographics">
+                        <h5 class="mb-0">
+                            <button class="btn btn-block text-left text-white" type="button" 
+                                    data-toggle="collapse" data-target="#collapseDemographics" 
+                                    aria-expanded="true" aria-controls="collapseDemographics">
+                                <i class="fas fa-user mr-1"></i>1. Basic Demographics
+                            </button>
+                        </h5>
+                    </div>
+                    <div id="collapseDemographics" class="collapse show" aria-labelledby="headingDemographics" data-parent="#motherAccordion">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="control-label font-weight-bold">First Name</label>
+                                        <div class="form-control-plaintext border p-2 bg-light">
+                                            @(Model.FirstName ?? "Not provided")
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="control-label font-weight-bold">Middle Name</label>
+                                        <div class="form-control-plaintext border p-2 bg-light">
+                                            @(Model.MiddleName ?? "Not provided")
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="control-label font-weight-bold">Last Name</label>
+                                        <div class="form-control-plaintext border p-2 bg-light">
+                                            @(Model.LastName ?? "Not provided")
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="control-label font-weight-bold">Date of Birth</label>
+                                        <div class="form-control-plaintext border p-2 bg-light">
+                                            @(Model.DateOfBirth?.ToString("MM/dd/yyyy") ?? "Not provided")
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="control-label font-weight-bold">Birth Place</label>
+                                        <div class="form-control-plaintext border p-2 bg-light">
+                                            @(Model.BirthPlace ?? "Not provided")
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="control-label font-weight-bold">Social Security Number</label>
+                                        <div class="form-control-plaintext border p-2 bg-light">
+                                            @(Model.SSN ?? "Not provided")
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            @if (!string.IsNullOrEmpty(Model.Mrn))
+                            {
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="control-label font-weight-bold">MRN</label>
+                                            <div class="form-control-plaintext border p-2 bg-light">
+                                                @Model.Mrn
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Address Information Section -->
+                <div class="card">
+                    <div class="card-header bg-primary text-white" id="headingAddress">
+                        <h5 class="mb-0">
+                            <button class="btn btn-block text-left text-white collapsed" type="button" 
+                                    data-toggle="collapse" data-target="#collapseAddress" 
+                                    aria-expanded="false" aria-controls="collapseAddress">
+                                <i class="fas fa-home mr-1"></i>2. Address Information
+                            </button>
+                        </h5>
+                    </div>
+                    <div id="collapseAddress" class="collapse" aria-labelledby="headingAddress" data-parent="#motherAccordion">
+                        <div class="card-body">
+                            <!-- Residential Address -->
+                            <h6><i class="fas fa-home"></i> Residential Address</h6>
+                            @if (Model.ResidentialAddress != null)
+                            {
+                                <div class="border p-3 bg-light mb-3">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <strong>@(Model.ResidentialAddress.Address1 ?? "Not provided")</strong>
+                                        </div>
+                                    </div>
+                                    @if (!string.IsNullOrEmpty(Model.ResidentialAddress.Address2))
+                                    {
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                @Model.ResidentialAddress.Address2
+                                            </div>
+                                        </div>
+                                    }
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <strong>City:</strong> @(Model.ResidentialAddress.City ?? "Not provided")
+                                        </div>
+                                        <div class="col-md-4">
+                                            <strong>State:</strong> @(Model.ResidentialAddress.AddressState?.StateName ?? "Not provided")
+                                        </div>
+                                        <div class="col-md-4">
+                                            <strong>Zip:</strong> @(Model.ResidentialAddress.PostalCode ?? "Not provided")
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="alert alert-secondary">
+                                    <i class="fas fa-info-circle"></i> No residential address on file
+                                </div>
+                            }
+
+                            <!-- Mailing Address -->
+                            <h6><i class="fas fa-envelope"></i> Mailing Address</h6>
+                            @if (Model.MailingAddressSameAsResidential)
+                            {
+                                <div class="alert alert-info">
+                                    <i class="fas fa-info-circle"></i> Same as residential address
+                                </div>
+                            }
+                            else if (Model.MailingAddress != null)
+                            {
+                                <div class="border p-3 bg-light mb-3">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <strong>@(Model.MailingAddress.Address1 ?? "Not provided")</strong>
+                                        </div>
+                                    </div>
+                                    @if (!string.IsNullOrEmpty(Model.MailingAddress.Address2))
+                                    {
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                @Model.MailingAddress.Address2
+                                            </div>
+                                        </div>
+                                    }
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <strong>City:</strong> @(Model.MailingAddress.City ?? "Not provided")
+                                        </div>
+                                        <div class="col-md-4">
+                                            <strong>State:</strong> @(Model.MailingAddress.AddressState?.StateName ?? "Not provided")
+                                        </div>
+                                        <div class="col-md-4">
+                                            <strong>Zip:</strong> @(Model.MailingAddress.PostalCode ?? "Not provided")
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="alert alert-secondary">
+                                    <i class="fas fa-info-circle"></i> No mailing address on file
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Demographics & Cultural Information Section -->
+                <div class="card">
+                    <div class="card-header bg-primary text-white" id="headingCultural">
+                        <h5 class="mb-0">
+                            <button class="btn btn-block text-left text-white collapsed" type="button" 
+                                    data-toggle="collapse" data-target="#collapseCultural" 
+                                    aria-expanded="false" aria-controls="collapseCultural">
+                                <i class="fas fa-globe mr-1"></i>3. Cultural & Demographic Information
+                            </button>
+                        </h5>
+                    </div>
+                    <div id="collapseCultural" class="collapse" aria-labelledby="headingCultural" data-parent="#motherAccordion">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="control-label font-weight-bold">Religion</label>
+                                        <div class="form-control-plaintext border p-2 bg-light">
+                                            @(Model.Religion?.Name ?? "Not specified")
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="control-label font-weight-bold">Ethnicity</label>
+                                        <div class="form-control-plaintext border p-2 bg-light">
+                                            @(Model.Ethnicity?.Name ?? "Not specified")
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="control-label font-weight-bold">Education Level</label>
+                                        <div class="form-control-plaintext border p-2 bg-light">
+                                            @(Model.EducationLevel?.EducationLevelName ?? "Not specified")
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Race Display -->
+                            <div class="form-group">
+                                <label class="control-label font-weight-bold">Race</label>
+                                <div class="border p-2 bg-light">
+                                    @if (Model.SelectedRaceIds != null && Model.SelectedRaceIds.Any())
+                                    {
+                                        @foreach (var raceId in Model.SelectedRaceIds)
+                                        {
+                                            var race = Model.Races?.FirstOrDefault(r => r.Value == raceId.ToString());
+                                            if (race != null)
+                                            {
+                                                <span class="badge badge-primary mr-1">@race.Text</span>
+                                            }
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <span class="text-muted">Not specified</span>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                                <!-- Marriage Information Section -->
+                <div class="card">
+                    <div class="card-header bg-primary text-white" id="headingMarriage">
+                        <h5 class="mb-0">
+                            <button class="btn btn-block text-left text-white collapsed" type="button" 
+                                    data-toggle="collapse" data-target="#collapseMarriage" 
+                                    aria-expanded="false" aria-controls="collapseMarriage">
+                                <i class="fas fa-ring mr-1"></i>4. Marriage Information (At Time of Birth)
+                            </button>
+                        </h5>
+                    </div>
+                    <div id="collapseMarriage" class="collapse" aria-labelledby="headingMarriage" data-parent="#motherAccordion">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="control-label font-weight-bold">Married in the Past</label>
+                                        <div class="form-control-plaintext border p-3 bg-light">
+                                            @if (Model.MotherMarriedInPast)
+                                            {
+                                                <span class="badge badge-info p-2">
+                                                    <i class="fas fa-check"></i> Yes
+                                                </span>
+                                            }
+                                            else
+                                            {
+                                                <span class="badge badge-secondary p-2">
+                                                    <i class="fas fa-times"></i> No
+                                                </span>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="control-label font-weight-bold">Married During Pregnancy</label>
+                                        <div class="form-control-plaintext border p-3 bg-light">
+                                            @if (Model.MotherMarriedDuringPregnancy)
+                                            {
+                                                <span class="badge badge-success p-2">
+                                                    <i class="fas fa-check"></i> Yes
+                                                </span>
+                                            }
+                                            else
+                                            {
+                                                <span class="badge badge-secondary p-2">
+                                                    <i class="fas fa-times"></i> No
+                                                </span>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="control-label font-weight-bold">Father is Mother's Husband</label>
+                                        <div class="form-control-plaintext border p-3 bg-light">
+                                            @if (Model.IsFatherHusbandOfMother)
+                                            {
+                                                <span class="badge badge-primary p-2">
+                                                    <i class="fas fa-check-double"></i> Yes
+                                                </span>
+                                            }
+                                            else
+                                            {
+                                                <span class="badge badge-secondary p-2">
+                                                    <i class="fas fa-times"></i> No
+                                                </span>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

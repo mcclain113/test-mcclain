@@ -1,0 +1,1068 @@
+﻿@using IS_Proj_HIT.Entities.Enum;
+@using System.Linq;
+@model IS_Proj_HIT.ViewModels.Encounters.PhysicianAssessmentViewModel
+
+@{
+    ViewData["Title"] = "Physicians History & Physical";
+    var userPermissions = ViewData["UserPermissions"] as List<string>;
+    var signer = ViewBag.Providers;
+    var coSigner = ViewBag.Cosigners;
+    var checkForNull = ViewBag.checkForNull;
+    var allergiesExist = ViewBag.allergiesExist;
+    var medicationsExist = ViewBag.medicationsExist;
+    bool canRepopulate = userPermissions
+        .Any(p => string.Equals(p, "HistoryPhysicalRepopulateAllergies", StringComparison.OrdinalIgnoreCase));
+    bool canRepopulateMeds = userPermissions
+        .Any(p => string.Equals(p, "HistoryPhysicalRepopulateMedications", StringComparison.OrdinalIgnoreCase));
+}
+
+<partial name="PatientBannerPartial" model="ViewBag.Patient" class="mw-100"/>
+<partial name="_EncounterMenu" model="ViewBag.Encounter"/>
+<partial name="_ValidationScriptsPartial" />
+
+<form method="post" asp-action="UpdateHistoryAndPhysical" id="physicianAssessment" name="physicianAssessment">
+    @Html.AntiForgeryToken()
+    @*Hidden inputs to pass additional data through when submitting form*@
+        @if (checkForNull)
+        {
+            <input type="hidden" asp-for="PhysicianAssessment.EncounterId" value="@ViewBag.Encounter.EncounterId" />
+            <input type="hidden" asp-for="PatientMrn" value="@ViewBag.Patient.Mrn" />
+        }
+        else 
+        {
+            <input type="hidden" asp-for="PhysicianAssessment.PhysicianAssessmentId" value="@Model.PhysicianAssessment.PhysicianAssessmentId" />
+            <input type="hidden" asp-for="PhysicianAssessment.EncounterId" value="@ViewBag.Encounter.EncounterId" />
+            <input type="hidden" asp-for="PatientMrn" value="@ViewBag.Patient.Mrn" />
+            <input type="hidden" asp-for="PhysicianAssessment.PhysicianAssessmentDate" value="@Model.PhysicianAssessment.PhysicianAssessmentDate" />
+            <input type="hidden" asp-for="PhysicianAssessment.WrittenDateTime" value="@Model.PhysicianAssessment.WrittenDateTime" />
+        }
+
+
+    <div class="row justify-content-start">
+        <div class="col mx-0 px-0">
+            <div class="card ">
+                <div class="card-header bg-primary text-white">
+                    <h4>Physician History & Physical</h4>
+                </div>
+
+            <div class="card-body bg-light">
+
+                @* header information for history & physical view  *@
+                    <div class="row justify-content-around">
+                        <div class="col-sm-12 col-lg-4">
+                            <label style="padding-right: 1em">Admission Date: </label>
+                            <span class="font-weight-bold">@ViewBag.Encounter.AdmitDateTime.ToString("M/d/yyyy")</span>
+                        </div>
+
+                        @if (checkForNull)
+                        {
+                            <div class="col-sm-12 col-lg-4 form-group form-inline">
+                                <label asp-for="PhysicianAssessment.PhysicianAssessmentDate" class="mr-1" style="padding-right: 1em">Assessment Date:</label>
+                                <input class="form-control" type="datetime-local" 
+                                    value="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm")"
+                                    asp-for="PhysicianAssessment.PhysicianAssessmentDate"/>
+                            </div>
+                        }
+                        else 
+                        {
+                            <div class="col-sm-12 col-lg-4 form-group form-inline">
+                                <label class="mr-1" style="padding-right: 1em">Assessment Date:</label>
+                                <span class="font-weight-bold" >@Model.PhysicianAssessment.PhysicianAssessmentDate?.ToString("M/d/yyyy")</span>
+                            </div>
+                        }
+
+
+                    </div>
+                    <hr/>
+                    <div class="row justify-content-around">
+                        <div class="col-sm-12 col-lg-4">
+                            <label style="padding-right: 1em">Attending Physician:</label>
+                            <span class="font-weight-bold">@Model.AttendingPhysician?.FirstName @Model.AttendingPhysician?.LastName</span> 
+                        </div>
+                        <div class="col-sm-12 col-lg-4">
+                            <label style="padding-right: 1em">Visit Type:</label>
+                            <span class="font-weight-bold">@ViewBag.Encounter.PlaceOfService.Description</span> 
+                        </div>
+                    </div>
+                    <hr/>
+                @* end header information for history & physical view  *@
+
+                @* start section for Present Illness *@ 
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <label><strong>Present Illness: </strong></label><br>
+                            <div class="form-group mx-3">
+                                <label style="padding-right: 1em;text-decoration: underline;">Chief Complaint:</label>
+
+                                @{
+                                    if ( checkForNull )
+                                    {
+                                        <textarea asp-for="@Model.Encounter.ChiefComplaint" class="col-12"
+                                    style="display: block;" rows="4" name="PhysicianAssessment.ChiefComplaint" id="chiefComplaint">
+                                        </textarea> 
+                                    }
+                                    
+                                    else if(Model.PhysicianAssessment.ChiefComplaint != null && Model.PhysicianAssessment.ChiefComplaint != ""){
+                                        <textarea asp-for="PhysicianAssessment.ChiefComplaint" class="col-12"
+                                    style="display: block;" rows="4" name="PhysicianAssessment.ChiefComplaint" id="chiefComplaint">
+                                        </textarea>
+                                    }
+                                    else{
+                                        <textarea asp-for="@Model.Encounter.ChiefComplaint" class="col-12"
+                                    style="display: block;" rows="4" name="PhysicianAssessment.ChiefComplaint" id="chiefComplaint">
+                                        </textarea>
+                                    } 
+                                }
+                            </div>
+                            <div class="form-group mx-3">
+                                <label style="padding-right: 1em;text-decoration: underline;">History of Present Illness:</label>
+                                <textarea asp-for="PhysicianAssessment.HistoryOfPresentIllness" class="col-12"
+                                    style="display: block;" rows="4" id="historyOfPresentIllness">
+                                </textarea>
+                                <span class="field-message text-danger d-none" data-field="PhysicianAssessment.HistoryOfPresentIllness" aria-live="polite"></span>
+
+                            </div>
+                        </div>
+                    </div>
+                    <hr/>
+                @* end section for Present Illness *@ 
+
+                @* start section for Allergies and Medications *@ 
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="d-flex align-items-center mb-2">
+                                <label class="me-3"><strong>Allergies and Medications: </strong></label>
+                                <div class="d-inline-flex align-items-center">
+                                    @if (!allergiesExist)
+                                    {
+                                        <button id="populateAllergiesBtn" type="button" class="btn btn-sm btn-secondary mx-2 allergies-btn"
+                                                data-pa-id="@Model.PhysicianAssessment.PhysicianAssessmentId"
+                                                data-patient-mrn="@ViewBag.Patient.Mrn"
+                                                data-action="populate">
+                                            Populate Allergies from Patient
+                                        </button>
+                                    }
+                                    @if (!medicationsExist)
+                                    {
+                                        <button id="populateMedicationsBtn" type="button" class="btn btn-sm btn-secondary mx-2 allergies-btn"
+                                                data-pa-id="@Model.PhysicianAssessment.PhysicianAssessmentId"
+                                                data-patient-mrn="@ViewBag.Patient.Mrn"
+                                                data-action="populateMeds">
+                                            Populate Medications from Patient
+                                        </button>
+                                    }
+                                    @if (allergiesExist && canRepopulate)
+                                    {
+                                        <button id="repopulateAllergiesBtn" type="button" class="btn btn-sm btn-danger mx-2 allergies-btn"
+                                                data-pa-id="@Model.PhysicianAssessment.PhysicianAssessmentId"
+                                                data-patient-mrn="@ViewBag.Patient.Mrn"
+                                                data-action="repopulate">
+                                            Re-populate Allergies from Patient
+                                        </button>
+                                    }
+                                    @if (medicationsExist && canRepopulateMeds)
+                                    {
+                                        <button id="repopulateMedicationsBtn" type="button" class="btn btn-sm btn-danger mx-2 allergies-btn"
+                                                data-pa-id="@Model.PhysicianAssessment.PhysicianAssessmentId"
+                                                data-patient-mrn="@ViewBag.Patient.Mrn"
+                                                data-action="repopulateMeds">
+                                            Re-populate Medications from Patient
+                                        </button>
+                                    }
+                                </div>
+                            </div>
+
+                            <div class="row form-group mx-1 align-items-start">
+                                <label class="col-auto pe-0" style="text-decoration: underline;">Allergies:</label>
+                                <div class="col" id="allergiesContainer">
+                                    @await Html.PartialAsync("_AssessmentAllergiesListPartial", Model.AssessmentAllergies)
+                                </div>
+                            </div>
+
+                            <div class="row form-group mx-1 align-items-start">
+                                <label class="col-auto pe-0" style="text-decoration: underline;">Medications:</label>
+                                <div class="col" id="medicationsContainer">
+                                    @await Html.PartialAsync("_AssessmentMedicationsListPartial", Model.AssessmentMedications)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr />
+                @* end section for Allergies and Medications *@ 
+
+                @* start section for History *@ 
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <label><strong>History: </strong></label><br>
+                            <div class="form-group mx-3">
+                                <label style="padding-right: 1em;text-decoration: underline;">Past Medical & Surgical History:</label>
+                                <textarea asp-for="PhysicianAssessment.PastMedicalSurgicalHistory" class="col-12"
+                                    style="display: block;" rows="4" id="pastMedicalSurgicalHistory">
+                                </textarea>
+                                <span class="field-message text-danger d-none" data-field="PhysicianAssessment.PastMedicalSurgicalHistory" aria-live="polite"></span>
+                            </div>
+                            <div class="form-group mx-3">
+                                <label style="padding-right: 1em;text-decoration: underline;">Social History:</label>
+                                <textarea asp-for="PhysicianAssessment.SocialHistory" class="col-12"
+                                    style="display: block;" rows="4" id="socialHistory">
+                                </textarea>
+                                <span class="field-message text-danger d-none" data-field="PhysicianAssessment.SocialHistory" aria-live="polite"></span>
+                            </div>
+                            <div class="form-group mx-3">
+                                <label style="padding-right: 1em;text-decoration: underline;">Family History:</label>
+                                <textarea asp-for="PhysicianAssessment.FamilyHistory" class="col-12"
+                                    style="display: block;" rows="4" id="familyHistory">
+                                </textarea>
+                                <span class="field-message text-danger d-none" data-field="PhysicianAssessment.FamilyHistory" aria-live="polite"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <hr/>
+                @* end section for History *@
+
+                @* start section for Review of Systems, Physical Exam *@ 
+                    <div class="row">
+                        <div class="col-sm-12">
+                            @foreach (var examSystem in Model.SystemExamTypes)
+                            {
+                            <label><strong>@examSystem.ExamType1:</strong></label>
+                            <br />
+
+                            <div class="row form-group mx-1" style="display:flex;">
+                                @foreach (var bst in examSystem.BodySystemTypes)
+                                {
+                                    var idx = Model.BodySystemAssessments.FindIndex(x => x.BodySystemTypeId == bst.BodySystemTypeId);
+                                    if (idx < 0)
+                                    {
+                                        // No matching list entry found — skip rendering this BodySystemType
+                                        continue;
+                                    }
+
+                                    var bsa = Model.BodySystemAssessments[idx];
+                                    var notChecked = bsa.IsWithinNormalLimits is null;
+                                    var trueChecked = bsa.IsWithinNormalLimits is true;
+                                    var falseChecked = bsa.IsWithinNormalLimits is false;
+                                    var descVisible = trueChecked || falseChecked;
+                                    var descClass = descVisible ? "" : "d-none";
+                                    var idBase = $"bs-{bst.BodySystemTypeId}";
+                                    
+                                    <div class="row pb-1 w-100">
+                                        <label class="col-sm-3 col-form-label" style="padding-right:em;text-decoration:underline;">@bst.Name:</label>
+                                        <div class="col-sm-9">
+                                            <div class="btn-group btn-group-toggle w-100" data-bs-toggle="buttons">
+                                                @{
+                                                    // idx, idBase, descClass already computed in the Razor block above
+                                                    var namePrefix = $"BodySystemAssessments[{idx}]";
+                                                    var radioName = namePrefix + ".IsWithinNormalLimits";
+                                                    var commentName = namePrefix + ".Comment";
+                                                }
+
+                                                <input type="radio"
+                                                    id="@(idBase)-n"
+                                                    class="btn-check bs-n"
+                                                    name="@(radioName)"
+                                                    value=""
+                                                    @(notChecked ? "checked" : "") />
+                                                <label class="btn btn-outline-secondary col-4 text-nowrap" for="@(idBase)-n">Not Assessed</label>
+
+                                                <input type="radio"
+                                                    id="@(idBase)-t"
+                                                    class="btn-check bs-t"
+                                                    name="@(radioName)"
+                                                    value="true"
+                                                    @(trueChecked ? "checked" : "") />
+                                                <label class="btn btn-outline-secondary col-4 text-nowrap" for="@(idBase)-t">Within Normal Limits</label>
+
+                                                <input type="radio"
+                                                    id="@(idBase)-f"
+                                                    class="btn-check bs-f"
+                                                    name="@(radioName)"
+                                                    value="false"
+                                                    @(falseChecked ? "checked" : "") />
+                                                <label class="btn btn-outline-secondary col-4 text-nowrap" for="@(idBase)-f">Abnormal</label>
+                                            </div>
+
+                                            <input id="@(idBase)-d"
+                                            class="form-control mt-2 @descClass"
+                                            type="text"
+                                            name="@(commentName)"
+                                            value="@(bsa.Comment ?? "")"
+                                            placeholder="Please describe the assessed condition" 
+                                            @(descVisible ? "" : "disabled") />
+                                            <span class="field-message text-danger d-none" data-field="@(commentName)" aria-live="polite"></span>
+
+                                        </div>
+                                            
+                                        @Html.HiddenFor(m => m.BodySystemAssessments[idx].BodySystemTypeId)
+                                        
+                                    </div>
+                                }
+                            </div>
+
+                            <hr />
+                            }
+                        </div>
+                    </div>
+                @* end section for Review of Systems, Physical Exam *@  
+
+                @* start section for Assessment & Plan *@ 
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <label><strong>Assessment & Plan: </strong></label><br>
+                            <div class="row form-group mx-3">
+                                <label style="padding-right: 1em;text-decoration: underline;">Significant Diagnostic Tests:</label>
+                                <textarea asp-for="PhysicianAssessment.SignificantDiagnosticTests" class="col-12"
+                                    style="display: block;" rows="4" id="significantDiagnosticTests">
+                                </textarea>
+                                <span class="field-message text-danger d-none" data-field="PhysicianAssessment.SignificantDiagnosticTests" aria-live="polite"></span>
+                            </div>
+                            <div class="row form-group mx-3">
+                                <label style="padding-right: 1em;text-decoration: underline;">Assessment:</label>
+                                <textarea asp-for="PhysicianAssessment.Assessment" class="col-12"
+                                    style="display: block;" rows="4" id="assessment">
+                                </textarea>
+                                <span class="field-message text-danger d-none" data-field="PhysicianAssessment.Assessment" aria-live="polite"></span>
+                            </div>
+                            <div class="row form-group mx-3">
+                                <label style="padding-right: 1em;text-decoration: underline;">Plan:</label>
+                                <textarea asp-for="PhysicianAssessment.Plan" class="col-12 "
+                                    style="display: block;" rows="4" id="plan">
+                                </textarea>
+                                <span class="field-message text-danger d-none" data-field="PhysicianAssessment.Plan" aria-live="polite"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <hr/>
+                @* end section for Assessment & Plan *@ 
+
+                @* begin section for Provider signatures *@    
+                    <div class="row mx-3">
+                        <div class="col-12 col-lg-6">
+                            <div class="row mb-3 form-group">
+                                <label for="paAuthoringProviderId" class="col-sm-4 col-form-label">Authoring Provider: </label>
+                                <div class="col-sm-8 justify-content-center">
+                                    <select id="physician" class="form-control dropdowns selectable sign select2"
+                                        asp-for="@Model.PhysicianAssessment.AuthoringProvider"
+                                        asp-items="signer">   
+                                        <option value="" selected>Select a Physician</option>
+                                    </select>
+                                    <span class="field-message text-danger d-none" data-field="PhysicianAssessment.AuthoringProvider" aria-live="polite"></span>
+
+                                    @* <div class="needProvider" style="display: none; color: red;">
+                                        <span><strong>Please select a provider</strong></span></div> *@
+                                </div>
+                            </div>
+                            
+                            <div class="row mb-3 form-group">
+                                <label for="paAuthoringProviderSignature" class="col-sm-4 col-form-label">Provider Signature:</label>
+                                <div class="col-sm-8 justify-content-center signature" style="display:none;">
+                                    <input asp-for="PhysicianAssessment.AuthoringProviderSignature"
+                                        id="paAuthoringProviderSignature"
+                                        class="form-control" />
+                                    <span asp-validation-for="PhysicianAssessment.AuthoringProviderSignature" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                            <div class="row mb-3 form-group" id="timeStampAuthoring">
+                                <label for="AuthoringProviderSignedDate" class="col-sm-4 col-form-label">Date Signed:</label>
+                                <div class="col-sm-8 signature" style="display:none;">
+                                    @if (Model?.PhysicianAssessment?.AuthoringProviderSignedDate != null)
+                                    {
+                                        <!-- Show existing signed date for read-only display and keep a hidden input for POST -->
+                                        <span class="form-control-plaintext">
+                                            @Model.PhysicianAssessment.AuthoringProviderSignedDate.Value.ToString("M/d/yyyy")
+                                        </span>
+                                        <input type="hidden" asp-for="PhysicianAssessment.AuthoringProviderSignedDate" />
+                                    }
+                                    else
+                                    {
+                                        <!-- Empty on purpose: JS will insert a datetime-local input with id AuthoringProviderSignedDate when signature is entered -->
+                                        @* Intentionally leave blank so the client script can inject the input *@
+                                    }
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-lg-6">
+                            <div id="cosign" style="display:none">
+                                <div class="row mb-3 form-group">
+                                    <label for="paCoSignatureProviderId" class="col-sm-4 col-form-label">Co-Provider: </label>
+                                    <div class="col-sm-8">
+                                        <select id="dischargeCoSigningProviderId" class="form-control dropdowns cosign select2"
+                                            asp-for="@Model.PhysicianAssessment.CoSignature" asp-items="coSigner"
+                                            >
+                                            <option value="" selected>Select a Co-Physician</option>
+                                        </select>
+                                        <span class="field-message text-danger d-none" data-field="PhysicianAssessment.CoSignature" aria-live="polite"></span>
+
+                                        @* <span id="needCoProviderCosign"
+                                            class="text-danger"
+                                            style="display:none; font-weight:bold;">
+                                        Please select a CoPhysician
+                                        </span> *@
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3 form-group">
+                                    <label for="paCoSigningProviderSignature" class="col-sm-4 col-form-label">Co-Signature: </label>
+                                    <div class="col-sm-8 justify-content-center cosignature">
+                                        <input class="form-control"
+                                            asp-for="@Model.PhysicianAssessment.CoSigningProviderSignature"
+                                            
+                                            placeholder="Co-Provider Signature"
+                                            id="paCoSigningProviderSignature"/>
+                                    </div>       
+                                </div>
+
+                                <div class="row mb-3 form-group" id="timeStamp">
+                                    <label for="paCoSigningProviderSignedDate" class="col-sm-4 col-form-label">Date Signed: </label>
+                                    <div class="col-sm-8">
+                                        <input type="text"  asp-for="@Model.PhysicianAssessment.CoSigningProviderSignedDate"
+                                        class="form-control"
+                                        value=""
+                                        placeholder="Date/Time"
+                                        id="paCoSigningProviderSignedDate"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr/>
+                @* end section for Provider signatures *@
+
+                @* begin section for buttons *@
+
+                    @if (userPermissions != null && (userPermissions.Contains("HistoryPhysicalEdit")) )
+                    {
+                        <button class="btn btn-primary updater" 
+                        type="submit">
+                        Update History & Physical
+                        </button> 
+                    }
+                    <button class="btn btn-secondary" formnovalidate 
+                        asp-controller="PhysicianAssessment" 
+                        asp-action="ViewHistoryAndPhysical"
+                        asp-route-id="@ViewBag.Encounter.EncounterId">Cancel
+                    </button>
+
+                @* end section for buttons *@
+
+                
+            </div>
+        </div>
+    </div>
+</form> 
+
+@section Scripts {
+    <script>
+        $(function () {
+            const $form = $('#physicianAssessment');
+            const $authorSig = $('#paAuthoringProviderSignature');
+            const $authorDateWrap = $('#timeStampAuthoring .signature');
+            const $coSignSelect = $('#dischargeCoSigningProviderId');
+            const $signSelect = $('.sign');
+            const serverNow = '@DateTime.Now.ToString("yyyy-MM-ddTHH:mm")';
+            let needCosign = false;
+            let missing = [];
+
+            // initialize Select2
+            $('.select2').select2({ width: '100%' });
+
+            // tiny helper: get span by field name
+            function $msgSpanFor(name) {
+                return $(`.field-message[data-field="${name}"]`);
+            }
+
+            // show/clear visual highlight on fields
+            function markInvalid($el) {
+                try { $el.addClass('is-invalid required-highlight'); } catch (e) {}
+            }
+            function clearInvalid($el) {
+                try { $el.removeClass('is-invalid required-highlight'); } catch (e) {}
+            }
+
+            // show a message for a named field
+            function showFieldMessage(name, message) {
+                const $span = $msgSpanFor(name);
+                if ($span.length) {
+                $span.text(message).removeClass('d-none');
+                } else {
+                // no span found; console fallback
+                console.warn('Missing field-message span for', name, message);
+                }
+                const $input = $(`[name="${name}"]`);
+                if ($input.length) markInvalid($input);
+            }
+
+            // clear message for a named field
+            function clearFieldMessage(name) {
+                const $span = $msgSpanFor(name);
+                if ($span.length) {
+                $span.text('').addClass('d-none');
+                }
+                const $input = $(`[name="${name}"]`);
+                if ($input.length) clearInvalid($input);
+            }
+
+            // global input/change listener: clear messages for that field when edited
+            $(document).on('input change', '[name]', function () {
+                const nm = $(this).attr('name') || '';
+                if (nm) clearFieldMessage(nm);
+            });
+
+            // jQuery Validate initialization (no auto-submit)
+            const validator = $form.validate({
+                onsubmit: false,
+                errorPlacement: function () {}, // we'll show messages using spans
+                highlight: function (el) { $(el).addClass('is-invalid'); },
+                unhighlight: function (el) { $(el).removeClass('is-invalid'); }
+            });
+
+            // normalize "0" option values to empty string
+            $('select').each(function () {
+                $(this).find('option').each(function () { if ($(this).val() === '0') $(this).val(''); });
+            });
+
+            // helper to disable/enable comment inputs so hidden ones do not bind or validate
+            function setCommentVisibility($desc, visible) {
+                if (!$desc || !$desc.length) return;
+                $desc.toggleClass('d-none', !visible);
+                $desc.prop('disabled', !visible);
+                if (!visible) { try { $desc.rules('remove', 'required'); } catch (e) {} }
+                else { $desc.removeClass('is-invalid required-highlight'); }
+            }
+
+            // BodySystem radio change handling: show/hide comment and add required rule for Abnormal (f)
+            $(document).on('change', '.bs-n, .bs-t, .bs-f', function () {
+                const id = $(this).attr('id');
+                if (!id) return;
+                const parts = id.split('-');
+                const suffix = parts.pop();
+                const base = parts.join('-');
+                const descSelector = '#' + base + '-d';
+                const $desc = $(descSelector);
+                const showDesc = (suffix === 't' || suffix === 'f');
+                setCommentVisibility($desc, showDesc);
+
+                // require comment only for Abnormal (f)
+                try { $desc.rules('remove', 'required'); } catch (e) {}
+                if (suffix === 'f') {
+                    try {
+                        $desc.rules('add', {
+                        required: true,
+                        messages: { required: 'Please describe the assessed condition.' }
+                        });
+                    } catch (e) {}
+                }
+            });
+
+            // initialize pre-checked radios so comments and rules are correct
+            $('.bs-f:checked, .bs-t:checked').each(function () { $(this).trigger('change'); });
+
+            // helper to add/remove required rule on co-sign select
+            function setCoSignRequired(isRequired) {
+                $coSignSelect.rules('remove', 'required');
+                if (isRequired) {
+                    $coSignSelect.rules('add', {
+                        required: true,
+                        messages: { required: 'A Co-Physician selection is required.' }
+                    });
+                }
+                $coSignSelect.valid();
+            }
+
+            // Toggle cosign UI immediately and verify via AJAX
+            function toggleCoSigner() {
+                const providerIdRaw = ($signSelect.val() || '').toString().trim();
+                const providerId = providerIdRaw === '0' ? '' : providerIdRaw;
+                // reset UI
+                $('.needProvider').hide();
+                $('.signature').hide();
+                $('#cosign').hide();
+                needCosign = false;
+                setCoSignRequired(false);
+
+                // ensure author signature input enabled by default (will be toggled below)
+                $authorSig.prop('disabled', false);
+
+                if (!providerId) return;
+
+                // optimistically show signature area while we fetch provider status
+                $('.signature').show();
+
+                $.getJSON('/Encounter/GetProviderStatusId', { id: providerId })
+                    .done(function (res) {
+                        const idNumber = Number(res?.providerIdNumber);
+                        // this branch does not require a cosigner
+                        if (idNumber === 1) {
+                            $('.signature').show(); $('#cosign').hide(); 
+                            needCosign = false; 
+                            setCoSignRequired(false);
+                            clearFieldMessage('PhysicianAssessment.CoSignature');
+                            $authorSig.prop('disabled', false);
+                            // Clear any previously selected co-provider and co-sign data
+                            $coSignSelect.val('').trigger('change');            // clears Select2 visible value and underlying select
+                            clearFieldMessage('PhysicianAssessment.CoSignature'); // hide inline message if any
+                            $coSignSelect.removeClass('is-invalid');
+
+                            // clear co-signature input and its date if present
+                            $('#paCoSigningProviderSignature').val('');         // clear signature text
+                            $('#paCoSigningProviderSignedDate').remove();       // remove injected datetime-local if exists
+                            $('#timeStamp').html('');                           // optional: clear the timeStamp container if you use it
+                            $('#cosign').hide();                                // hide cosign UI (already hidden in branch)
+                        // this branch does require a cosigner
+                        } else if (idNumber === 2 || idNumber === 3) {
+                            $('.signature').show(); 
+                            $('#cosign').show(); 
+                            needCosign = true; 
+                            setCoSignRequired(true);
+                            // Immediately show inline message requiring co-sign if none selected
+                            if (!$coSignSelect.val()) {
+                                showFieldMessage('PhysicianAssessment.CoSignature', 'A Co-Provider selection is required now');
+                                // disable author signature input until co-provider chosen
+                                $authorSig.prop('disabled', true).addClass('disabled');
+                            } else {
+                                // co-sign already selected -> allow author signature
+                                clearFieldMessage('PhysicianAssessment.CoSignature');
+                                $authorSig.prop('disabled', false).removeClass('disabled');
+                            }
+                        } else {
+                            $('.signature').show(); 
+                            $('#cosign').hide(); 
+                            needCosign = false; setCoSignRequired(false);
+                            clearFieldMessage('PhysicianAssessment.CoSignature');
+                            $authorSig.prop('disabled', false);
+                        }
+                    })
+                    .fail(function () {
+                        // fallback branch: show signature but hide cosign (cosigner not required)
+                        $('.signature').show(); 
+                        $('#cosign').hide(); 
+                        needCosign = false; 
+                        setCoSignRequired(false);
+                        clearFieldMessage('PhysicianAssessment.CoSignature');
+                        $authorSig.prop('disabled', false);
+                        // Clear any previously selected co-provider and co-sign data
+                        $coSignSelect.val('').trigger('change');            // clears Select2 visible value and underlying select
+                        clearFieldMessage('PhysicianAssessment.CoSignature'); // hide inline message if any
+                        $coSignSelect.removeClass('is-invalid');
+
+                        // clear co-signature input and its date if present
+                        $('#paCoSigningProviderSignature').val('');         // clear signature text
+                        $('#paCoSigningProviderSignedDate').remove();       // remove injected datetime-local if exists
+                        $('#timeStamp').html('');                           // optional: clear the timeStamp container if you use it
+                        $('#cosign').hide();                                // hide cosign UI (already hidden in branch)
+                    });
+            }
+
+            // clear author signature and author date stamp
+            function clearAuthorSignatureAndDate() {
+                $authorSig.val('').removeClass('is-invalid');
+                $('#AuthoringProviderSignedDate').remove();
+                $authorDateWrap.html('');
+            }
+
+            // when provider changes, clear signature/date and toggle cosign
+            $signSelect.on('change', function () {
+                clearAuthorSignatureAndDate();
+                toggleCoSigner();
+            });
+
+            // When user focuses author signature, if cosign required and not chosen, show inline message and prevent editing
+            $authorSig.on('focus', function (e) {
+                if (needCosign && !$coSignSelect.val()) {
+                    showFieldMessage('PhysicianAssessment.CoSignature', 'Please select a Co-Provider now');
+                    $coSignSelect.addClass('is-invalid').focus();
+                    // blur the signature input to prevent entry
+                    $(this).blur();
+                }
+            });
+
+            // If the input is disabled, prevent typing (extra guard)
+            $authorSig.on('keydown paste input', function (e) {
+                if ($(this).prop('disabled')) {
+                    e.preventDefault();
+                    return false;
+                }
+            });
+
+            // when co-sign select changes, enable author signature, hide the message and remove invalid styling
+            $coSignSelect.on('change', function () {
+                if ($(this).val()) {
+                    // co-provider selected -> allow author signature and clear co-sign requirement message
+                    clearFieldMessage('PhysicianAssessment.CoSignature');
+                    $(this).removeClass('is-invalid');
+                    $('#needCoProviderCosign').hide();
+                    $authorSig.prop('disabled', false).removeClass('disabled');
+                } else {
+                    // none selected -> if cosign required, re-show message and disable author signature
+                    if (needCosign) {
+                        showFieldMessage('PhysicianAssessment.CoSignature', 'A Co-Provider selection is required now');
+                        $authorSig.prop('disabled', true).addClass('disabled');
+                        $(this).addClass('is-invalid');
+                    }
+                }
+            });
+
+            // ensure author date input exists when signature entered
+            function ensureAuthorDateInput() {
+                const sigVal = ($authorSig.val() || '').toString().trim();
+                const hasInput = $('#AuthoringProviderSignedDate').length > 0;
+                if (sigVal) {
+                    if (!hasInput) {
+                        const input = $('<input>')
+                        .attr('type', 'datetime-local')
+                        .attr('id', 'AuthoringProviderSignedDate')
+                        .attr('name', 'PhysicianAssessment.AuthoringProviderSignedDate')
+                        .val(serverNow)
+                        .addClass('form-control');
+                        $authorDateWrap.append(input);
+                    }
+                } else {
+                    $('#AuthoringProviderSignedDate').remove();
+                }
+            }
+
+            // create co-sign timestamp when co-signature input receives input
+            $(document).on('input', '.cosignature input, .cosignature textarea', function () {
+                if (!$('#paCoSigningProviderSignedDate').length) {
+                const html =
+                    '<label for="paCoSigningProviderSignedDate" class="col-sm-4 col-form-label">Date Signed: </label>' +
+                    '<div class="col-sm-8">' +
+                    `<input type="datetime-local" id="paCoSigningProviderSignedDate" name="PhysicianAssessment.CoSigningProviderSignedDate" class="form-control" value="${serverNow}" />` +
+                    '</div>';
+                $('#timeStamp').html(html);
+                }
+            });
+
+            // friendly labels for top-level fields
+            const labels = {
+                'PhysicianAssessment.PhysicianAssessmentDate': 'Assessment Date',
+                'PhysicianAssessment.HistoryOfPresentIllness': 'History of Present Illness',
+                'PhysicianAssessment.PastMedicalSurgicalHistory': 'Past Medical & Surgical History',
+                'PhysicianAssessment.SocialHistory': 'Social History',
+                'PhysicianAssessment.FamilyHistory': 'Family History',
+                'PhysicianAssessment.SignificantDiagnosticTests': 'Significant Diagnostic Tests',
+                'PhysicianAssessment.Assessment': 'Assessment',
+                'PhysicianAssessment.Plan': 'Plan'
+            };
+
+            // friendly label resolver including BodySystemAssessments comment mapping
+            function friendlyLabelFor(name) {
+                if (/^BodySystemAssessments\[\d+\]\.Comment$/.test(name)) {
+                    const m = name.match(/BodySystemAssessments\[(\d+)\]\.Comment/);
+                    if (m) {
+                        const idx = parseInt(m[1], 10);
+                        const hidden = $(`input[name="BodySystemAssessments[${idx}].BodySystemTypeId"]`);
+                        if (hidden.length) {
+                            const typeId = hidden.val();
+                            // find a visible label near that body system; fallback if not found
+                            const lbl = $(`#bs-${typeId}-n`).closest('.row').find('label').first().text();
+                            if (lbl) return lbl.trim() + ' comment';
+                        }
+                    }
+                    return 'Body system comment';
+                }
+                return labels[name] || name;
+            }
+
+            // show missing fields inline and mark them
+            function showMissingAndMark(missingArr) {
+                // clear previous messages/highlights
+                $('.field-message').each(function () { $(this).text('').addClass('d-none'); });
+                $('.required-highlight').removeClass('required-highlight');
+                $('.is-invalid').removeClass('is-invalid');
+
+                missingArr.forEach(m => {
+                    const friendly = friendlyLabelFor(m.name);
+                    showFieldMessage(m.name, friendly + ' is required');
+                });
+
+                // Always clear author signature and date so user must re-sign after fixing missing fields
+                clearAuthorSignatureAndDate();
+
+                // Focus the earliest rendered missing field (resolves names/selectors to DOM order)
+                focusEarliestMissing(missingArr);
+            }
+
+            // central checks when author signature receives input
+            $authorSig.on('input change', function () {
+                ensureAuthorDateInput();
+                const val = ($authorSig.val() || '').trim();
+                if (!val) return;
+
+                missing.length = 0;
+                const requiredNames = [
+                'PhysicianAssessment.PhysicianAssessmentDate',
+                'PhysicianAssessment.HistoryOfPresentIllness',
+                'PhysicianAssessment.PastMedicalSurgicalHistory',
+                'PhysicianAssessment.SocialHistory',
+                'PhysicianAssessment.FamilyHistory',
+                'PhysicianAssessment.SignificantDiagnosticTests',
+                'PhysicianAssessment.Assessment',
+                'PhysicianAssessment.Plan'
+                ];
+
+                // top-level required checks
+                for (const n of requiredNames) {
+                    const $el = $(`[name="${n}"]`);
+                    if (!$el.length || !($el.val() || '').toString().trim()) missing.push({ selector: $el, name: n });
+                }
+
+                // body system comment checks (only those that have required rule)
+                Array.from(document.querySelectorAll('[name]')).forEach(el => {
+                    const name = el.name || '';
+                    if (!/^\s*BodySystemAssessments\[\d+\]\.Comment\s*$/.test(name)) return;
+                    if (!$(el).is(':visible')) return;
+                    try {
+                        const rules = $(el).rules ? $(el).rules() : null;
+                        if (!rules || !rules.required) return;
+                    } catch (e) { return; }
+                    const v = $(el).val ? $(el).val() : (el.value || '');
+                    if (!(v || '').toString().trim()) missing.push({ selector: $(el), name: name });
+                });
+
+                if (needCosign && !$coSignSelect.val()) {
+                    missing.push({ selector: $coSignSelect, name: 'PhysicianAssessment.CoSignature' });
+                    $('#needCoProviderCosign').show();
+                    $coSignSelect.addClass('is-invalid');
+                }
+
+                if (missing.length > 0) {
+                    showMissingAndMark(missing);
+                    return;
+                }
+
+                // All good -> ensure author date exists and remove invalid state
+                ensureAuthorDateInput();
+                $authorSig.removeClass('is-invalid');
+            });
+
+            // updater button click: validate and respect signature logic
+            $('.updater').on('click', function (e) {
+                // If author signature is empty, allow submit without the full-signature checks but ensure provider selected
+                if (!($authorSig.val() || '').trim()) {
+                    if (!$signSelect.val()) {
+                        e.preventDefault();
+                        showFieldMessage('PhysicianAssessment.AuthoringProvider', 'Please select a Provider');
+                        $signSelect.addClass('is-invalid').focus();
+                        return false;
+                    }
+                    return true;
+                }
+
+                // If signature exists, perform full validation using validator and inline messages
+                const valid = validator.form();
+
+                // show validator errors inline
+                if (!valid) {
+                    // populate spans from validator.errorList
+                    if (validator.errorList && validator.errorList.length) {
+                        const errs = validator.errorList;
+                        errs.forEach(err => {
+                            const name = err.element.name;
+                            const msg = err.message || 'Required';
+                            showFieldMessage(name, msg);
+                        });
+                    }
+                }
+
+                // ensure co-sign requirement enforced at click time
+                if (needCosign && (!$coSignSelect.val() || $coSignSelect.val().toString().trim() === '')) {
+                    showFieldMessage('PhysicianAssessment.CoSignature', 'Please select a Co-Provider now');
+                    $coSignSelect.addClass('is-invalid').focus();
+                    e.preventDefault();
+                    return false;
+                }
+
+                if (!valid) { e.preventDefault(); validator.focusInvalid(); return false; }
+
+                // allow submit
+                return true;
+            });
+
+            // Resolve each missing entry to a concrete DOM node and focus the one earliest in DOM order
+            function focusEarliestMissing(missingArr) {
+                if (!missingArr || !missingArr.length) return;
+
+                // resolve to DOM nodes (prefer visible input/select/textarea)
+                const resolved = missingArr.map(m => {
+                    // try the provided selector first
+                    let $el = m.selector && m.selector.length ? m.selector : $(`[name="${m.name}"]`);
+
+                    // fallback to any element with that name if selector empty
+                    if ((!$el || !$el.length) && m.name) $el = $(`[name="${m.name}"]`);
+
+                    // if still nothing, fall back to the corresponding field-message span
+                    if ((!$el || !$el.length)) {
+                        const $span = $msgSpanFor(m.name);
+                        return $span && $span.length ? $span[0] : null;
+                    }
+
+                    // if multiple matches choose first visible, otherwise first
+                    if ($el.length > 1) {
+                        const visible = $el.filter(':visible');
+                        if (visible.length) $el = visible.first();
+                        else $el = $el.first();
+                    }
+
+                    return $el && $el.length ? $el[0] : null;
+                }).filter(Boolean);
+
+                if (!resolved.length) {
+                    // fallback to cosign select if required
+                    if (needCosign && $coSignSelect.length) { $coSignSelect.focus(); }
+                    return;
+                }
+
+                // determine earliest node using compareDocumentPosition
+                let earliest = resolved[0];
+                for (let i = 1; i < resolved.length; i++) {
+                    const node = resolved[i];
+                    const pos = node.compareDocumentPosition(earliest);
+                    // DOCUMENT_POSITION_FOLLOWING bit means node is before earliest
+                    if (pos & Node.DOCUMENT_POSITION_FOLLOWING) earliest = node;
+                }
+
+                // If earliest is not focusable (e.g., span), try nearest input/select/textarea
+                try {
+                    const $ear = $(earliest);
+                    if ($ear.is(':input')) {
+                        $ear.focus();
+                        return;
+                    }
+                    const $near = $ear.find('input,select,textarea').filter(':visible').first();
+                    if ($near.length) { $near.focus(); return; }
+                    const $sibling = $ear.closest('div, .row, .form-group').find('input,select,textarea').filter(':visible').first();
+                    if ($sibling.length) { $sibling.focus(); return; }
+                    // last resort
+                    $ear.focus();
+                } catch (e) { /* ignore focus errors */ }
+            }
+        
+            // Block any form submit (Enter key, programmatic) when co-sign required but not selected
+            $form.on('submit', function (e) {
+                if (needCosign && (!$coSignSelect.val() || $coSignSelect.val().toString().trim() === '')) {
+                    showFieldMessage('PhysicianAssessment.CoSignature', 'Please select a Co-Provider before submitting');
+                    $coSignSelect.addClass('is-invalid').focus();
+                    e.preventDefault();
+                    return false;
+                }
+            });
+
+            // initial UI setup
+            toggleCoSigner();
+        });
+    </script>
+
+    <script>
+    (function () {
+        const token = () => document.querySelector('input[name="__RequestVerificationToken"]').value;
+
+        async function postAndReplace(url, paId, mrn, action, containerId, btn) {
+            btn.disabled = true;
+            const originalText = btn.innerText;
+            btn.innerText = 'Working...';
+
+            try {
+                const formData = new URLSearchParams();
+                formData.append('paId', paId);
+                formData.append('mrn', mrn);
+                formData.append('action', action);
+
+                const resp = await fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                        'RequestVerificationToken': token()
+                    },
+                    body: formData.toString()
+                });
+
+                if (!resp.ok) {
+                    console.error('Fetch failed', resp.status);
+                    alert('Failed to fetch data. Please try again.');
+                    return;
+                }
+
+                const html = await resp.text();
+                document.getElementById(containerId).innerHTML = html;
+            } catch (err) {
+                console.error(err);
+                alert('An error occurred. Please try again.');
+            } finally {
+                btn.disabled = false;
+                btn.innerText = originalText;
+            }
+        }
+
+        document.getElementById('populateAllergiesBtn')?.addEventListener('click', function () {
+            const paId = this.dataset.paId;
+            const mrn = this.dataset.patientMrn;
+            const action = this.dataset.action;
+            postAndReplace('/PhysicianAssessment/FetchAssessmentAllergies', paId, mrn, action, 'allergiesContainer', this);
+        });
+
+        document.getElementById('repopulateAllergiesBtn')?.addEventListener('click', function () {
+            const paId = this.dataset.paId;
+            const mrn = this.dataset.patientMrn;
+            const action = this.dataset.action;
+            postAndReplace('/PhysicianAssessment/FetchAssessmentAllergies', paId, mrn, action, 'allergiesContainer', this);
+        });
+
+        document.getElementById('populateMedicationsBtn')?.addEventListener('click', function () {
+            const paId = this.dataset.paId;
+            const mrn = this.dataset.patientMrn;
+            const action = this.dataset.action;
+            postAndReplace('/PhysicianAssessment/FetchAssessmentMedications', paId, mrn, action, 'medicationsContainer', this);
+        });
+
+        document.getElementById('repopulateMedicationsBtn')?.addEventListener('click', function () {
+            const paId = this.dataset.paId;
+            const mrn = this.dataset.patientMrn;
+            const action = this.dataset.action;
+            postAndReplace('/PhysicianAssessment/FetchAssessmentMedications', paId, mrn, action, 'medicationsContainer', this);
+        });
+    })();
+    </script>
+
+}
+
+
+<style>
+    .required-highlight {
+        border: 3px solid red !important;
+        border-radius: 4px;
+    }
+
+    .field-message { font-size: .9rem; margin-left: .5rem; }
+    .field-message.d-none { display: none !important; }
+
+    /* Visually hide radio inputs but keep them accessible and focusable */
+    .btn-check {
+        position: absolute;
+        clip: rect(0, 0, 0, 0);
+        width: 1px;
+        height: 1px;
+        margin: -1px;
+        overflow: hidden;
+        white-space: nowrap;
+        border: 0;
+        padding: 0;
+    }
+
+    /* Style the label when its radio input is checked */
+    .btn-check:checked + .btn {
+        /* Apply Bootstrap 4's .btn-primary look */
+        color: #fff;
+        background-color: #2C3E50;
+        border-color: #2C3E50;
+        font-weight: 600;
+    }
+
+    /* Optional: focus styles for accessibility */
+    .btn-check:focus + .btn,
+    .btn:focus {
+        box-shadow: 0 0 0 0.2rem rgba(44, 62, 80, 0.4);
+    }
+</style>

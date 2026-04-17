@@ -1,0 +1,39 @@
+@using IS_Proj_HIT.Entities
+@model IEnumerable<Patient>
+
+<table class="stripe" id="motherLookupTab">
+    <thead>
+        <tr>
+            <th>MRN</th>
+            <th hidden>Last Name</th>
+            <th>Name</th>
+            <th>Date of Birth</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var p in Model)
+    {
+        <tr>
+            <td>@p.Mrn</td>
+            <td hidden>@p.Person.LastName</td>
+            <td>@($"{p.Person.FirstName} {p.Person.LastName}")</td>
+            <td>@(p.Person.Dob.HasValue ? p.Person.Dob.Value.ToShortDateString() : "")</td>
+            <td>
+                <a asp-controller="Patient"
+                   asp-action="ViewPatientDetails"
+                   asp-route-id="@p.Mrn"
+                   class="btn btn-nav">
+                    Details
+                </a>
+
+                <button type="button"
+                        class="btn btn-primary select-patient"
+                        data-mrn="@p.Mrn">
+                    Select
+                </button>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>

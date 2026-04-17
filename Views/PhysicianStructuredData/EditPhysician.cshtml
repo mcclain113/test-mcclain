@@ -1,0 +1,142 @@
+@model IS_Proj_HIT.ViewModels.PhysicianStructuredData.PhysicianStructuredDataViewModel
+@{
+    ViewBag.Title = "Edit Physician";
+}
+
+<h1>Edit</h1>
+
+<h4>Physician</h4>
+<hr />
+
+<div class="row">
+    <div class="col-md-10">
+        <form method="post">
+            @Html.AntiForgeryToken()
+            <div class="form-row">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="Physician.PhysicianId" value="@Model.Physician.PhysicianId" readonly/>
+                <input type="hidden" asp-for="Address.AddressId" value="@Model.Physician.AddressId" readonly/>
+                
+                <div class="form-group col-sm-6">
+                    <label asp-for="Physician.FirstName" class="control-label">First Name</label>
+                    <input asp-for="Physician.FirstName" 
+                        class="form-control" maxlength="100" required />
+                    <span asp-validation-for="Physician.FirstName" class="text-danger"></span>
+                </div>
+                <div class="form-group col-sm-6">
+                    <label asp-for="Physician.LastName" class="control-label">Last Name</label>
+                    <input asp-for="Physician.LastName" 
+                        class="form-control" maxlength="100" required />
+                    <span asp-validation-for="Physician.LastName" class="text-danger"></span>
+                </div>
+            </div>
+            <fieldset class="validate-address">
+                <div class="form-row">
+                    <div class="form-group col-sm-4">
+                        <label asp-for="Physician.AddressId" class="control-label">Street Address</label>
+                        <input asp-for="@Model.Address.Address1" class="validate form-control" maxlength="50"/>
+                        <span asp-validation-for="Address.Address1" class="invalid-summary text-danger" style="display:none">Please enter an Address</span>
+                    </div>            
+                    <div class="form-group col-sm-2">
+                        <label asp-for="Physician.AddressId" class="control-label">Suite or Apt #</label>
+                        @if (Model.Physician.Address == null){
+                            <input asp-for="@Model.Address.Address2" class="validate not-required form-control"maxlength="25" placeholder="Example:  Apt. 14"/>}
+                            else
+                            {
+                                <input asp-for="@Model.Address.Address2" class="validate not-required form-control"maxlength="25"/>
+                            }      
+                    </div>
+                    <div class="form-group col-sm-4">
+                        <label asp-for="Physician.AddressId" class="control-label">City</label>
+                        <input asp-for="@Model.Address.City" class="validate form-control"maxlength="50" />
+                        <span asp-validation-for="Address.City" class="invalid-summary text-danger" style="display:none">Please enter a City</span>
+                    </div>
+                    <div class="form-group col-sm-2">
+                        <label  class="control-label" asp-for="Address.AddressStateID">Select State</label>
+                        <select class="form-control" asp-for="Address.AddressStateID" asp-items="ViewBag.StateId"></select>
+                    </div>
+                    <!-- both the State and Country have default values so the 'validate' class is omitted  -->
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-sm-2">
+                        <label asp-for="Physician.AddressId" class="control-label">Zip Code</label>
+                        <input asp-for="@Model.Address.PostalCode" class="validate form-control zipcode"maxlength="11"/>
+                        <span asp-validation-for="Address.PostalCode" class="invalid-summary text-danger" style="display:none">Please enter a Postal Code</span>
+                    </div>
+                    <div class="form-group col-sm-4">
+                        <label asp-for="Physician.AddressId" class="validate not-required control-label">County</label>
+                        @if (Model.Physician.Address == null){
+                            <input asp-for="@Model.Address.County" class="validate not-required form-control"maxlength="50" placeholder="Example:  Jefferson"/>}
+                        else
+                        {
+                            <input asp-for="@Model.Address.County" class="validate not-required form-control"maxlength="50"/>
+                        }
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label asp-for="Address.CountryId" class="control-label">Country</label>
+                        <select asp-for="Address.CountryId" class="form-control" asp-items="ViewBag.CountryId"></select>
+                    </div>
+                </div>
+            </fieldset>
+
+            <div class="form-row">
+                <div class="form-group col-sm-6">
+                    <label asp-for="Physician.PhoneNumber" class="control-label">Phone Number</label>
+                    <input asp-for="Physician.PhoneNumber" class="form-control phone" maxlength="14"/>
+                    <span asp-validation-for="Physician.PhoneNumber" class="text-danger"></span>
+                </div>
+                <div class="form-group col-sm-6">
+                    <label asp-for="Physician.EmailAddress" class="control-label"></label>
+                    <input asp-for="Physician.EmailAddress" class="form-control" maxlength="50" />
+                    <span asp-validation-for="Physician.EmailAddress" class="text-danger"></span>
+                </div>                
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col-sm-6">
+                    <label asp-for="Physician.Credentials" class="control-label">Credentials</label>
+                    <input asp-for="Physician.Credentials" class="form-control" maxlength="100"/>
+                    <span asp-validation-for="Physician.Credentials" class="text-danger"></span>
+                </div>
+                <div class="form-group col-sm-6">
+                    <label asp-for="Physician.License" class="control-label">License</label>
+                    <input asp-for="Physician.License" class="form-control" maxlength="50"/>
+                    <span asp-validation-for="Physician.License" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col-sm-4">
+                    <label class="control-label" asp-for="Physician.SpecialtyId">Provider Specialty</label>
+                    <select class ="form-control" asp-for="Physician.SpecialtyId" asp-items="ViewBag.SpecialtyId"></select>
+                    <span asp-validation-for="Physician.SpecialtyId" class="text-danger"></span>
+                </div>
+                <div class="form-group col-sm-4">
+                    <label class="control-label" asp-for="Physician.ProviderTypeId">Provider Type</label>
+                    <select class ="form-control" asp-for="Physician.ProviderTypeId" asp-items="ViewBag.ProviderTypeId"></select>
+                    <span asp-validation-for="Physician.ProviderTypeId" class="text-danger"></span>
+                </div>
+                <div class="form-group col-sm-4">
+                    <label class="control-label" asp-for="Physician.ProviderStatusId">Provider Status</label>
+                    <select class="form-control" asp-for="Physician.ProviderStatusId" asp-items="ViewBag.ProviderStatusId"></select>
+                    <span asp-validation-for="Physician.ProviderStatusId" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <a asp-controller="PhysicianStructuredData" asp-action="ViewPhysicians" class="btn btn-outline-danger">Discard Changes</a>
+                </div>
+            
+                <div class="form-group">
+                    <input type="submit" value="Save Changes" class="btn btn-primary ml-3" />
+                </div>
+
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

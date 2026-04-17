@@ -1,0 +1,256 @@
+﻿@using IS_Proj_HIT.Entities.Enum
+@using System.Linq
+@model IS_Proj_HIT.ViewModels.Encounters.PhysicianAssessmentViewModel
+
+@{
+    ViewData["Title"] = "Physicians History & Physical";
+    var userPermissions = ViewData["UserPermissions"] as List<string>;
+    var signer = ViewBag.Providers;
+    var coSigner = ViewBag.Cosigners;
+}
+
+<partial name="PatientBannerPartial" model="ViewBag.Patient" class="mw-100"/>
+<partial name="_EncounterMenu" model="ViewBag.Encounter"/>
+
+<div class="row justify-content-start">
+    <div class="col mx-0 px-0">
+        <div class="card ">
+            <div class="card-header bg-primary text-white">
+                <h4>
+                    Physician History & Physical
+
+                    @if (userPermissions != null && (userPermissions.Contains("HistoryPhysicalEdit")) )
+                    {
+                        <a
+                            asp-controller="PhysicianAssessment"
+                            asp-action="UpdateHistoryAndPhysical"
+                            asp-route-assessmentId="@Model.PhysicianAssessment.PhysicianAssessmentId"
+                            asp-route-patientMRN="@ViewBag.Patient.Mrn"
+                            asp-route-encounterId="@Model.Encounter.EncounterId"
+                            class="btn btn-info btn-md float-right">
+                            Edit
+                        </a>
+                    } 
+
+                </h4>
+            </div>
+
+            <input asp-for="PhysicianAssessment.EncounterId" name="EncounterId" type="hidden" value="@ViewBag.Encounter.EncounterId"/>
+
+            <div class="card-body bg-light">
+                @* header information for history & physical view  *@
+                    <div class="row justify-content-around">
+                        <div class="col-sm-12 col-lg-4">
+                            <label style="padding-right: 1em">Admission Date: </label>
+                            <span class="font-weight-bold">@ViewBag.Encounter.AdmitDateTime.ToString("M/d/yyyy")</span>
+                        </div>
+                        <div class="col-sm-12 col-lg-4 form-group form-inline">
+                            <label asp-for="PhysicianAssessment.PhysicianAssessmentDate" class="mr-1" style="padding-right: 1em">Assessment Date:</label>
+                            <span class="font-weight-bold">@Model.PhysicianAssessment.PhysicianAssessmentDate?.ToString("M/d/yyyy")</span>
+                        </div>
+                    </div>
+                    <hr/>
+                    <div class="row justify-content-around">
+                        <div class="col-sm-12 col-lg-4">
+                            <label style="padding-right: 1em">Attending Physician:</label>
+                            <span class="font-weight-bold">@Model.AttendingPhysician?.FirstName @Model.AttendingPhysician?.LastName</span> 
+                        </div>
+                        <div class="col-sm-12 col-lg-4">
+                            <label style="padding-right: 1em">Visit Type:</label>
+                            <span class="font-weight-bold">@ViewBag.Encounter.PlaceOfService.Description</span>
+                        </div>
+                    </div>
+                    <hr/>
+                @* end header information for history & physical view  *@
+
+                 @* start section for Present Illness *@ 
+                    <div class="row">
+                        <div class="col-sm-12 mx-3">
+                            <label><strong>Present Illness: </strong></label><br>
+                            <div class="row form-group mx-3">
+                                <label style="padding-right: 1em;text-decoration: underline;">Chief Complaint:</label>
+                               
+                                @{
+                                    if(@Model.PhysicianAssessment.ChiefComplaint != null && @Model.PhysicianAssessment.ChiefComplaint != ""){
+                                        <p>@Model.PhysicianAssessment.ChiefComplaint</p>
+                                    }
+                                    else
+                                    {
+                                        <p>@ViewBag.Encounter.ChiefComplaint</p>
+                                    }
+                                }
+
+                            </div>
+                            <div class="row form-group mx-3">
+                                <label style="padding-right: 1em;text-decoration: underline;">History of Present Illness:</label>
+                                <span>@Model.PhysicianAssessment.HistoryOfPresentIllness</span>
+                            </div>
+                        </div>
+                    </div>
+                    <hr/>
+                @* end section for Present Illness *@ 
+
+                @* start section for Allergies and Medications *@ 
+                    <div class="row">
+                        <div class="col-sm-12 mx-3">
+                            <label><strong>Allergies and Medications: </strong></label><br>
+                            <div class="row form-group mx-1 align-items-start">
+                                <label class="col-auto pe-0" style="text-decoration: underline;">Allergies:</label>
+                                <div id="allergiesContainer">
+                                    @await Html.PartialAsync("_AssessmentAllergiesListPartial", Model.AssessmentAllergies)
+                                </div>
+                            </div>
+                            <div class="row form-group mx-1 align-items-start">
+                                <label class="col-auto pe-0" style="text-decoration: underline;">Medications:</label>
+                                <div class="col" id="medicationsContainer">
+                                    @await Html.PartialAsync("_AssessmentMedicationsListPartial", Model.AssessmentMedications)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr/>
+                @* end section for Allergies and Medications *@ 
+
+                @* start section for History *@ 
+                    <div class="row">
+                        <div class="col-sm-12 mx-3">
+                            <label><strong>History: </strong></label><br>
+                            <div class="row form-group mx-3">
+                                <label style="padding-right: 1em;text-decoration: underline;">Past Medical & Surgical History:</label>
+                                <span>@Model.PhysicianAssessment.PastMedicalSurgicalHistory</span>
+                            </div>
+                            <div class="row form-group mx-3">
+                                <label style="padding-right: 1em;text-decoration: underline;">Social History:</label>
+                                <span>@Model.PhysicianAssessment.SocialHistory</span>
+                            </div>
+                            <div class="row form-group mx-3">
+                                <label style="padding-right: 1em;text-decoration: underline;">Family History:</label>
+                                <span>@Model.PhysicianAssessment.FamilyHistory</span>
+                            </div>
+                        </div>
+                    </div>
+                    <hr/>
+                @* end section for History *@ 
+
+                @* start section for Review of Systems, Physical Exam *@
+                    <div class="row">
+                        <div class="col-sm-12 mx-3">
+                            @foreach (var examSystem in Model.SystemExamTypes)
+                            {
+                            <label><strong>@examSystem.ExamType1:</strong></label>
+                            <br />
+
+                            foreach (var systemType in examSystem.BodySystemTypes)
+                            {
+                                // find the index in the list for this BodySystemTypeId
+                                var idx = Model.BodySystemAssessments.FindIndex(x => x.BodySystemTypeId == systemType.BodySystemTypeId);
+                                if (idx < 0) idx = -1; // handle missing defensively
+
+                                @if (idx >= 0 && Model.BodySystemAssessments[idx].IsWithinNormalLimits != null)
+                                {
+                                <div class="row form-group mx-3">
+                                    <label style="padding-right: 1em;text-decoration: underline;">@systemType.Name:</label>
+                                    <span>@Model.BodySystemAssessments[idx].Comment</span>
+                                </div>
+                                }
+
+                                @if (systemType == examSystem.BodySystemTypes.LastOrDefault())
+                                {
+                                <hr />
+                                }
+                            }
+                            }
+                        </div>
+                    </div>
+                @* end section for Review of Systems, Physical Exam *@
+
+                @* start section for Assessment & Plan *@ 
+                    <div class="row">
+                        <div class="col-sm-12 mx-3">
+                            <label><strong>Assessment & Plan: </strong></label><br>
+                            <div class="row form-group mx-3">
+                                <label style="padding-right: 1em;text-decoration: underline;">Significant Diagnostic Tests:</label>
+                                <span>@Model.PhysicianAssessment.SignificantDiagnosticTests</span>
+                            </div>
+                            <div class="row form-group mx-3">
+                                <label style="padding-right: 1em;text-decoration: underline;">Assessment:</label>
+                                <p>@Model.PhysicianAssessment.Assessment</p>
+                            </div>
+                            <div class="row form-group mx-3">
+                                <label style="padding-right: 1em;text-decoration: underline;">Plan:</label>
+                                <span>@Model.PhysicianAssessment.Plan</span>
+                            </div>
+                        </div>
+                    </div>
+                    <hr/>
+                @* end section for Assessment & Plan *@ 
+
+                @* start section for Provider signatures *@    
+                <div class="row">
+                    <div class="col-12 col-lg-6">
+                        <div class="row ml-3 form-group">
+                            <label style="padding-right: 1em"><strong>Authoring Provider: </strong></label>
+                            <span>@Model.PhysicianAssessment.AuthoringProviderNavigation?.FirstName @Model.PhysicianAssessment.AuthoringProviderNavigation?.LastName</span>
+                            <input type="hidden" id="sign" value="@(Model.PhysicianAssessment.AuthoringProviderNavigation?.PhysicianId.ToString() ?? "")" />
+                        </div>
+
+                        <div class="row ml-3 form-group">
+                            <label style="padding-right: 1em"><strong>Provider Signature: </strong></label>
+                            <span>@Model.PhysicianAssessment.AuthoringProviderSignature</span>
+                        </div>
+
+                        <div class="row ml-3 form-group">
+                            <label style="padding-right: 1em"><strong>Date Signed: </strong></label>
+                            <span>@Model.PhysicianAssessment.AuthoringProviderSignedDate?.ToString("M/d/yyyy")</span>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-lg-6">
+                        <div id="cosign" style="display:none">
+                            <div class="row mb-3 form-group">
+                                <label style="padding-right: 1em"><strong>Co-Provider: </strong></label>
+                                <span>@Model.PhysicianAssessment.CoSignatureNavigation?.FirstName @Model.PhysicianAssessment.CoSignatureNavigation?.LastName</span>
+                            </div>
+                            <div class="row mb-3 form-group">
+                                <label style="padding-right: 1em"><strong>Co-Signature: </strong></label>
+                                <span>@Model.PhysicianAssessment.CoSigningProviderSignature</span>
+                            </div>
+                            <div class="row mb-3 form-group" id="timeStamp">
+                                <label style="padding-right: 1em"><strong>Date Signed: </strong></label>
+                                <span>@Model.PhysicianAssessment.CoSigningProviderSignedDate?.ToString("M/d/yyyy")</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @* end section for Provider signatures *@
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function() {
+    var providerId = $('#sign').val();
+    if (!providerId) {
+        // no provider -> nothing to do
+        return;
+    }
+
+    $.getJSON('/Encounter/GetProviderStatusId', { id: providerId })
+        .done(function(result) {
+            var raw = result && result.providerIdNumber;
+            var idNumber = Number(raw);
+            if (Number.isNaN(idNumber) || idNumber === 0) {
+                $('#cosign').hide();
+            } else if (idNumber === 2 || idNumber === 3) {
+                $('#cosign').show();
+            } else {
+                $('#cosign').hide();
+            }
+            })
+        .fail(function() {
+            // keep cosign hidden on error
+            $('#cosign').hide();
+        });
+    });
+</script>

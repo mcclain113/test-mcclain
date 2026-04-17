@@ -1,0 +1,59 @@
+@model List<IS_Proj_HIT.Entities.ClinicalReminder>
+
+@{
+    ViewData["Title"] = "Clinical Reminders";
+}
+
+<div class="row my-3">
+    <h3>
+        <a class="btn btn-primary" asp-controller="AlertStructuredData" asp-action="Index">
+            <i class="fa fa-arrow-left "></i>
+        </a>
+        Clinical Reminders
+    </h3>
+</div>
+
+<p>
+    <a class="btn btn-primary" asp-controller="AlertStructuredData" asp-action="CreateClinicalReminder">Create New</a>
+</p>
+
+<table class="stripe nowrap" id="clinicalReminderTable">
+    <thead>
+        <tr>
+            <th>Clinical Reminder</th>
+            <th>Status</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var clinicalReminder in Model)
+        {
+            <tr>
+                <td>@clinicalReminder.Name</td>
+                <td>@(clinicalReminder.IsActive ? "Active" : "Inactive")</td>
+                <td>
+                    <a class="btn btn-primary" asp-controller="AlertStructuredData" asp-action="EditClinicalReminder" asp-route-id="@clinicalReminder.ClinicalReminderId">Edit</a>
+                    <a class="btn btn-danger" asp-controller="AlertStructuredData" asp-action="DeleteClinicalReminder" asp-route-id="@clinicalReminder.ClinicalReminderId">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section scripts{
+    <script>
+        // DataTable Documentation found here: https://datatables.net/
+        $(function () {
+            // Creates DataTable
+            $('#clinicalReminderTable').DataTable({
+                columns: [null, null, { orderable: false }],
+                order: [[0, 'asc']],
+                pageLength: 10,
+                searching: true,
+                language: {
+                    emptyTable: 'None found'
+                }
+            });
+        });
+    </script>
+}

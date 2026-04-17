@@ -1,0 +1,143 @@
+@model IS_Proj_HIT.ViewModels.UserManagement.UserManagementStructuredDataViewModel
+@{
+    ViewBag.Title = "Details - Facility";
+}
+
+<div class="header-container">
+    <h1>Details</h1>
+    <a asp-controller="UserManagementStructuredData" asp-action="EditFacility"  asp-route-id="@Model.Facility.FacilityId" class="btn btn-primary">Edit</a>
+</div>
+
+<h4>Facility</h4>
+<hr />
+
+<div class="row">
+    <div class="col-md-10">
+        <form method="post">
+            @Html.AntiForgeryToken()
+            <div class="form-row">
+                <input type="hidden" asp-for="Facility.FacilityId" value="@Model.Facility.FacilityId" readonly/>
+                <input type="hidden" asp-for="Address.AddressId" readonly/>
+                <input type="hidden" asp-for="AddressState.StateID" readonly/>
+                
+                <div class="form-group col-sm-6">
+                    <label asp-for="Facility.Name" class="control-label">Facility Name</label>
+                    <span class="form-control">@Model.Facility.Name</span>
+                </div>
+                <div class="form-group col-sm-6">
+                    <label asp-for="Facility.Description" class="control-label">Description</label>
+                    <span class="form-control">@Model.Facility.Description</span>
+                </div>
+            </div>
+ 
+            <div class="form-row">
+                <div class="form-group col-sm-4">
+                    <label asp-for="Facility.AddressId" class="control-label">Street Address</label>
+                    @if(Model.Address != null)
+                    {
+                        <span class="form-control">@Model.Address.Address1</span>
+                    }
+                    else
+                    {
+                        <span class="form-control"></span>
+                    }    
+                </div>            
+                <div class="form-group col-sm-2">
+                    <label asp-for="Facility.AddressId" class="control-label">Suite or Apt #</label>
+                    @if(Model.Address != null)
+                    {
+                        <span class="form-control">@Model.Address.Address2</span>
+                    }
+                    else
+                    {
+                        <span class="form-control"></span>
+                    }
+                </div>
+                <div class="form-group col-sm-4">
+                    <label asp-for="Facility.AddressId" class="control-label">City</label>
+                    @if(Model.Address != null)
+                    {
+                        <span class="form-control">@Model.Address.City</span>
+                    }
+                    else
+                    {
+                        <span class="form-control"></span>
+                    }
+                </div>
+                <div class="form-group col-sm-2">
+                    <label asp-for="Facility.AddressId" class="control-label">State</label>
+                    @if(Model.Address != null)
+                    {
+                        <span class="form-control">@Model.AddressState.StateAbbreviation</span>
+                    }
+                    else
+                    {
+                        <span class="form-control"></span>
+                    }
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col-sm-2">
+                    <label asp-for="Facility.AddressId" class="control-label">Zip Code</label>
+                    @if(Model.Address != null)
+                    {
+                        <span class="form-control">@Model.Address.PostalCode</span>
+                    }
+                    else
+                    {
+                        <span class="form-control"></span>
+                    }
+                </div>
+                <div class="form-group col-sm-4">
+                    <label asp-for="Facility.AddressId" class="control-label">County</label>
+                    @if(Model.Address != null)
+                    {
+                        <span class="form-control">@Model.Address.County</span>
+                    }
+                    else
+                    {
+                        <span class="form-control"></span>
+                    }
+                </div>
+                <div class="form-group col-sm-6">
+                    <label  class="control-label" asp-for="Address.Country">Country</label>
+                    @if(Model.Address != null)
+                    {
+                        <span class="form-control">@Model.Country.Name</span>
+                    }
+                    else
+                    {
+                        <span class="form-control"></span>
+                    }
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col-sm-6">
+                    <label asp-for="Facility.Phone" class="control-label">Phone Number</label>
+                    @if (Model.Facility.Phone != null){
+                        <span class="form-control">@string.Format("{0:(###) ###-####}", long.Parse(Model.Facility.Phone))</span>
+                        } else {
+                            <span class="form-control"></span>
+                        }
+                </div>               
+            </div>
+
+        </form>
+    </div>
+</div>
+
+
+<div>
+    <a asp-controller="UserManagementStructuredData" asp-action="ViewFacilities">Back to List</a>
+</div>
+
+<style>
+    .header-container { 
+        display: flex; 
+        justify-content: space-between; 
+        align-items: center; 
+        margin-bottom: 20px; /* Adjust as needed for spacing */ 
+        }    
+</style>

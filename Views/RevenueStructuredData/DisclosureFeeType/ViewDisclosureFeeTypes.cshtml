@@ -1,0 +1,166 @@
+@model List<IS_Proj_HIT.Entities.DisclosureFeeType>
+
+    <!-- this script is for the drap and drop, loading it before anything in the page might need it -->
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+@{
+    ViewData["Title"] = "Disclosure Fee Types";
+}
+
+<div class="row my-3">
+    <h3>
+        <a class="btn btn-primary" asp-controller="RevenueStructuredData" asp-action="Index">
+            <i class="fa fa-arrow-left "></i>
+        </a>
+        Disclosure Fee Types
+    </h3>
+</div>
+
+<p>
+    <a class="btn btn-primary" asp-controller="RevenueStructuredData" asp-action="CreateDisclosureFeeType">Create New</a>
+</p>
+
+<!-- providing a modal for User info while the drag and drop result is posted and page refreshed  -->
+<div id="savingModal" class="modal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body">
+        <p>Saving changes...</p>    <!-- could add more text or an icon here -->
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="table-responsive">
+    <table id="disclosureFeeTypeTable" class="stripe dt-responsive">
+        <thead>
+            <tr>
+                <th></th>
+                <th class="hidden-column">Id</th>
+                <th>Sort Order</th> <!-- want to hide this column as well but it helps the User identify where they are in the dataset  -->
+                <th>Fee Amount</th>
+                <th>Fee Description</th>
+                <th>Comments</th>
+                <th>Effective Date</th>
+                <th>Expiration Date</th>
+                <th class="all"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var disclosureFeeType in Model)
+            {
+                <tr data-id="@disclosureFeeType.DisclosureFeeTypeId">
+                    <td class="drag-handle"><i class="fas fa-grip-lines"></i></td>
+                    <td class="hidden-column">@disclosureFeeType.DisclosureFeeTypeId</td>
+                    <td>@disclosureFeeType.SortOrder</td>
+                    <td>@disclosureFeeType.FeeAmount</td>
+                    <td>@disclosureFeeType.FeeDescription</td>
+                    <td>@disclosureFeeType.Comments</td>
+                    <td>@disclosureFeeType.EffectiveDate</td>
+                    <td>@disclosureFeeType.ExpirationDate</td>
+                    <td>
+                        <a class="btn btn-primary" asp-controller="RevenueStructuredData" asp-action="EditDisclosureFeeType" asp-route-id="@disclosureFeeType.DisclosureFeeTypeId">Edit</a>
+                        <a class="btn btn-danger" asp-controller="RevenueStructuredData" asp-action="DeleteDisclosureFeeType" asp-route-id="@disclosureFeeType.DisclosureFeeTypeId">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<style>
+    .drag-handle {
+        cursor: grab;
+        font-size: 20px;
+        padding: 5px;
+    }
+
+    .hidden-column {
+        display: none;  /* use CSS to hide the column(s) instead of setting in DataTable below as DataTable settings remove the column (and all its data) from DOM  */
+    }
+    #disclosureFeeTypeTable td:last-child, #disclosureFeeTypeTable th:last-child {
+        white-space: nowrap;
+    }
+</style>
+
+@section scripts{
+    <script>
+        // these scripts could be moved to disclosureFeeType.js but were kept here because they are specific to this view
+        // note the loading of the jquery file up above - loading it early in the file read
+        // DataTable Documentation found here: https://datatables.net/
+        $(function () {
+            // Creates DataTable
+            $('#disclosureFeeTypeTable').DataTable({
+                columns: [{ orderable: false },null,null,null, null,null,null,null, { orderable: false }],
+                order: [[2, 'asc']],
+                pageLength: 10,
+                searching: true,
+                language: {
+                    emptyTable: 'No Disclosure Fee Types found'
+                },
+                stateSave: true, // this remember page settings (i.e., which page, how many records in view, etc.)
+                stateDuration: -1,   // can be in seconds, but -1 means store the state only for the current session
+                responsive: true,    // table resizes to the view screen
+                columnDefs: [
+                        // higher numbers for responsivePriority are hidden first when resizing to smaller viewscreen
+                    { targets: 0, responsivePriority: 1},
+                    { targets: 1, responsivePriority: 10000, searchable: false},    // not searching on the DisclosureFeeTypeId
+                    { targets: 2, responsivePriority: 2, searchable: false, className: 'text-center'},    // not searching on the SortOrder fields, center the text
+                    { targets: 3, responsivePriority: 3, className: 'text-right pr-4'},    // right align currency with a bit of padding on the right
+                    { targets: 4, responsivePriority: 4},
+                    { targets: 5, responsivePriority: 6},
+                    { targets: 6, responsivePriority: 2100, className: 'text-center'},// center the date
+                    { targets: 7, responsivePriority: 2000, className: 'text-center'},// center the date
+                    { targets: 8, responsivePriority: 1, className: 'all'}  // className all means must remain visible, no wrapping of content
+                ]
+            });
+
+            // capture the first row SortOrder value as baseline for the page, build & send a Dictionary instead of using a special class or ViewModel
+            $("#disclosureFeeTypeTable tbody").sortable({
+                handle: ".drag-handle",
+                start: function (event, ui) {
+                    // Capture and store the baseline sort order from the first row on the table.
+                    var startingOrder = parseInt(
+                        $("#disclosureFeeTypeTable tbody tr:first")
+                            .find("td").eq(2).text().trim(),
+                        10
+                    );
+                    // Store it for later use (e.g., on the dragged item)
+                    ui.item.data("baseline", startingOrder);
+                },
+                update: function (event, ui) {
+                    // Retrieve the baseline value
+                    var baseline = ui.item.data("baseline");
+
+                    // Prepare a dictionary mapping each ID to its new sort order
+                    var sortedOrders = {};
+
+                    $("#disclosureFeeTypeTable tbody tr").each(function (index) {
+                        var id = $(this).attr("data-id");
+                        // Calculate new sort order as baseline + index
+                        sortedOrders[id] = baseline + index;
+                    });
+
+                    // Show a saving modal if needed
+                    setTimeout(function () {
+                        $("#savingModal").modal("show");
+                    }, 300);
+
+                    $.ajax({
+                        url: "/RevenueStructuredData/UpdateOrder",
+                        type: "POST",
+                        contentType: "application/json",
+                        data: JSON.stringify(sortedOrders),
+                        success: function () {
+                            $("#savingModal").modal("hide");
+                            location.reload();
+                        },
+                        error: function (error) {
+                            console.error("Error updating order:", error);
+                            $("#savingModal").modal("hide");
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+}

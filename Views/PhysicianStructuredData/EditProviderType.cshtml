@@ -1,0 +1,42 @@
+@model IS_Proj_HIT.ViewModels.PhysicianStructuredData.PhysicianStructuredDataViewModel
+@{
+    ViewBag.Title = "Edit Provider Type";
+}
+
+<h1>Edit</h1>
+
+<h4>Provider Type</h4>
+<hr />
+
+<div class="row">
+    <div class="col-md-10">
+        <form method="post">
+            @Html.AntiForgeryToken()
+            <div class="form-row">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="ProviderType.ProviderTypeId" value="@Model.ProviderType.ProviderTypeId" readonly/>
+
+                <div class="form-group col-sm-6">
+                    <label asp-for="ProviderType.Name" class="control-label">Provider Type Name</label>
+                    <input asp-for="ProviderType.Name" class="form-control" maxlength="100" required />
+                    <span asp-validation-for="ProviderType.Name" class="text-danger"></span>
+                </div>
+                <div class="form-group col-sm-6">
+                    <label asp-for="ProviderType.Description" class="control-label">Provider Type Description</label>
+                    <input asp-for="ProviderType.Description" class="form-control" maxlength="100" />
+                    <span asp-validation-for="ProviderType.Description" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <a asp-controller="PhysicianStructuredData" asp-action="ViewProviderTypes" class="btn btn-outline-danger">Discard Changes</a>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Save Changes" class="ml-3 btn btn-primary" />
+                </div>
+            </div>            
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

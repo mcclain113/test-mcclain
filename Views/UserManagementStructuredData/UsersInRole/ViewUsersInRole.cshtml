@@ -1,0 +1,59 @@
+@model IS_Proj_HIT.ViewModels.UserManagement.UserManagementStructuredDataViewModel
+
+@{
+    ViewData["Title"] = "Users In Role";
+}
+
+<h3 class="d-flex mt-3">
+    <a class="btn btn-primary" asp-controller="UserManagementStructuredData" asp-action="ViewRoles">
+        <i class="fa fa-arrow-left "></i>
+    </a>
+    <span class="ml-2">Users In Role: <b class="ml-3">@Model.IdentityRole.Name</b></span>
+    <a class="btn btn-info ml-auto" asp-controller="UserManagementStructuredData" asp-action="EditUsersInRole" asp-route-id="@Model.IdentityRole.Id" asp-route-mode="Edit">Edit Users in Role</a>
+</h3>
+
+<table class="stripe nowrap" id="usersInRoleTable">
+    <thead>
+        <tr>
+            <th hidden>Last Name</th>
+            <th>Name</th>
+            <th>Email</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model.Users)
+        {
+            <tr>
+                <td hidden>@user.LastName</td>
+                <td>
+                    @($"{user.FirstName} {user.LastName}")
+                </td>
+                <td>
+                    @user.Email
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section scripts{
+    <script>
+        // DataTable Documentation found here: https://datatables.net/
+        $(document).ready(function () {
+            // Creates DataTable
+            $('#usersInRoleTable').DataTable({
+                columns: [
+                    { visible: false, orderable: true }, // Hidden, but sortable
+                    null,
+                    null
+                ],
+                order: [[0, 'asc']],
+                pageLength: 10,
+                searching: true,
+                language: {
+                    emptyTable: 'None found'
+                }
+            });
+        });
+    </script>
+}

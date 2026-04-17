@@ -1,0 +1,45 @@
+@model IS_Proj_HIT.ViewModels.PhysicianStructuredData.PhysicianStructuredDataViewModel
+@{
+    ViewBag.Title = "Delete Specialty";
+}
+
+<h1>Delete</h1>
+
+<h3>@ViewData["RegularMessage"]</h3>
+<h3 class="error">@ViewData["ErrorMessage"]</h3>
+
+<h4>Specialty</h4>
+<hr />
+
+<div class="row">
+    <div class="col-md-10">
+        <form method="post">
+            @Html.AntiForgeryToken()
+            <div class="form-row">
+                
+                <input type="hidden" asp-for="Specialty.SpecialtyId" value="@Model.Specialty.SpecialtyId" readonly/>
+
+                <div class="form-group col-sm-6">
+                    <label asp-for="Specialty.Name" class="control-label">Specialty</label>
+                    <input asp-for="Specialty.Name" class="form-control" maxlength="100" required />
+                    
+                </div>
+                <div class="form-group col-sm-6">
+                    <label asp-for="Specialty.Description" class="control-label">Description</label>
+                    <input asp-for="Specialty.Description" class="form-control" maxlength="100" />
+                    
+                </div>
+                <div class="form-group">
+                    <a asp-controller="PhysicianStructuredData" asp-action="ViewSpecialties" class="btn btn-outline-danger">Discard Changes</a>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Delete Item" class="ml-3 btn btn-primary" />
+                </div>
+            </div>            
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-controller="PhysicianStructuredData" asp-action="ViewSpecialties">Back to List</a>
+</div>

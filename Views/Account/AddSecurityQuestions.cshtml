@@ -1,0 +1,119 @@
+@model IS_Proj_HIT.ViewModels.Account.SecurityQuestionsViewModel
+
+@{
+    ViewData["Title"] = "Security Questions";
+}
+
+<div class="container">
+    <div class="row justify-content-center">
+        <h1>@ViewData["Title"]</h1>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-md-4">
+        <form asp-action="AddSecurityQuestions" asp-controller="Account" method="post" id="addSecurityQuestions">
+            @Html.AntiForgeryToken()
+            <input type="hidden" asp-for="CurrentUserId" />
+            <input type="hidden" asp-for="ReturnUrl" />
+            <div asp-validation-summary="All" class="text-danger"></div>
+
+            <div class="form-group">
+                <label for="question1">Question One</label>
+                <select class="custom-select mr-sm-2 dropdowns" id="question1" asp-for="SecurityQuestion1" asp-items="Model.Questions">
+                    <option value="">Select Question</option>
+                </select>
+                <span asp-validation-for="SecurityQuestion1" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="question1Answer">Answer</label>
+                <input type="text" class="form-control" placeholder="Answer" id="question1Answer" asp-for="SecurityQuestion1Answer" />
+                <span asp-validation-for="SecurityQuestion1Answer" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="question2">Question Two</label>
+                <select class="custom-select mr-sm-2 dropdowns" id="question2" asp-for="SecurityQuestion2" asp-items="Model.Questions">
+                    <option value="">Select Question</option>
+                </select>
+                <span asp-validation-for="SecurityQuestion2" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="question2Answer">Answer</label>
+                <input type="text" class="form-control" placeholder="Answer" id="question2Answer" asp-for="SecurityQuestion2Answer" />
+                <span asp-validation-for="SecurityQuestion2Answer" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="question3">Question Three</label>
+                <select class="custom-select mr-sm-2 dropdowns" id="question3" asp-for="SecurityQuestion3" asp-items="Model.Questions">
+                    <option value="">Select Question</option>
+                </select>
+                <span asp-validation-for="SecurityQuestion3" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="question3Answer">Answer</label>
+                <input type="text" class="form-control" placeholder="Answer" id="question3Answer" asp-for="SecurityQuestion3Answer" />
+                <span asp-validation-for="SecurityQuestion3Answer" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">Confirm</button>
+                <button type="button" class="btn btn-secondary ml-2" onclick="resetForm()">Reset</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        function resetForm() {
+            // Reset form fields
+            document.getElementById('addSecurityQuestions').reset();
+
+            // Restore original options for all dropdowns
+            $("select").each(function () {
+                $(this).empty(); // Remove all current options
+                var originalOptions = $(this).data("original-options"); // Retrieve stored options
+                
+                if (originalOptions) {
+                    $(this).append(originalOptions); // Restore the original options
+                }
+            });
+        }
+
+        $(document).ready(function () {
+            // Store original dropdown options when the page loads
+            $("select").each(function () {
+                $(this).data("original-options", $(this).html());
+            });
+
+            // Disable/removes options dynamically when a selection is made
+            $("select").change(function () {
+                var selectedValues = [];
+
+                $("select").each(function () {
+                    var selected = $(this).val();
+                    if (selected) {
+                        selectedValues.push(selected);
+                    }
+                });
+
+                $("select").each(function () {
+                    var dropdown = $(this);
+                    var currentSelection = dropdown.val();
+
+                    dropdown.find("option").each(function () {
+                        var option = $(this);
+                        
+                        if (selectedValues.includes(option.val()) && option.val() !== currentSelection) {
+                            option.remove();
+                        }
+                    });
+                });
+            });
+        });
+    </script>
+}

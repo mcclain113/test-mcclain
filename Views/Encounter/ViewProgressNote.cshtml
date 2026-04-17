@@ -1,0 +1,60 @@
+@model IS_Proj_HIT.ViewModels.ProgressNotesViewModel
+
+@{
+    var userPermissions = ViewData["UserPermissions"] as List<string>;
+}
+
+<partial model="ViewBag.Patient" name="PatientBannerPartial" />
+<partial name="_EncounterMenu" model="Model.Encounter"/>
+
+<div class="row justify-content-start">
+    <div class="col mx-0 px-0">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h4>
+                    Details for Progress Note - @Model.ProgressNote.ProgressNoteId
+                    @if (userPermissions != null && (userPermissions.Contains("ProgressNotesEdit")) )
+                    {
+                        <a asp-action="EditProgressNote"
+                           asp-route-id="@Model.Encounter.EncounterId"
+                           asp-route-pId="@Model.ProgressNote.ProgressNoteId"
+                           class="btn btn-info btn-sm float-right">
+                            Edit
+                        </a>
+                    }
+                </h4>
+            </div>
+            <div class="card-body bg-light"> 
+                <div class="container">
+                    <div class="col-sm-8" style="margin: auto;">
+                        <div class="form-group form-inline">  
+                            <label style="padding-right: 3%; padding: 2%;">Last Updated: </label>
+                            <span style="width: 40%;" class="font-weight-bold"> @Model.ProgressNote.LastUpdated</span>
+                        </div>
+                        <hr/>
+                        <div class="form-group form-inline">
+                            <label style="padding-right: 3%; padding: 2%;">Select a note type: </Label>
+                            <span style="width: 40%;" class="font-weight-bold"> @Model.ProgressNote.NoteType.NoteType1</span>
+                        </div>
+                        <hr/>
+                        <div class="form-group form-inline">
+                            <label style="padding-right: 3%; padding: 2%;">Note: </Label>
+                            <span style="width: 40%;" class="font-weight-bold"> @Model.ProgressNote.Note</span>
+                        </div>
+                        <hr/>
+                        <div class="form-group form-inline">
+                            <label style="padding-right: 3%; padding: 2%;">Physician: </Label>
+                            <span style="width: 40%;" class="font-weight-bold"> @Model.ProgressNote.Physician.LastName</span>
+                        </div>
+                        <hr/>
+                        <div class="form-group form-inline">
+                            <label style="padding-right: 3%; padding: 2%;">Co-Physician: </Label>
+                            <span style="width: 40%;" class="font-weight-bold"> @Model.ProgressNote.CoPhysician.LastName</span>
+                        </div>
+                        <hr/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

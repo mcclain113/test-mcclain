@@ -1,0 +1,45 @@
+@model IS_Proj_HIT.ViewModels.PcaStructuredDataViewModel
+@{
+    ViewBag.Title = "Create Temp Route Type";
+    var userPermissions = ViewData["UserPermissions"] as List<string>;
+}
+
+<h1>Create</h1>
+
+<h4>Temp Route Type</h4>
+<hr />
+
+<div class="row">
+    <div class="col-md-10">
+        <form method="post">
+            @Html.AntiForgeryToken()
+            <div class="form-row">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group col-sm-6">
+                    <label asp-for="TempRouteType.TempRouteTypeName" class="control-label">Temp Route Type Name</label>
+                    <input asp-for="TempRouteType.TempRouteTypeName" 
+                        class="form-control" maxlength="50" required
+                        placeholder="Example:  Oral" />
+                    <span asp-validation-for="TempRouteType.TempRouteTypeName" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-row">            
+                <div class="form-group">
+                    @if (userPermissions != null && (userPermissions.Contains("StructuredDataAdd")) )
+                    {               
+                        <input type="submit" value="Create" class="btn btn-primary" />
+                    }
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<div>
+    <a asp-controller="PcaStructuredData" asp-action="ViewTempRouteTypes">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

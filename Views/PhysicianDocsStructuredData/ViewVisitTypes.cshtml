@@ -1,0 +1,62 @@
+@model List<IS_Proj_HIT.Entities.VisitType>
+
+@{
+    ViewData["Title"] = "Visit Types";
+}
+
+<div class="row my-3">
+<h3>
+    <a class="btn btn-primary" asp-controller="PhysicianDocsStructuredData" asp-action="Index">
+        <i class="fa fa-arrow-left "></i>
+    </a>
+    Visit Types
+</h3>
+</div>
+
+<p>
+    <a class="btn btn-primary" asp-controller="PhysicianDocsStructuredData" asp-action="CreateVisitType">Create New</a>
+</p>
+
+<table class="stripe nowrap" id="visitTypeTable">
+    <thead>
+        <tr>
+            <th>
+                Visit Type Name
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var visitType in Model)
+        {
+            <tr>
+                <td>
+                    @visitType.Name
+                </td>
+
+                <td>
+                    <a class="btn btn-primary" asp-controller="PhysicianDocsStructuredData" asp-action="EditVisitType" asp-route-id="@visitType.VisitTypeId">Edit</a>
+                    <a class="btn btn-danger" asp-controller="PhysicianDocsStructuredData" asp-action="DeleteVisitType" asp-route-id="@visitType.VisitTypeId">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section scripts{
+    <script>
+        // Creates DataTable
+        // DataTable Documentation found here: https://datatables.net/
+        $(function () {
+            $('#visitTypeTable').DataTable({
+                columns: [null, { orderable: false }],
+                order: [[0, 'asc']],
+                pageLength: 10,
+                searching: true,
+                language: {
+                    emptyTable: 'None found.'
+                }
+            });
+        });
+    </script>
+}

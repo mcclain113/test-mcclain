@@ -1,0 +1,49 @@
+@model IS_Proj_HIT.ViewModels.PhysicianStructuredData.PhysicianStructuredDataViewModel
+@{
+    ViewBag.Title = "Delete Physician";
+}
+
+<h1>Delete</h1>
+
+<h3>@ViewData["RegularMessage"]</h3>
+<h3 class="error">@ViewData["ErrorMessage"]</h3>
+
+<h4>Physician</h4>
+<hr />
+
+<div class="row">
+    <div class="col-md-10">
+        <form method="post">
+            @Html.AntiForgeryToken()
+            <div class="form-row">
+
+                <input type="hidden" asp-for="Physician.PhysicianId" value="@Model.Physician.PhysicianId" readonly/>
+                <input type="hidden" asp-for="Address.AddressId" />
+
+                <div class="form-group col-sm-4">
+                    <label asp-for="Physician.FirstName" class="control-label">First Name</label>
+                    <input asp-for="Physician.FirstName" 
+                        class="form-control" maxlength="100" />
+                    <span asp-validation-for="Physician.FirstName" class="text-danger"></span>
+                </div>
+                <div class="form-group col-sm-4">
+                    <label asp-for="Physician.LastName" class="control-label">Last Name</label>
+                    <input asp-for="Physician.LastName" 
+                        class="form-control" maxlength="100" />
+                    <span asp-validation-for="Physician.LastName" class="text-danger"></span>
+                </div>
+                <div class="form-group col-sm-4">
+                    <label asp-for="Physician.License" class="control-label">License</label>
+                    <input asp-for="Physician.License" class="form-control" maxlength="50"/>
+                    <span asp-validation-for="Physician.License" class="text-danger"></span>
+                </div>
+               <div class="form-group">
+                    <a asp-controller="PhysicianStructuredData" asp-action="ViewPhysicians" class="btn btn-outline-danger">Discard Changes</a>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Delete Physician" class="ml-3 btn btn-primary" />
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

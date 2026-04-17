@@ -1,0 +1,57 @@
+@model IS_Proj_HIT.ViewModels.EncounterStructuredDataViewModel
+@{
+    ViewBag.Title = "Create Point Of Origin";
+}
+
+<h1>Create</h1>
+
+<h4>Point Of Origin</h4>
+<hr />
+
+<h3 class="error">@ViewData["ErrorMessage"]</h3>
+
+<div class="row">
+    <div class="col-md-10">
+        <form method="post">
+            @Html.AntiForgeryToken()
+            <div class="form-row">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group col-sm-2">
+                    <label asp-for="PointOfOrigin.WiPopCode" class="control-label">WiPopCode</label>
+                    <input asp-for="PointOfOrigin.WiPopCode" 
+                        class="form-control" maxlength="3" required
+                        placeholder="Example:  MG8" />
+                    <span asp-validation-for="PointOfOrigin.WiPopCode" class="text-danger"></span>
+                </div>
+                <div class="form-group col-sm-4">
+                    <label asp-for="PointOfOrigin.Description" class="control-label">Description</label>
+                    <input asp-for="PointOfOrigin.Description" 
+                        class="form-control" maxlength="150"  
+                        placeholder="Example:  Clinic or Physician's Office"/>
+                    <span asp-validation-for="PointOfOrigin.Description" class="text-danger"></span>
+                </div>
+                <div class="form-group col-sm-6">
+                    <label asp-for="PointOfOrigin.Explaination" class="control-label">Explanation</label>
+                    <input asp-for="PointOfOrigin.Explaination" 
+                        class="form-control"   
+                        placeholder="Example:  Clinic or Physician's Office usage note..."/>
+                    <span asp-validation-for="PointOfOrigin.Explaination" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                </div>
+
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<div>
+    <a asp-controller="EncounterStructuredData" asp-action="ViewPointOfOrigins">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

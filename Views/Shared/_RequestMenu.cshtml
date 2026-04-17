@@ -1,0 +1,83 @@
+﻿@using IS_Proj_HIT.Entities
+@model IS_Proj_HIT.ViewModels.Disclosure.RequestDetailsViewModel
+
+<div class="card col-2 mx-0 px-0 float-left">
+    <div class="card-header bg-primary text-white">
+        <h4>
+            Request Menu
+        </h4>
+    </div>
+    <div class="card border-0 border-top border-left border-right">
+        <div class="card-header">
+            <h5 class="mb-0">
+                <a asp-action="RequestDetails" asp-route-Id="@Model.Request.RequestId" id="RequestDetails" class="btn btn-link menuLink link">Request</a>
+            </h5>
+        </div>
+    </div>
+    <div class="card border-0 border-top border-left border-right">
+        <div class="card-header">
+            <h5 class="mb-0">
+                <a asp-action="RequesterDetails" asp-route-id="@Model.Request.RequestId" id="RequesterDetails" class="btn btn-link menuLink link">Requester</a>
+            </h5>
+        </div>
+    </div>
+    <div class="card border-0 border-top border-left border-right">
+        <div class="card-header text-left">
+            <h5 class="mb-0">
+                <a asp-action="PatientDetails" asp-route-id="@Model.Request.RequestId" id="PatientDetails" class="btn btn-link menuLink link">Patient</a>
+            </h5>
+        </div>
+    </div>
+    <div class="card border-0 border-top border-left border-right">
+        <div class="card-header text-left">
+            <h5 class="mb-0">
+                <a asp-action="PatientRepresentativeDetails" asp-route-id="@Model.Request.RequestId" id="PatientRepresentativeDetails" class="btn btn-link menuLink link text-left">Patient Representative</a>
+            </h5>
+        </div>
+    </div>
+    <div class="card border-0 border-top border-left border-right">
+        <div class="card-header text-left">
+            <h5 class="mb-0">
+                <a asp-action="RequestedItemsDetails" asp-route-id="@Model.Request.RequestId" id="RequestedItemsDetails" class="btn btn-link menuLink link text-left">Requested Items</a>
+            </h5>
+        </div>
+    </div>
+    <div class="card border-0 border-top border-left border-right">
+        <div class="card-header text-left">
+            <h5 class="mb-0">
+                <a asp-action="DisclosureDetails" asp-route-id="@Model.Request.RequestId" id="DisclosureDetails" class="btn btn-link menuLink link">Invoice</a>
+            </h5>
+        </div>
+    </div>
+    <div class="card border-0">
+        <div class="card-header">
+            <h5 class="mb-0">
+                <a asp-action="LegalDetails" asp-route-id="@Model.Request.RequestId" id="LegalDetails" class="btn btn-link menuLink link">Legal</a>
+            </h5>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        // Store the current action name rendered by Razor into a JavaScript variable
+        var currentActionName = '@ViewContext.RouteData.Values["action"]';
+
+        // Select the tab based on the action name
+        if (currentActionName === 'RequestDetails') {
+            $('#RequestDetails').removeClass('menuLink').addClass('activeMenuLink');
+        } else if (currentActionName === 'RequesterDetails') {
+            $('#RequesterDetails').removeClass('menuLink').addClass('activeMenuLink');
+        } else if (currentActionName === 'PatientDetails') {
+            $('#PatientDetails').removeClass('menuLink').addClass('activeMenuLink');
+        } else if (currentActionName === 'PatientRepresentativeDetails') {
+            $('#PatientRepresentativeDetails').removeClass('menuLink').addClass('activeMenuLink');
+        } else if (currentActionName === 'RequestedItemsDetails') {
+            $('#RequestedItemsDetails').removeClass('menuLink').addClass('activeMenuLink');
+        } else if (currentActionName === 'DisclosureDetails') {
+            $('#DisclosureDetails').removeClass('menuLink').addClass('activeMenuLink');
+        } else if (currentActionName === 'LegalDetails') {
+            $('#LegalDetails').removeClass('menuLink').addClass('activeMenuLink');
+        }
+    });
+</script>

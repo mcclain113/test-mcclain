@@ -1,0 +1,43 @@
+@model IS_Proj_HIT.ViewModels.PhysicianStructuredData.PhysicianDocsStructuredDataViewModel
+@{
+    ViewData["Title"] = "Create a Priority";
+}
+
+<h1>Create</h1>
+
+<h4>Priority</h4>
+<hr/>
+
+<div class="row">
+    <div class="col-md-10">
+        <form method="post">
+            @Html.AntiForgeryToken()
+            <div class="form-row">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                
+                <div class="form-group col-sm-6">
+                    <label asp-for="Priority.PriorityName" class="control-label">Name of Priority</label>
+                    <input asp-for="Priority.PriorityName" 
+                        class="form-control" maxlength="50" required
+                        placeholder="Example:  Recurring (completed at designated intervals)" />
+                    <span asp-validation-for="Priority.PriorityName" class="text-danger"></span>
+                </div>
+            </div>    
+            <div class="form-row">
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                </div>
+
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<div>
+    <a asp-controller="PhysicianDocsStructuredData" asp-action="ViewPriorities">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

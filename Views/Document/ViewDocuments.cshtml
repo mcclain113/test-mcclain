@@ -1,0 +1,575 @@
+@model IS_Proj_HIT.ViewModels.DocWrapperViewModel
+
+@{
+    ViewData["Title"] = "View Documents";
+    var userPermissions = ViewData["UserPermissions"] as List<string>;
+    var docType = ViewData["docType"] as int?;
+}
+
+<!-- Always display the patient partial banner -->
+<partial name="PatientBannerPartial" model="Model.Patient" />
+
+<!-- conditional to determine which left-hand side panel to display -->
+@if (Model.Encounter != null)
+{
+  <partial name="_EncounterMenu" model="Model.Encounter" />
+}
+else
+{
+  <partial name="_PatientMenu" model="Model.Patient" />
+}
+
+<div class="patient-data card bg-secondary">
+    <!-- Card header with Add Documents button -->
+    <div class="card-header bg-primary text-white">
+        <h4 class="mb-0">
+          <!--set the header text, calculated in the view model  -->
+          @Model.HeaderText
+
+          <!-- the view where docType is not null will not display this button to any Role  -->
+          @if(!Model.DocType.HasValue &&
+          ( (Model.Encounter != null && userPermissions != null && userPermissions.Contains("EncounterDocumentAdd") )
+            ||  (userPermissions != null && userPermissions.Contains("PatientDocumentAdd")) ) )
+          {
+            <button type="button"
+                    class="btn btn-outline-primary float-right"
+                    data-toggle="modal"
+                    data-target="#addDocsModal">
+                <i class="fas fa-plus"></i> Add Documents
+            </button>
+          }
+        </h4>
+    </div>
+
+    <div class="card-body bg-light">
+      @if (TempData["Message"] != null)
+      {
+          <div class="alert alert-success">
+              @TempData["Message"]
+          </div>
+      }
+      @if (TempData["Error"] != null)
+      {
+          <div class="alert alert-danger">
+              @TempData["Error"]
+          </div>
+      }
+
+      @if(Model.DocType != null)
+      {
+        <table class="table table-striped mb-0" id="docsTable2" style="width: 100%;">
+          <thead>
+          <tr>
+              <th>Description</th>
+              <th>Notes</th>
+              <th>Upload Date</th>
+              <th >Actions</th>
+          </tr>
+          </thead>
+          <tbody>
+          @foreach (var doc in Model.Documents)
+          {
+              @await Html.PartialAsync("_DocumentRowPartial", doc)
+          }
+          </tbody>
+      </table>
+      }
+      else
+      {
+        <table class="table table-striped mb-0" id="docsTable" style="width: 100%;">
+          <thead>
+            <tr>
+                <th>Document Type</th>
+                <th>Upload Date</th>
+                <th>Description</th>
+                <th >Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+          @foreach (var doc in Model.Documents)
+          {
+              @await Html.PartialAsync("_DocumentRowPartial", doc)
+          }
+          </tbody>
+        </table>
+      }
+    </div>      
+</div>
+
+
+<!-- Add Documents Modal -->
+<div class="modal fade" id="addDocsModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-custom-width">
+    <div class="modal-content">
+      <form id="addDocsForm"
+            asp-action="UploadMultiple"
+            asp-controller="Document"
+            method="post"
+            enctype="multipart/form-data">
+        
+        @Html.AntiForgeryToken()
+        <input type="hidden" name="mrn" value="@Model.Patient.Mrn" />
+        @if (Model.Encounter != null)
+        {
+          <input type="hidden" name="encounterId" value="@Model.Encounter.EncounterId" />
+        }
+        @if (Model.DocType.HasValue)
+        {
+          <input type="hidden" name="docType" value="@Model.DocType" />
+        }
+
+        <div class="modal-header">
+          <h3 class="modal-title">Add Documents</h3>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+
+        <div class="modal-body">
+          <div class="mb-3">
+            <label for="filePicker" class="form-label">Select File(s)</label>
+            <input type="file"
+                   id="filePicker"
+                   multiple
+                   accept=".pdf,.jpg,.jpeg,.png"
+                   class="form-control" />
+          </div>
+          <!-- upload progress bar (hidden by default), uses Bootstrap 4 striped & animated style -->
+          <div id="uploadProgress" class="progress mb-3" style="display: none;">
+            <div
+              class="progress-bar progress-bar-striped progress-bar-animated"
+              role="progressbar"
+              aria-valuemin="0"
+              aria-valuemax="100"
+              aria-valuenow="0"
+              style="width: 0%;">
+              0%
+            </div>
+          </div>
+          <table class="table table-sm">
+            <thead>
+              <tr>
+                <th>File Name</th>
+                <th>Type</th>
+                <th>Description</th>
+                <th>Notes</th>
+              </tr>
+            </thead>
+            <tbody id="fileMetaRows">
+              <!-- rows injected by JS -->
+            </tbody>
+          </table>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button"
+                  class="btn btn-secondary"
+                  data-dismiss="modal">
+            Cancel
+          </button>
+          <button type="submit" class="btn btn-primary">
+            Upload All
+          </button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</div>  <!-- End of Add Documents Modal -->
+
+<!-- Document Details & Edit Modal -->
+<div class="modal fade" id="docDetailsModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-custom-width">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Document Details</h5>
+        <button type="button" class="close" data-dismiss="modal">
+          <span>&times;</span>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <!-- Content loaded via AJAX -->
+      </div>
+
+    </div>
+  </div>
+</div>  <!-- End of Document Details & Edit Modal  -->
+
+
+<style>
+    .modal-custom-width {
+        max-width: 90%; /* Adjust the percentage as needed */
+        }
+
+    <!-- added .modal-header and .modal-title here because the defaults were not displaying properly -->
+    .modal-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 1rem;
+        border-bottom: 1px solid #dee2e6;
+        background-color: #f8f9fa;
+    }
+
+    .modal-title {
+        margin: 0;
+        color: #000;
+    }
+
+    /* Allow the page behind to scroll */
+    body.modal-open {
+      overflow-y: auto !important;      /* re-enable page scroll */
+    }
+
+    /* Turn the modal into a “normal” block in the document flow */
+    .modal {
+      position: absolute !important;    /* no longer fixed at the viewport */
+      top: 0; left: 0;                  /* keep it at the top */
+      right: 0; bottom: 0;
+      overflow: visible !important;     /* let its contents flow out */
+    }
+
+    /* Make sure the backdrop doesn’t block clicks or scrolls */
+    .modal-backdrop {
+      position: absolute;
+      background: rgba(0, 0, 0, 0.5);
+    }
+
+    /* control the width of the table and support the column widths applied below */
+    #docsTable {
+      table-layout: fixed;
+      width: 100%;
+    }
+
+    /* Assign percentage widths per column */
+    #docsTable thead th:nth-child(1) { width: 20%; }   /* Document Type Name */
+    #docsTable thead th:nth-child(2) { width: 20%; }   /* Upload Date */
+    #docsTable thead th:nth-child(3) { width: 50%; }   /* Description */
+    #docsTable thead th:nth-child(4) { width: 10%; }   /* Actions */
+
+    /* control the width of the table and support the column widths applied below */
+    #docsTable2 {
+      table-layout: fixed;
+      width: 100%;
+    }
+
+    /* Assign percentage widths per column */
+    #docsTable2 thead th:nth-child(1) { width: 40%; }   /* Description */
+    #docsTable2 thead th:nth-child(2) { width: 40%; }   /* Notes */
+    #docsTable2 thead th:nth-child(3) { width: 10%; }   /* Upload Date */
+    #docsTable2 thead th:nth-child(4) { width: 10%; }   /* Actions */
+
+    /* make the entire progress wrapper taller */
+    #uploadProgress {
+      height: 4rem !important;      /* adjust to whatever you like */
+    }
+
+    /* vertically center the text inside the bar */
+    #uploadProgress .progress-bar {
+      height: 4rem !important;
+      line-height: 4rem; /* same as height */
+    }
+</style>
+
+@section scripts {
+  <script>  
+    // file selection initiated by clicking the 'Add Documents' button
+    (function() {
+      const picker = document.getElementById('filePicker');
+      const tbody  = document.getElementById('fileMetaRows');
+
+      picker.addEventListener('change', () => {
+        tbody.innerHTML = '';
+        const files = picker.files;
+        
+        for (let i = 0; i < files.length; i++) {
+          const file = files[i];
+          const row = document.createElement('tr');
+
+          // Build the HTML for each row’s inputs
+          row.innerHTML = `
+            <td>
+              ${file.name}
+              <input type="hidden"
+                     name="Files[${i}].FileIndex"
+                     value="${i}" />
+            </td>
+            <td>
+              <select name="Files[${i}].DocumentTypeID"
+                      class="form-select form-select-sm"
+                      required>
+                <option value="">-- select --</option>
+                @foreach (var dt in Model.DocumentTypes) {
+                  <text><option value="@dt.Value">@dt.Text</option></text>
+                }
+              </select>
+            </td>
+            <td>
+              <input type="text"
+                     name="Files[${i}].DocumentDescription"
+                     class="form-control form-control-sm" />
+            </td>
+            <td>
+              <input type="text"
+                     name="Files[${i}].Notes"
+                     class="form-control form-control-sm" />
+            </td>
+          `;
+
+          // Create a hidden file input so model-binding picks up the actual file
+          const fileInput = document.createElement('input');
+          fileInput.type  = 'file';
+          fileInput.name  = `Files[${i}].File`;
+          fileInput.style.display = 'none';
+          
+          // Attach the File object via a DataTransfer
+          const dt = new DataTransfer();
+          dt.items.add(file);
+          fileInput.files = dt.files;
+
+          row.appendChild(fileInput);
+          tbody.appendChild(row);
+        }
+      });
+    })();
+  </script>
+
+  <!-- Datatable initializations  -->
+  <script>
+    $(document).ready(function(){
+      $('#docsTable').DataTable({
+        columns: [null, null, null, { orderable: false }],
+        order: [[0,'asc']],
+        pageLength: 10,
+        searching: true,
+        language: { emptyTable: 'No documents found' }
+      });
+      $('#docsTable2').DataTable({
+        columns: [null, null, null, { orderable: false }],
+        order: [[2,'asc']],
+        pageLength: 10,
+        searching: true,
+        language: { emptyTable: 'No documents found' }
+      });
+    });
+  </script>
+
+  <!-- Document-details & Edit modal AJAX -->
+  <script>
+    $(function(){
+      // a) Show Details
+      $(document).on('click', '.btn-document-details', function(){
+        const id = $(this).data('id');
+        const docType = $(this).data('docType');  // jQuery converts data-doc-type --> docType
+        $('#docDetailsModal .modal-body')
+          .load(`/Document/DetailsPartial?id=${id}&docType=${docType}`, () => {
+            $('#docDetailsModal').modal('show');
+          });
+      });
+
+      // b) Swap to Edit form
+      $(document).on('click', '.btn-document-edit', function(){
+        const id      = $(this).data('id');       // pass the current record id
+        const section = $(this).data('section');  // pass the section identifier so the cshtml knows what to display
+        $('#docDetailsModal .modal-body')
+          .load(`/Document/EditPartial?id=${id}&section=${section}`, function() {
+            initModalSelect2();        // <— initialize Select2 here by calling the function below
+            initPatientSelect2InModal();  // <- calling the PatientSelect function when the edit modal is loaded
+          });
+      });
+
+      // DELEGATED change handler - needed for 'patient2differentpatientencounter' and 'encounter2differentpatientencounter' so once the Mrn is selected it grabs that patient's list of encounters and shows the remaining portion of the div
+      $(document).on('change', '#docDetailsModal #patient-search', async function(){
+        const mrn     = $(this).val();
+        const $wrapper= $('#docDetailsModal #encounter-container');
+        const $select = $('#docDetailsModal #EncounterId');
+
+        if (!mrn) {
+          $select
+            .html('<option value="">— Select an encounter —</option>')
+            .prop('disabled', true);
+          $wrapper.hide();
+          return;
+        }
+
+        // fetch via jQuery
+        const items = await $.getJSON(
+          '@Url.Action("GetEncountersForPatient","Document")',
+          { mrn }
+        );
+
+        $select
+          .html(items
+            .map(i =>  `<option value="${i.value}">${i.text}</option>`)
+            .join(''))
+          .prop('disabled', false)  // enable the fields
+          .prop('required', true);  // make it required
+        $wrapper.show();
+      });
+
+      // c) AJAX-submit Edit
+      $(document).on('submit', '#documentEditForm', function(e){
+        e.preventDefault();
+        $.post(this.action, $(this).serialize())
+         .done(data => {
+           if (data.success) {
+             $('#docDetailsModal').modal('hide');
+             location.reload();
+           } else {
+             $('#docDetailsModal .modal-body').html(data);
+           }
+         });
+      });
+    });
+
+    // helper to wire up any .select2 inside the modal
+    function initModalSelect2() {
+      $('#docDetailsModal')
+        .find('.select2')
+        .each(function () {
+          var $sel = $(this);
+          if (!$sel.hasClass('select2-hidden-accessible')) {
+            $sel.select2({
+              width: '100%',
+              minimumResultsForSearch: 0,
+              dropdownParent: $('#docDetailsModal')
+            });
+          }
+        });
+    }
+  </script>
+
+  <!-- script for the progress bar  -->
+  <script>
+    $(function() {
+      const $form    = $('#addDocsForm');
+      const $modal   = $('#addDocsModal');
+      const $barWrap = $('#uploadProgress');
+      const $bar     = $barWrap.find('.progress-bar');
+
+      $form.on('submit', function(e) {
+        e.preventDefault();
+
+        // prepare form data
+        const formData = new FormData(this);
+
+        // reset & show progress bar
+        $bar.css('width', '0%')
+            .attr('aria-valuenow', 0)
+            .text('0%');
+        $barWrap.show();
+
+        // disable inputs to prevent re-submit
+        $form.find('input, button, select').prop('disabled', true);
+
+        $.ajax({
+          url: $form.attr('action'),
+          type: 'POST',
+          data: formData,
+          contentType: false,
+          processData: false,
+          xhr: function() {
+            const xhr = new window.XMLHttpRequest();
+
+            // 1) Track upload bytes
+            xhr.upload.addEventListener('progress', function(evt) {
+              if (!evt.lengthComputable) return;
+              const pct = Math.round(evt.loaded / evt.total * 100);
+              $bar
+                .css('width', pct + '%')
+                .attr('aria-valuenow', pct)
+                .text(pct + '%');
+            }, false);
+
+            // 2) When upload is complete, switch to an indeterminate "Processing…" bar
+            xhr.upload.addEventListener('load', function() {
+              $bar
+                // keep it full-width
+                .css('width', '100%')
+                // add the striped + animated look
+                .removeClass()                              
+                .addClass('progress-bar progress-bar-striped progress-bar-animated')
+                .attr('aria-valuenow', 100)
+                .text('Processing…');
+            }, false);
+
+            return xhr;
+          },
+          success: function() {
+            // on complete, reload
+            // optional:  hide the bar before reload
+            // $barWrap.hide();
+            location.reload();
+          },
+          error: function() {
+            // handle error, re-enable form
+            alert('Upload failed. Please try again.');
+            $form.find('input, button, select').prop('disabled', false);
+            $barWrap.hide();
+          }
+        });
+      });
+    });
+  </script>
+
+  <!-- script for the Patient Search used in the _DocumentEditPartial.cshmtl-->
+  <script>
+    function initPatientSelect2InModal() {
+      const $sel = $('#docDetailsModal').find('.select2-ajax-patient');
+
+      $sel.each(function () {
+        var $this = $(this);
+        if ($this.hasClass('select2-hidden-accessible')) return;
+
+        $this.select2({
+          width: '100%',
+          dropdownParent: $('#docDetailsModal'),
+          placeholder: 'Type MRN, name, or DOB (e.g. 01-31-1980)',
+          minimumInputLength: 2,  // change to 0 when testing, 2 for production so less traffic to server
+          ajax: {
+            url: '/Patient/SearchPatients',
+            dataType: 'json',
+            delay: 250,
+            data: function (params) {
+              return {
+                q: params.term,
+                take: 25
+              };
+            },
+            processResults: function (data) {
+              // data.results expected: [{id, text}, ...]
+              return {
+                results: data.results || []
+              };
+            },
+            cache: true
+          },
+          templateResult: function (item) {
+            return item.text || item.id;
+          },
+          templateSelection: function (item) {
+            return item.text || item.id;
+          },
+          escapeMarkup: function (m) { return m; }
+        });
+
+        // If an initial value exists (server pre-rendered option with MRN), fetch full display to show nice text
+        const initialVal = $this.val();
+        if (initialVal) {
+          $.getJSON('/Patient/SearchPatients', { q: initialVal, take: 1 })
+            .done(function (d) {
+              if (d && d.results && d.results.length) {
+                const item = d.results.find(r => r.id === initialVal);
+                if (item) {
+                  // create the option and select it
+                  const option = new Option(item.text, item.id, true, true);
+                  $this.append(option).trigger('change');
+                }
+              }
+            });
+        }
+      });
+    }
+  </script>
+}

@@ -1,0 +1,55 @@
+@model List<IS_Proj_HIT.Entities.UserProgram>
+
+@{
+    ViewData["Title"] = "Users In Program";
+}
+
+<h3 class="d-flex mt-3">
+    <a class="btn btn-primary" asp-controller="UserManagementStructuredData" asp-action="ViewPrograms">
+        <i class="fa fa-arrow-left "></i>
+    </a>
+    <span class="ml-2">Users In Program: <b class="ml-3">@ViewBag.Program.Name</b></span>
+    <a class="btn btn-info ml-auto" asp-controller="UserManagementStructuredData" asp-action="EditUsersInProgram" asp-route-programId="@ViewBag.Program.ProgramId">Edit Users in Program</a>
+</h3>
+
+<table class="stripe nowrap" id="usersInProgramTable">
+    <thead>
+        <tr>
+            <th hidden>Last Name</th>
+            <th>Name</th>
+            <th>Email</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td hidden>@item.User.LastName</td>
+                <td>@($"{item.User.FirstName} {item.User.LastName}")</td>
+                <td>@item.User.Email</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section scripts{
+    <script>
+        // DataTable Documentation found here: https://datatables.net/
+        $(document).ready(function () {
+            // Creates DataTable
+            $('#usersInProgramTable').DataTable({
+                columns: [
+                    { visible: false, orderable: true }, // Hidden, but sortable
+                    null,
+                    null
+                ],
+                order: [[0, 'asc']],
+                pageLength: 10,
+                searching: true,
+                language: {
+                    emptyTable: 'None found'
+                }
+            });
+        });
+    </script>
+}

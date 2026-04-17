@@ -1,0 +1,57 @@
+@model List<IS_Proj_HIT.Entities.FinalRouteAndMethodOfDelivery>
+@{
+    ViewData["Title"] = "Final Route And Method Of Deliveries";
+}
+
+<div class="row my-3">
+    <h3>
+        <a class="btn btn-primary" asp-controller="BirthRegistryStructuredData" asp-action="Index">
+            <i class="fa fa-arrow-left"></i>
+        </a>
+        Final Route And Method Of Deliveries
+    </h3>
+</div>
+
+<p>
+    <a class="btn btn-primary" asp-controller="BirthRegistryStructuredData" asp-action="CreateFinalRouteAndMethodOfDelivery">Create New</a>
+</p>
+
+<table class="stripe" id="finalRouteAndMethodOfDeliveryTable">
+    <thead>
+        <tr>
+            <th>Final Route And Method Of Delivery Name</th>
+            <th>Final Route And Method Of Delivery Description</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var finalRouteAndMethodOfDelivery in Model)
+        {
+            <tr>
+                <td>@finalRouteAndMethodOfDelivery.FinalRouteAndMethodName</td>
+                <td>@finalRouteAndMethodOfDelivery.FinalRouteAndMethodDescription</td>
+                <td>
+                    <a class="btn btn-primary" asp-controller="BirthRegistryStructuredData" asp-action="EditFinalRouteAndMethodOfDelivery" asp-route-id="@finalRouteAndMethodOfDelivery.FinalRouteAndMethodId">Edit</a>
+                    <a class="btn btn-danger" asp-controller="BirthRegistryStructuredData" asp-action="DeleteFinalRouteAndMethodOfDelivery" asp-route-id="@finalRouteAndMethodOfDelivery.FinalRouteAndMethodId">Delete</a>
+                </td>
+            </tr>
+        }
+
+    </tbody>
+</table>
+
+@section scripts{
+    <script>
+    // DataTable Documentation found here:  https://datatables.net
+    $(function(){
+        // Create the data table
+        $('#finalRouteAndMethodOfDeliveryTable').DataTable({
+            columns: [null, null, {orderable: false}],
+            order: [[0, 'asc'] ],
+            pageLength: 10,
+            searching: true,
+            language: { emptyTable: 'None found'}
+        });
+    });
+    </script>
+}

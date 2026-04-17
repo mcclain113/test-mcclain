@@ -1,0 +1,37 @@
+@model IS_Proj_HIT.Entities.CongenitalAnomaly
+@{
+    ViewBag.Title = "Delete Congenital Anomaly";
+}
+
+<h1>Delete</h1>
+
+<h3>@ViewData["RegularMessage"]</h3>
+<h3 class="error">@ViewData["ErrorMessage"]</h3>
+
+<h4>Congenital Anomaly</h4>
+<hr />
+
+<div class="row">
+    <div class="col-md-10">
+        <form method="post">
+            @Html.AntiForgeryToken()
+            <div class="form-row">
+                
+                <input type="hidden" asp-for="CongenitalAnomalyId" value="@Model.CongenitalAnomalyId" readonly/>
+
+                <div class="form-group col-sm-6">
+                    <label asp-for="CongenitalAnomalyName" class="control-label">Congenital Anomaly Name</label>
+                    <input asp-for="CongenitalAnomalyName" class="form-control" />
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <a asp-controller="BirthRegistryStructuredData" asp-action="ViewCongenitalAnomalies" class="btn btn-outline-danger">Discard Changes</a>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Delete Item" class="ml-3 btn btn-primary" />
+                </div>
+            </div>            
+        </form>
+    </div>
+</div>

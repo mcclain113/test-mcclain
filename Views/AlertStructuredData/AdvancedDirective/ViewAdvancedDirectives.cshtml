@@ -1,0 +1,57 @@
+@model List<IS_Proj_HIT.Entities.AdvancedDirective>
+
+@{
+    ViewData["Title"] = "Advanced Directives";
+}
+
+<div class="row my-3">
+    <h3>
+        <a class="btn btn-primary" asp-controller="AlertStructuredData" asp-action="Index">
+            <i class="fa fa-arrow-left "></i>
+        </a>
+        Advanced Directives
+    </h3>
+</div>
+
+<p>
+    <a class="btn btn-primary" asp-controller="AlertStructuredData" asp-action="CreateAdvancedDirective">Create New</a>
+</p>
+
+<table class="stripe nowrap" id="advancedDirectiveTable">
+    <thead>
+        <tr>
+            <th>Advanced Directive Name</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var advancedDirective in Model)
+        {
+            <tr>
+                <td>@advancedDirective.Name</td>
+                <td>
+                    <a class="btn btn-primary" asp-controller="AlertStructuredData" asp-action="EditAdvancedDirective" asp-route-id="@advancedDirective.AdvancedDirectiveId">Edit</a>
+                    <a class="btn btn-danger" asp-controller="AlertStructuredData" asp-action="DeleteAdvancedDirective" asp-route-id="@advancedDirective.AdvancedDirectiveId">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section scripts{
+    <script>
+        // DataTable Documentation found here: https://datatables.net/
+        $(function () {
+            // Creates DataTable
+            $('#advancedDirectiveTable').DataTable({
+                columns: [null, { orderable: false }],
+                order: [[0, 'asc']],
+                pageLength: 10,
+                searching: true,
+                language: {
+                    emptyTable: 'None found'
+                }
+            });
+        });
+    </script>
+}

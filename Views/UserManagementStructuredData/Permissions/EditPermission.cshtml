@@ -1,0 +1,59 @@
+@model IS_Proj_HIT.ViewModels.UserManagement.UserManagementStructuredDataViewModel
+@{
+    ViewBag.Title = "Edit Permission";
+}
+
+<h1>Edit</h1>
+
+<h4>Permission</h4>
+<hr />
+
+<div class="row">
+    <div class="col-md-10">
+        <form method="post">
+            @Html.AntiForgeryToken()
+            <div class="form-row">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="AspNetPermission.Id" value="@Model.AspNetPermission.Id" readonly />
+                <div class="form-group col-sm-6">
+                    <label asp-for="AspNetPermission.Name" class="control-label">Permission Name</label>
+                    <input asp-for="AspNetPermission.Name" 
+                        class="form-control" disabled
+                        placeholder="Example:  PatientAdd" />
+                    <input type="hidden" asp-for="AspNetPermission.Name" value="@Model.AspNetPermission.Name" />
+                </div>
+                <div class="form-group col-sm-6">
+                    <label asp-for="AspNetPermission.ModuleOrForm"  class="control-label">Module or Form</label>
+                    <input asp-for="AspNetPermission.ModuleOrForm"  
+                        class="form-control" disabled
+                        placeholder="Example:  Patient" />
+                    <input type="hidden" asp-for="AspNetPermission.ModuleOrForm" value="@Model.AspNetPermission.ModuleOrForm" />
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-sm-12">
+                    <label asp-for="AspNetPermission.Description" class="control-label">Permission Description</label>
+                    <textarea asp-for="AspNetPermission.Description" 
+                        class="form-control" maxlength="500" rows="5"
+                        placeholder="Example:  Add a Patient functionality is accessible"></textarea>
+                    <span asp-validation-for="AspNetPermission.Description" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="ml-1 form-group">
+                    <input type="submit" value="Update" class="btn btn-primary" />
+                </div>
+
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<div>
+    <a asp-controller="UserManagementStructuredData" asp-action="ViewPermissions">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

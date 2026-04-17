@@ -1,0 +1,50 @@
+@model IS_Proj_HIT.ViewModels.AlertStructuredData.AlertStructuredDataViewModel
+@{
+    ViewBag.Title = "Create Clinical Reminder";
+}
+
+<h1>Create</h1>
+
+<h4>Clinical Reminder</h4>
+<hr />
+
+<div class="row">
+    <div class="col-md-10">
+        <form method="post">
+            @Html.AntiForgeryToken()
+            <div class="form-row">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group col-sm-6">
+                    <label asp-for="ClinicalReminder.Name" class="control-label">Clinical Reminder Name</label>
+                    <input asp-for="ClinicalReminder.Name" 
+                        class="form-control" maxlength="100" required
+                        placeholder="Example:  Annual physical exam" />
+                    <span asp-validation-for="ClinicalReminder.Name" class="text-danger"></span>
+                </div>
+                <div class="form-group col-sm-6">
+                    <label asp-for="ClinicalReminder.IsActive" class="control-label">Active?</label>
+                    <select asp-for="ClinicalReminder.IsActive" class="form-control" required>
+                        <option value="">Select</option>
+                        <option value="true">Yes</option>
+                        <option value="false">No</option>
+                    </select>
+                    <span asp-validation-for="ClinicalReminder.IsActive" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                </div>
+
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<div>
+    <a asp-controller="AlertStructuredData" asp-action="ViewClinicalReminders">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

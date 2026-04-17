@@ -1,0 +1,32 @@
+@model IS_Proj_HIT.ViewModels.Account.RoleFacilitySelectionViewModel
+
+@{
+    ViewData["Title"] = "Role and Facility Selection";
+}
+
+<div class="container">
+    <div class="row justify-content-center">
+        <h1>@ViewData["Title"]</h1>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-md-4">
+        <form asp-action="SetRoleAndFacility" method="post">
+            @Html.AntiForgeryToken()
+            <div class="form-group">
+                <label for="Role">Select Role:</label>
+                <select asp-for="SelectedRole" asp-items="@(new SelectList(Model.Roles, "Id", "Name"))" class="form-control">
+                    <option value="" selected disabled>Choose a role</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="Facility">Select Facility:</label>
+                <select asp-for="SelectedFacility" asp-items="@(new SelectList(Model.Facilities, "FacilityId", "Name"))" class="form-control">
+                    <option value="" selected disabled>Choose a facility</option>
+                </select>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Continue</button>
+        </form>
+    </div>
+</div>

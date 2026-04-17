@@ -1,0 +1,248 @@
+@model IS_Proj_HIT.ViewModels.PatientVm.PatientViewModel
+
+<div class="card-body" @(ViewBag.ViewPatientDetails ? "hidden" : "")>
+<fieldset>
+    <legend>
+        Patient Contact Information
+    </legend>
+    <div class="row">
+        <input type="hidden" asp-for="PersonContactDetail.PersonContactDetailId"/>
+
+        <div class="col-3 form-group">
+            <label>Cell Phone</label>
+            <input asp-for="PersonContactDetail.CellPhone" class="form-control phone"
+                placeholder="Primary Phone" />
+        </div>
+        <div class="col-3 form-group">
+            <label>Home Phone</label>
+            <input asp-for="PersonContactDetail.HomePhone" type="tel"
+                class="form-control phone" placeholder="Secondary Phone" />
+        </div>
+        <div class="col-3 form-group">
+            <label>Work Phone</label>
+            <input asp-for="PersonContactDetail.WorkPhone" type="tel"
+                class="form-control phone" placeholder="Work Phone" />
+        </div>
+        <div class="col-3 form-group">
+            <label>Email</label>
+            <input asp-for="PersonContactDetail.EmailAddress" type="email"
+                class="form-control" placeholder="Email" />
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <p>Contact Preferences</p>
+        </div>
+        <div class="col-6 form-group">
+            <label for="preferredModesOfContact">Preferred Contact Method</label>
+            <select asp-for="SelectedPreferredModeOfContactIds" id="preferredModesOfContact" class="form-control dropdowns select-2 contact-method" asp-items="ViewBag.PreferredModesOfContact" multiple="multiple"></select>
+        </div>
+        <div class="col-6 form-group contact-time-container">
+            <label for="preferredTimesToContact">Preferred Contact Time(s)</label>
+            <select asp-for="SelectedPreferredContactTimeIds" id="preferredTimesToContact" class="form-control dropdowns select-2 contact-time" asp-items="ViewBag.PreferredContactTimes" multiple="multiple"> </select>
+        </div>
+    </div>
+    <hr>
+</fieldset>
+<fieldset class="validate-address">
+    <input type="hidden" asp-for="ResidenceAddress.AddressId" value="ResidenceAddress.AddressId" readonly/>
+    <legend>Residence Address</legend>
+    <div class="row">
+        <div class="col-4 form-group">
+            <label> Street Address </label>
+            <input asp-for="ResidenceAddress.Address1" type="text"
+                class="validate form-control" placeholder="Example: 534 Meadow Road" />
+                <div class="invalid-summary text-danger" style="display:none">
+                    Please enter a Street Address
+                </div>
+        </div>
+        <div class="col-2 form-group">
+            <label>Suite/Apt #</label>
+            <input asp-for="ResidenceAddress.Address2" type="text"
+                class="validate not-required form-control" placeholder="Example: Apt 4" />
+        </div>
+        <div class="col-2 form-group">
+            <label>City</label>
+            <input asp-for="ResidenceAddress.City" type="text"
+                class="validate form-control" placeholder="Example:  Madison" />
+                <div class="invalid-summary text-danger" style="display:none">
+                    Please enter a City
+                </div>
+        </div>
+        <div class="form-group col-sm-2">
+                <label>Select State</label>
+                <select class="form-control" asp-for="ResidenceAddress.AddressStateID" asp-items="ViewBag.StateId"></select>
+            </div>
+        <div class="col-2 form-group">
+            <label>Postal Code</label>
+            <input asp-for="ResidenceAddress.PostalCode"
+                type="text" class="validate form-control zipcode" placeholder="Ex: 53036" maxlength="10"/>
+                <div class="invalid-summary text-danger" style="display:none">
+                    Please enter a Postal Code
+                </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-4 form-group">
+            <label>County</label>
+            <input asp-for="ResidenceAddress.County" type="text"
+                class="validate not-required form-control" placeholder="Ex: Jefferson" />
+        </div>
+        <div class="col-4 form-group">
+            <label>Country</label>
+            <select asp-for="ResidenceAddress.CountryId"
+                class="form-control" asp-items="ViewBag.Countries">
+            </select>
+        </div>
+    </div>
+</fieldset>
+
+<div class="form-check checkboxcontainer pl-0 mb-3">
+    <label class="form-check-label">
+        Mailing address is the same as Residence address
+        <input asp-for="@Model.ResidenceSameAsMailing" hidden />
+        <span class="box"></span>
+    </label>
+</div>
+
+<fieldset id="MailingAddress" class="validate-address" hidden="@Model.ResidenceSameAsMailing" disabled="@Model.ResidenceSameAsMailing">
+    <input type="hidden" asp-for="MailingAddress.AddressId" value="MailingAddress.AddressId" readonly/>
+    <legend>Mailing Address</legend>
+    <div class="row">
+        <div class="col-4 form-group">
+            <label> Street Address </label>
+            <input asp-for="MailingAddress.Address1" type="text"
+                class="validate form-control" placeholder="Example: 678 South 118th St" />
+                <div class="invalid-summary text-danger" style="display:none">
+                    Please enter an Address
+                </div>
+        </div>
+        <div class="col-2 form-group">
+            <label>Suite / Apt. #</label>
+            <input asp-for="MailingAddress.Address2" type="text"
+                class="validate not-required form-control" placeholder="Ex: Apt 4" />
+        </div>
+        <div class="col-2 form-group">
+            <label>City</label>
+            <input asp-for="MailingAddress.City" type="text"
+                class="validate form-control" placeholder="Example:  Madison" />
+                <div class="invalid-summary text-danger" style="display:none">
+                    Please enter a City
+                </div>
+        </div>
+        <div class="form-group col-sm-2">
+            <label>Select State</label>
+            <select class="form-control" asp-for="MailingAddress.AddressStateID" asp-items="ViewBag.StateId"></select>
+        </div>
+        <div class="col-2 form-group">
+            <label>Postal Code</label>
+            <input asp-for="MailingAddress.PostalCode" type="text"
+                class="validate form-control zipcode" placeholder="Ex: 53036" maxlength="11" />
+                <div class="invalid-summary text-danger" style="display:none">
+                    Please enter a Postal Code
+                </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-4 form-group">
+            <label>County</label>
+            <input asp-for="MailingAddress.County" type="text"
+                class="validate not-required form-control" placeholder="Ex: Jefferson" />
+        </div>
+        <div class="col-4 form-group">
+            <label>Country</label>
+            <select asp-for="MailingAddress.CountryId"
+                class="form-control" asp-items="ViewBag.Countries">
+            </select>
+        </div>
+    </div>
+</fieldset>
+</div>
+
+<div @(!ViewBag.ViewPatientDetails ? "hidden" : "")>
+    <div class="row">
+        <div class="col-4 ml-3">
+            <div class="row">
+                <label>Cell Phone:</label>
+                <span class="data phone ml-2">@(Model.PersonContactDetail?.CellPhone ?? "")</span>
+            </div>
+            <div class="row">
+                <label>Home Phone:</label>
+                <span class="data phone ml-2">@(Model.PersonContactDetail?.HomePhone ?? "")</span>
+            </div>
+            <div class="row">
+                <label>Work Phone:</label>
+                <span class="data phone ml-2">@(Model.PersonContactDetail?.WorkPhone ?? "")</span>
+            </div>
+            <div class="row">
+                <label>Email:</label>
+                <span class="data ml-2">@(Model.PersonContactDetail?.EmailAddress ?? "")</span>
+            </div>
+            <div class="row">
+                <label>Preferred Contact Method(s):</label><Br>
+                @if (Model.PersonContactDetail?.PersonModeOfContacts != null
+                        && Model.PersonContactDetail?.PersonModeOfContacts.Count >= 1)
+                {
+                    <ul class="data">
+                        @foreach (var modeOfContact in 
+                            Model.PersonContactDetail?.PersonModeOfContacts)
+                        {
+                            <li>@modeOfContact.PreferredModeOfContact?.Name</li>
+                        }
+                    </ul>
+                }
+                else
+                {
+                    <span class="data"></span>
+                }
+            </div>
+            <div class="row">
+                <label>Preferred Contact Time(s): </label><br>
+                @if (Model.PersonContactDetail?.PersonContactTimes != null && 
+                        Model.PersonContactDetail?.PersonContactTimes.Count >= 1)
+                {
+                    <ul class="data">
+                        @foreach (var modeOfContact in 
+                            Model.PersonContactDetail.PersonContactTimes)
+                        {
+                            <li>@modeOfContact.PreferredContactTime?.Name</li>
+                        }
+                    </ul>
+                }
+                else
+                {
+                    <span class="data"></span>
+                }
+            </div>
+        </div>
+        
+        <div class="col-4">
+            <div class="row">
+                <label>Residence Address:</label>
+                <span class="data ml-2">
+                    @(Model.ResidenceAddress?.Address1 ?? "") 
+                    @(Model.ResidenceAddress?.Address2 ?? "")<br>
+                    @(Model.ResidenceAddress?.City ?? "")
+                    @(Model.ResidenceAddress?.City != null && Model.ResidenceAddress?.AddressState?.StateAbbreviation != null ? ", " : "") 
+                    @(Model.ResidenceAddress?.AddressState?.StateAbbreviation ?? "")  
+                    @(Model.ResidenceAddress?.PostalCode ?? "")<br>
+                    @(Model.ResidenceAddress?.Country?.Name ?? "")
+                </span>
+            </div>
+            <br>
+            <div class="row" hidden="@Model.ResidenceSameAsMailing" disabled="@Model.ResidenceSameAsMailing">
+                <label>Mailing Address:</label>
+                <span class="data ml-2">
+                    @(Model.MailingAddress?.Address1 ?? "") 
+                    @(Model.MailingAddress?.Address2 ?? "")<br>
+                    @(Model.MailingAddress?.City ?? "")
+                    @(Model.MailingAddress?.City != null && Model.MailingAddress?.AddressState?.StateAbbreviation != null ? ", " : "") 
+                    @(Model.MailingAddress?.AddressState?.StateAbbreviation ?? "")  
+                    @(Model.MailingAddress?.PostalCode ?? "")<br>
+                    @(Model.MailingAddress?.Country?.Name ?? "")
+                </span>
+            </div>
+        </div>
+    </div>
+</div>

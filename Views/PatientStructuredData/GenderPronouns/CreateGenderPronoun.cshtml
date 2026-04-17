@@ -1,0 +1,45 @@
+@model IS_Proj_HIT.ViewModels.PatientVm.PatientStructuredDataViewModel
+@{
+    ViewBag.Title = "Create Gender Pronoun";
+}
+
+<h1>Create</h1>
+
+<h4>Gender Pronoun</h4>
+<hr />
+
+<div class="row">
+    <div class="col-md-10">
+        <form method="post">
+            @Html.AntiForgeryToken()
+            <div class="form-row">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                
+                <div class="form-group col-sm-6">
+                    <label asp-for="GenderPronoun.GenderPronouns" class="control-label">Gender Pronouns</label>
+                    <input asp-for="GenderPronoun.GenderPronouns" 
+                        class="form-control" maxlength="30" required
+                        placeholder="Example:  He/Him/His" />
+                    <span asp-validation-for="GenderPronoun.GenderPronouns" class="text-danger"></span>
+                </div>
+
+            </div>
+
+            <div class="form-row">            
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+
+<div>
+    <a asp-controller="PatientStructuredData" asp-action="ViewGenderPronouns">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,212 @@
+﻿@{
+    ViewBag.Title = "Administration";
+    var userPermissions = ViewData["UserPermissions"] as List<string>;
+    var requiredStructuredDataPermissions = new[]{"StructuredDataAdd","StructuredDataEdit","StructuredDataView","StructuredDataDelete"};
+    var requiredSecurityPermissions = new[]{"SecurityAssignRole","SecurityRemoveRole"};
+}
+
+<div class="row my-3">
+    <div class="col-12">
+        <h3>Administration Tools</h3>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        @if(userPermissions.Any(permission => requiredStructuredDataPermissions.Contains(permission)))
+        {
+            <div class="col-sm-3 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <a asp-controller="AlertStructuredData" asp-action="Index" class="btn btn-outline-primary">
+                            <h5 class="card-title mb-0">Alert Structured Data</h5>
+                        </a>
+                    </div>
+                    <div class="card-footer">
+                        <p class="mb-0">Management pages for Alert structured data/lookup tables  </p>
+                    </div>
+                </div>
+            </div>
+        } 
+
+        @if(userPermissions.Any(permission => requiredStructuredDataPermissions.Contains(permission)))
+        {
+            <div class="col-sm-3 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <a asp-controller="BirthRegistryStructuredData" asp-action="Index" class="btn btn-outline-primary">
+                            <h5 class="card-title mb-0">Birth Registry Structured Data</h5>
+                        </a>
+                    </div>
+                    <div class="card-footer">
+                        <p class="mb-0">Management pages for Birth Registry structured data/lookup tables  </p>
+                    </div>
+                </div>
+            </div>
+        } 
+
+        @if(userPermissions.Any(permission => requiredStructuredDataPermissions.Contains(permission)))
+        {
+            <div class="col-sm-3 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <a asp-controller="DisclosureStructuredData" asp-action="Index" class="btn btn-outline-primary">
+                            <h5 class="card-title mb-0">Disclosure Structured Data</h5>
+                        </a>
+                    </div>
+                    <div class="card-footer">
+                        <p class="mb-0">Management pages for Disclosure structured data/lookup tables  </p>
+                    </div>
+                </div>
+            </div>
+        }        
+
+        @if(userPermissions.Any(permission => requiredStructuredDataPermissions.Contains(permission)))
+        {
+            <div class="col-sm-3 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <a asp-controller="EncounterStructuredData" asp-action="Index" class="btn btn-outline-primary">
+                            <h5 class="card-title mb-0">Encounter Structured Data</h5>
+                        </a>
+                    </div>
+                    <div class="card-footer">
+                        <p class="mb-0">Management pages for Encounter structured data/lookup tables  </p>
+                    </div>
+                </div>
+            </div>
+        }
+
+        @if(userPermissions.Any(permission => requiredStructuredDataPermissions.Contains(permission)))
+        {
+            <div class="col-sm-3 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <a asp-controller="MedicationDataEntry" asp-action="Index" class="btn btn-outline-primary">
+                            <h5 class="card-title mb-0">Medication Structured Data</h5>
+                        </a>
+                    </div>
+                    <div class="card-footer">
+                        <p class="mb-0">List of Medications from Database such as Generic Name and Brand Name  </p>
+                    </div>
+                </div>
+            </div>
+        }
+
+        @if(userPermissions.Any(permission => requiredStructuredDataPermissions.Contains(permission)))
+        {
+            <div class="col-sm-3 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <a asp-controller="PatientStructuredData" asp-action="Index" class="btn btn-outline-primary">
+                            <h5 class="card-title mb-0">Patient Structured Data</h5>
+                        </a>
+                    </div>
+                    <div class="card-footer">
+                        <p class="mb-0">Management pages for Patient structured data/lookup tables  </p>
+                    </div>
+                </div>
+            </div>
+        }
+
+        @if(userPermissions.Any(permission => requiredStructuredDataPermissions.Contains(permission)))
+        {
+            <div class="col-sm-3 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <a asp-controller="PCAStructuredData" asp-action="Index" class="btn btn-outline-primary">
+                            <h5 class="card-title mb-0">PCA Structured Data</h5>
+                        </a>
+                    </div>
+                    <div class="card-footer">
+                        <p class="mb-0">Management pages for Patient Care Assessment structured data/lookup tables  </p>
+                    </div>
+                </div>
+            </div>
+        }
+
+        @if(userPermissions.Any(permission => requiredStructuredDataPermissions.Contains(permission)))
+        {
+            <div class="col-sm-3 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <a asp-controller="PhysicianDocsStructuredData" asp-action="Index" class="btn btn-outline-primary">
+                            <h5 class="card-title mb-0">Physician Documents Structured Data</h5>
+                        </a>
+                    </div>
+                    <div class="card-footer">
+                        <p class="mb-0">Management pages for Physician Documents structured data/lookup tables  </p>
+                    </div>
+                </div>
+            </div>
+        }
+
+        @if(userPermissions.Any(permission => requiredStructuredDataPermissions.Contains(permission)))
+        {
+            <div class="col-sm-3 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <a asp-controller="PhysicianStructuredData" asp-action="Index" class="btn btn-outline-primary">
+                            <h5 class="card-title mb-0">Physician Structured Data</h5>
+                        </a>
+                    </div>
+                    <div class="card-footer">
+                        <p class="mb-0">Management pages for Physician structured data/lookup tables  </p>
+                    </div>
+                </div>
+            </div>
+        }
+
+        @if(userPermissions.Any(permission => requiredStructuredDataPermissions.Contains(permission)))
+        {
+            <div class="col-sm-3 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <a asp-controller="RevenueStructuredData" asp-action="Index" class="btn btn-outline-primary">
+                            <h5 class="card-title mb-0">Revenue Structured Data</h5>
+                        </a>
+                    </div>
+                    <div class="card-footer">
+                        <p class="mb-0">Management pages for Revenue structured data/lookup tables</p>
+                    </div>
+                </div>
+            </div>
+        }
+
+        @if(userPermissions.Any(permission => requiredStructuredDataPermissions.Contains(permission))  || userPermissions.Any(permission => requiredSecurityPermissions.Contains(permission)) )
+        {
+            <div class="col-sm-3 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <a asp-controller="UserManagementStructuredData" asp-action="Index" class="btn btn-outline-primary">
+                            <h5 class="card-title mb-0">User Management</h5>
+                        </a>
+                    </div>
+                    <div class="card-footer">
+                        <p class="mb-0">Management pages for Roles and Users structured data</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-3 mb-3">
+                <!-- create a spacer -->
+            </div>
+        }
+
+        @if(userPermissions.Any(permission => requiredStructuredDataPermissions.Contains(permission))  )
+        {
+            <div class="col-sm-3 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <a asp-controller="MiscStructuredData" asp-action="Index" class="btn btn-outline-primary">
+                            <h5 class="card-title mb-0">Miscellaneous</h5>
+                        </a>
+                    </div>
+                    <div class="card-footer">
+                        <p class="mb-0">Management pages for miscellaneous structured data</p>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

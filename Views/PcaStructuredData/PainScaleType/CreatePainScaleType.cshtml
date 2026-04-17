@@ -1,0 +1,45 @@
+@model IS_Proj_HIT.ViewModels.PcaStructuredDataViewModel
+@{
+    ViewBag.Title = "Create Pain Scale Type";
+    var userPermissions = ViewData["UserPermissions"] as List<string>;
+}
+
+<h1>Create</h1>
+
+<h4>Pain Scale Type</h4>
+<hr />
+
+<div class="row">
+    <div class="col-md-10">
+        <form method="post">
+            @Html.AntiForgeryToken()
+            <div class="form-row">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group col-sm-6">
+                    <label asp-for="PainScaleType.PainScaleTypeName" class="control-label">Pain Scale Type Name</label>
+                    <input asp-for="PainScaleType.PainScaleTypeName" 
+                        class="form-control" maxlength="50" required
+                        placeholder="Example:  Wong-Baker" />
+                    <span asp-validation-for="PainScaleType.PainScaleTypeName" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-row">            
+                <div class="form-group">
+                    @if (userPermissions != null && (userPermissions.Contains("StructuredDataAdd")) )
+                    {               
+                        <input type="submit" value="Create" class="btn btn-primary" />
+                    }
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<div>
+    <a asp-controller="PcaStructuredData" asp-action="ViewPainScaleTypes">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

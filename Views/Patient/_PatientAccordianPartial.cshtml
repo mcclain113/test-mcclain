@@ -1,0 +1,230 @@
+@using IS_Proj_HIT.Entities
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model IS_Proj_HIT.ViewModels.PatientVm.PatientViewModel
+
+<!-- This partial view is called by CreatePatient.cshtml
+        This view sets the UI stage using Bootstrap accordian styling
+        then calling a partial view specific to each accordian section -->            
+            
+<!-- The ViewBag.CreatingPatient is set in the Getter methods
+        when true, the UI is for Creating
+        when false, the UI is for Editing -->
+@if(ViewBag.CreatingPatient)
+{
+    <div class="text-center shadebox">
+        <label class="mrn">MRN</label><br/>
+        <input asp-for="@Model.Patient.Mrn" id="mrn" class="bg-light mrn"
+            value="@(ViewBag.MRN != null ? ViewBag.MRN : "")" data-toggle="popover" data-placement="top"
+            title="This unique ID identifies the patient" readonly/>
+    </div>
+}
+else
+{
+    <!-- EditPatient and ViewPatientDetails Getters both use this information so a separate conditional for ViewPatientDetails is not needed here -->
+    <input type="hidden" asp-for="Patient.Mrn" value="@Model.Patient.Mrn" readonly/>
+    <input type="hidden" asp-for="Person.PersonId" value="@Model.Person.PersonId" readonly/>
+    <input type="hidden" asp-for="RequestId" value="@Model.RequestId" readonly/>
+    <input type="hidden" asp-for="Employment.EmploymentId" readonly/>
+    <input type="hidden" asp-for="PersonContactDetail.PersonContactDetailId" readonly/>
+    <input type="hidden" asp-for="PrimaryInsurance.PatientInsuranceId" readonly/>
+    <input type="hidden" asp-for="SecondaryInsurance.PatientInsuranceId" readonly/>
+    <input type="hidden" asp-for="TertiaryInsurance.PatientInsuranceId"  readonly/>
+    <input type="hidden" asp-for="EmploymentAddress.AddressId" readonly/>
+    <input type="hidden" asp-for="ResidenceAddress.AddressId" readonly/>
+    <input type="hidden" asp-for="MailingAddress.AddressId" readonly/>
+    <!-- Hidden inputs for each PatientAlias ID -->
+    @for (int i = 0; i < Model.PatientAliases.Count; i++)
+    {
+        <input type="hidden" name="PatientAliases[@i].PatientAliasID" value="@Model.PatientAliases[i].PatientAliasID" />
+    }
+    <!-- Hidden inputs for each PersonRace ID -->
+    @if(Model.PersonRaces != null)
+    {    
+        for (int i = 0; i < Model.PersonRaces.Count; i++)
+        {
+            <input type="hidden" name="PersonRaces[@i].RaceId" value="@Model.PersonRaces[i].RaceId" />
+            <input type="hidden" name="PersonRaces[@i].Race.RaceId" value="@Model.PersonRaces[i].Race.RaceId" />
+        }
+    }
+    <!-- Hidden inputs for each PersonLanguage ID -->
+    @if(Model.PersonLanguages != null)
+    {    
+        for (int i = 0; i < Model.PersonLanguages.Count; i++)
+        {
+            <input type="hidden" name="PersonLanguages[@i].PersonLanguageId" value="@Model.PersonLanguages[i].PersonLanguageId" />
+            <input type="hidden" name="PersonLanguages[@i].LanguageId" value="@Model.PersonLanguages[i].LanguageId" />
+            <input type="hidden" name="PersonLanguages[@i].PersonId" value="@Model.PersonLanguages[i].PersonId" />
+        }
+    }
+    <!-- Hidden inputs for each EmergencyContact ID -->
+    @for (int i = 0; i < Model.EmergencyContact.Count; i++)
+    {
+        <input type="hidden" name="EmergencyContact[@i].EmergencyContactId" value="@Model.EmergencyContact[i].EmergencyContactId" />
+        @if (Model.EmergencyContact[i].ContactAddress != null)
+        {
+            <input type="hidden" name="EmergencyContact[@i].ContactAddress.AddressId" value="@Model.EmergencyContact[i].ContactAddress.AddressId" />
+            <input type="hidden" name="EmergencyContact[@i].ContactAddressId" value="@Model.EmergencyContact[i].ContactAddressId" />
+        }
+        <input type="hidden" name="EmergencyContact[@i].ContactRelationshipId" value="@Model.EmergencyContact[i].ContactRelationshipId" />
+        <input type="hidden" name="EmergencyContact[@i].Mrn" value="@Model.EmergencyContact[i].Mrn" />
+    }
+}
+    
+<div class="container mt-3">
+    @if (TempData["PatientError"] != null)
+            {
+                <div class="alert alert-danger">
+                    @TempData["PatientError"]
+                </div>
+            }
+    <div id="accordion">
+
+        <!-- Patient Demographics Section -->
+        <div class="card">
+            <div class="card-header custom-header bg-primary" id="headingOne">
+                <h4 class="mb-0">
+                    <button class="btn btn-block left-align" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        Patient Demographics
+                    </button>
+                </h4>
+            </div>
+
+            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+                <div class="card-body">
+                    @{
+                        await Html.RenderPartialAsync("_DemographicsPartial");
+                    }
+                </div>
+            </div>
+        </div>
+
+        <!-- Patient Contact Section -->
+        <div class="card">
+            <div class="card-header custom-header bg-primary" id="headingTwo">
+                <h4 class="mb-0">
+                    <button class="btn btn-block left-align collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                        Patient Contact Information
+                    </button>
+                </h4>
+            </div>
+            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+                <div class="card-body">
+                    @{
+                        await Html.RenderPartialAsync("_ContactInfoPartial");
+                    }
+                </div>
+            </div>
+        </div>
+
+        <!-- Emergency Contact Section --> 
+        <div class="card" id="emergencyContactSection"> 
+            <div class="card-header custom-header bg-primary" id="headingEmergencyContact">
+                <h4 class="mb-0"> 
+                    <button class="btn btn-block left-align collapsed" type="button" data-toggle="collapse" data-target="#collapseEmergencyContact" aria-expanded="false" aria-controls="collapseEmergencyContact"> 
+                        Patient Emergency Contact Information
+                    </button> 
+                </h4> 
+            </div> 
+            <div id="collapseEmergencyContact" class="collapse" aria-labelledby="headingEmergencyContact" data-parent="#accordion">
+                <div class="card-body" id="emergencyContactsContainer"> 
+                    @if (Model.EmergencyContact == null || Model.EmergencyContact.Count == 0)
+                    {
+                        <partial name="_EmergencyContactPartial" model="new IS_Proj_HIT.Entities.PatientEmergencyContact()" view-data="@(new ViewDataDictionary(ViewData) { {"indexEC", 0} })" />
+                    }
+                    else
+                    {
+                        @for (var i = 0; i < Model.EmergencyContact.Count; i++)
+                        {
+                            <partial name="_EmergencyContactPartial" model="@Model.EmergencyContact[i]" view-data="@(new ViewDataDictionary(ViewData) { {"indexEC", i} })" />
+                        }
+                    }
+                </div>
+                <div class="ml-5 mb-3" @(ViewBag.ViewPatientDetails ? "hidden" : "")>
+                    <!-- The button click runs a script which is an ajax call to a controller method;  it needs this hidden input to pass the ViewBag data through  -->
+                    <input type="hidden" id="ViewPatientDetails" value="@ViewBag.ViewPatientDetails" />
+                    <button type="button" class="btn btn-primary" id="addEmergencyContactBtn">Enter Another Emergency Contact</button>
+                </div>
+            </div> 
+        </div>
+
+        <!-- Patient Employment Section -->
+        <div class="card">
+            <div class="card-header custom-header bg-primary" id="headingThree">
+                <h4 class="mb-0">
+                    <button class="btn btn-block left-align collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                        Patient Employment Information
+                    </button>
+                </h4>
+            </div>
+            <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+                <div class="card-body">
+                    @{
+                        await Html.RenderPartialAsync("_EmploymentPartial");
+                    }
+                </div>
+            </div>
+        </div>
+        
+        <!-- Patient Insurance Section -->
+        <div class="card">
+            <div class="card-header custom-header bg-primary text-white" id="headingFour">
+                <h4 class="mb-0">
+                    <button class="btn btn-block left-align collapsed" type="button" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                        Patient Insurance Information
+                    </button>
+                </h4>
+            </div>
+            <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordion">
+                <div class="card-body">
+                    @{
+                        await Html.RenderPartialAsync("_InsurancePartial");
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Use the bool ViewBag.ViewPatientDetails, set in the controller, to toggle between showing the list of Encounters in the Detail view
+            or showing submit/cancel buttons -->
+    @if(ViewBag.ViewPatientDetails)
+    {
+        @if(!ViewBag.IsModal)
+        {
+            await Html.RenderPartialAsync("_EncounterPartial");
+        }
+    }
+    else
+    {
+        <!-- use the CreatingPatient toggle, set in the controller, to render either the Create Patient or Edit Patient button in the UI -->
+        @if(ViewBag.CreatingPatient)
+        {
+            <button style="margin-top: 1rem;" class="btn btn-primary btn-block btn-lg" 
+                    type="submit" onclick="setFormSubmit()">Create Patient</button>
+            <div class="mt-3">
+                <a asp-controller="Patient" asp-action="Index" class="btn btn-cancel">Cancel</a>
+            </div>
+        }
+        else
+        {
+            <button style="margin-top: 1rem;" class="btn btn-primary btn-block btn-lg" 
+                    type="submit" onclick="setFormSubmit()">Update Patient</button>
+            @if(Model.RequestId.HasValue)
+            {
+                <a class="btn btn-cancel float-right mt-3" asp-controller="Disclosure" asp-action="PatientDetails" asp-route-id="@Model.RequestId.Value">Cancel and Return to Request</a>
+            }
+            else
+            {
+                <div class="mt-3">
+                    <a asp-controller="Patient" asp-action="ViewPatientDetails"  asp-route-id="@Model.Patient.Mrn" class="btn btn-cancel">Cancel</a>
+                </div>
+            }
+            
+        }
+    }
+</div>
+
+<style>
+    .left-align {
+        text-align: left; 
+    }
+</style>

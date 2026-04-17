@@ -1,0 +1,40 @@
+@model IS_Proj_HIT.ViewModels.EncounterFormViewModel
+
+<div class="row">
+    <div class="col-sm-12 col-lg-4">
+        <label>Emergency Provider</label>
+        <select class="form-control dropdowns" asp-for="@Model.emergencyProviderId" asp-items="ViewBag.Physician">
+            <option value="">Select Emergency Provider</option>
+        </select>
+        <span asp-validation-for="emergencyProviderId" class="text-danger"></span>
+    </div>
+    <div class="col-sm-12 col-lg-4">
+        <label>Admitting Provider</label>
+        <select class="form-control dropdowns" asp-for="@Model.admittingProviderId" asp-items="ViewBag.Physician">
+            <option value="">Select Admitting Provider</option>
+        </select>
+        <span asp-validation-for="admittingProviderId" class="text-danger"></span>
+    </div>
+    <div class="col-sm-12 col-lg-4">
+        <label>Attending Provider</label>
+        <select class="form-control dropdowns" asp-for="@Model.attendingProviderId" asp-items="ViewBag.Physician">
+            <option value="">Select Attending Provider</option>
+        </select>
+        <span asp-validation-for="attendingProviderId" class="text-danger"></span>
+    </div>
+    <div class="col-sm-12 col-lg-4">
+        <label>Primary Care Provider</label>
+        <select class="form-control dropdowns" asp-for="@Model.primaryProviderId" asp-items="ViewBag.Physician">
+            <option value="">Select Primary Care Provider</option>
+        </select>
+        <span asp-validation-for="primaryProviderId" class="text-danger"></span>
+    </div>
+    <div class="col-sm-12 col-lg-4">
+        <label>Referring Provider</label>
+        <select class="form-control dropdowns" asp-for="@Model.referringProviderId" asp-items="ViewBag.Physician">
+            <option value="">Select Referring Provider</option>
+        </select>
+        <span asp-validation-for="referringProviderId" class="text-danger"></span>
+    </div>
+</div>
+<hr />

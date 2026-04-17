@@ -1,0 +1,142 @@
+@model IS_Proj_HIT.Entities.PatientEmergencyContact
+
+@{
+    var i = (int)ViewData["indexEC"];
+    var detailsIndex = i +1;
+}
+
+<!-- the class 'emergencyContacts' is needed to set the index used in the javascript function '#addEmergencyContactBtn' which uses ajax to render another partial when the button is clicked  -->
+<div class="card-body emergencyContacts" @(ViewBag.ViewPatientDetails ? "hidden" : "")>
+    <fieldset>
+        <div class="row validate-emergencyContact">
+            <!-- the class validate-emergencyContact is for the validation script validateEmergencyContact() which checks for required fields if an entry is made  -->
+            <div class="col-4 form-group">
+                <label for="EmergencyContact@i_ContactName">Emergency Contact Name</label>
+                <input type="text" class="validate form-control" id="EmergencyContact@i_ContactName" name="EmergencyContact[@i].ContactName" value="@Model.ContactName" placeholder="Emergency Contact Name" maxlength="50"/>
+                <div class="invalid-summary text-danger" style="display:none">
+                    Please enter Contact Name
+                </div>
+            </div>
+            <div class="col-2 form-group">
+                <label for="EmergencyContact@i_ContactPhone">Phone Number</label>
+                <input name="EmergencyContact[@i].ContactPhone" value="@Model.ContactPhone" id="EmergencyContact@i_ContactPhone" type="tel" class="validate not-required form-control phone" placeholder="Phone Number"/>
+            </div>
+            <div class="col-3 form-group">
+                <label for="EmergencyContact@i_ContactEmail">Emergency Contact Email</label>
+                <input name="EmergencyContact[@i].ContactEmail" value="@Model.ContactEmail" id="EmergencyContact@i_ContactEmail" type="text"   class="validate not-required form-control" placeholder="myEmergencyContact@fakemail.com" maxlength="100"/>
+            </div>
+            <div class="form-group col-sm-3">
+                <label for="EmergencyContact@i_ContactRelationship" class="control-label">Select Relationship</label>
+                <select id="EmergencyContact@i_ContactRelationship" asp-for="ContactRelationshipId" name="EmergencyContact[@i].ContactRelationshipId" class="validate not-required form-control" asp-items="ViewBag.Relationships">
+                    <option value="">Select Relationship</option>
+                </select>
+                <span asp-validation-for="ContactRelationshipId" class="text-danger"></span>
+            </div>
+        </div>
+        
+        <fieldset class="validate-address">
+            <div class="row">
+                <div class="col-4 form-group">
+                    <label for="Address1"> Street Address </label>
+                    <input name="EmergencyContact[@i].ContactAddress.Address1" 
+                        id="Address1" type="text" class="validate form-control" 
+                        value="@(Model.ContactAddress != null ? Model.ContactAddress.Address1 : null)" 
+                        placeholder="Example: 334 Meadow Road"  maxlength="100" />
+                    <div class="invalid-summary text-danger" style="display:none">
+                        Please enter an Address
+                    </div>
+                </div>
+                <div class="col-2 form-group">
+                    <label for="Suite">Suite or Apt.#</label>
+                    <input name="EmergencyContact[@i].ContactAddress.Address2" 
+                        id="Suite" type="text" class="validate not-required form-control"
+                        value="@(Model.ContactAddress?.Address2 ?? null)" 
+                        placeholder="Example:  Apt. 4" maxlength="100"  />
+                </div>
+                <div class="col-2 form-group">
+                    <label for="City">City</label>
+                    <input name="EmergencyContact[@i].ContactAddress.City" 
+                        id="City" type="text" class="validate form-control"
+                        value="@(Model.ContactAddress?.City ?? null)"
+                        placeholder="Example:  Madison"  maxlength="50" />
+                    <div class="invalid-summary text-danger" style="display:none">
+                        Please enter a City
+                    </div>
+                </div>
+                <div class="form-group col-sm-2">
+                    <label  class="control-label" for="AddressStateID">Select State</label>
+                    <select  name="EmergencyContact[@i].ContactAddress.AddressStateID" 
+                        id="AddressStateID" class="form-control" asp-for="ContactAddress.AddressStateID" 
+                        asp-items="ViewBag.StateId"></select>
+                </div>
+                <div class="col-2 form-group">
+                    <label for="PostalCode">Postal Code</label>
+                    <input name="EmergencyContact[@i].ContactAddress.PostalCode" 
+                        id="PostalCode" type="text" class="validate form-control zipcode"
+                        value="@(Model.ContactAddress?.PostalCode ?? null)" 
+                        placeholder="Example:  53036" />
+                        <div class="invalid-summary text-danger" style="display:none">
+                            Please enter a Postal Code
+                        </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-4">
+                    <label for="County" class="control-label">County</label>
+                    <input name="EmergencyContact[@i].ContactAddress.County" 
+                        id="County" class="validate not-required form-control"
+                        value="@(Model.ContactAddress?.County ?? null)" 
+                        maxlength="50" placeholder="Example:  Jefferson"/>
+                </div>
+                <div class="col-4 form-group">
+                    <label for="Country">Country</label>
+                    <select name="EmergencyContact[@i].ContactAddress.CountryId" 
+                        id="Country" class="form-control"
+                        asp-for="ContactAddress.CountryId" asp-items="ViewBag.Countries">
+                    </select>
+                </div>
+            </div>
+        </fieldset>
+    </fieldset>         
+</div>
+
+<div @(!ViewBag.ViewPatientDetails ? "hidden" : "")>
+    <div @(i == 0 ? "hidden" : "")>
+        <hr class="mt-2" />
+    </div>
+    <div class="row">
+        <div class="col-6 ml-3">
+            <div class="row">
+                <label>Emergency Contact Name:</label>
+                <span class="data ml-2">@(Model.ContactName ?? "")</span>
+            </div>
+            <div class="row">
+                <label>Relationship:</label>
+                <span class="data ml-2">@(Model.ContactRelationship?.Name ?? "")</span>
+            </div>
+            <div class="row">
+                <label>Email:</label>
+                <span class="data ml-2">@(Model.ContactEmail ?? "")</span>
+            </div>
+        </div>
+                
+        <div class="col-5">
+            <div class="row">
+                <label>Phone Number:</label>
+                <span class="data phone ml-2">@(Model.ContactPhone ?? "")</span>
+            </div>
+            <div class="row">
+                <label>Address:</label>
+                <span class="data ml-1">
+                    @(Model.ContactAddress?.Address1 ?? "") 
+                    @(Model.ContactAddress?.Address2 ?? "")<br>
+                    @(Model.ContactAddress?.City ?? "")
+                    @(Model.ContactAddress?.City != null && Model.ContactAddress?.AddressState?.StateAbbreviation != null ? ", " : "") 
+                    @(Model.ContactAddress?.AddressState?.StateAbbreviation ?? "")  
+                    @(Model.ContactAddress?.PostalCode ?? "")<br>
+                    @(Model.ContactAddress?.Country?.Name ?? "")
+                </span>
+            </div>
+        </div>
+    </div>
+</div>

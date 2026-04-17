@@ -1,0 +1,46 @@
+@model IS_Proj_HIT.ViewModels.PatientVm.PatientStructuredDataViewModel
+@{
+    ViewBag.Title = "Edit Insurance Provider";
+}
+
+<h1>Edit</h1>
+
+<h4>Insurance Provider</h4>
+<hr />
+
+<div class="row">
+    <div class="col-md-10">
+        <form method="post">
+            @Html.AntiForgeryToken()
+            <div class="form-row">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="InsuranceProvider.InsuranceProviderId" value="@Model.InsuranceProvider.InsuranceProviderId" readonly/>
+                                
+                <div class="form-group col-sm-6">
+                    <label asp-for="InsuranceProvider.ProviderName" class="control-label">Provider Name</label>
+                    <input asp-for="InsuranceProvider.ProviderName" 
+                        class="form-control" maxlength="100" required
+                        placeholder="Example:  Medicare Part A (Hospital Insurance)" />
+                    <span asp-validation-for="InsuranceProvider.ProviderName" class="text-danger"></span>
+                </div>
+                
+            </div>
+
+            <div class="form-row">            
+                <div class="form-group">
+                    <input type="submit" value="Save Changes" class="btn btn-primary" />
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+
+<div>
+    <a asp-controller="PatientStructuredData" asp-action="ViewInsuranceProviders">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,146 @@
+@{
+    ViewData["Title"] = "Birth Registry Search";
+}
+
+<div class="row justify-content-center mt-2">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                <h2><small><i class="fas fa-search mr-2 pb-2"></i></small>Birth Registry Search</h2>
+            </div>
+            <div class="card-body bg-light">
+                <form method="get" asp-controller="BirthRegistry" asp-action="BirthRegistryArchive">
+                    
+                    <div class="card mb-4">
+                        <div class="card-header bg-info text-white">
+                            <h6 class="mb-0"><i class="fas fa-filter mr-2"></i>Registry Status</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-4 mb-3">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="registryStatus" id="searchAll" value="all" checked>
+                                        <label class="form-check-label" for="searchAll">
+                                            <div><strong>All Registries</strong></div>
+                                            <small class="text-muted">Show all birth registries</small>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="registryStatus" id="searchComplete" value="complete">
+                                        <label class="form-check-label" for="searchComplete">
+                                            <div><strong>Complete Only</strong></div>
+                                            <small class="text-muted">Certified registries with newborn data</small>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="registryStatus" id="searchIncomplete" value="incomplete">
+                                        <label class="form-check-label" for="searchIncomplete">
+                                            <div><strong>Incomplete Only</strong></div>
+                                            <small class="text-muted">Missing certification or newborn data</small>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h5 class="text-primary"><i class="fas fa-female mr-2"></i>Mother Information</h5>
+                            <div class="form-group">
+                                <input type="text" name="motherFirstName" class="form-control" placeholder="Mother First Name" id="motherFirstName" />
+                            </div>
+                            <div class="form-group">
+                                <input type="text" name="motherLastName" class="form-control" placeholder="Mother Last Name" id="motherLastName" />
+                            </div>
+                            <div class="form-group">
+                                <input type="text" name="motherMrn" class="form-control" placeholder="Mother MRN" id="motherMrn" />
+                            </div>
+                            <div class="form-group">
+                                <input type="text" name="motherSsn" class="form-control" placeholder="Mother SSN" id="motherSsn" />
+                            </div>
+                            <div class="form-group">
+                                <label for="motherDateOfBirth" class="font-weight-bold">Mother Date of Birth</label>
+                                <input type="date" name="motherDateOfBirth" class="form-control" id="motherDateOfBirth" />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <h5 class="text-primary"><i class="fas fa-baby mr-2"></i>Newborn Information</h5>
+                            <div class="form-group">
+                                <input type="text" name="newbornFirstName" class="form-control" placeholder="Newborn First Name" id="newbornFirstName" />
+                            </div>
+                            <div class="form-group">
+                                <input type="text" name="newbornLastName" class="form-control" placeholder="Newborn Last Name" id="newbornLastName" />
+                            </div>
+                            <div class="form-group">
+                                <input type="text" name="newbornMrn" class="form-control" placeholder="Newborn MRN" id="newbornMrn" />
+                            </div>
+                            <div class="form-group">
+                                <label for="birthDateRangeStart" class="font-weight-bold">Birth Date Range</label>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <input type="date" name="birthDateRangeStart" class="form-control" placeholder="From" id="birthDateRangeStart" />
+                                        <small class="text-muted">From date</small>
+                                    </div>
+                                    <div class="col-6">
+                                        <input type="date" name="birthDateRangeEnd" class="form-control" placeholder="To" id="birthDateRangeEnd" />
+                                        <small class="text-muted">To date</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="alert alert-info">
+                        <h6 class="alert-heading"><i class="fas fa-lightbulb mr-2"></i>Search Tips:</h6>
+                        <ul class="mb-0 small">
+                            <li>Use any combination of fields to search</li>
+                            <li>Partial names and numbers are supported</li>
+                            <li>Select status to filter by completion</li>
+                            <li>Leave fields blank to show all registries</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="form-group text-center">
+                        <button type="submit" class="btn btn-primary btn-lg btn-block">
+                            <i class="fas fa-search"></i> Search Birth Registries
+                        </button>
+                        <button type="reset" class="btn btn-outline-secondary mt-2">
+                            <i class="fas fa-eraser"></i> Clear Form
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function() {
+            const $form = $('form');
+            
+            $form.on('submit', function() {
+                $form.find('input[type="text"], input[type="date"]').each(function() {
+                    const $input = $(this);
+                    const isEmpty = !$input.val() || $input.val().trim() === '';
+                    
+                    if (isEmpty) {
+                        $input.removeAttr('name');
+                    }
+                });
+            });
+
+            $('button[type="reset"]').on('click', function() {
+                setTimeout(function() {
+                    $('input[type="date"]').val('');
+                    $('input[name="registryStatus"][value="all"]').prop('checked', true);
+                }, 10);
+            });
+        });
+    </script>
+}

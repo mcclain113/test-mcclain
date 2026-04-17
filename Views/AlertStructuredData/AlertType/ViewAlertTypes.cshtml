@@ -1,0 +1,59 @@
+@model List<IS_Proj_HIT.Entities.AlertType>
+
+@{
+    ViewData["Title"] = "Alert Types";
+}
+
+<div class="row my-3">
+    <h3>
+        <a class="btn btn-primary" asp-controller="AlertStructuredData" asp-action="Index">
+            <i class="fa fa-arrow-left "></i>
+        </a>
+        Alert Types
+    </h3>
+</div>
+
+<p>
+    <a class="btn btn-primary" asp-controller="AlertStructuredData" asp-action="CreateAlertType">Create New</a>
+</p>
+
+<table class="stripe nowrap" id="alertTypeTable">
+    <thead>
+        <tr>
+            <th>Alert Type</th>
+            <th>Description</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var alertType in Model)
+        {
+            <tr>
+                <td>@alertType.Name</td>
+                <td>@alertType.Description</td>
+                <td>
+                    <a class="btn btn-primary" asp-controller="AlertStructuredData" asp-action="EditAlertType" asp-route-id="@alertType.AlertId">Edit</a>
+                    <a class="btn btn-danger" asp-controller="AlertStructuredData" asp-action="DeleteAlertType" asp-route-id="@alertType.AlertId">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section scripts{
+    <script>
+        // DataTable Documentation found here: https://datatables.net/
+        $(function () {
+            // Creates DataTable
+            $('#alertTypeTable').DataTable({
+                columns: [null, null, { orderable: false }],
+                order: [[0, 'asc']],
+                pageLength: 10,
+                searching: true,
+                language: {
+                    emptyTable: 'None found'
+                }
+            });
+        });
+    </script>
+}

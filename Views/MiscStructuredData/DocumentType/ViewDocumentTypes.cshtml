@@ -1,0 +1,60 @@
+@model List<IS_Proj_HIT.Entities.DocumentType>
+@{
+    ViewData["Title"] = "Document Types";
+}
+
+<div class="row my-3">
+    <h3>
+        <a class="btn btn-primary" asp-controller="MiscStructuredData" asp-action="Index">
+            <i class="fa fa-arrow-left"></i>
+        </a>
+        Document Types
+    </h3>
+</div>
+
+<p>
+    <a class="btn btn-primary" asp-controller="MiscStructuredData" asp-action="CreateDocumentType">Create New</a>
+</p>
+
+<table class="stripe" id="documentTypeTable">
+    <thead>
+        <tr>
+            <th>Document Type Name</th>
+            <th>Document Type Level</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var documentType in Model)
+        {
+            <tr>
+                <td>@documentType.DocumentTypeName</td>
+                <td>@documentType.DocumentTypeLevel</td>
+                <td>
+                    <a class="btn btn-primary" asp-controller="MiscStructuredData" asp-action="EditDocumentType" asp-route-id="@documentType.DocumentTypeID">Edit</a>
+                    <a class="btn btn-danger" asp-controller="MiscStructuredData" asp-action="DeleteDocumentType" asp-route-id="@documentType.DocumentTypeID">Delete</a>
+                </td>
+            </tr>
+        }
+
+    </tbody>
+</table>
+
+@section scripts{
+    <script>
+    // DataTable Documentation found here:  https://datatables.net
+    $(function(){
+        // Create the data table
+        $('#documentTypeTable').DataTable({
+            columns: [null, null, {orderable: false}],
+            order: [
+                [1,'asc'],
+                [0, 'asc']
+            ],
+            pageLength: 10,
+            searching: true,
+            language: { emptyTable: 'None found'}
+        });
+    });
+    </script>
+}

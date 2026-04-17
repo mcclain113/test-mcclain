@@ -1,0 +1,49 @@
+@{
+    ViewBag.Title = "Revenue Data Entry";
+}
+
+<div class="row my-3">
+<h3>
+    <a class="btn btn-primary" asp-controller="Administration" asp-action="Index">
+        <i class="fa fa-arrow-left "></i>
+    </a>
+    Revenue Data Entry Management
+</h3>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-4 col-lg-3 mb-3">
+            <div class="card">
+                <div class="card-body text-center">
+                    <a class="btn btn-outline-primary" asp-controller="RevenueStructuredData" asp-action="ViewChargeDefinitions">Charge Definitions</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-4 col-lg-3 mb-3">
+            <div class="card">
+                <div class="card-body text-center">
+                    <a class="btn btn-outline-primary" asp-controller="RevenueStructuredData" asp-action="ViewDisclosureFeeTypes">Disclosure Fee Types</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-4 col-lg-3 mb-3">
+            <div class="card">
+                <div class="card-body text-center">
+                    <a class="btn btn-outline-primary" asp-controller="RevenueStructuredData" asp-action="ViewPaymentTypes">Payment Types</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-4 col-lg-3 mb-3">
+            <div class="card">
+                <div class="card-body text-center">
+                    <a class="btn btn-outline-primary" asp-controller="RevenueStructuredData" asp-action="ViewRevenueCodes">Revenue Codes</a>
+                </div>
+            </div>
+        </div>
+
+    </div> <!-- close the row  -->
+</div>

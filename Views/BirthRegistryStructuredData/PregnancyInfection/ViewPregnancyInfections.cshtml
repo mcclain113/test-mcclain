@@ -1,0 +1,57 @@
+@model List<IS_Proj_HIT.Entities.PregnancyInfection>
+@{
+    ViewData["Title"] = "Pregnancy Infections";
+}
+
+<div class="row my-3">
+    <h3>
+        <a class="btn btn-primary" asp-controller="BirthRegistryStructuredData" asp-action="Index">
+            <i class="fa fa-arrow-left"></i>
+        </a>
+        Pregnancy Infections
+    </h3>
+</div>
+
+<p>
+    <a class="btn btn-primary" asp-controller="BirthRegistryStructuredData" asp-action="CreatePregnancyInfection">Create New</a>
+</p>
+
+<table class="stripe" id="pregnancyInfectionTable">
+    <thead>
+        <tr>
+            <th>Pregnancy Infection Name</th>
+            <th>Pregnancy Infection Description</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var pregnancyInfection in Model)
+        {
+            <tr>
+                <td>@pregnancyInfection.InfectionName</td>
+                <td>@pregnancyInfection.InfectionDescription</td>
+                <td>
+                    <a class="btn btn-primary" asp-controller="BirthRegistryStructuredData" asp-action="EditPregnancyInfection" asp-route-id="@pregnancyInfection.InfectionId">Edit</a>
+                    <a class="btn btn-danger" asp-controller="BirthRegistryStructuredData" asp-action="DeletePregnancyInfection" asp-route-id="@pregnancyInfection.InfectionId">Delete</a>
+                </td>
+            </tr>
+        }
+
+    </tbody>
+</table>
+
+@section scripts{
+    <script>
+    // DataTable Documentation found here:  https://datatables.net
+    $(function(){
+        // Create the data table
+        $('#pregnancyInfectionTable').DataTable({
+            columns: [null, null, {orderable: false}],
+            order: [[0, 'asc'] ],
+            pageLength: 10,
+            searching: true,
+            language: { emptyTable: 'None found'}
+        });
+    });
+    </script>
+}

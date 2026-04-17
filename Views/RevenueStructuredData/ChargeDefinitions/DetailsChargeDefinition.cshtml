@@ -1,0 +1,80 @@
+@model IS_Proj_HIT.ViewModels.RevenueStructuredDataViewModel
+@{
+    ViewData["Title"] = "Details Charge Definition";
+}
+
+<div class="header-container">
+    <h1>Details</h1>
+    <a asp-controller="RevenueStructuredData" asp-action="EditChargeDefinition"  asp-route-id="@Model.ChargeDefinition.ChargeID" class="btn btn-primary">Edit</a>
+</div>
+
+<h4 class="form-row">Charge Definition</h4>
+
+<hr/>
+<div class="row">
+    <div class="col-md-10">
+        <form method="post">
+            @Html.AntiForgeryToken()
+            <div class="form-row">
+                
+                <input type="hidden" asp-for="ChargeDefinition.ChargeID" readonly />
+                <input type="hidden" asp-for="Department.DepartmentId" readonly />
+
+                <div class="form-group col-sm-12">
+                    <label asp-for="ChargeDefinition.LongDescription" class="control-label">Long Description</label>
+                    <span class="form-control">@Model.ChargeDefinition.LongDescription</span>
+                    
+                </div>
+
+                <div class="form-group col-sm-4">
+                    <label asp-for="ChargeDefinition.ShortDescription" class="control-label">Short Description</label>
+                    <span class="form-control">@Model.ChargeDefinition.ShortDescription</span>
+                </div>
+
+                <div class="form-group col-sm-4">
+                    <label asp-for="ChargeDefinition.ChargeAmount" class="control-label">Charge Amount</label>
+                    <span class="form-control">@Model.ChargeDefinition.ChargeAmount</span>
+                </div>
+
+                <div class="form-group col-sm-4">
+                    <label asp-for="ChargeDefinition.ServiceCode" class="control-label">CPT/HCPCS Code</label>
+                    <span class="form-control">@Model.ChargeDefinition.ServiceCode</span>
+                </div>
+
+                <div class="form-group col-sm-6">
+                    <label  class="control-label" asp-for="Department.DepartmentId">Department</label>
+                    <span class="form-control">@Model.Department.Name</span>
+                </div>
+
+                <div class="form-group col-sm-6">
+                    <label  class="control-label" asp-for="ChargeDefinition.RevenueCodeID">Revenue Code</label>
+                    <span class="form-control">@Model.ChargeDefinition.RevenueCodeID - @Model.RevenueCode.ShortDescription</span>
+                </div>
+
+                <div class="form-group col-sm-6">
+                    <label  class="control-label" asp-for="ChargeDefinition.DateActivated">Date Activated</label>
+                    <span class="form-control">@Model.ChargeDefinition.DateActivated</span>
+                </div>
+
+                <div class="form-group col-sm-6">
+                    <label  class="control-label" asp-for="ChargeDefinition.DateDeactivated">Date Deactivated</label>
+                    <span class="form-control">@Model.ChargeDefinition.DateDeactivated</span>
+                </div>
+
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-controller="RevenueStructuredData" asp-action="ViewChargeDefinitions">Back to List</a>
+</div>
+
+<style>
+    .header-container { 
+        display: flex; 
+        justify-content: space-between; 
+        align-items: center; 
+        margin-bottom: 20px; /* Adjust as needed for spacing */ 
+        }    
+</style>

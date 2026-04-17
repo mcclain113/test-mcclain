@@ -1,0 +1,72 @@
+@model List<IS_Proj_HIT.Entities.MedicationDeliveryRoute>
+
+@{
+    ViewData["Title"] = "Medication Delivery Routes";
+}
+
+<div class="row my-3">
+<h3>
+    <a class="btn btn-primary" asp-controller="MedicationDataEntry" asp-action="Index">
+        <i class="fa fa-arrow-left "></i>
+    </a>
+    Medication Delivery Routes
+</h3>
+</div>
+
+<p>
+    <a class="btn btn-primary" asp-controller="MedicationDataEntry" asp-action="CreateDeliveryRoute">Create New</a>
+</p>
+
+<table class="stripe nowrap" id="deliveryRouteTable">
+    <thead>
+        <tr>
+            <th>Delivery Route</th>
+            <th>Description</th>
+            <th>Active</th>
+            <th>Last Modified</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var deliveryRoute in Model)
+        {
+            @* If the table is not active, grey out the row *@
+            <tr class=@(deliveryRoute.IsActive ? "" : "bg-secondary")>
+                <td>
+                    @deliveryRoute.DeliveryRouteName
+                </td>
+                <td>
+                    @deliveryRoute.Description
+                </td>
+                <td>
+                    @(deliveryRoute.IsActive ? "Yes" : "No")
+                </td>
+                <td>
+                    @deliveryRoute.ModifiedDate.ToString("MM/dd/yyyy")
+                </td>
+                <td>
+                    <a class="btn btn-primary" asp-controller="MedicationDataEntry" asp-action="EditDeliveryRoute" asp-route-id="@deliveryRoute.DeliveryRouteId">Edit</a>
+                    <a class="btn btn-danger" asp-controller="MedicationDataEntry" asp-action="DeleteDeliveryRoute" asp-route-id="@deliveryRoute.DeliveryRouteId">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section scripts{
+    <script>
+        // Creates DataTable
+        // DataTable Documentation found here: https://datatables.net/
+        $(function () {
+            $('#deliveryRouteTable').DataTable({
+                columns: [null, null, null,null, { orderable: false }],
+                order: [[0, 'asc']],
+                pageLength: 25,
+                searching: true,
+                language: {
+                    emptyTable: 'No medication delivery routes found'
+                }
+            });
+        });
+    </script>
+}

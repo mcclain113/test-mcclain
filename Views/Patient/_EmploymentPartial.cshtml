@@ -1,0 +1,119 @@
+@model IS_Proj_HIT.ViewModels.PatientVm.PatientViewModel
+
+<div class="card-body" @(ViewBag.ViewPatientDetails ? "hidden" : "")>
+    <fieldset>
+        @* <legend>Employment</legend> *@
+        <div class="row validate-employment">
+            <div class="col-4 form-group">
+                <label for="Occupation">Occupation</label>
+                <input asp-for="@Model.Employment.Occupation" id="Occupation" type="text" class="validate not-required form-control"  
+                        placeholder="Occupation"/>
+            </div>
+            <div class="col-6 form-group">
+                <label for="Employer">Employer Name</label>
+                <input asp-for="@Model.Employment.EmployerName" id="Employer" type="text" class="validate form-control" 
+                        placeholder="Employer Name"/>
+                <div class="invalid-summary text-danger" style="display:none">
+                    Please enter Employer Name
+                </div>
+            </div>
+            <div class="col-2 form-group">
+                <label for="EmployerPhone">Employer Phone Number</label>
+                <input asp-for="@Model.Employment.PhoneNumber" id="EmployerPhone" 
+                        class="validate form-control phone" placeholder="Phone Number"/>
+                <div class="invalid-summary text-danger" style="display:none">
+                    Please enter Employer Phone Number
+                </div>
+            </div>
+            
+        </div>
+        
+        <fieldset class="validate-address">
+            @* <legend>Employer Address</legend> *@
+            <div class="row">
+                <div class="col-4 form-group">
+                    <label> Street Address </label>
+                    <input asp-for="@Model.EmploymentAddress.Address1" 
+                            type="text" class="validate form-control" placeholder="Example: 334 Meadow Road" maxlength="100" />
+                            <div class="invalid-summary text-danger" style="display:none">
+                                Please enter an Address
+                            </div>
+                </div>
+                <div class="col-2 form-group">
+                    <label>Suite or Apt.#</label>
+                    <input asp-for="@Model.EmploymentAddress.Address2"
+                        type="text" class="validate not-required form-control" placeholder="Example:  Apt. 4"  maxlength="100"/>
+                </div>
+                <div class="col-2 form-group">
+                    <label>City</label>
+                    <input asp-for="@Model.EmploymentAddress.City"
+                            type="text" class="validate form-control" placeholder="Example:  Madison"  maxlength="50"/>
+                            <div class="invalid-summary text-danger" style="display:none">
+                                Please enter a City
+                            </div>
+                </div>
+                <div class="form-group col-sm-2">
+                    <label  class="control-label" asp-for="EmploymentAddress.AddressStateID">Select State</label>
+                    <select class="form-control" asp-for="EmploymentAddress.AddressStateID" asp-items="ViewBag.StateId"></select>
+                </div>
+                <div class="col-2 form-group">
+                    <label>Postal Code</label>
+                    <input asp-for="@Model.EmploymentAddress.PostalCode" 
+                            type="text" class="validate form-control zipcode" placeholder="Example:  53036" />
+                        <div class="invalid-summary text-danger" maxlength="11" style="display:none">
+                            Please enter a Postal Code
+                        </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-4">
+                    <label asp-for="EmploymentAddress.AddressId" class="control-label">County</label>
+                    <input asp-for="EmploymentAddress.County" class="validate not-required form-control"maxlength="50" placeholder="Example:  Jefferson"/>
+                </div>
+                <div class="col-4 form-group">
+                    <label>Country</label>
+                    <select asp-for="@Model.EmploymentAddress.CountryId" 
+                            class="form-control" asp-items="ViewBag.Countries">
+                    </select>
+                </div>
+            </div>
+        </fieldset>
+    </fieldset>
+           
+</div>
+
+<div @(!ViewBag.ViewPatientDetails ? "hidden" : "")>
+    
+    <div class="row">
+        <div class="col-4 ml-3">
+            <div class="row">
+                <label>Occupation:</label>
+                <span class="data ml-2">@(Model.Employment?.Occupation ?? "")</span>
+            </div>
+            <div class="row">
+                <label>Employer Name:</label>
+                <span class="data ml-2">@(Model.Employment?.EmployerName ?? "")</span>
+            </div>
+            <div class="row">
+                <label for="EmployerPhone">Phone Number:</label>
+                <span class="data phone ml-2">@(Model.Employment?.PhoneNumber ?? "")</span>
+            </div>
+        </div>
+
+        <div class="col-6">
+            <div class="row">
+                <label class="col-2">Address:</label>
+                <span class="data">
+                    @(Model.Employment?.Address?.Address1 ?? "") 
+                    @(Model.Employment?.Address?.Address2 ?? "")<br>
+                    @(Model.Employment?.Address?.City ?? "")
+                    @(Model.Employment?.Address?.City != null && Model.Employment?.Address?.AddressState?.StateAbbreviation != null ? ", " : "") 
+                    @(Model.Employment?.Address?.AddressState?.StateAbbreviation ?? "")  
+                    @(Model.Employment?.Address?.PostalCode ?? "")<br>
+                    @(Model.Employment?.Address?.Country?.Name ?? "")
+                </span>
+            </div>
+        </div>
+    </div>
+    
+</div>

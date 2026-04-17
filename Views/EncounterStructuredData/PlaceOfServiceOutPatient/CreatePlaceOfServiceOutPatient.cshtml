@@ -1,0 +1,50 @@
+@model IS_Proj_HIT.ViewModels.EncounterStructuredDataViewModel
+@{
+    ViewBag.Title = "Create Place Of Service OutPatient";
+}
+
+<h1>Create</h1>
+
+<h4>Place Of Service OutPatient</h4>
+<hr />
+
+<h3 class="error">@ViewData["ErrorMessage"]</h3>
+
+<div class="row">
+    <div class="col-md-10">
+        <form method="post">
+            @Html.AntiForgeryToken()
+            <div class="form-row">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group col-sm-6">
+                    <label asp-for="PlaceOfServiceOutPatient.WiPopCode" class="control-label">WiPopCode</label>
+                    <input asp-for="PlaceOfServiceOutPatient.WiPopCode" 
+                        class="form-control" maxlength="2" required
+                        placeholder="Example:  15" />
+                    <span asp-validation-for="PlaceOfServiceOutPatient.WiPopCode" class="text-danger"></span>
+                </div>
+                <div class="form-group col-sm-6">
+                    <label asp-for="PlaceOfServiceOutPatient.Description" class="control-label">Description</label>
+                    <input asp-for="PlaceOfServiceOutPatient.Description" 
+                        class="form-control" maxlength="70"   
+                        placeholder="Example:  OHO - Other OutPatient Hospital"/>
+                    <span asp-validation-for="PlaceOfServiceOutPatient.Description" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                </div>
+
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<div>
+    <a asp-controller="EncounterStructuredData" asp-action="ViewPlaceOfServiceOutPatients">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

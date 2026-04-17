@@ -1,0 +1,45 @@
+@model IS_Proj_HIT.ViewModels.PhysicianStructuredData.PhysicianStructuredDataViewModel
+@{
+    ViewBag.Title = "Delete Provider Type";
+}
+
+<h1>Delete</h1>
+
+<h3>@ViewData["RegularMessage"]</h3>
+<h3 class="error">@ViewData["ErrorMessage"]</h3>
+
+<h4>Provider Type</h4>
+<hr />
+
+<div class="row">
+    <div class="col-md-10">
+        <form method="post">
+            @Html.AntiForgeryToken()
+            <div class="form-row">
+                
+                <input type="hidden" asp-for="ProviderType.ProviderTypeId" value="@Model.ProviderType.ProviderTypeId" readonly/>
+
+                <div class="form-group col-sm-6">
+                    <label asp-for="ProviderType.Name" class="control-label">Provider Type Name</label>
+                    <input asp-for="ProviderType.Name" class="form-control" maxlength="50" required />
+                    
+                </div>
+                <div class="form-group col-sm-6">
+                    <label asp-for="ProviderType.Description" class="control-label">Provider Type Description</label>
+                    <input asp-for="ProviderType.Description" class="form-control" maxlength="100" />
+                    
+                </div>
+                <div class="form-group">
+                    <a asp-controller="PhysicianStructuredData" asp-action="ViewProviderTypes" class="btn btn-outline-danger">Discard Changes</a>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Delete Item" class="ml-3 btn btn-primary" />
+                </div>
+            </div>            
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-controller="PhysicianStructuredData" asp-action="ViewProviderTypes">Back to List</a>
+</div>

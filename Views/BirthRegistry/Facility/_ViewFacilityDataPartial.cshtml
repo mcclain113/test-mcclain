@@ -1,0 +1,479 @@
+@model IS_Proj_HIT.ViewModels.BirthRegistry.BirthFacilityViewModel
+
+<div class="card">
+    <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+        <h4 class="mb-0"><i class="fas fa-hospital mr-2"></i>Birth Facility Information</h4>
+        <span class="badge badge-light text-dark">View Mode</span>
+    </div>
+
+    <div class="card-body" id="facilityViewAccordion">
+
+        @if (Model.HasFacilityInformation || !string.IsNullOrWhiteSpace(Model.PlaceOfBirth) ||
+                Model.BirthPlaceTypeId.HasValue)
+        {
+            <div class="card mb-3" id="facility-view-section-1">
+                <div class="card-header bg-primary text-white">
+                    <button class="btn btn-block text-left text-white" type="button" data-toggle="collapse"
+                        data-target="#facility-view-collapse1">
+                        <i class="fas fa-hospital"></i> 1. Place of Birth
+                    </button>
+                </div>
+
+                <div id="facility-view-collapse1" class="collapse show" data-parent="#facilityViewAccordion">
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label class="font-weight-bold">Birth Location</label>
+                            <div class="form-control-plaintext border p-2 bg-light">
+                                @(Model.PlaceOfBirth == "WCTMC"
+                                                            ? "WCTMC"
+                                                            : Model.PlaceOfBirth == "NonFacility"
+                                                            ? "Non-WCTMC Facility"
+                                                            : (Model.PlaceOfBirth ?? "Not provided"))
+                            </div>
+                        </div>
+
+                        @if (Model.PlaceOfBirth == "WCTMC")
+                        {
+                            <div class="border rounded p-3 bg-light mb-3">
+                                <div class="form-row">
+                                    <div class="col-md-6">
+                                        <label class="mb-0">Facility</label>
+                                        <div class="font-weight-bold">Waukesha County Technical Medical Center</div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="mb-0">Facility ID</label>
+                                        <div class="font-weight-bold">9063874824</div>
+                                    </div>
+                                </div>
+                                <div class="form-row mt-2">
+                                    <div class="col-md-6">
+                                        <label class="mb-0">City/Town/Location of Birth</label>
+                                        <div class="font-weight-bold">Pewaukee</div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="mb-0">County of Birth</label>
+                                        <div class="font-weight-bold">Waukesha</div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        else if (Model.PlaceOfBirth == "NonFacility")
+                        {
+                            if (Model.NonWctmcFacilityId.HasValue && Model.Facility != null)
+                            {
+                                var addr = Model.Facility.Address;
+                                var city = addr?.City ?? "—";
+                                var postal = addr?.PostalCode ?? "—";
+                                var facilityIdText = Model.NonWctmcFacilityId?.ToString() ?? "—";
+
+                                <div class="border rounded bg-light p-3 mb-3">
+                                    <div class="form-row">
+                                        <div class="col-md-6">
+                                            <label class="font-weight-bold mb-0">Facility Name:</label>
+                                            <div class="font-weight-bold">
+                                                @(string.IsNullOrWhiteSpace(Model.Facility.Name)
+                                                                                    ? "—"
+                                                                                    : Model.Facility.Name)
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="font-weight-bold mb-0">Facility ID:</label>
+                                             <div>@facilityIdText</div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row mt-2">
+                                        <div class="col-md-6">
+                                            <label class="font-weight-bold mb-0">City:</label>
+                                             <div>@city</div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="font-weight-bold mb-0">ZIP:</label>
+                                            <div>@postal</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                            else if (!string.IsNullOrWhiteSpace(Model.NonFacilityAddressLine1))
+                            {
+                                <div class="border rounded bg-light p-3 mb-3">
+                                    <label class="font-weight-bold d-block">Non-Facility Address</label>
+                                    <div class="form-control-plaintext border p-2">
+                                        @Model.NonFacilityAddressLine1
+                                        @if (!string.IsNullOrWhiteSpace(Model.NonFacilityCity)
+                                                                    || !string.IsNullOrWhiteSpace(Model.NonFacilityState)
+                                                                    || !string.IsNullOrWhiteSpace(Model.NonFacilityZip))
+                                        {
+                                            <br />
+                                            <small>
+                                                @(string.Join(", ",
+                                                                                new[]
+                                                                                {
+                                                                Model.NonFacilityCity,
+                                                                Model.NonFacilityState,
+                                                                Model.NonFacilityZip
+                                                                                }.Where(s => !string.IsNullOrWhiteSpace(s))))
+                                            </small>
+                                        }
+                                    </div>
+                                </div>
+                            }
+                        }
+
+                        <!-- Birth Place Type & Planned Home -->
+                        @if (Model.BirthPlaceTypeId.HasValue && Model.BirthPlaceTypes != null)
+                        {
+                            var typeText = Model.BirthPlaceTypes
+                            .FirstOrDefault(x => x.Value == Model.BirthPlaceTypeId.Value.ToString())
+                            ?.Text;
+
+                            <div class="form-group mt-3">
+                                <label class="font-weight-bold">Birth Place Type</label>
+                                <div class="form-control-plaintext border p-2 bg-light">
+                                    @(typeText ?? "Not provided")
+                                </div>
+                            </div>
+
+                            if (!string.IsNullOrWhiteSpace(typeText) &&
+                            typeText.IndexOf("home", StringComparison.OrdinalIgnoreCase) >= 0)
+                            {
+                                string plannedText =
+                                Model.IsPlannedHomeBirth == true ? "Yes" :
+                                Model.IsPlannedHomeBirth == false ? "No" :
+                                "Don’t know / Not recorded";
+
+                                <div class="form-group">
+                                    <label class="font-weight-bold">Was the home birth planned?</label>
+                                    <div class="form-control-plaintext border p-2">
+                                        @plannedText
+                                    </div>
+                                </div>
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+
+        @if (Model.IsMotherTransferred.HasValue)
+        {
+            <div class="card mb-3" id="facility-view-section-2">
+                <div class="card-header bg-primary text-white">
+                    <button class="btn btn-block text-left text-white collapsed" type="button" data-toggle="collapse"
+                        data-target="#facility-view-collapse2">
+                        <i class="fas fa-ambulance"></i> 2. Transfer Facility
+                    </button>
+                </div>
+
+                <div id="facility-view-collapse2" class="collapse show" data-parent="#facilityViewAccordion">
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label class="font-weight-bold">
+                                Was the mother transferred to this facility for maternal medical or fetal indications for
+                                delivery?
+                            </label>
+                            <div class="form-control-plaintext border p-2 bg-light">
+                                @(Model.IsMotherTransferred.Value ? "Yes" : "No")
+                            </div>
+                        </div>
+
+                        @if (Model.IsMotherTransferred.Value)
+                        {
+                            <div class="border rounded bg-light p-3">
+                                <div class="form-row">
+                                    <div class="col-md-6">
+                                        <label class="font-weight-bold mb-0">Facility Name:</label>
+                                         <div>
+                                            @(string.IsNullOrWhiteSpace(Model.FacilityTransferredFromName)
+                                                                                ? "Not recorded"
+                                                                                : Model.FacilityTransferredFromName)
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="font-weight-bold mb-0">Facility ID:</label>
+                                         <div>
+                                            @(Model.FacilityTransferredFromId.HasValue
+                                                                                ? Model.FacilityTransferredFromId.Value.ToString()
+                                                                                : "Not recorded")
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-row mt-2">
+                                    <div class="col-md-6">
+                                        <label class="font-weight-bold mb-0">City:</label>
+                                         <div>
+                                            @(string.IsNullOrWhiteSpace(Model.TransferFacilityCity)
+                                                                                ? "Not recorded"
+                                                                                : Model.TransferFacilityCity)
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="font-weight-bold mb-0">ZIP:</label>
+                                        <div>
+                                            @(string.IsNullOrWhiteSpace(Model.TransferFacilityZip)
+                                                                                ? "Not recorded"
+                                                                                : Model.TransferFacilityZip)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+
+        @if (Model.HasAttendantInformation || Model.DeliveringAttendantId.HasValue || Model.DeliveringAttendant != null)
+        {
+            <div class="card mb-3" id="facility-view-section-3">
+                <div class="card-header bg-primary text-white">
+                    <button class="btn btn-block text-left text-white collapsed" type="button" data-toggle="collapse"
+                        data-target="#facility-view-collapse3">
+                        <i class="fas fa-user-md"></i> 3. Delivering Attendant
+                    </button>
+                </div>
+
+                <div id="facility-view-collapse3" class="collapse show" data-parent="#facilityViewAccordion">
+                    <div class="card-body">
+                        <div class="border rounded bg-light p-3">
+                            <div class="form-row">
+                                <div class="col-md-6">
+                                    <label class="mb-0">Name</label>
+                                    <div class="font-weight-bold">
+                                        @{
+                                            var attName = Model.AttendantFullName;
+
+                                            if (string.IsNullOrWhiteSpace(attName) && Model.DeliveringAttendant != null)
+                                            {
+                                                attName = $"{Model.DeliveringAttendant.FirstName}                    {Model.DeliveringAttendant.LastName}".Trim();
+                                            }
+
+                                            var attDisplay = string.IsNullOrWhiteSpace(attName)
+                                            ? "Not provided"
+                                            : attName;
+                                        }
+                                        @attDisplay
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="mb-0">NPI</label>
+                                    <div class="font-weight-bold">
+                                        @{
+                                            var npi = Model.AttendantNPI;
+
+                                            if (string.IsNullOrWhiteSpace(npi) && Model.DeliveringAttendant != null)
+                                            {
+                                                npi = Model.DeliveringAttendant.License;
+                                            }
+
+                                            var npiDisplay = string.IsNullOrWhiteSpace(npi)
+                                            ? "Not provided"
+                                            : npi;
+                                        }
+                                        @npiDisplay
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-row mt-2">
+                                <div class="col-md-12">
+                                    <label class="mb-0">Title(s)</label>
+                                    <div class="font-weight-bold">
+                                        @{
+                                            var title = Model.AttendantTitle;
+
+                                            if (string.IsNullOrWhiteSpace(title) && Model.DeliveringAttendant != null)
+                                            {
+                                                title = Model.DeliveringAttendant.Credentials;
+                                            }
+
+                                            var titleDisplay = string.IsNullOrWhiteSpace(title)
+                                            ? "Not provided"
+                                            : title;
+                                        }
+                                        @titleDisplay
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        }
+
+        @if (Model.CertifierOfBirthId.HasValue || Model.CertifierOfBirth != null || Model.IsCertifierAttendant)
+        {
+            <div class="card mb-3" id="facility-view-section-4">
+                <div class="card-header bg-primary text-white">
+                    <button class="btn btn-block text-left text-white collapsed" type="button" data-toggle="collapse"
+                        data-target="#facility-view-collapse4">
+                        <i class="fas fa-file-signature"></i> 4. Certifier of Birth
+                    </button>
+                </div>
+
+                <div id="facility-view-collapse4" class="collapse show" data-parent="#facilityViewAccordion">
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label class="font-weight-bold">Certifier same as delivering attendant?</label>
+                            <div class="form-control-plaintext border p-2 bg-light">
+                                @(Model.IsCertifierAttendant ? "Yes" : "No")
+                            </div>
+                        </div>
+
+                        <div class="border rounded bg-light p-3 mt-2">
+                            <div class="form-row">
+                                <div class="col-md-6">
+                                    <label class="mb-0">Certifier Name</label>
+                                    <div class="font-weight-bold">
+                                        @{
+                                            string certName;
+
+                                            if (Model.IsCertifierAttendant)
+                                            {
+                                                certName = Model.AttendantFullName;
+                                                if (string.IsNullOrWhiteSpace(certName) && Model.DeliveringAttendant != null)
+                                                {
+                                                    certName = $"{Model.DeliveringAttendant.FirstName}                                 {Model.DeliveringAttendant.LastName}".Trim();
+                                                }
+                                            }
+                                            else
+                                            {
+                                                certName = Model.CertifierFullName;
+                                                if (string.IsNullOrWhiteSpace(certName) && Model.CertifierOfBirth != null)
+                                                {
+                                                    certName = $"{Model.CertifierOfBirth.FirstName}                            {Model.CertifierOfBirth.LastName}".Trim();
+                                                }
+                                            }
+
+                                            var certNameDisplay = string.IsNullOrWhiteSpace(certName)
+                                            ? "Not provided"
+                                            : certName;
+                                        }
+                                        @certNameDisplay
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label class="mb-0">Certifier NPI</label>
+                                    <div class="font-weight-bold">
+                                        @{
+                                            string certNpi;
+
+                                            if (Model.IsCertifierAttendant)
+                                            {
+                                                certNpi = Model.AttendantNPI;
+                                                if (string.IsNullOrWhiteSpace(certNpi) && Model.DeliveringAttendant != null)
+                                                {
+                                                    certNpi = Model.DeliveringAttendant.License;
+                                                }
+                                            }
+                                            else
+                                            {
+                                                certNpi = Model.CertifierNPI;
+                                                if (string.IsNullOrWhiteSpace(certNpi) && Model.CertifierOfBirth != null)
+                                                {
+                                                    certNpi = Model.CertifierOfBirth.License;
+                                                }
+                                            }
+
+                                            var certNpiDisplay = string.IsNullOrWhiteSpace(certNpi)
+                                            ? "Not provided"
+                                            : certNpi;
+                                        }
+                                        @certNpiDisplay
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-row mt-2">
+                                <div class="col-md-12">
+                                    <label class="mb-0">Certifier Title(s)</label>
+                                    <div class="font-weight-bold">
+                                        @{
+                                            string certTitle;
+
+                                            if (Model.IsCertifierAttendant)
+                                            {
+                                                certTitle = Model.AttendantTitle;
+                                                if (string.IsNullOrWhiteSpace(certTitle) && Model.DeliveringAttendant != null)
+                                                {
+                                                    certTitle = Model.DeliveringAttendant.Credentials;
+                                                }
+                                            }
+                                            else
+                                            {
+                                                certTitle = Model.CertifierTitle;
+                                                if (string.IsNullOrWhiteSpace(certTitle) && Model.CertifierOfBirth != null)
+                                                {
+                                                    certTitle = Model.CertifierOfBirth.Credentials;
+                                                }
+                                            }
+
+                                            var certTitleDisplay = string.IsNullOrWhiteSpace(certTitle)
+                                            ? "Not provided"
+                                            : certTitle;
+                                        }
+                                        @certTitleDisplay
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        }
+
+        @if (!string.IsNullOrWhiteSpace(Model.CertifierSignature) || Model.DateCertified.HasValue)
+        {
+            <div class="card mb-3" id="facility-view-section-5">
+                <div class="card-header bg-primary text-white">
+                    <button class="btn btn-block text-left text-white collapsed" type="button" data-toggle="collapse"
+                        data-target="#facility-view-collapse5">
+                        <i class="fas fa-pen-fancy"></i> 5. Signature of Certifier
+                    </button>
+                </div>
+
+                <div id="facility-view-collapse5" class="collapse show" data-parent="#facilityViewAccordion">
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label class="font-weight-bold">Signature of Certifier</label>
+                            <div class="form-control-plaintext border p-2 signature-input bg-light">
+                                @(string.IsNullOrWhiteSpace(Model.CertifierSignature)
+                                                            ? "Not recorded"
+                                                            : Model.CertifierSignature)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="font-weight-bold">Date Certified</label>
+                            <div class="form-control-plaintext border p-2 bg-light">
+                                @(Model.DateCertified?.ToString("MM/dd/yyyy") ?? "Not recorded")
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+
+    </div>
+</div>
+
+<style>
+    .signature-input {
+        font-family: "Brush Script MT", "Lucida Handwriting", cursive;
+        font-size: 1.2rem;
+    }
+
+    .form-control-plaintext {
+        background-color: #f8f9fa;
+        border-radius: 0.25rem;
+    }
+
+    .card-header button {
+        text-align: left;
+        width: 100%;
+        font-weight: 600;
+    }
+</style>

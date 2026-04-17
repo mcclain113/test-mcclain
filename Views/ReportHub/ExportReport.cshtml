@@ -1,0 +1,25 @@
+@page
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model IS_Proj_HIT.Controllers.ReportHubController
+@namespace ReportViewerCore.Sample.AspNetCore.Pages
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+<html>
+<head>
+    <title>ReportViewerCore ASP.NET Core sample</title>
+</head>
+
+<body>
+    <form method="post">
+        <fieldset>
+            <div>
+                <button asp-page-handler="GetPDF" type="submit">Get PDF</button>
+                <button asp-page-handler="GetHTML">Get HTML</button>
+                <button asp-page-handler="GetDOCX">Get DOCX</button>
+                <button asp-page-handler="GetXLSX">Get XLSX</button>
+            </div>
+        </fieldset>
+    </form>
+</body>
+
+</html>

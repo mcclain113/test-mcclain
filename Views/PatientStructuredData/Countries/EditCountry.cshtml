@@ -1,0 +1,46 @@
+@model IS_Proj_HIT.ViewModels.PatientVm.PatientStructuredDataViewModel
+@{
+    ViewBag.Title = "Edit Country";
+}
+
+<h1>Edit</h1>
+
+<h4>Country</h4>
+<hr />
+
+<div class="row">
+    <div class="col-md-10">
+        <form method="post">
+            @Html.AntiForgeryToken()
+            <div class="form-row">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="Country.CountryId" value="@Model.Country.CountryId" readonly/>
+                
+                <div class="form-group col-sm-6">
+                    <label asp-for="Country.Name" class="control-label">Name</label>
+                    <input asp-for="Country.Name" 
+                        class="form-control" maxlength="50" required
+                        placeholder="Example:  Argentina" />
+                    <span asp-validation-for="Country.Name" class="text-danger"></span>
+                </div>
+                
+            </div>
+
+            <div class="form-row">            
+                <div class="form-group">
+                    <input type="submit" value="Save Changes" class="btn btn-primary" />
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+
+<div>
+    <a asp-controller="PatientStructuredData" asp-action="ViewCountries">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,577 @@
+@model IS_Proj_HIT.ViewModels.OrdersViewModel
+
+@{
+    ViewData["Title"] = "Add an Order";
+    var signer = ViewBag.Providers;
+    var coSigner = ViewBag.Cosigners;
+}
+
+<partial name="PatientBannerPartial" model="ViewBag.Patient" />
+<partial name="_EncounterMenu" model="ViewBag.Encounter"/>
+
+<div class="card" style="border: none;">
+    <form asp-action="CreateOrder" method="post" id="createOrderForm">
+        @Html.AntiForgeryToken()
+        <input type="hidden" asp-for="@Model.OrderInfo.EncounterId" value="@Model.Encounter.EncounterId" />
+        <input type="hidden" id="hiddenTestReason" name="OrderInfo.TestReason" />
+        <input type="hidden" id="hiddenNotes" name="OrderInfo.Notes" />
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <div class="card-header bg-primary text-white">
+            <h4>Add an Order</h4>
+        </div>
+        <div class="card-body bg-light">
+            <div class="form-row">
+                <div class="form-group col-sm-4">
+                    <label class="control-label mr-2" asp-for="Encounter.EncounterType">Level of Care:</label>
+                    <span class="font-weight-bold">@Model.Encounter.EncounterType.Name</span>
+                </div>
+                <div class="form-group col-sm-4">
+                    <label class="control-label mr-2" asp-for="Encounter.Department">Department:</label>
+                    <span class="font-weight-bold">@Model.Encounter.Department.Name</span>
+                </div>
+                <div class="form-group col-sm-4">
+                    <label class="control-label mr-2" asp-for="AttendingPhysician">Attending Physician:</label>
+                    <span class="font-weight-bold">@Model.AttendingPhysician.FirstName @Model.AttendingPhysician.LastName</span>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col-12 col-lg-6">
+                    <div class="row form-group">
+                        <label asp-for="OrderInfo.OrderDate" class="col-sm-4 col-form-label">Order Date: </label>
+                        <div class="col-sm-8 justify-content-center">
+                            <input type="datetime-local" class="form-control" asp-for="OrderInfo.OrderDate"/>
+                            <span asp-validation-for="OrderInfo.OrderDate" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-lg-6">
+                    <div class="form-group form-check"> 
+                        <input type="checkbox" asp-for="OrderInfo.IsVerbalOrder" class="form-check-input mt-3" id="IsVerbalOrder" onchange="toggleDiv()"/> 
+                        <label asp-for="OrderInfo.IsVerbalOrder" class="col-form-label">Is this a Verbal Order?</label> 
+                        <span asp-validation-for="OrderInfo.IsVerbalOrder" class="text-danger"></span> 
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="col-12 col-lg-6">
+                    <div class="form-row form-group">
+                        <label asp-for="OrderInfo.OrderTypeId" class="col-sm-4 col-form-label">Order Type:</label>
+                        <div class="col-sm-8 justify-content-center">
+                            <select class="form-control" id="selectOrderType" asp-for="OrderInfo.OrderTypeId" asp-items="ViewBag.OrderTypes">
+                                <option value="">Select an Order Type</option>
+                            </select>
+                            <span asp-validation-for="OrderInfo.OrderTypeId" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-6">
+                    <div class="form-row form-group">
+                        <label asp-for="OrderInfo.PriorityId" class="col-sm-4 col-form-label">Order Priority:</label>
+                        <div class="col-sm-8 justify-content-center">
+                            <select class="form-control" asp-for="OrderInfo.PriorityId" asp-items="ViewBag.Priorities">
+                                <option value="">Select a Priority</option>
+                            </select>
+                            <span asp-validation-for="OrderInfo.PriorityId" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+<hr/>
+        @* begin section with show/hide determined by the selected OrderTypeId*@
+
+            @* begin section forOrderTypeId = 2:  Admission*@
+            <div class="row" id="OrderTypeId2Div" style="display: none;">
+                <div class="col-sm-12">
+                    <div class="row form-group mx-3">
+                        <label>Admitting Diagnosis: </label>
+                        <textarea asp-for="OrderInfo.AdmittingDiagnosis" class="col-12"
+                            style="display: block;" rows="2"></textarea>
+                    </div>
+                    <div class="row form-group mx-3">
+                        <label>Notes: </label>
+                        <textarea name="OrderInfo.Notes" class="col-12"
+                            id="notesAdmission"
+                            style="display: block;" rows="2"></textarea>
+                    </div>
+                </div>
+            </div>
+            @* end section forOrderTypeId = 2:  Admission*@
+
+            @* begin section forOrderTypeId = 3:  Discharge/Transfer*@
+            <div class="row" id="OrderTypeId3Div" style="display: none;">
+                <div class="col-sm-12">
+                    <div class="row form-group mx-3">
+                        <label>Reason for Service: </label>
+                        <textarea name="OrderInfo.TestReason" class="col-12"
+                            id="testReasonDischargeTransfer"
+                            style="display: block;" rows="4"></textarea>
+                    </div>
+                    <div class="row form-group mx-3">
+                        <label>Notes: </label>
+                        <textarea name="OrderInfo.Notes" class="col-12"
+                            id="notesDischargeTransfer"
+                            style="display: block;" rows="4"></textarea>
+                    </div>
+                </div>
+            </div>
+            @* end section forOrderTypeId = 3:  Discharge/Transfer*@
+
+            @* begin section forOrderTypeId = 4:  Medication*@
+            <div class="row" id="OrderTypeId4Div" style="display: none;">
+                <div class="col-sm-12">
+                    <div class="row form-group mx-3">
+                        <label>Reason for Medication: </label>
+                        <textarea name="OrderInfo.TestReason" class="col-12"
+                            id="testReasonMedication"
+                            style="display: block;" rows="4"></textarea>
+                    </div>
+                    <div class="row form-group mx-3">
+                        <label>Notes: </label>
+                        <textarea name="OrderInfo.Notes" class="col-12"
+                            id="notesMedication"
+                            style="display: block;" rows="4"></textarea>
+                    </div>
+                </div>
+            </div>
+            @* end section forOrderTypeId = 4:  Medication*@
+
+            @* begin section forOrderTypeId = 5:  Lab*@
+            <div class="row" id="OrderTypeId5Div" style="display: none;">
+                <div class="col-sm-12">
+                    <div class="form-row mb-3 form-group">
+                        <label asp-for="OrderInfo.OrderedItemChargeID" class="col-form-label mr-1">Lab Test:</label>
+                        <div class="col-sm-6 justify-content-center">
+                            <select class="form-control" asp-for="OrderInfo.OrderedItemChargeID" asp-items="ViewBag.LaboratoryCDM">
+                                <option value="">Select a Lab Test</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row align-items-center">
+                        <div class="col-auto"> 
+                            <span>SELECT:  </span> 
+                        </div>  
+                        <div class="col-auto"> 
+                            <div class="form-check"> 
+                                <input type="radio" class="form-check-input" name="IsFastingVm" value="true" id="fasting" /> 
+                                <label class="form-check-label" for="fasting">Fasting</label> 
+                            </div>
+                        </div> 
+                        <div class="col-auto"> 
+                            <span>for</span> 
+                        </div> 
+                        <div class="col-auto"> 
+                            <input type="number" class="form-control" asp-for="OrderInfo.HoursFasting" placeholder="0" min="0" max="24" step="1" /> 
+                        </div>
+                        <div class="col-auto"> 
+                            <span>hours,  OR</span> 
+                        </div> 
+                        <div class="col-auto"> 
+                            <div class="form-check">
+                                 
+                                <input type="radio" class="form-check-input" name="IsFastingVm" value="false" id="nonfasting" checked /> 
+                                <label class="form-check-label" for="nonfasting">Non-fasting</label> 
+                            </div>
+                        </div>
+                    </div>
+                    <hr/>
+
+                    <div class="row form-group mx-3">
+                        <label>Reason for Test: </label>
+                        <textarea name="OrderInfo.TestReason" class="col-12"
+                            id="testReasonLab"
+                            style="display: block;" rows="4"></textarea>
+                    </div>
+                    <div class="row form-group mx-3">
+                        <label>Notes: </label>
+                        <textarea name="OrderInfo.Notes" class="col-12"
+                            id="notesLab"
+                            style="display: block;" rows="4"></textarea>
+                    </div>
+                </div>
+            </div> 
+            @* end section forOrderTypeId = 5:  Lab*@
+
+            @* begin section forOrderTypeId = 6:  Radiology*@
+            <div class="row" id="OrderTypeId6Div" style="display: none;">
+                <div class="col-sm-12">
+                    <div class="form-row mb-3 form-group">
+                        <label asp-for="OrderInfo.OrderedItemChargeID" class="col-form-label mr-1">Radiology Exam:</label>
+                        <div class="col-sm-6 justify-content-center">
+                            <select class="form-control" asp-for="OrderInfo.OrderedItemChargeID" asp-items="ViewBag.RadiologyCDM">
+                                <option value="">Select an exam</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row form-group mx-3">
+                        <label>Reason for Exam: </label>
+                        <textarea name="OrderInfo.TestReason" class="col-12"
+                            id="testReasonRadiology"
+                            style="display: block;" rows="4"></textarea>
+                    </div>
+                    <div class="row form-group mx-3">
+                        <label>Notes: </label>
+                        <textarea name="OrderInfo.Notes" class="col-12"
+                            id="notesRadiology"
+                            style="display: block;" rows="4"></textarea>
+                    </div>
+                </div>
+            </div>           
+            @* end section forOrderTypeId = 6:  Radiology*@
+
+            @* begin section forOrderTypeId = 7:  Other Diagnostics*@
+            <div class="row" id="OrderTypeId7Div" style="display: none;">
+                <div class="col-sm-12">
+                    <div class="row form-group mx-3">
+                        <label>Reason for Service: </label>
+                        <textarea name="OrderInfo.TestReason" class="col-12"
+                            id="testReasonOtherDiagnostics"
+                            style="display: block;" rows="4"></textarea>
+                    </div>
+                    <div class="row form-group mx-3">
+                        <label>Notes: </label>
+                        <textarea name="OrderInfo.Notes" class="col-12"
+                            id="notesOtherDiagnostics"
+                            style="display: block;" rows="4"></textarea>
+                    </div>
+                </div>
+            </div>
+            @* end section forOrderTypeId = 7:  Other Diagnostics*@
+
+            @* begin section forOrderTypeId = 8:  Treatment*@
+            <div class="row" id="OrderTypeId8Div" style="display: none;">
+                <div class="col-sm-12">
+                    <div class="row form-group mx-3">
+                        <label>Reason for Service: </label>
+                        <textarea name="OrderInfo.TestReason" class="col-12"
+                            id="testReasonTreatment"
+                            style="display: block;" rows="4"></textarea>
+                    </div>
+                    <div class="row form-group mx-3">
+                        <label>Notes: </label>
+                        <textarea name="OrderInfo.Notes" class="col-12"
+                            id="notesTreatment"
+                            style="display: block;" rows="4"></textarea>
+                    </div>
+                </div>
+            </div>
+            @* end section forOrderTypeId = 8:  Treatment*@
+
+            @* begin section forOrderTypeId = 9:  Therapy*@
+            <div class="row" id="OrderTypeId9Div" style="display: none;">
+                <div class="col-sm-12">
+                    <div class="row form-group mx-3">
+                        <label>Reason for Service: </label>
+                        <textarea name="OrderInfo.TestReason" class="col-12"
+                            id="testReasonTherapy"
+                            style="display: block;" rows="4"></textarea>
+                    </div>
+                    <div class="row form-group mx-3">
+                        <label>Notes: </label>
+                        <textarea name="OrderInfo.Notes" class="col-12"
+                            id="notesTherapy"
+                            style="display: block;" rows="4"></textarea>
+                    </div>
+                </div>
+            </div>
+            @* end section forOrderTypeId = 9:  Therapy*@
+
+            @* begin section forOrderTypeId = 10:  Dietary*@
+            <div class="row" id="OrderTypeId10Div" style="display: none;">
+                <div class="col-sm-12">
+                    <div class="row form-group mx-3">
+                        <label>Reason for Service: </label>
+                        <textarea name="OrderInfo.TestReason" class="col-12"
+                            id="testReasonDietary"
+                            style="display: block;" rows="4"></textarea>
+                    </div>
+                    <div class="row form-group mx-3">
+                        <label>Notes: </label>
+                        <textarea name="OrderInfo.Notes" class="col-12"
+                            id="notesDietary"
+                            style="display: block;" rows="4"></textarea>
+                    </div>
+                </div>
+            </div>
+            @* end section forOrderTypeId = 10:  Dietary*@
+
+            @* begin section forOrderTypeId = 11:  Consultation*@
+            <div class="row" id="OrderTypeId11Div" style="display: none;">
+                <div class="col-sm-12">
+                    <div class="row form-group mx-3">
+                        <label>Reason for Service: </label>
+                        <textarea name="OrderInfo.TestReason" class="col-12"
+                            id="testReasonConsultation"
+                            style="display: block;" rows="4"></textarea>
+                    </div>
+                    <div class="row form-group mx-3">
+                        <label>Notes: </label>
+                        <textarea name="OrderInfo.Notes" class="col-12"
+                            id="notesConsultation"
+                            style="display: block;" rows="4"></textarea>
+                    </div>
+                </div>
+            </div>
+            @* end section forOrderTypeId = 11:  Consultation*@
+
+        @* end section with show/hide determined by the selected OrderTypeId*@
+
+        @*  begin section for Author signatures  *@
+
+        <div id="verbalOrderDiv" style="display: none;">
+            <hr/>
+            <div class="row">
+                <div class="form-group col-sm-4">
+                    <label for="oiAuthorId" class="control-label">Author (verbal order):</label>
+                    <div class="justify-content-center">
+                        <select id="oiAuthor" class="form-control"
+                            name="OrderInfo.AuthorId"
+                            asp-items="signer">
+                            <option value="" selected>Select the Order Author:</option>
+                        </select>
+                        <span asp-validation-for="OrderInfo.AuthorId" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="form-group col-sm-4">
+                    <label for="oiOrderingAuthorSignature" class="control-label">Author Signature (vo):</label>
+                    <div class="justify-content-center signature" style="display: block;">
+                        <input class="form-control"
+                            asp-for="@Model.OrderInfo.AuthorESignature"
+                            placeholder="Author Signature"
+                            id="oiOrderingAuthorSignature"/>
+                        <span asp-validation-for="OrderInfo.AuthorESignature" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="form-group col-sm-4">
+                    <label for="oiOrderingAuthorSignedDate" class="control-label">Date signed (vo): </label>
+                    <div class="oiAuthorSignature" style="display: block;">
+                        <input type="datetime-local" asp-for="@Model.OrderInfo.AuthorSignedDate" class="form-control" value="" placeholder="Date/Time" id="oiOrderingAuthorSignedDate"/>
+                        <span asp-validation-for="OrderInfo.AuthorSignedDate" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr/>
+        @*  end section for Author signatures  *@        
+        @*  begin section for Provider signatures  *@
+
+            <div class="row">
+                <div class="col-12 col-lg-6"> <!-- open the provider column -->
+                    <div class="row mb-3 form-group">
+                        <label for="oiOrderingProviderId" class="col-sm-4 col-form-label">Ordering Provider:</label>
+                        <div class="col-sm-8 justify-content-center">
+                            <select id="physician" class="form-control sign"
+                                asp-for="@Model.OrderInfo.OrderingProviderID"
+                                asp-items="signer">
+                                <option value="" selected>Select the Ordering Provider:</option>
+                            </select>
+                            <span asp-validation-for="OrderInfo.OrderingProviderID" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3 form-group">
+                        <label for="oiOrderingProviderSignature" class="col-sm-4 col-form-label">Provider Signature:</label>
+                        <div class="col-sm-8 justify-content-center signature" style="display: block;">
+                            <input class="form-control"
+                                asp-for="@Model.OrderInfo.ProviderESignature"
+                                placeholder="Provider Signature"
+                                id="oiOrderingProviderSignature"/>
+                                <span asp-validation-for="OrderInfo.ProviderESignature" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3 form-group" id="timeStampAuthoring">
+                        <label for="oiOrderingProviderSignedDate" class="col-sm-4 col-form-label">Date signed: </label>
+                        <div class="col-sm-8 signature" style="display: block;">
+                            <input type="datetime-local" asp-for="@Model.OrderInfo.ProviderSignedDate" class="form-control" value="" placeholder="Date/Time" id="oiOrderingProviderSignedDate"/>
+                            <span asp-validation-for="OrderInfo.ProviderSignedDate" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div> <!-- close the provider column -->
+
+                 <div class="col-12 col-lg-6"> <!-- open the co-provider column -->
+                    <div id="cosign" style="display: none;">
+                        <div class="row mb-3 form-group">
+                            <label for="oiCosigningProviderId" class="col-sm-4 col-form-label">Co-Signing Provider:</label>
+                            <div class="col-sm-8">
+                                <select id="oiCosigningProviderId" class="form-control cosign"
+                                    asp-for="@Model.OrderInfo.AuthenticatingProviderID"
+                                    asp-items="coSigner">
+                                    <option value="" selected>Select the Authenticating Provider:</option>
+                                    </select>
+                                    <span asp-validation-for="OrderInfo.AuthenticatingProviderID" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3 form-group">
+                            <label for="oiAuthProviderSignature" class="col-sm-4 col-form-label">Signature:</label>
+                            <div class="col-sm-8 justify-content-center cosignature">
+                                <input class="form-control"
+                                    asp-for="@Model.OrderInfo.AuthenticatingProviderESignature"
+                                    placeholder="Co-Provider Signature"
+                                    id="oiCosigningProviderSignature"/>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3 form-group" id="timeStamp">
+                            <label for="oiAuthProviderSignedDate" class="col-sm-4 col-form-label">Date signed: </label>
+                            <div class="col-sm-8">
+                                <input type="datetime-local" asp-for="@Model.OrderInfo.AuthenticatingProviderSignedDate" class="form-control" value="" placeholder="Date/Time" id="oiCosigningProviderSignedDate"/>
+                            </div>
+                        </div>
+                    </div> <!-- close the co-provider column display toggle -->
+                </div> <!-- close the co-provider column -->               
+            </div>
+        @*  end section for Provider signatures  *@
+
+            <div class="form-row">
+                <div class="form-group">
+                    <a class="btn btn-secondary" 
+                                asp-controller="Order"
+                                asp-action="ListOrders"
+                                asp-route-id="@Model.Encounter.EncounterId">Return to List</a>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Create Order" class="btn btn-primary ml-3"/>
+                </div>
+            </div>
+        </div> <!-- close the card body -->
+    </form>
+</div>  <!-- close the card -->
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+<script>
+    // this script toggles the Author signature block depending upon whether IsVerbalOrder is checked or not 
+    function toggleDiv() 
+    { 
+        var isChecked = document.getElementById("IsVerbalOrder").checked; 
+        var divElement = document.getElementById("verbalOrderDiv");
+        var inputFields = [
+            document.getElementById("oiAuthor"), 
+            document.getElementById("oiOrderingAuthorSignature"), 
+            document.getElementById("oiOrderingAuthorSignedDate") 
+            ];
+
+        if (isChecked) 
+        { 
+            divElement.style.display = "block";
+            // Add required attribute for validation when Author block is shown
+            inputFields.forEach(function(input) { 
+                if (input) { 
+                    input.setAttribute('required', 'required');  
+                }
+            });
+        } else { 
+            divElement.style.display = "none";
+            // Remove required attribute for validation when Author block is hidden
+            inputFields.forEach(function(input) { 
+                if (input) 
+                { 
+                    input.removeAttribute('required');  
+                }
+            });
+        }  
+    } 
+    // Ensure the div's initial state matches the checkbox state when the page loads 
+    window.onload = function() { toggleDiv(); } 
+
+    $(document).ready(function() {
+        let needCosign = false;
+
+        $('#selectOrderType').change(function(){
+            // Hide all option divs
+            $('[id$="Div"]').hide();
+            var selectedValue = $(this).val();
+            $('#OrderTypeId' + selectedValue + 'Div').show();
+            // ensure IsVerbalOrder block is properly displayed
+            toggleDiv();
+        });
+
+        toggleCoSigner();
+
+        $('.sign').on('click', function(e){ 
+            toggleCoSigner();
+            // ensure IsVerbalOrder block is properly displayed
+            toggleDiv();
+        });
+
+        function toggleCoSigner(){
+            let providerId= $('.sign').val(); 
+
+            if(providerId != 0)
+            {
+                let idNumber = ""
+
+                $.ajax({
+                    type: "GET",
+                    url: "/Encounter/GetProviderStatusId",
+                    dataType: "json",
+                    data: {id: providerId},
+                    success: function(result){
+                        idNumber = result.providerIdNumber
+                        if(idNumber == 1)
+                        {
+                            $('.signature').show();
+                            $('#cosign').hide()
+                            $('.needProvider').hide();
+                            // ensure IsVerbalOrder block is properly displayed
+                            toggleDiv();
+
+                        }
+                        else if(idNumber == 2 || idNumber == 3)
+                        {
+                            $('.signature').show();
+                            $('#cosign').show()
+                            $('.needProvider').hide();
+                            needCosign = true;
+                        }
+                        // ensure IsVerbalOrder block is properly displayed
+                        toggleDiv();
+                        needCosignerName();
+                    }
+                });
+            }
+        }
+
+        function needCosignerName()
+        {
+            var neededFields = document.getElementsByClassName('cosign'); 
+            if (needCosign) { 
+                Array.prototype.forEach.call(neededFields, function(needThisField) { 
+                    if (needThisField) { 
+                        needThisField.setAttribute('required', 'required'); 
+                        needThisField.setCustomValidity("Please select a co-provider");
+                    } 
+                }); 
+            } else { 
+                Array.prototype.forEach.call(neededFields, function(needThisField) { 
+                    if (needThisField) { 
+                        needThisField.removeAttribute('required');
+                        needThisField.setCustomValidity(""); 
+                    } 
+                });
+            }
+            //Trigger form validation to update validation states
+            $('#createOrderForm').validate().element($('.cosign'));
+        }
+
+        //Sync visible TestReason to hidden input on form submit
+        $('#createOrderForm').on('submit', function(){
+            let visibleTestReason = $('div[id^="OrderTypeId"]:visible textarea[name="OrderInfo.TestReason"]').val();
+            let visibleNotes =  $('div[id^="OrderTypeId"]:visible textarea[name="OrderInfo.Notes"]').val();
+            $('#hiddenTestReason').val(visibleTestReason);
+            $('#hiddenNotes').val(visibleNotes);
+        });
+
+    });
+
+    </script>
+
+}

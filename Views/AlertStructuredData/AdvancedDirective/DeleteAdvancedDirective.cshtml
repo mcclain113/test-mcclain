@@ -1,0 +1,36 @@
+@model IS_Proj_HIT.ViewModels.AlertStructuredData.AlertStructuredDataViewModel
+@{
+    ViewBag.Title = "Delete Advanced Directive";
+}
+
+<h1>Delete</h1>
+
+<h3>@ViewData["RegularMessage"]</h3>
+<h3 class="error">@ViewData["ErrorMessage"]</h3>
+
+<h4>Advanced Directive</h4>
+<hr />
+
+<div class="row">
+    <div class="col-md-10">
+        <form method="post">
+            @Html.AntiForgeryToken()
+            <div class="form-row">
+                <input type="hidden" asp-for="AdvancedDirective.AdvancedDirectiveId" value="@Model.AdvancedDirective.AdvancedDirectiveId" readonly/>
+                <div class="form-group col-sm-6">
+                    <label asp-for="AdvancedDirective.Name" class="control-label">Advanced Directive Name</label>
+                    <input asp-for="AdvancedDirective.Name" class="form-control" disabled/>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group">
+                    <input type="submit" value="Delete Item" class="ml-3 btn btn-primary" />
+                </div>
+            </div>            
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-controller="AlertStructuredData" asp-action="ViewAdvancedDirectives">Back to List</a>
+</div>

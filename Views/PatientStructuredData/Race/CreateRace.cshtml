@@ -1,0 +1,67 @@
+@model IS_Proj_HIT.ViewModels.PatientVm.PatientStructuredDataViewModel
+@{
+    ViewBag.Title = "Create Race";
+}
+
+<h1>Create</h1>
+
+<h4>Race</h4>
+<hr />
+
+<div class="row">
+    <div class="col-md-10">
+        <form method="post">
+            @Html.AntiForgeryToken()
+            <div class="form-row">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                
+                <div class="form-group col-sm-2">
+                    <label asp-for="Race.WhiacCode" class="control-label">WHIAC Code</label>
+                    <input asp-for="Race.WhiacCode" 
+                        class="form-control" 
+                        placeholder="Example:  100" />
+                    <span asp-validation-for="Race.WhiacCode" class="text-danger"></span>
+                </div>
+                <div class="form-group col-sm-4">
+                    <label asp-for="Race.Name" class="control-label">Name</label>
+                    <input asp-for="Race.Name" 
+                        class="form-control" maxlength="50" required
+                        placeholder="Example:  Chinese" />
+                    <span asp-validation-for="Race.Name" class="text-danger"></span>
+                </div>
+                <div class="form-group col-sm-6">
+                    <label class="control-label">Description</label>
+                    <input asp-for="Race.Description" 
+                        class="form-control" 
+                        placeholder="Example:  Description from the WHIAC table" />
+                    <span asp-validation-for="Race.Description" class="text-danger"></span>
+                </div>
+                <div class="form-group col-sm-6">
+                    <label class="control-label">Category</label>
+                    <input asp-for="Race.Category" 
+                        class="form-control" 
+                        placeholder="Example:  Category from the WHIAC table" />
+                    <span asp-validation-for="Race.Category" class="text-danger"></span>
+                </div>
+                
+
+            </div>
+
+            <div class="form-row">            
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+
+<div>
+    <a asp-controller="PatientStructuredData" asp-action="ViewRaces">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,51 @@
+@model IS_Proj_HIT.Entities.CongenitalAnomaly
+@{
+    ViewBag.Title = "Edit Congenital Anomaly";
+}
+
+<h1>Edit</h1>
+
+<h4>Congenital Anomaly</h4>
+<hr />
+
+<div class="row">
+    <div class="col-md-10">
+        <form method="post">
+            @Html.AntiForgeryToken()
+            <div class="form-row">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="CongenitalAnomalyId" value="@Model.CongenitalAnomalyId" readonly/>
+                <div class="form-group col-sm-6">
+                    <label asp-for="CongenitalAnomalyName" class="control-label">Congenital Anomaly Name</label>
+                    <input asp-for="CongenitalAnomalyName" 
+                        class="form-control" maxlength="50" required
+                        placeholder="Example:  Cleft palate" />
+                    <span asp-validation-for="CongenitalAnomalyName" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-sm-12">
+                    <label asp-for="CongenitalAnomalyDescription" class="control-label">Congenital Anomaly Description</label>
+                    <textarea asp-for="CongenitalAnomalyDescription" 
+                        class="form-control" maxlength="500"
+                        placeholder="Example:  Incomplete fusion..." ></textarea>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <input type="submit" value="Save Changes" class="btn btn-primary" />
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<div>
+    <a asp-controller="BirthRegistryStructuredData" asp-action="ViewCongenitalAnomalies">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

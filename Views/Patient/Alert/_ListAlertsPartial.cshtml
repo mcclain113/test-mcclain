@@ -1,0 +1,241 @@
+@model IS_Proj_HIT.ViewModels.Alert.AlertListViewModel
+@{
+    var userPermissions = ViewData["UserPermissions"] as List<string>;
+    var mrn = ViewData["Mrn"] as string ?? string.Empty;
+}
+
+<div class="card" data-modal-title="List Alerts">
+    <div class="card-header bg-primary text-white">
+        <h4> Patient Active Alerts
+            @if (userPermissions != null && (userPermissions.Contains("AlertAdd")) )
+            {
+                <a asp-action="CreateAlert" asp-route-id="@Model.Mrn" class="btn btn-outline-primary float-right open-create">
+                    <i class="fas fa-plus"></i> Add An Alert
+                </a>
+            }
+        </h4>
+    </div>
+    <div class="bg-light">
+        <table id="activeAlertsTable" class="stripe nowrap fixed-width" style="width:100%; border:none">
+                <colgroup>
+                <col style="width:15%"  />       <!-- column 0: Alert Type -->
+                <col style="width:45%"  />       <!-- column 1: Description -->
+                <col style="width:10%"  />       <!-- column 2: Start Date -->
+                <col style="width:10%"  />       <!-- column 3: Active -->
+                <col style="width:20%"  />       <!-- column 4: Actions -->
+            </colgroup>
+
+            <thead>
+                <tr class="table-primary">
+                    <th>Alert Type</th>
+                    <th>Description</th>
+                    <th>Start Date</th>
+                    <th>Active</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            @foreach (var item in Model.ActiveAlerts)
+            {
+                <tr data-alertid="@item.PatientAlertId">
+                    <td>@item.AlertTypeName</td>
+                    <td class="description">@item.Description</td>
+                    <td>@item.StartDate.ToString("yyyy-MM-dd")</td>
+                    <td>@(item.IsActive ? "Yes" : "No")</td>
+                    <td>
+                        @if (userPermissions != null && (userPermissions.Contains("AlertView")) )
+                        {
+                            <a class="btn btn-sm btn-primary open-details"
+                            href="@Url.Action("AlertDetails", "Patient", new { id = item.PatientAlertId, mrn = Model.Mrn })"
+                            data-alertid="@item.PatientAlertId">Details</a>
+                        }
+                        @if (userPermissions != null && (userPermissions.Contains("AlertDelete")) )
+                        {
+                            <form asp-action="DeleteAlert" asp-controller="Patient"
+                                asp-route-id="@item.PatientAlertId"
+                                asp-route-mrn="@mrn"
+                                method="post"
+                                class="d-inline delete-alert-form"
+                                data-confirm="Are you sure you want to delete this Patient Alert?">
+                                @Html.AntiForgeryToken()
+                                <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                            </form>
+
+                        }
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    @if (Model.InactiveAlerts != null && Model.InactiveAlerts.Any())
+    {
+        <div class="card-header bg-secondary text-white mt-5">
+            <h4>Patient Inactive Alerts</h4>
+        </div>
+
+        <table id="inactiveAlertsTable" class="stripe nowrap fixed-width" style="width:100%; border:none">
+            <colgroup>
+                <col style="width:15%"  />
+                <col style="width:45%"  />
+                <col style="width:10%"  />
+                <col style="width:10%"  />
+                <col style="width:20%"  />
+            </colgroup>
+            <thead>
+                <tr class="table-dark">
+                    <th>Alert Type</th>
+                    <th>Description</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            @foreach (var item in Model.InactiveAlerts)
+            {
+                <tr data-alertid="@item.PatientAlertId" class="table-light">
+                    <td>@item.AlertTypeName</td>
+                    <td class="description">@item.Description</td>
+                    <td>@item.StartDate.ToString("yyyy-MM-dd")</td>
+                    <td>@(item.EndDate.HasValue ? item.EndDate.Value.ToString("yyyy-MM-dd") : "")</td>
+                    <td>
+                        @if (userPermissions != null && (userPermissions.Contains("AlertView")) )
+                        {
+                            <a class="btn btn-sm btn-primary open-details"
+                            href="@Url.Action("AlertDetails", "Patient", new { id = item.PatientAlertId, mrn = Model.Mrn })"
+                            data-alertid="@item.PatientAlertId">Details</a>
+                        }
+                        @if (userPermissions != null && (userPermissions.Contains("AlertDelete")) )
+                        {
+                            <form asp-action="DeleteAlert" asp-controller="Patient"
+                                asp-route-id="@item.PatientAlertId"
+                                asp-route-mrn="@mrn"
+                                method="post"
+                                class="d-inline delete-alert-form"
+                                data-confirm="Are you sure you want to delete this Patient Alert?">
+                                @Html.AntiForgeryToken()
+                                <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                            </form>
+                        }
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    }
+
+    @Html.AntiForgeryToken()
+
+    </div>
+</div>
+
+
+<style>
+    .card {
+        box-sizing: border-box; /* Ensures padding is included in total width */
+        padding: 0; /* Ensures no extra padding inside the card */
+    }
+
+    .card-header {
+        margin: 0; /* Aligns header with the card body and table */
+    }
+
+    /* Force percentage widths to be honored */
+    table.fixed-width {
+        width: 100%;
+        table-layout: fixed; /* respect col widths */
+    }
+
+    /* Prevent wrapping for all columns except Description (2nd column) */
+    table.fixed-width th,
+    table.fixed-width td {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    /* Ensure Description column wraps gracefully */
+    table.fixed-width td:nth-child(2),
+    table.fixed-width th:nth-child(2) {
+        white-space: normal;
+        overflow-wrap: anywhere;
+    }
+
+    /* Make Actions column buttons align nicely */
+    table.fixed-width td .btn {
+        white-space: nowrap;
+    }
+
+    #activeAlertsTable_wrapper .dataTables_info,
+    #inactiveAlertsTable_wrapper .dataTables_info {
+        margin-left: 1rem;
+    }
+</style>
+
+<script>
+    $(function () {
+        function initAlertTables() {
+            if ($.fn.DataTable.isDataTable('#activeAlertsTable')) {
+            $('#activeAlertsTable').DataTable().destroy();
+            }
+            if ($.fn.DataTable.isDataTable('#inactiveAlertsTable')) {
+            $('#inactiveAlertsTable').DataTable().destroy();
+            }
+
+            $('#activeAlertsTable').DataTable({
+            autoWidth: false,
+            columns: [
+                { width: "15%" },
+                { width: "45%" },
+                { width: "10%" },
+                { width: "10%" },
+                { width: "20%", orderable: false }
+            ],
+            order: [[2, 'desc']],
+            pageLength: 10,
+            searching: false,
+            lengthChange: false,
+            language: { emptyTable: 'No Alerts have been created for this patient.' }
+            });
+
+            if ($('#inactiveAlertsTable').length) {
+            $('#inactiveAlertsTable').DataTable({
+                autoWidth: false,
+                columns: [
+                { width: "15%" },
+                { width: "45%" },
+                { width: "10%" },
+                { width: "10%" },
+                { width: "20%", orderable: false }
+                ],
+                order: [[2, 'desc']],
+                pageLength: 10,
+                searching: false,
+                lengthChange: false,
+                language: { emptyTable: 'No Alerts have been created for this patient.' }
+            });
+            }
+        }
+
+        initAlertTables();
+
+        // When modal shown, force DataTables to recalc column widths
+        $('#globalModal').on('shown.bs.modal', function () {
+            if ($.fn.DataTable.isDataTable('#activeAlertsTable')) {
+            var t = $('#activeAlertsTable').DataTable();
+            t.columns.adjust();
+            if (t.responsive) t.responsive.recalc();
+            } else {
+            initAlertTables();
+            }
+
+            if ($.fn.DataTable.isDataTable('#inactiveAlertsTable')) {
+            var t2 = $('#inactiveAlertsTable').DataTable();
+            t2.columns.adjust();
+            if (t2.responsive) t2.responsive.recalc();
+            }
+        });
+    });
+</script>
+<!-- this script handles Delete confirmation whether in regular view or a modal view -->
+<script src="~/js/confirm.js" defer></script>

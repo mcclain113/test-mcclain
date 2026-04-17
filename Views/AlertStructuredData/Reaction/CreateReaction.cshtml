@@ -1,0 +1,63 @@
+@model IS_Proj_HIT.ViewModels.AlertStructuredData.AlertStructuredDataViewModel
+@{
+    ViewBag.Title = "Create Reaction";
+}
+
+<h1>Create</h1>
+
+<h4>Reaction</h4>
+<hr />
+
+<div class="row">
+    <div class="col-md-12">
+        <form method="post">
+            @Html.AntiForgeryToken()
+            <div class="form-row">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group col-sm-4">
+                    <label asp-for="Reaction.Name" class="control-label">Reaction Name</label>
+                    <input asp-for="Reaction.Name" 
+                        class="form-control" maxlength="50" required
+                        placeholder="Example:  Coughing" />
+                    <span asp-validation-for="Reaction.Name" class="text-danger"></span>
+                </div>
+                <div class="form-group col-sm-4">
+                    <label asp-for="Reaction.Description" class="control-label">Description</label>
+                    <input asp-for="Reaction.Description" 
+                        class="form-control"  
+                        placeholder="Example:  Designates whether the patient has advanced directives"/>
+                    <span asp-validation-for="Reaction.Description" class="text-danger"></span>
+                </div>
+
+                <div class="form-group col-sm-4">
+                    <label asp-for="Reaction.AlertRequired" class="control-label">Alert Required</label>
+                    <div>
+                        <div class="form-check form-check-inline">
+                            <input asp-for="Reaction.AlertRequired" class="form-check-input" type="radio" value="true" id="AlertRequiredTrue" />
+                            <label class="form-check-label" for="AlertRequiredTrue">Yes</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input asp-for="Reaction.AlertRequired" class="form-check-input" type="radio" value="false" id="AlertRequiredFalse" />
+                            <label class="form-check-label" for="AlertRequiredFalse">No</label>
+                        </div>
+                    </div>
+                    <span asp-validation-for="Reaction.AlertRequired" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                </div>
+
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<div>
+    <a asp-controller="AlertStructuredData" asp-action="ViewReactions">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

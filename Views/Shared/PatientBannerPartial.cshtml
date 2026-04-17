@@ -1,0 +1,139 @@
+﻿@model IS_Proj_HIT.Entities.Patient
+@{
+    ViewData["Title"] = "Patient Alerts";
+}
+@ViewBag.Message
+
+<div class="card mw-100 patient-banner">
+    <div class="card-header bg-primary text-white mw-100">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12 col-lg-5 my-auto">
+                    <h3 class="m-0">
+                        Patient:
+                        <a asp-controller="Patient"
+                           asp-action="ViewPatientDetails"
+                           asp-route-id="@Model.Mrn"
+                           class="heading page-link d-inline-block">
+                            @Model.FirstName @Model.MiddleName @Model.LastName
+                        </a>
+                    </h3>
+                </div>
+                <div class="col-sm-3 col-lg-2 my-auto">
+                    <span class="heading">MRN: </span>@Model.Mrn
+                </div>
+                <div class="col-sm-3 col-lg-2 my-auto">
+                    <span class="heading">DOB: </span> @(Model.Dob?.ToShortDateString() ?? "N/A")
+                </div>
+                <div class="col-sm-3 col-lg-1 my-auto">
+                    @if (Model.DeceasedLiving == false)
+                    {<span class="heading">Age: </span> @(Model.Dob.HasValue ? ConversionService.ConvertDobToCurrentAge(Model.Dob.Value).ToString() : "N/A")}
+                    else
+                    {<span class="heading" style="font-size: x-large;">Deceased</span>}
+
+                </div>
+                <div class="col-sm-3 col-lg-1 my-auto">
+                    @if (Model.PatientAlerts != null)
+                    {
+                        <a asp-controller="Patient"
+                           asp-action="ListAlerts"
+                           asp-route-mrn="@Model.Mrn"
+                           id="listAlertsButton" class="btn @(Model.PatientAlerts.Count > 0 ? "btn-outline-danger" : "btn-outline-warning")">
+                            <h5 class="font-weight-bold m-0">
+
+                                @{ var i = Model.PatientAlerts.Count;}
+                                @foreach (var patientalerts in Model.PatientAlerts)
+                                { if (patientalerts.EndDate.HasValue) { i--; } }
+                                <i class="fas fa-exclamation-triangle"></i> Alerts @i
+                            </h5>
+                        </a>
+                    } else @if(Model.PatientMedicationLists != null)
+                    {
+                        <a asp-controller="Patient"
+                           asp-action="ListMedications"
+                           asp-route-id="@Model.Mrn"
+                           >
+
+                        </a>
+                    }
+                </div>
+                <div class="col-sm-3 col-lg-1 my-auto">
+                    <!-- Directives button -->
+                    <button
+                        id="listDirectivesButton"
+                        class="btn btn-outline-info"
+                        data-toggle="modal"
+                        data-target="#directivesModal"
+                        data-mrn="@Model.Mrn">
+                        <h5 class="font-weight-bold m-0">
+                        <i class="fas fa-file-medical-alt"></i> Directives
+                        </h5>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal for Directives -->
+<div
+  class="modal fade"
+  id="directivesModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="directivesModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-custom-width" role="document">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h5 class="modal-title" id="directivesModalLabel">Advanced Directives</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <!-- List of directives loads here -->
+        <div id="directivesListPlaceholder" class="text-center py-5">
+          <i class="fas fa-spinner fa-pulse"></i> Loading…
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <!-- Hidden by default; will be shown after clicking a directive -->
+        <button
+          type="button"
+          id="backToListBtn"
+          class="btn btn-link"
+          style="display: none;">
+          ← Back to document list
+        </button>
+
+        <!-- Always-available Close button -->
+        <button
+          type="button"
+          class="btn btn-secondary"
+          data-dismiss="modal">
+          Close
+        </button>
+      </div>
+
+
+    </div>
+  </div>
+</div>
+
+<style>
+    .modal-custom-width {
+        max-width: 80%; /* Adjust the percentage as needed */
+        }
+
+    /* Turn the modal into a “normal” block in the document flow */
+    .modal {
+      position: absolute !important;    /* no longer fixed at the viewport */
+      top: 0; left: 0;                  /* keep it at the top */
+      right: 0; bottom: 0;
+      overflow: visible !important;     /* let its contents flow out */
+    }
+</style>

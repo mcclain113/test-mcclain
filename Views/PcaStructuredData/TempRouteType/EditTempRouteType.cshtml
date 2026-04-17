@@ -1,0 +1,44 @@
+@model IS_Proj_HIT.ViewModels.PcaStructuredDataViewModel
+@{
+    ViewBag.Title = "Edit Temp Route Type";
+    var userPermissions = ViewData["UserPermissions"] as List<string>;
+}
+
+<h1>Edit</h1>
+
+<h4>Temp Route Type</h4>
+<hr />
+
+<div class="row">
+    <div class="col-md-10">
+        <form method="post">
+            @Html.AntiForgeryToken()
+            <div class="form-row">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="TempRouteType.TempRouteTypeId" value="@Model.TempRouteType.TempRouteTypeId" readonly/>
+                <div class="form-group col-sm-6">
+                    <label asp-for="TempRouteType.TempRouteTypeName" class="control-label">Temp Route Type Name</label>
+                    <input asp-for="TempRouteType.TempRouteTypeName" 
+                        class="form-control" maxlength="50" required
+                        placeholder="Example:  Oral" />
+                    <span asp-validation-for="TempRouteType.TempRouteTypeName" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <a asp-controller="PcaStructuredData" asp-action="ViewTempRouteTypes" class="btn btn-outline-danger">Discard Changes</a>
+                </div>           
+                <div class="form-group ml-3">
+                    @if (userPermissions != null && (userPermissions.Contains("StructuredDataEdit")) )
+                    {
+                        <input type="submit" value="Save Changes" class="btn btn-primary" />
+                    }
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

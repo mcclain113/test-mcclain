@@ -1,0 +1,99 @@
+@model IS_Proj_HIT.ViewModels.Account.RegisterViewModel
+
+@{
+    ViewData["Title"] = "Register";
+}
+
+<div class="container">
+    <div class="row justify-content-center">
+        <h1>@ViewData["Title"]</h1>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-md-4">
+            <form asp-action="Register" method="post">
+                @Html.AntiForgeryToken()
+                <input type="hidden" asp-for="ReturnUrl" value="~/Account/RegisteredButWithoutRole" />
+                <div asp-validation-summary="All" class="text-danger"></div>
+            <hr />
+            <div class="form-group">
+                <label asp-for="FirstName" ></label>
+                <input asp-for="FirstName" class="form-control" >
+                <span asp-validation-for="FirstName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LastName"></label>
+                <input asp-for="LastName" class="form-control" >
+                <span asp-validation-for="LastName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Email"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+             <div class="form-group"> 
+                 <label>Program</label><br /> 
+                 <select class="form-control dropdowns" asp-for="ProgramId" asp-items="@Model.Programs">
+                     <option value="">Select Program</option>
+                 </select>
+             </div> 
+            <div class="form-group">
+                <label asp-for="Password"></label>
+                <input asp-for="Password" class="form-control"/>
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ConfirmPassword"></label>
+                <input asp-for="ConfirmPassword" class="form-control" />
+                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+            </div>
+            <small>
+                Password must be 6 characters minimum and contain:
+                <br />
+                Uppercase & lowercase letters, numbers, and symbols
+            </small>
+            <div class="form-group">
+                <input type="checkbox" id="privacyCheckbox" asp-for="PrivacyPolicyIsChecked">
+                <label for="privacyCheckbox">I agree to HIT Privacy Policy</label>
+                <a onclick="myFunction()">
+                    <i class="fas fa-info-circle"></i>
+                </a>
+            </div>
+            <div id="Submit">
+                <button type="submit" class="btn btn-primary">Register</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial"/>
+    <script>
+        $(document).ready(function () {
+            //click function to open privacy modal
+            $("#privacyBtn").click(function () {
+                $("#privacyModal").modal()
+            });
+
+            //uncheck privacy checkbox on load
+            $('#privacyCheckbox').prop( "checked", false );
+
+            //hide the register button until the privacy agreement is checked
+            $("#Submit").hide();
+
+            //reveals the register button when privacy checkbox is checked
+            $(function () {
+                $('#privacyCheckbox').change(function () {
+                    $('#Submit').toggle($(this).is(':checked'));
+                });
+            });
+        });
+        
+        function myFunction() {
+          var r = confirm("Waukesha County Technical Medical Center Privacy Policy \nGeneral Disclosure: \nWCTC HIT operates and maintains this web application. This page informs you of our policies regarding the collection, use, and disclosure of personal information we receive from users of the Site. We use your Personal Informaion only for providing and improving the website. By using the website, you agree to the collection and use of information in accordance with this policy. \nWCTMC Usage Policy \nAll data and information contained in the WCTMC electronic database is simulated, is to be used for educational purposes only. Do NOT enter any actual personally identifiable information for yourself or any other person beyond a first and last name. Do not access any information other than that which is necessary for completion of assigned work. Any access to this system, other than that required by your instructor, is equivalent to a HIPAA violation and will be addressed following the WCTC Academic Code of Conduct policies, and may include disciplinary action up to and including dismissal from the program. \n Information we collect and use: \n While using the website, we may ask you to provide us with certain personally identifiable information that can be used to contact or identify you. Personally identifiable information may include, but is not limited to your name. \nLog Data: \nLike many site operators, we collect information that your browser sends whenever you visit our Site. This data may include information such as your IP address, browser type and version, pages of our Site that you visit, the time and date of your visit, the time spent on those pages and other statistics. \nThis Privacy Policy was last modified on 2/2/2020.");
+          if (r == true) {
+            document.getElementById(privacyCheckbox).click()
+          }}
+    </script>
+
+}

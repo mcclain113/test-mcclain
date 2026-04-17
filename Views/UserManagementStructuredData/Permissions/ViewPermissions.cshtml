@@ -1,0 +1,74 @@
+@model List<IS_Proj_HIT.Entities.AspNetPermission>
+
+@{
+    ViewData["Title"] = "Permissions";
+}
+
+<div class="row my-3">
+<h3>
+    <a class="btn btn-primary" asp-controller="UserManagementStructuredData" asp-action="Index">
+        <i class="fa fa-arrow-left "></i>
+    </a>
+    Permissions
+</h3>
+</div>
+
+<p>
+    <a class="btn btn-primary" asp-controller="UserManagementStructuredData" asp-action="CreatePermission">Create New</a>
+</p>
+
+<table class="stripe nowrap" id="permissionTable">
+    <thead>
+        <tr>
+            <th>
+                Permission Name
+            </th>
+            <th style="white-space: normal;">
+                Permission Description
+            </th>
+            <th>
+                Module or Form
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var permission in Model)
+        {
+            <tr>
+                <td>
+                    @permission.Name
+                </td>
+                <td style="white-space: normal;">
+                    @permission.Description
+                </td>
+                <td>
+                    @permission.ModuleOrForm
+                </td>
+                <td>
+                   
+                    <a class="btn btn-primary" asp-controller="UserManagementStructuredData" asp-action="EditPermission" asp-route-id="@permission.Id">Edit</a>
+                    <a class="btn btn-danger" asp-controller="UserManagementStructuredData" asp-action="DeletePermission" asp-route-id="@permission.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section scripts{
+    <script>
+        // DataTable Documentation found here: https://datatables.net/
+        $(document).ready(function () {
+            // Creates DataTable
+            $('#permissionTable').DataTable({
+                columns: [null, null, null, { orderable: false } ],
+                order: [[0, 'asc']],
+                pageLength: 10,
+                searching: true,
+                language: {
+                    emptyTable: 'No Permissions found'
+                }
+            });
+        });
+    </script>
+}

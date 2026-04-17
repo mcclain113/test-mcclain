@@ -1,0 +1,92 @@
+﻿@using IS_Proj_HIT.Entities
+@model IS_Proj_HIT.ViewModels.Disclosure.RequestDetailsViewModel
+@{
+    ViewData["Title"] = "RequesterDetails";
+}
+
+<partial name="RequestBannerPartial" model="Model" />
+<partial name="_RequestMenu" model="Model" />
+
+
+<div class="card" style="border:none;">
+    <!--Page Header-->
+    <div class="card-header requestDetailData">
+        <h3>
+            Requester Details
+        </h3>
+    </div>
+    <!--View Mode-->
+    <div class="card-body bg-light" id="viewMode">
+        <div class="container">
+            <div class="row">
+                <div class="col-4 ">
+                    First Name: <b>@Model.Requester.FirstName</b>
+                </div>
+                <div class="col-4">
+                    Last Name: <b>@Model.Requester.LastName</b>
+                </div>
+                <div class="col-4">
+                    Company Name: <b>@Model.Requester.CompanyName</b>
+                </div>
+            </div>
+            <hr />
+            <div class="row">
+                <div class="col-4 ">
+                    Street Address: @if (Model.Requester.Address != null) { <b>@Model.Requester.Address.Address1</b>} else {}
+                </div>
+                <div class="col-4 ">
+                    Ste/Apt: @if (Model.Requester.Address != null) {<b>@Model.Requester.Address.Address2</b>} else {}
+                </div>
+                <div class="col-2 ">
+                    City: @if (Model.Requester.Address != null) {<b>@Model.Requester.Address.City</b>} else {}
+                </div>
+                <div class="col-2 ">
+                    State: @if (Model.Requester.Address != null) { <b>@Model.Requester.Address.AddressState.StateAbbreviation</b>} else {}
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-4">
+                    Zip code: @if (Model.Requester.Address != null) {<b>@Model.Requester.Address.PostalCode</b>} else {}
+                </div>
+                <div class="col-4">
+                    County: @if (Model.Requester.Address != null) { <b>@Model.Requester.Address.County</b>} else {}
+                </div>
+                <div class="col-4">
+                    Country: @if (Model.Requester.Address != null) { <b>@Model.Requester.Address.Country.Name</b>} else {}
+                </div>
+            </div>
+            <hr />
+            <div class="row">
+                <div class="col-4">
+                    Phone Number: <b>@if (Model.Requester.PhoneNumber != null) {
+                            <span class="phone">@Model.Requester.PhoneNumber</span>
+                        } else {
+                            <span class="data"></span>
+                        }</b>
+                </div>
+                <div class="col-4">
+                    Email Address: <b>@Model.Requester.EmailAddress</b>
+                </div>
+            </div>
+            <hr />
+            <div class="row">
+                <div class="col-4 ">
+                    Requester Type: <b>@Model.Requester.RequesterType.RequesterType1</b>
+                </div>
+                <div class="col-4">
+                    Requester Status: <b>@Model.Requester.RequesterStatus.RequesterStatus1</b>
+                </div>
+            </div>
+            <hr />
+            <div class="row">
+                <div class="col-12">
+                    Comments: <b>@Model.Requester.Comments</b>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Scripts-->
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,275 @@
+@model IS_Proj_HIT.ViewModels.BirthRegistry.NewbornViewModel
+
+<style>
+    .checkmark {
+        font-size: 1.2rem;
+    }
+
+    .info-icon {
+        color: #6c757d;
+        font-size: 1rem;
+        margin-left: 5px;
+        cursor: pointer;
+    }
+
+    .info-icon:hover {
+        color: #5a6268;
+    }
+</style>
+
+<div class="card">
+    <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+        <h4 class="mb-0"><i class="fas fa-baby mr-2"></i>Newborn Information</h4>
+        <span class="badge badge-light text-dark">View Mode</span>
+    </div>
+    <div class="card-body">
+        <div id="newbornAccordion">
+            <!-- Section 1: Newborn Birth Information -->
+            <div class="card">
+                <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center" id="nbHeading1">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link text-white" type="button" data-toggle="collapse" data-target="#nbCollapse1" aria-expanded="true" aria-controls="nbCollapse1">
+                            <i class="fas fa-baby mr-2"></i> Newborn Birth Information
+                        </button>
+                    </h5>
+                </div>
+                <div id="nbCollapse1" class="collapse show" aria-labelledby="nbHeading1" data-parent="#newbornAccordion">
+                    <div class="card-body">
+                        <div>
+                            <label class="control-label font-weight-bold">Infant's Birth Name</label>
+                            <div class="form-control-plaintext border p-2 bg-light">
+                                @(Model.FullName)
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label font-weight-bold">Infant's Date and Time of Birth</label>
+                            <i class="fas fa-info-circle info-icon" data-toggle="tooltip" data-placement="top" data-html="true" title="Time is displayed using 24-hour clock; 'Time unknown' is indicated if applicable."></i>
+                            <div class="form-control-plaintext border p-2 bg-light">
+                                @(Model.DateAndTimeOfBirth?.ToString("MM/dd/yyyy HH:mm") ?? (Model.IsTimeUnknown ? "Time unknown" : "Not provided"))
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label font-weight-bold">Birthweight (Lbs)</label>
+                            <div class="form-control-plaintext border p-2 bg-light">
+                                @(Model.BirthWeightInLbs?.ToString() ?? "Not provided")
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label font-weight-bold">Obstetric estimate of gestation at delivery</label>
+                            <div class="form-control-plaintext border p-2 bg-light">
+                                @(Model.GestationalAgeEstimateInWeeks)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label font-weight-bold">Sex</label>
+                            <div class="form-control-plaintext border p-2 bg-light">
+                                @if (Model.SexId != null && Model.SexOptions?.Any() == true)
+                                {
+                                    var sex = Model.SexOptions.FirstOrDefault(s => s.Value == Model.SexId.ToString());
+                                    @(sex?.Text ?? "Not specified")
+                                }
+                                else
+                                {
+                                    @:Not specified
+                                }
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label font-weight-bold">Apgar Scores</label>
+                            <div class="form-row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="control-label font-weight-bold">1 MIN:</label>
+                                        <div class="form-control-plaintext border p-2 bg-light">
+                                            @(Model.ApgarScoreAt1Minute?.ToString() ?? "Not provided")
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="control-label font-weight-bold">5 MIN:</label>
+                                        <div class="form-control-plaintext border p-2 bg-light">
+                                            @(Model.ApgarScoreAt5Minutes?.ToString() ?? "Not provided")
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="control-label font-weight-bold">10 MIN:</label>
+                                        <div class="form-control-plaintext border p-2 bg-light">
+                                            @(Model.ApgarScoreAt10Minutes?.ToString() ?? "Not provided")
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 2: Birth Characteristics -->
+            <div class="card">
+                <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center" id="nbHeading2">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link text-white collapsed" type="button" data-toggle="collapse" data-target="#nbCollapse2" aria-expanded="false" aria-controls="nbCollapse2">
+                            <i class="fas fa-baby-carriage mr-2"></i> Birth Characteristics
+                        </button>
+                    </h5>
+                </div>
+                <div id="nbCollapse2" class="collapse show" aria-labelledby="nbHeading2" data-parent="#newbornAccordion">
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label class="control-label font-weight-bold">Plurality and Birth Order</label>
+                            <div class="form-control-plaintext border p-2 bg-light">
+                                @if (Model.IsSingleBirth)
+                                {
+                                    @:Single birth
+                                }
+                                else
+                                {
+                                    @:Plurality: @(Model.Plurality?.ToString() ?? "Not provided"), Birth Order: @(Model.BirthOrder?.ToString() ?? "Not provided")
+                                }
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label font-weight-bold">Was infant transferred within 24 hours of delivery?</label>
+                            <div class="form-control-plaintext border p-2 bg-light">
+                                @if (Model.InfantTransferredWithin24Hours == true)
+                                {
+                                    <span class="text-success"><i class="fas fa-check-circle mr-1"></i> Yes - Transferred to @(Model.NameOfFacilityTransferredTo ?? "Not specified")</span>
+                                }
+                                else if (Model.InfantTransferredWithin24Hours == false)
+                                {
+                                    <span class="text-muted"><i class="fas fa-times-circle mr-1"></i> No</span>
+                                }
+                                else
+                                {
+                                    <span class="text-warning"><i class="fas fa-question-circle mr-1"></i> Not specified</span>
+                                }
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label font-weight-bold">Is infant living at time of report?</label>
+                            <div class="form-control-plaintext border p-2 bg-light">
+                                @if (Model.IsInfantStillLiving == true)
+                                {
+                                    <span class="text-success"><i class="fas fa-check-circle mr-1"></i> Yes</span>
+                                }
+                                else if (Model.IsInfantStillLiving == false)
+                                {
+                                    <span class="text-muted"><i class="fas fa-times-circle mr-1"></i> No</span>
+                                }
+                                else
+                                {
+                                    <span class="text-warning"><i class="fas fa-question-circle mr-1"></i> Not specified</span>
+                                }
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label font-weight-bold">Is infant being breastfed at discharge?</label>
+                            <div class="form-control-plaintext border p-2 bg-light">
+                                @if (Model.IsInfantBeingBreastfed == true)
+                                {
+                                    <span class="text-success"><i class="fas fa-check-circle mr-1"></i> Yes</span>
+                                }
+                                else if (Model.IsInfantBeingBreastfed == false)
+                                {
+                                    <span class="text-muted"><i class="fas fa-times-circle mr-1"></i> No</span>
+                                }
+                                else
+                                {
+                                    <span class="text-warning"><i class="fas fa-question-circle mr-1"></i> Not specified</span>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 3: Newborn Health Status -->
+            <div class="card">
+                <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center" id="nbHeading3">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link text-white collapsed" type="button" data-toggle="collapse" data-target="#nbCollapse3" aria-expanded="false" aria-controls="nbCollapse3">
+                            <i class="fas fa-heartbeat mr-2"></i> Newborn Health Status
+                        </button>
+                    </h5>
+                </div>
+                <div id="nbCollapse3" class="collapse show" aria-labelledby="nbHeading3" data-parent="#newbornAccordion">
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label class="control-label font-weight-bold">Abnormal Conditions</label>
+                            <div class="form-control-plaintext border p-2 bg-light">
+                                @if (Model.NoAbnormalities)
+                                {
+                                    @:NO ABNORMALITIES IDENTIFIED
+                                }
+                                else if (Model.SelectedAbnormalConditionIds != null && Model.SelectedAbnormalConditionIds.Any())
+                                {
+                                    @foreach (var conditionId in Model.SelectedAbnormalConditionIds)
+                                    {
+                                        var condition = Model.AbnormalConditions?.FirstOrDefault(c => c.Value == conditionId.ToString());
+                                        if (condition != null)
+                                        {
+                                            <span class="badge badge-primary mr-1">@condition.Text</span>
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    @:Not specified
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 4: Congenital Anomalies -->
+            <div class="card">
+                <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center" id="nbHeading4">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link text-white collapsed" type="button" data-toggle="collapse" data-target="#nbCollapse4" aria-expanded="false" aria-controls="nbCollapse4">
+                            <i class="fas fa-dna mr-2"></i> Congenital Anomalies
+                        </button>
+                    </h5>
+                </div>
+                <div id="nbCollapse4" class="collapse show" aria-labelledby="nbHeading4" data-parent="#newbornAccordion">
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label class="control-label font-weight-bold">Congenital Anomalies</label>
+                            <div class="form-control-plaintext border p-2 bg-light">
+                                @if (Model.NoCongenitalAnomalies)
+                                {
+                                    @:NO CONGENITAL ANOMALIES IDENTIFIED
+                                }
+                                else if (Model.SelectedCongenitalAnomalyIds != null && Model.SelectedCongenitalAnomalyIds.Any())
+                                {
+                                    @foreach (var anomalyId in Model.SelectedCongenitalAnomalyIds)
+                                    {
+                                        var anomaly = Model.CongenitalAnomalies?.FirstOrDefault(a => a.Value == anomalyId.ToString());
+                                        if (anomaly != null)
+                                        {
+                                            <span class="badge badge-primary mr-1">@anomaly.Text</span>
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    @:Not specified
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

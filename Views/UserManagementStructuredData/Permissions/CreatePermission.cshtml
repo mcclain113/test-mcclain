@@ -1,0 +1,86 @@
+@model IS_Proj_HIT.ViewModels.UserManagement.UserManagementStructuredDataViewModel
+@{
+    ViewBag.Title = "Create Permission";
+}
+
+<h1>Create</h1>
+
+<h4>Permission</h4>
+<hr />
+
+<div class="row">
+    <div class="col-md-10">
+        <form method="post">
+            @Html.AntiForgeryToken()
+
+            <div class="form-group">
+                <label>Select Activity:</label>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="IsPermissionGroup" value="true" 
+                        checked onchange="toggleFields(true)" />
+                    <label class="form-check-label">Create a Group of Permissions
+                        <a href="#" class="fas font-weight-normal fa-question-circle fa-s" data-offset="0% 0%" 
+                            data-toggle="popover" data-trigger="focus hover" data-placement="right" container="body" customClass="w-90"
+                            title="Create a Group of Permissions" data-content="If you select this radio button and then enter 'Skateboard' in the 'Module or Form' field, this group of permissions and descriptions will be created:  SkateboardAdd, SkateboardDelete, SkateboardEdit, SkateboardView."></a></label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="IsPermissionGroup" value="false" 
+                        onchange="toggleFields(false)" />
+                    <label class="form-check-label">Create a Single Permission
+                        <a href="#" class="fas font-weight-normal fa-question-circle fa-s" data-offset="0% 0%" 
+                            data-toggle="popover" data-trigger="focus hover" data-placement="right" container="body" customClass="w-90"
+                            title="Create a Single Permission" data-content="If you select this radio button you will provide input in all three fields and create one unique Permission.  For example, to create the permission 'SkateboardSpecial':  in the ''Module or Form' field enter 'Skateboard', in the 'Permission Name' field enter 'SkateboardSpecial', and in the 'Description' field enter 'Special access to the Skateboard module'."></a>
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-group col-sm-6">
+                <label asp-for="AspNetPermission.ModuleOrForm" class="control-label">Module or Form</label>
+                <input asp-for="AspNetPermission.ModuleOrForm" 
+                    class="form-control" maxlength="40" required placeholder="Example:  Skateboard" />
+                <span asp-validation-for="AspNetPermission.ModuleOrForm" class="text-danger"></span>
+            </div>
+
+            <div id="singlePermissionFields">
+                <div class="form-group col-sm-6">
+                    <label asp-for="AspNetPermission.Name" class="control-label">Permission Name</label>
+                    <input asp-for="AspNetPermission.Name" 
+                        class="form-control" maxlength="50"
+                        placeholder="Example:  SkateboardSpecial" />
+                    <span asp-validation-for="AspNetPermission.Name" class="text-danger"></span>
+                </div>
+                <div class="form-group col-sm-12">
+                    <label asp-for="AspNetPermission.Description" class="control-label">Permission Description</label>
+                    <textarea asp-for="AspNetPermission.Description" 
+                        class="form-control" maxlength="500" rows="5" 
+                        placeholder="Example:  Special Skateboard functionality is accessible"></textarea>
+                    <span asp-validation-for="AspNetPermission.Description" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="col">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<div class="col mt-3">
+    <a asp-controller="UserManagementStructuredData" asp-action="ViewPermissions">Back to List</a>
+</div>
+
+@section Scripts {
+    <script>
+        function toggleFields(isSet) {
+            const singleFields = document.getElementById('singlePermissionFields');
+            singleFields.style.display = isSet ? 'none' : 'block';
+        }
+
+        // Initialize with Single Permission fields visible
+        document.addEventListener('DOMContentLoaded', function () {
+            toggleFields(true);
+        });
+    </script>
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

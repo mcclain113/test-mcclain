@@ -1,0 +1,83 @@
+@model IS_Proj_HIT.Entities.Encounter
+@{
+    ViewData["Title"] = "Discharge Encounter";
+}
+
+<partial name="PatientBannerPartial" model="ViewBag.Patient" />
+<form asp-action="DischargeEncounter" id="dischargeEncounter" method="post" name="dischargeEncounter">
+    @Html.AntiForgeryToken()
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <input asp-for="@Model.EncounterId" name="EncounterId" type="hidden" value="@Model.EncounterId" />
+    <input asp-for="AdmitDateTime" name="AdmitDateTime" type="hidden" value="@Model.AdmitDateTime" />
+    <div class="card">
+        <div class="card-header bg-primary text-white">
+            <h4>
+                Discharge Encounter
+                <a asp-action="ViewEncounter"
+                    asp-route-encounterId="@Model.EncounterId"
+                    class="btn btn-info float-right">
+                    Return to Encounter View
+                </a>
+            </h4>
+        </div>  <!-- close the card-header -->
+        <div class="card-body bg-light">
+            <hr/>
+            <div class="row">
+                <div class="col-sm-12 col-lg-4">
+                    <label>Discharge Date Time (XX/XX/XXXX 00:00 AM/PM)</label>
+                    <input type="datetime-local" asp-for="@Model.DischargeDateTime" name="DischargeDateTime" class="form-control" placeholder="XX/XX/XXXX 00:00"/>
+                    <span asp-validation-for="DischargeDateTime" class="text-danger"></span>
+                </div>
+                <div class="col-sm-12 col-lg-8">
+                    <label>Discharge Disposition</label>
+                    <select class="form-control dropdowns select2" asp-for="@Model.DischargeDisposition" asp-items="ViewBag.Discharges" name="DischargeDisposition">
+                        <option value="">Select Discharge Disposition</option>
+                    </select>
+                    <span asp-validation-for="DischargeDisposition" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 col-lg-12">
+                    <label>Discharge Notes</label>
+                    <input type="text" asp-for="@Model.DischargeComment" name="DischargeComment" class="form-control" placeholder="Discharge Notes">
+                    <span asp-validation-for="DischargeComment" class="text-danger"></span>
+                </div>
+            </div>
+            <hr />
+        </div>  <!-- close the card-body -->
+    </div>  <!-- close the card -->
+    <button class="btn btn-primary btn-block" onclick="setFormSubmit()" type="submit">Save</button>
+</form> <!-- close the form -->
+<hr/>
+<a asp-controller="Encounter" asp-action="ViewEncounter" asp-route-encounterId="@Model.EncounterId" class="btn btn-cancel">
+    Cancel
+</a>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        $(document).ready(function () {
+            $('.select2').select2();
+        });
+    </script>
+
+
+    <script>
+        var formSubmit = false;
+        var setFormSubmit = function () {
+            Validation();
+            formSubmit = true;
+        };
+
+        window.onload = function () {
+            window.addEventListener("beforeunload",
+                function (e) {
+                    if (formSubmit) {
+                        return undefined;
+                    }
+                    var message = "If you leave before saving, your changes will be lost.";
+                    e.returnValue = message;
+                });
+        };
+    </script>
+}

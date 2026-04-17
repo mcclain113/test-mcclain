@@ -1,0 +1,68 @@
+@model List<IS_Proj_HIT.Entities.RequestPurpose>
+
+@{
+    ViewData["Title"] = "Disclosure Request Purposes";
+}
+
+<div class="row my-3">
+<h3>
+    <a class="btn btn-primary" asp-controller="DisclosureStructuredData" asp-action="Index">
+        <i class="fa fa-arrow-left "></i>
+    </a>
+    Disclosure Request Purposes
+</h3>
+</div>
+
+<p>
+    <a class="btn btn-primary" asp-controller="DisclosureStructuredData" asp-action="CreateRequestPurpose">Create New</a>
+</p>
+
+<table class="stripe nowrap" id="requestPurposeTable">
+    <thead>
+        <tr>
+            <th>
+                Request Purpose
+            </th>
+            <th>
+                Purpose Description
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var requestPurpose in Model)
+        {
+            <tr>
+                <td>
+                    @requestPurpose.RequestPurpose1
+                </td>
+                <td>
+                    @requestPurpose.PurposeDescription
+                </td>
+                <td>
+                   
+                    <a class="btn btn-primary" asp-controller="DisclosureStructuredData" asp-action="EditRequestPurpose" asp-route-id="@requestPurpose.PurposeId">Edit</a>
+                    <a class="btn btn-danger" asp-controller="DisclosureStructuredData" asp-action="DeleteRequestPurpose" asp-route-id="@requestPurpose.PurposeId">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section scripts{
+    <script>
+        // Creates DataTable
+        // DataTable Documentation found here: https://datatables.net/
+        $(function () {
+            $('#requestPurposeTable').DataTable({
+                columns: [null, null, { orderable: false }],
+                order: [[0, 'asc']],
+                pageLength: 10,
+                searching: true,
+                language: {
+                    emptyTable: 'No request purposes found'
+                }
+            });
+        });
+    </script>
+}

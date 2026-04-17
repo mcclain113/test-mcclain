@@ -1,0 +1,17 @@
+@model IS_Proj_HIT.ViewModels.Alert.AlertListViewModel
+@{
+    ViewData["Title"] = "Patient Alerts";
+}
+
+<partial name="PatientBannerPartial" model="ViewBag.Patient" class="mw-100"/>
+<partial name="_PatientMenu" model="ViewBag.Patient"/>
+
+<div class="row justify-content-start">
+    <div class="col mx-0 px-0">
+        <div class="card">
+            @{
+                await Html.RenderPartialAsync("Alert/_ListAlertsPartial");
+            }
+        </div>
+    </div>
+</div>

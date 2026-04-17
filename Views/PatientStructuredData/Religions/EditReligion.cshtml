@@ -1,0 +1,50 @@
+@model IS_Proj_HIT.ViewModels.PatientVm.PatientStructuredDataViewModel
+@{
+    ViewBag.Title = "Create Religion";
+}
+
+<h1>Edit</h1>
+
+<h4>Religion</h4>
+<hr />
+
+<div class="row">
+    <div class="col-md-10">
+        <form method="post">
+            @Html.AntiForgeryToken()
+            <div class="form-row">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="Religion.ReligionId" value="@Model.Religion.ReligionId" readonly />
+                
+                <div class="form-group col-sm-6">
+                    <label asp-for="Religion.Name" class="control-label">Religion Name</label>
+                    <input asp-for="Religion.Name" 
+                        class="form-control" maxlength="100" required
+                        placeholder="Example:  Agnostic" />
+                    <span asp-validation-for="Religion.Name" class="text-danger"></span>
+                </div>
+                <div class="form-group col-sm-6">
+                    <label asp-for="Religion.Description" class="control-label">Description</label>
+                    <input asp-for="Religion.Description" 
+                        class="form-control"/>
+                </div>
+            </div>
+
+            <div class="form-row">            
+                <div class="form-group">
+                    <input type="submit" value="Edit" class="btn btn-primary" />
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+
+<div>
+    <a asp-controller="PatientStructuredData" asp-action="ViewReligions">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

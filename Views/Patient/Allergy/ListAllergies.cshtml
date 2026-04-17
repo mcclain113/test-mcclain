@@ -1,0 +1,18 @@
+@model IS_Proj_HIT.ViewModels.Allergy.AllergyListViewModel
+@{
+    ViewData["Title"] = "Patient Allergies";
+    var userPermissions = ViewData["UserPermissions"] as List<string>;
+    var mrn = ViewData["Mrn"] as string ?? Model.Mrn ?? string.Empty;
+}
+
+<partial name="PatientBannerPartial" model="ViewBag.Patient" class="mw-100" />
+<partial name="_PatientMenu" model="ViewBag.Patient" />
+
+<div class="row justify-content-start">
+    <div class="col mx-0 px-0">
+        <div class="card">
+            @await Html.PartialAsync("Allergy/_ListAllergiesPartial", Model)
+            @Html.AntiForgeryToken()
+        </div>
+    </div>
+</div>

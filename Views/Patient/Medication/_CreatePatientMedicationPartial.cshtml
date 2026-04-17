@@ -1,0 +1,346 @@
+@model IS_Proj_HIT.ViewModels.PatientVm.PatientMedicationViewModel
+
+<div class="card">
+    <div  class="card-header bg-primary text-white">
+        <h4>Add A Patient Medication</h4>
+    </div>
+
+    <form method="post" asp-action="CreatePatientMedication" class="patient-medication-form" id="patMeds">
+        @Html.AntiForgeryToken()
+        <div class="card-body bg-light">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="PatientMedication.Mrn" value="@Model.PatientMedication.Mrn" readonly/>
+
+            <div class="row">
+                <div class="form-group col-sm-12">
+                    <label for="availableMeds-select" class="control-label">Medications Available</label>
+                    <select asp-for="PatientMedication.MedicationID" asp-items="@Model.MedicationsAvailable" class="form-control" id="availableMeds-select" data-val-required="Please select a medication from the list." required ><option value="">Select a Medication</option></select>
+                    <span asp-validation-for="PatientMedication.MedicationID" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-sm-6">
+                    <label asp-for="PatientMedication.FrequencyID" class="control-label">Frequency</label>
+                    <select asp-for="PatientMedication.FrequencyID" asp-items="@Model.MedicationFrequencies" class="form-control" data-val-required="Please select a Frequency." required><option value="">Select Frequency</option></select>
+                    <span asp-validation-for="PatientMedication.FrequencyID" class="text-danger"></span>
+                </div>
+                <div class="form-group col-6">
+                    <label asp-for="PatientMedication.OrderingProviderID" class="control-label">Ordering Provider</label>
+                    <select asp-for="PatientMedication.OrderingProviderID" asp-items="@Model.Providers" class="form-control selectable" data-val-required="Please select an Ordering Provider." required><option value="">Select Ordering Provider</option></select>
+                    <span asp-validation-for="PatientMedication.OrderingProviderID" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-12">
+                    <label asp-for="PatientMedication.Indication" class="control-label">Indication</label>
+                    <input asp-for="PatientMedication.Indication" class="form-control" data-val-required="Please provide an Indication." required />
+                    <span asp-validation-for="PatientMedication.Indication" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-sm-6">
+                    <label asp-for="PatientMedication.StartDate" class="control-label">Start Date</label>
+                    <input class="form-control" type="date" asp-for="PatientMedication.StartDate"/>
+                    <span asp-validation-for="PatientMedication.StartDate" class="text-danger"></span>
+                </div>
+                <div class="form-group col-sm-6">
+                    <label asp-for="PatientMedication.EndDate" class="control-label">End Date (if known)</label>
+                    <input class="form-control" type="date" asp-for="PatientMedication.EndDate" />
+                    <span asp-validation-for="PatientMedication.EndDate" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-12">
+                    <label asp-for="PatientMedication.Comments" class="control-label">Comments</label>
+                    <textarea asp-for="PatientMedication.Comments" class="form-control"></textarea>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <label asp-for="PatientMedication.EnteredBy" class="control-label">Entered By</label>
+                    <input asp-for="PatientMedication.EnteredBy" class="form-control" required maxlength="100"></input>
+                    <span asp-validation-for="PatientMedication.EnteredBy" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-6">
+                    <label asp-for="PatientMedication.DateEntered" class="control-label">Date Entered</label>
+                    <input class="form-control" type="datetime-local" asp-for="PatientMedication.DateEntered" data-val-required="Please enter the name of the person creating this entry" required value="@(DateTime.Now.ToString("yyyy-MM-dd'T'HH:mm"))"/>
+                    <span asp-validation-for="PatientMedication.DateEntered" class="text-danger"></span>
+                </div>
+            </div>
+            @if (ViewBag.ErrorMessage != null) {
+                <div class="form-group col-12">
+                    <span class="text-danger">@ViewBag.ErrorMessage</span>
+                </div>
+            }
+            <button class="btn btn-primary btn-block" onclick="setFormSubmit()" type="submit">Create Patient Medication</button>
+
+            <div>
+                <a asp-controller="Patient" asp-action="ListMedications" asp-route-id="@Model.PatientMedication.Mrn" class="btn btn-cancel ajax-modal-load mt-3">Cancel</a>
+            </div>
+        </div>
+    </form>
+</div>
+
+@{ 
+  // exact local paths (use actual filenames - min or non-min)
+  var jqueryValidateLocal = Url.Content("~/lib/jquery-validation/dist/jquery.validate.js");
+  var jqueryUnobtrusiveLocal = Url.Content("~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js");
+
+  // CDN fallbacks (optional)
+  var jqueryValidateCdn = "https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js";
+  var jqueryUnobtrusiveCdn = "https://cdnjs.cloudflare.com/ajax/libs/jquery-validate-unobtrusive/3.2.12/jquery.validate.unobtrusive.min.js";
+}
+
+<script>
+/* patientMedication module + safe init (self-contained in partial) */
+(function($, window, document){
+  // Define module only once
+  if (!window.patientMedication) {
+    window.patientMedication = (function () {
+      function init($container) {
+        $container = ($container && $container.length) ? $container : $(document);
+        var $form = $container.find('.patient-medication-form');
+        if (!$form.length) $form = $container.find('form[action*="CreatePatientMedication"], form');
+        if (!$form.length) return;
+
+        var $medSelect = $form.find('#availableMeds-select');
+        if (!$medSelect.length) $medSelect = $form.find('select[name$="MedicationID"], select[name="PatientMedication.MedicationID"]');
+        if (!$medSelect.length) return;
+
+        // mark novalidate to allow jquery validate handling
+        $form.attr('novalidate', 'novalidate');
+
+        // Initialize select2 if available
+        if ($.fn.select2) {
+          var $modal = $container.closest('.modal');
+          var dropdownParent = $modal.length ? $modal : $(document.body);
+          try {
+            if ($medSelect.data('select2')) $medSelect.select2('destroy');
+          } catch(e) { /* ignore */ }
+          $medSelect.attr('tabindex', '-1').select2({
+            width: '100%',
+            placeholder: 'Search medications',
+            allowClear: true,
+            minimumResultsForSearch: 3,
+            dropdownParent: dropdownParent,
+            matcher: function (params, data) {
+              if (!params || !params.term) return data;
+              if (!data || !data.text) return null;
+              var term = params.term.trim().toLowerCase();
+              var text = data.text.toLowerCase();
+              return text.indexOf(term) !== -1 ? data : null;
+            }
+          });
+        }
+
+        // Wire up change/input to validate element and clear server errors
+        $form.on('change input', 'select, input, textarea', function () {
+          var validator = $form.data('validator') || $form.validate && $form.validate();
+          if (validator && validator.element && validator.element(this)) $form.find('#serverErrorMedication').text('').hide();
+        });
+
+        // Unobtrusive parse if available
+        if (typeof $.validator !== 'undefined' && typeof $.validator.unobtrusive !== 'undefined') {
+          $form.removeData('validator');
+          $form.removeData('unobtrusiveValidation');
+          $.validator.unobtrusive.parse($form);
+        }
+      }
+
+      return { init: init };
+    })();
+  }
+
+  /* Safe loader and initializer: waits for DOM, module, and deps */
+  (function ensureDepsAndInit(containerSelector, attempts) {
+    attempts = attempts || 0;
+    var maxAttempts = 25;
+    var delayMs = 120;
+
+    var $container = $(containerSelector);
+    if (!$container.length) $container = $(document);
+
+    var $form = $container.find('.patient-medication-form');
+    if (!$form.length) $form = $container.find('form[action*="CreatePatientMedication"], form');
+
+    var $medSelect = $form.find('#availableMeds-select');
+    if (!$medSelect.length) $medSelect = $form.find('select[name$="MedicationID"], select[name="PatientMedication.MedicationID"]');
+
+    // quick early exit if form/select not present yet
+    if (!$form.length || !$medSelect.length) {
+      if (attempts >= maxAttempts) {
+        console.warn('patientMedication init aborted: form or med select not found', { formLen: $form.length, medSelectLen: $medSelect.length });
+        return;
+      }
+      return setTimeout(function(){ ensureDepsAndInit(containerSelector, attempts + 1); }, delayMs);
+    }
+
+    function loadScriptOnce(src, cb) {
+        if (!src) return cb();
+        // token-based presence check: tolerant to CDN/minified differences
+        var token = src.indexOf('/') !== -1 ? src.split('/').pop().split('?')[0] : src;
+        var already = Array.prototype.slice.call(document.scripts).some(function(s){
+            return s.src && s.src.indexOf(token) !== -1;
+        });
+        if (already) return cb();
+        var s = document.createElement('script');
+        s.src = src;
+        s.async = false;
+        s.onload = cb;
+        s.onerror = function(){ console.warn('Failed to load', src); cb(); };
+        document.head.appendChild(s);
+    }
+
+    var needSelect2 = (typeof $.fn.select2 !== 'function');
+
+    // tolerant presence check by token (matches local, minified, CDN variants)
+    function scriptTagPresent(token) {
+        if (!token) return false;
+        var scripts = Array.prototype.slice.call(document.scripts || []);
+        return scripts.some(function(s){ return s.src && s.src.indexOf(token) !== -1; });
+    }
+
+    // tokens we look for
+    var validateToken = 'jquery.validate';
+    var unobtrusiveToken = 'jquery.validate.unobtrusive';
+
+    // runtime globals presence
+    var validatorGlobalPresent = (typeof $.validator !== 'undefined');
+    var unobGlobalPresent = (validatorGlobalPresent && typeof $.validator.unobtrusive !== 'undefined');
+
+    // token presence (covers scripts added by _Layout)
+    var validateScriptPresent = scriptTagPresent(validateToken);
+    var unobScriptPresent = scriptTagPresent(unobtrusiveToken);
+
+    console.log('patientMedication loader: validatorGlobalPresent=', validatorGlobalPresent,
+                'unobGlobalPresent=', unobGlobalPresent,
+                'validateScriptPresent=', validateScriptPresent,
+                'unobScriptPresent=', unobScriptPresent);
+
+    // Decide whether we need to load jquery.validate
+    var needValidate = !validatorGlobalPresent && !validateScriptPresent;
+
+    // Decide whether we need to load unobtrusive
+    // we want unobtrusive if global is missing OR script tag not present
+    var needUnobtrusive = !unobGlobalPresent && !unobScriptPresent;
+
+    console.log('patientMedication loader decision: needValidate=', needValidate, 'needUnobtrusive=', needUnobtrusive);
+
+    // Build tasks. Use the Razor variables here (exact paths)
+    var tasks = [];
+    if (needSelect2) tasks.push(function(n){ loadScriptOnce('https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js', n); });
+
+    if (needValidate) tasks.push(function(n){ loadScriptOnce('@jqueryValidateLocal', function(){
+    if (typeof $.validator === 'undefined') loadScriptOnce('@jqueryValidateCdn', n); else n();
+    }); });
+
+    if (needUnobtrusive) tasks.push(function(n){ loadScriptOnce('@jqueryUnobtrusiveLocal', function(){
+    if (typeof $.validator === 'undefined' || typeof $.validator.unobtrusive === 'undefined') loadScriptOnce('@jqueryUnobtrusiveCdn', n); else n();
+    }); });
+
+
+    // Load sequence for libs
+    function afterLibsReady() {
+      // parse unobtrusive if present
+      if (typeof $.validator !== 'undefined' && typeof $.validator.unobtrusive !== 'undefined') {
+        try {
+          $form.removeData('validator');
+          $form.removeData('unobtrusiveValidation');
+          $.validator.unobtrusive.parse($form);
+        } catch (e) { console.warn('unobtrusive parse failed', e); }
+      }
+
+      if (window.patientMedication && typeof window.patientMedication.init === 'function') {
+        try {
+          window.patientMedication.init($container);
+        } catch (e) {
+          console.warn('patientMedication.init error', e);
+        }
+      } else {
+        if (attempts >= maxAttempts) {
+          console.warn('patientMedication module not available; aborting');
+          return;
+        }
+        setTimeout(function(){ ensureDepsAndInit(containerSelector, attempts + 1); }, delayMs);
+      }
+    }
+
+    function runTasks(seq) {
+      if (!seq || !seq.length) return afterLibsReady();
+      var fn = seq.shift();
+      try { fn(function(){ runTasks(seq); }); } catch(e){ console.warn('load task error', e); runTasks(seq); }
+    }
+
+    runTasks(tasks.slice());
+
+  })('.card:has(.patient-medication-form), .card:has(form[action*="CreatePatientMedication"])');
+
+})(jQuery, window, document);
+
+</script>
+
+<script>
+    var formSubmit = false;
+
+    @* this script is used by controllers doing validation and Bootstrap to highlight properties which are invalid  *@
+    window.addEventListener("DOMContentLoaded", () => {
+        document.querySelectorAll("input.input-validation-error").forEach(
+            (elem) => { elem.classList.add("is-invalid"); }
+        );
+    });
+
+    var setFormSubmit = function () {
+        formSubmit = true;
+    };
+    window.onload = function () {
+        window.addEventListener("beforeunload",
+            function (e) {
+                if (formSubmit) {
+                    return undefined;
+                }
+                var message = "If you leave before saving, your changes will be lost.";
+                e.returnValue = message;
+        });
+    };
+</script>
+
+<script>
+(function () {
+  var $form = $('#patMeds').length ? $('#patMeds') : $('.modal-body #patMeds');
+  if (!$form.length) return;
+
+  // only run when inside the modal
+  var $modal = $form.closest('.modal');
+  if (!$modal.length) return;
+
+  // wire cancel link to load the ListMedicationss partial into the same modal
+  $form.find('a.ajax-modal-load').off('click').on('click', function (e) {
+    e.preventDefault();
+    var $link = $(this);
+    var url = $link.attr('href');
+    if (!url) return;
+
+    // show loading state (reuse same modal body)
+    var $modalBody = $modal.find('.modal-body').length ? $modal.find('.modal-body') : $modal.find('#globalModalBody');
+    var $modalTitle = $modal.find('.modal-title').length ? $modal.find('.modal-title') : $modal.find('#globalModalTitle');
+    $modalTitle.text($link.data('modalTitle') || 'Loading...');
+    $modalBody.html('<div class="text-center p-4"><div class="spinner-border" role="status" aria-hidden="true"></div></div>');
+
+    $.ajax({
+      url: url,
+      method: 'GET',
+      headers: { 'X-Requested-With': 'XMLHttpRequest' },
+      success: function (html) {
+        $modalBody.html(html);
+        // If the loaded content has [data-modal-title], use it; otherwise use 'Medications'
+        var provided = $modalBody.find('[data-modal-title]').data('modalTitle');
+        $modalTitle.text(provided || 'Medications');
+      },
+      error: function () {
+        $modalBody.html('<div class="text-danger p-3">Failed to load medications.</div>');
+        $modalTitle.text('Error');
+      }
+    });
+  });
+})();
+</script>

@@ -1,0 +1,84 @@
+@model Dictionary<string, List<string>>
+
+@{
+    ViewData["Title"] = "Role Permissions";
+    var permissionHeaders = ViewData["Permissions"] as List<string>;
+}
+
+<div class="row my-3">
+    <h3>
+        <a class="btn btn-primary" asp-controller="UserManagementStructuredData" asp-action="Index">
+            <i class="fa fa-arrow-left "></i>
+        </a>
+        Role Permissions
+    </h3>
+</div>
+
+<table class="table table-bordered stripe" id="rolePermissionTable">
+    <thead>
+        <tr>
+            <th>Module/Form</th>
+            @foreach (var role in Model.Keys)
+            {
+                <th>
+                    <a asp-controller="UserManagementStructuredData" asp-action="EditRolePermissions" asp-route-roleName="@role">@role</a>
+                </th>
+            }
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var moduleForm in permissionHeaders)
+        {
+            <tr>
+                <td>@moduleForm</td>
+                @foreach (var role in Model.Keys)
+                {
+                    var permissionsForRole = Model[role];
+                    var permissionsInModuleForm = permissionsForRole.Where(p => p.Contains(moduleForm, StringComparison.OrdinalIgnoreCase)).ToList();
+
+
+                    <td>
+                        @if (permissionsForRole.Any(p => p.Contains(moduleForm, StringComparison.OrdinalIgnoreCase)))
+                        {
+                            foreach (var permission in permissionsForRole.Where(p => p.Contains(moduleForm, StringComparison.OrdinalIgnoreCase)))
+                            {
+                                <span>@permission.Replace(moduleForm, "").Trim()</span><br/>
+                            }
+                        }
+                        else
+                        {
+                            <span>None</span>
+                        }
+                    </td>
+                }
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section scripts{
+    <script>
+        // DataTable Documentation found here: https://datatables.net/
+        $(document).ready(function () {
+            // Creates DataTable
+            $('#rolePermissionTable').DataTable({
+                // Auto-detect the number of columns
+                columnDefs: [
+                    {
+                        targets: '_all', // Applies settings to all columns
+                        orderable: true, // Allows ordering on all columns
+                        searchable: true, // Enables search on all columns
+                    }
+                ],
+                paging: true, // Enable pagination
+                info: true,   // Enable table information display below the table
+                searching: true, // Enable global search
+                autoWidth: false, // Prevent fixed width for dynamic columns
+                pageLength: 25,
+                language: {
+                    emptyTable: 'None found'
+                }
+            });
+        });
+    </script>
+}

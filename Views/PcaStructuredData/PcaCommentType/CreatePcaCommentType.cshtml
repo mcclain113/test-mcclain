@@ -1,0 +1,45 @@
+@model IS_Proj_HIT.ViewModels.PcaStructuredDataViewModel
+@{
+    ViewBag.Title = "Create PCA Comment Type";
+    var userPermissions = ViewData["UserPermissions"] as List<string>;
+}
+
+<h1>Create</h1>
+
+<h4>PCA Comment Type</h4>
+<hr />
+
+<div class="row">
+    <div class="col-md-10">
+        <form method="post">
+            @Html.AntiForgeryToken()
+            <div class="form-row">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group col-sm-6">
+                    <label asp-for="PcacommentType.PcacommentTypeName" class="control-label">PCA Comment Type Name</label>
+                    <input asp-for="PcacommentType.PcacommentTypeName" 
+                        class="form-control" maxlength="50" required
+                        placeholder="Example:  Vitals Notes" />
+                    <span asp-validation-for="PcacommentType.PcacommentTypeName" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-row">            
+                <div class="form-group">
+                    @if (userPermissions != null && (userPermissions.Contains("StructuredDataAdd")) )
+                    {               
+                        <input type="submit" value="Create" class="btn btn-primary" />
+                    }
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<div>
+    <a asp-controller="PcaStructuredData" asp-action="ViewPcaCommentTypes">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

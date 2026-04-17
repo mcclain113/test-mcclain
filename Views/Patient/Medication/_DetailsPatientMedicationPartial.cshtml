@@ -1,0 +1,80 @@
+@model IS_Proj_HIT.Entities.PatientMedicationList
+
+@{
+    var userPermissions = ViewData["UserPermissions"] as List<string>;
+}
+
+<div class="card" data-modal-title="Details">
+    <div  class="card-header bg-primary text-white">
+        <h4>Patient Medication Details
+            @if (userPermissions != null && (userPermissions.Contains("MedicationListEdit")) )
+            {
+                <a class="btn btn-info float-right open-edit"
+                    href="@Url.Action("EditPatientMedication", "Patient", new { id = Model.PatientMedicationListID})"
+                    data-med-id="@Model.PatientMedicationListID" data-modal-title="Edit Medication">Edit</a>
+            }
+        </h4>
+    </div>
+
+    <div class="card-body bg-light">
+        <div class="row">
+            <div class="form-group col-md-10">
+                <label for="medication-name" class="control-label">Medication Name</label>
+                <input id="medication-name" 
+                    value="@(   Model.Medications.MedicationGenericName.GenericName + " " +
+                                Model.Medications.ActiveStrengthUnits + " "  +
+                                Model.Medications.MedicationDosageForm.DosageForm + " => " +
+                                Model.Medications.MedicationBrandName.BrandName)" class="form-control" disabled />
+            </div>
+            <div class="form-group col-md-2">
+                <label for="IsActive" class="control-label">Active</label>
+                <input id="IsActive" class="form-control" value="@(Model.IsActive ? "Yes" : "No")" disabled />
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-6">
+                <label asp-for="MedicationFrequencies.FrequencyDescription" class="control-label">Frequency</label>
+                <input asp-for="MedicationFrequencies.FrequencyDescription" class="form-control" disabled />
+            </div>
+            <div class="form-group col-md-6">
+                <label for="provider" class="control-label">Ordering Provider</label>
+                <input id="provider" value="@(Model.Physicians.FirstName + " " + Model.Physicians.LastName)" class="form-control" disabled />
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-12">
+                <label asp-for="Indication" class="control-label">Indication</label>
+                <input asp-for="Indication" class="form-control" disabled />
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-6">
+                <label for="start-date" class="control-label">Start Date</label>
+                <input id="start-date" value="@Model.StartDate.ToShortDateString()" class="form-control" disabled />
+            </div>
+            <div class="form-group col-md-6">
+                <label for="end-date" class="control-label">End Date</label>
+                <input id="end-date" value="@(Model.EndDate != null ? Model.EndDate.Value.ToShortDateString() : "")" class="form-control" disabled />
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-12">
+                <label asp-for="Comments" class="control-label">Comments</label>
+                <textarea asp-for="Comments" class="form-control" disabled></textarea>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-6">
+                <label for="EnteredBy" class="control-label">Entered By</label>
+                <input asp-for="EnteredBy" class="form-control" disabled></input>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="date-entered" class="control-label">Date Entered</label>
+                <input id="date-entered" class="form-control" disabled value='@Model.DateEntered.ToString("g")'/>
+            </div>
+        </div>
+        <div>
+            <a asp-controller="Patient" asp-action="ListMedications" asp-route-id="@Model.Patients.Mrn" class="btn btn-cancel back-to-list mt-2">Return to List</a>
+        </div> 
+    </div>
+</div>

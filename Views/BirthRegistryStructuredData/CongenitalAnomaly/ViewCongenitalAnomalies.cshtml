@@ -1,0 +1,57 @@
+@model List<IS_Proj_HIT.Entities.CongenitalAnomaly>
+@{
+    ViewData["Title"] = "Congenital Anomalies";
+}
+
+<div class="row my-3">
+    <h3>
+        <a class="btn btn-primary" asp-controller="BirthRegistryStructuredData" asp-action="Index">
+            <i class="fa fa-arrow-left"></i>
+        </a>
+        Congenital Anomalies
+    </h3>
+</div>
+
+<p>
+    <a class="btn btn-primary" asp-controller="BirthRegistryStructuredData" asp-action="CreateCongenitalAnomaly">Create New</a>
+</p>
+
+<table class="stripe" id="congenitalAnomalyTable">
+    <thead>
+        <tr>
+            <th>Congenital Anomaly Name</th>
+            <th>Congenital Anomaly Description</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var congenitalAnomaly in Model)
+        {
+            <tr>
+                <td>@congenitalAnomaly.CongenitalAnomalyName</td>
+                <td>@congenitalAnomaly.CongenitalAnomalyDescription</td>
+                <td>
+                    <a class="btn btn-primary" asp-controller="BirthRegistryStructuredData" asp-action="EditCongenitalAnomaly" asp-route-id="@congenitalAnomaly.CongenitalAnomalyId">Edit</a>
+                    <a class="btn btn-danger" asp-controller="BirthRegistryStructuredData" asp-action="DeleteCongenitalAnomaly" asp-route-id="@congenitalAnomaly.CongenitalAnomalyId">Delete</a>
+                </td>
+            </tr>
+        }
+
+    </tbody>
+</table>
+
+@section scripts{
+    <script>
+    // DataTable Documentation found here:  https://datatables.net
+    $(function(){
+        // Create the data table
+        $('#congenitalAnomalyTable').DataTable({
+            columns: [null, null, {orderable: false}],
+            order: [[0, 'asc'] ],
+            pageLength: 10,
+            searching: true,
+            language: { emptyTable: 'None found'}
+        });
+    });
+    </script>
+}

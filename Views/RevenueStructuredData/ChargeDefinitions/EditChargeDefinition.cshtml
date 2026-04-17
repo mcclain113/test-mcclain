@@ -1,0 +1,87 @@
+@model IS_Proj_HIT.ViewModels.RevenueStructuredDataViewModel
+@{
+    ViewData["Title"] = "Edit Charge Definition";
+}
+
+<h1>Edit</h1>
+
+<h4>Charge Definition</h4>
+<hr/>
+<div class="row">
+    <div class="col-md-10">
+        <form method="post">
+            @Html.AntiForgeryToken()
+            <div class="form-row">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="ChargeDefinition.ChargeID" readonly />
+
+                <div class="form-group col-sm-12">
+                    <label asp-for="ChargeDefinition.LongDescription" class="control-label">Long Description</label>
+                    <input asp-for="ChargeDefinition.LongDescription"
+                        type="text" 
+                        class="form-control" maxlength="200" />
+                    <span asp-validation-for="ChargeDefinition.LongDescription" class="text-danger"></span>
+                </div>
+
+                <div class="form-group col-sm-4">
+                    <label asp-for="ChargeDefinition.ShortDescription" class="control-label">Short Description</label>
+                    <input asp-for="ChargeDefinition.ShortDescription" 
+                        class="form-control" maxlength="50" required />
+                    <span asp-validation-for="ChargeDefinition.ShortDescription" class="text-danger"></span>
+                </div>
+
+                <div class="form-group col-sm-4">
+                    <label asp-for="ChargeDefinition.ChargeAmount" class="control-label">Charge Amount</label>
+                    <input asp-for="ChargeDefinition.ChargeAmount" 
+                        class="form-control" step="0.01" required/>
+                    <span asp-validation-for="ChargeDefinition.ChargeAmount" class="text-danger"></span>
+                </div>
+
+                <div class="form-group col-sm-4">
+                    <label asp-for="ChargeDefinition.ServiceCode" class="control-label">Service Code</label>
+                    <input asp-for="ChargeDefinition.ServiceCode" 
+                        class="form-control" maxlength="10" />
+                    <span asp-validation-for="ChargeDefinition.ServiceCode" class="text-danger"></span>
+                </div>
+
+                <div class="form-group col-sm-6">
+                    <label  class="control-label" asp-for="ChargeDefinition.DepartmentID">Select Department</label>
+                    <select class="form-control" asp-for="ChargeDefinition.DepartmentID" asp-items="ViewBag.DepartmentID"></select>
+                    <span asp-validation-for="ChargeDefinition.DepartmentID" class="text-danger"></span>
+                </div>
+
+                <div class="form-group col-sm-6">
+                    <label  class="control-label" asp-for="ChargeDefinition.RevenueCodeID">Select Revenue Code</label>
+                    <select class="form-control" asp-for="ChargeDefinition.RevenueCodeID" asp-items="ViewBag.RevenueCodeID"></select>
+                    <span asp-validation-for="ChargeDefinition.RevenueCodeID" class="text-danger"></span>
+                </div>
+
+                <div class="form-group col-sm-6">
+                    <label  class="control-label" asp-for="ChargeDefinition.DateActivated">Date Activated</label>
+                    <input asp-for="ChargeDefinition.DateActivated" class="form-control" type="datetime-local"/>
+                    <span asp-validation-for="ChargeDefinition.DateActivated" class="text-danger"></span>
+                </div>
+
+                <div class="form-group col-sm-6">
+                    <label  class="control-label" asp-for="ChargeDefinition.DateDeactivated">Date Deactivated</label>
+                    <input asp-for="ChargeDefinition.DateDeactivated" class="form-control" type="datetime-local"/>
+                    <span asp-validation-for="ChargeDefinition.DateActivated" class="text-danger"></span>
+                </div>
+
+                <div class="form-row ml-2">
+                    <div class="form-group">
+                        <a asp-controller="RevenueStructuredData" asp-action="ViewChargeDefinitions" class="btn btn-outline-danger">Discard Changes</a>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Save Changes" class="btn btn-primary ml-2"/>
+                    </div>
+                </div>
+
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

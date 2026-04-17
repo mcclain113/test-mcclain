@@ -1,0 +1,129 @@
+@{
+    ViewBag.Title = "PCA Data Entry";
+    var userPermissions = ViewData["UserPermissions"] as List<string>;
+    var requiredStructuredDataPermissions = new[] {"StructuredDataAdd","StructuredDataEdit","StructuredDataView","StructuredDataDelete"};
+}
+
+<div class="row my-3">
+    <h3>
+        <a class="btn btn-primary" asp-controller="Administration" asp-action="Index">
+            <i class="fa fa-arrow-left "></i>
+        </a>
+        PCA Data Entry Management
+    </h3>
+</div>
+
+<div class="container">
+    <div class="row">
+        @if(userPermissions.Any(permission => requiredStructuredDataPermissions.Contains(permission)))
+        {
+            <div class="col-sm-4 col-lg-3 mb-3">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <a class="btn btn-outline-primary" asp-controller="PCAStructuredData" asp-action="ViewBPRouteTypes">Blood Pressure Route Types</a>
+                    </div>
+                </div>
+            </div> <!-- close the column  -->
+        }
+        @if(userPermissions.Any(permission => requiredStructuredDataPermissions.Contains(permission)))
+        {
+            <div class="col-sm-4 col-lg-3 mb-3">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <a class="btn btn-outline-primary" asp-controller="PCAStructuredData" asp-action="ViewBmiMethods">BMI Method</a>
+                    </div>
+                </div>
+            </div> <!-- close the column  -->
+        }
+        @if(userPermissions.Any(permission => requiredStructuredDataPermissions.Contains(permission)))
+        {
+            <div class="col-sm-4 col-lg-3 mb-3">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <a class="btn btn-outline-primary" asp-controller="PCAStructuredData" asp-action="ViewCareSystemParameters">Care System Parameter</a>
+                    </div>
+                </div>
+            </div> <!-- close the column  -->
+        }
+        @if(userPermissions.Any(permission => requiredStructuredDataPermissions.Contains(permission)))
+        {
+            <div class="col-sm-4 col-lg-3 mb-3">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <a class="btn btn-outline-primary" asp-controller="PCAStructuredData" asp-action="ViewCareSystemTypes">Care System Types</a>
+                    </div>
+                </div>
+            </div> <!-- close the column  -->
+        }
+        @if(userPermissions.Any(permission => requiredStructuredDataPermissions.Contains(permission)))
+        {
+            <div class="col-sm-4 col-lg-3 mb-3">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <a class="btn btn-outline-primary" asp-controller="PCAStructuredData" asp-action="ViewO2DeliveryTypes">O2 Delivery Types</a>
+                    </div>
+                </div>
+            </div> <!-- close the column  -->
+        }
+        @if(userPermissions.Any(permission => requiredStructuredDataPermissions.Contains(permission)))
+        {
+            <div class="col-sm-4 col-lg-3 mb-3">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <a class="btn btn-outline-primary" asp-controller="PCAStructuredData" asp-action="ViewPainParameters">Pain Parameter</a>
+                    </div>
+                </div>
+            </div> <!-- close the column  -->
+        }
+        @if(userPermissions.Any(permission => requiredStructuredDataPermissions.Contains(permission)))
+        {
+            <div class="col-sm-4 col-lg-3 mb-3">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <a class="btn btn-outline-primary" asp-controller="PCAStructuredData" asp-action="ViewPainRatings">Pain Rating</a>
+                    </div>
+                </div>
+            </div> <!-- close the column  -->
+        }
+        @if(userPermissions.Any(permission => requiredStructuredDataPermissions.Contains(permission)))
+        {
+            <div class="col-sm-4 col-lg-3 mb-3">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <a class="btn btn-outline-primary" asp-controller="PCAStructuredData" asp-action="ViewPainScaleTypes">Pain Scale Types</a>
+                    </div>
+                </div>
+            </div> <!-- close the column  -->
+        }
+        @if(userPermissions.Any(permission => requiredStructuredDataPermissions.Contains(permission)))
+        {
+            <div class="col-sm-4 col-lg-3 mb-3">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <a class="btn btn-outline-primary" asp-controller="PCAStructuredData" asp-action="ViewPcaCommentTypes">PCA Comment Type</a>
+                    </div>
+                </div>
+            </div> <!-- close the column  -->
+        }
+        @if(userPermissions.Any(permission => requiredStructuredDataPermissions.Contains(permission)))
+        {
+            <div class="col-sm-4 col-lg-3 mb-3">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <a class="btn btn-outline-primary" asp-controller="PCAStructuredData" asp-action="ViewPulseRouteTypes">Pulse Route Type</a>
+                    </div>
+                </div>
+            </div> <!-- close the column  -->
+        }
+        @if(userPermissions.Any(permission => requiredStructuredDataPermissions.Contains(permission)))
+        {
+            <div class="col-sm-4 col-lg-3 mb-3">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <a class="btn btn-outline-primary" asp-controller="PCAStructuredData" asp-action="ViewTempRouteTypes">Temp Route Type</a>
+                    </div>
+                </div>
+            </div> <!-- close the column  -->
+        }
+    </div>
+</div>

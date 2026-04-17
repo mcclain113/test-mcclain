@@ -1,0 +1,365 @@
+﻿@using IS_Proj_HIT.Entities
+@model IS_Proj_HIT.ViewModels.Disclosure.RequestDetailsViewModel
+
+@{
+    ViewData["Title"] = "PatientRepresentativeDetails";
+    var userPermissions = ViewData["UserPermissions"] as List<string>;
+}
+
+
+<partial name="RequestBannerPartial" model="Model" />
+<partial name="_RequestMenu" model="Model" />
+
+<div class="card" style="border:none;">
+    <!--Header Content-->
+    <div class="card-header requestDetailData ">
+        <h3>
+
+            Patient Representative 
+
+            @if (userPermissions != null && (userPermissions.Contains("DisclosureRequestEdit") ) )
+            {
+                @if(Model.Request.PatientRepresentativeId != null)
+                {
+                    <a class="btn btn-danger float-right m-1"
+                        id="removeButton"
+                        onclick="return confirm('Are you sure you want to Remove this Patient Representative?')"
+                        asp-route-patientRepresentativeId="@Model.PatientRepresentative.RepresentativeId"
+                        asp-route-requestId="@Model.Request.RequestId"
+                        asp-action="RemovePatientRepresentative">Remove
+                    </a>
+                    <a class="btn btn-info float-right m-1" id="editBtn" onclick="toggleEdit()">Edit</a>
+                }else
+                {
+                    <a class="btn btn-info float-right" id="addBtn" onclick="toggleAdd()">Add Patient Representative</a>
+                }                
+            }
+        </h3>
+
+    </div>
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success">
+            @TempData["SuccessMessage"]
+        </div>
+    }
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger">
+            @TempData["Error"]
+        </div>
+    }
+    <!--View Mode Content-->
+    <div class="card-body bg-light" id="viewMode">
+        <div class="container">
+            @if(Model.Request.PatientRepresentativeId != null)
+            {
+                <div class="row">
+                    <div class="col-4 ">
+                        First Name: <b>@Model.PatientRepresentative.RepresentativeFirstName</b>
+                    </div>
+                    <div class="col-4">
+                        Last Name: <b>@Model.PatientRepresentative.RepresentativeLastName</b>
+                    </div>
+                    @if(Model.PatientRepresentative.RepresentativePhoneNumber != null)
+                    {
+                        <div class="col-4">
+                            Phone Number: <b class="phone">@Model.PatientRepresentative.RepresentativePhoneNumber</b>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="col-4">
+                            Phone Number: 
+                        </div>
+                    }
+                </div>
+                <hr />
+                <div class="row">
+                    @if(Model.PatientRepresentative.RepresentativeEmailAddress != null)
+                    {
+                        <div class="col-4">
+                            Email Address: <b>@Model.PatientRepresentative.RepresentativeEmailAddress</b>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="col-4">
+                            Email Address: 
+                        </div>
+                    }
+                    @if (Model.PatientRepresentative.Comments != null)
+                    {
+                        <div class="col-4">
+                            Comments: <b>@Model.PatientRepresentative.Comments</b>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="col-4">
+                            Comments: 
+                        </div>
+                    }
+
+                </div>
+            }
+            else
+            {
+                <div class="row">
+                    <div class="col-4 ">
+                        First Name: 
+                    </div>
+                    <div class="col-4">
+                        Last Name: 
+                    </div>
+                    <div class="col-4">
+                        Phone Number: 
+                    </div>
+                </div>
+                <hr/>
+                <div class="row">
+                    <div class="col-4">
+                        Email Address: 
+                    </div>
+                    <div class="col-4">
+                        Comments: 
+                    </div>
+                </div>
+            }
+        </div>
+
+    </div>
+    <!--Edit Mode Content-->
+    @if(Model.Request.PatientRepresentativeId != null)
+    {        
+        <form method="post" id="patientRepresentativeEditForm" name="patientRepresentativeEditForm" asp-action="EditPatientRepresentative">
+            @Html.AntiForgeryToken()
+            <input type="hidden" asp-for="@Model.RequestBeingEdited.RequestId" value="@Model.RequestBeingEdited.RequestId" />
+            <input type="hidden" asp-for="@Model.PatientRepresentativeBeingEdited.RepresentativeId" value="@Model.PatientRepresentativeBeingEdited.RepresentativeId"/>
+            <div class="card-body bg-light" id="editMode" style="display:none;">
+                <div class="container">
+                    <input type="hidden" asp-for="@Model.RequestBeingEdited.RequestId" value="@Model.RequestBeingEdited.RequestId" />
+                    <input type="hidden" asp-for="@Model.PatientRepresentativeBeingEdited.RepresentativeId" value="@Model.PatientRepresentative.RepresentativeId" />
+                    <div class="row">
+                        <div class="col-4 d-flex">
+                            <div><label class="mt-1">First Name: </label></div>
+                            <div class="mx-2">
+                                <input asp-for="@Model.PatientRepresentativeBeingEdited.RepresentativeFirstName"
+                                       type="text"
+                                       placeholder="@Model.PatientRepresentativeBeingEdited.RepresentativeFirstName"
+                                       class="form-control" required />
+                            </div>
+                        </div>
+                        <div class="col-4 d-flex">
+                            <div><label class="mt-1">Last Name: </label></div>
+                            <div class="mx-2">
+                                <input asp-for="@Model.PatientRepresentativeBeingEdited.RepresentativeLastName"
+                                       type="text"
+                                       placeholder="@Model.PatientRepresentativeBeingEdited.RepresentativeLastName"
+                                       class="form-control" required />
+                            </div>
+                        </div>
+                        <div class="col-4 d-flex">
+                            <div><label class="mt-1">Phone Number: </label></div>
+                            <div class="mx-2">
+                                <input asp-for="@Model.PatientRepresentativeBeingEdited.RepresentativePhoneNumber"
+                                       type="text"
+                                       placeholder="@Model.PatientRepresentativeBeingEdited.RepresentativePhoneNumber"
+                                       class="form-control phone" />
+                            </div>
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="row">
+                        <div class="col-4 d-flex">
+                            <div><label class="mt-1">Email Address: </label></div>
+                            <div class="mx-2">
+                                <input asp-for="@Model.PatientRepresentativeBeingEdited.RepresentativeEmailAddress"
+                                       type="text"
+                                       placeholder="@Model.PatientRepresentativeBeingEdited.RepresentativeEmailAddress"
+                                       class="form-control" />
+                            </div>
+                        </div>
+                        <div class="col-4 d-flex">
+                            <div><label class="mt-1">Comments: </label></div>
+                            <div class="mx-2">
+                                <input asp-for="@Model.PatientRepresentativeBeingEdited.Comments"
+                                       type="text"
+                                       placeholder="@Model.PatientRepresentativeBeingEdited.Comments"
+                                       class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button class="btn btn-primary btn-block" id="saveBtn" type="submit" style="display:none">Update Patient Representative</button>
+            <a class="btn btn-secondary text-white float-right mt-3"
+               id="cancelBtn"
+               onclick="toggleEdit(); return confirm('Are you sure you want to Cancel? All changes will be lost.')"
+               asp-action="PatientRepresentativeDetails"
+               style="display:none">Cancel</a>
+        </form>
+    }
+    <!--Add Mode Content-->
+    @if(@Model.Request.PatientRepresentativeId == null){
+        <div id="addMode" style="display:none">
+            <!--Existing PatientRepresentative Add-->
+            <form method="post" id="existingPatientRepresentative" asp-action="AddPatientRepresentativeDetails">
+                @Html.AntiForgeryToken()
+                <input type="hidden" asp-for="@Model.RequestBeingEdited.RequestId" value="@Model.RequestBeingEdited.RequestId" />
+                <div class="card-body bg-light" >
+                    <div class="container">
+                        <input type="hidden" asp-for="@Model.RequestBeingEdited.RequestId" value="@Model.RequestBeingEdited.RequestId" />
+                        <div class="row" >
+                            <div class="col-12 d-flex">
+                                <div>
+                                    <label class="mt-1">Select Existing Patient Representative: </label>
+                                </div>
+                                <div class="mx-2">
+                                    <select asp-for="@Model.RequestBeingEdited.PatientRepresentativeId"
+                                            asp-items="@Model.PatientRepresentatives"
+                                            class="form-control" required>
+                                        <option value=" selected">Select Patient Representative</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col d-flex justify-content-end">
+                                <a class="btn btn-primary text-white" id="newPatientRepresentativeBtn" onclick="toggleNewPatientRepresentative()">Add New Patient Representative</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button class="btn btn-primary btn-block" id="saveBtn" type="submit" style="display:none">Update Patient Representative</button>
+                <a class="btn btn-secondary text-white float-right mt-3"
+                   id="cancelBtn"
+                   onclick="toggleEdit(); return confirm('Are you sure you want to Cancel? All changes will be lost.')"
+                   asp-action="PatientRepresentativeDetails"
+                   style="display:none">Cancel</a>
+            </form>
+            <!--New PatientRepresentative Add-->
+            <form method="post" id="newPatientRepresentative" style="display:none" asp-action="AddPatientRepresentativeDetails">
+                <input type="hidden" asp-for="@Model.RequestBeingEdited.RequestId" value="@Model.RequestBeingEdited.RequestId" />
+                <div class="card-body bg-light">
+                    <div class="container">
+                        <input type="hidden" asp-for="@Model.RequestBeingEdited.RequestId" value="@Model.RequestBeingEdited.RequestId" />                        
+                        <div class="row">
+                            <div class="col-4 d-flex">
+                                <div><label class="mt-1">First Name: </label></div>
+                                <div class="mx-2">
+                                    <input asp-for="@Model.PatientRepresentativeBeingEdited.RepresentativeFirstName"
+                                            type="text"
+                                            class="form-control" required />
+                                </div>
+                            </div>
+                            <div class="col-4 d-flex">
+                                <div><label class="mt-1">Last Name: </label></div>
+                                <div class="mx-2">
+                                    <input asp-for="@Model.PatientRepresentativeBeingEdited.RepresentativeLastName"
+                                            type="text"
+                                            class="form-control" required />
+                                </div>
+                            </div>
+                            <div class="col-4 d-flex">
+                                <div><label class="mt-1">Phone Number: </label></div>
+                                <div class="mx-2">
+                                    <input asp-for="@Model.PatientRepresentativeBeingEdited.RepresentativePhoneNumber"
+                                            type="text"
+                                            class="form-control phone"/>
+                                </div>
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="row">
+                            <div class="col-4 d-flex">
+                                <div><label class="mt-1">Email Address: </label></div>
+                                <div class="mx-2">
+                                    <input asp-for="@Model.PatientRepresentativeBeingEdited.RepresentativeEmailAddress"
+                                           type="text"
+                                           class="form-control"/>
+                                </div>
+                            </div>
+                            <div class="col-4 d-flex">
+                                <div><label class="mt-1">Comments: </label></div>
+                                <div class="mx-2">
+                                    <input asp-for="@Model.PatientRepresentativeBeingEdited.Comments"
+                                           type="text"
+                                           class="form-control"/>
+                                </div>
+                            </div>
+                            <div class="col-4 d-flex justify-content-end">
+                                <a class="btn btn-primary text-white" id="newPatientRepresentativeBtn" onclick="toggleNewPatientRepresentative()">Existing Patient Representative</a>
+                            </div>
+                        </div>                                                
+                    </div>
+                </div>
+                <button class="btn btn-primary btn-block" id="saveBtn" type="submit">Add New Patient Representative</button>
+                <a class="btn btn-secondary text-white float-right mt-3"
+                   id="cancelBtn"
+                   onclick="toggleEdit(); return confirm('Are you sure you want to Cancel? All changes will be lost.')"
+                   asp-action="PatientRepresentativeDetails">Cancel</a>
+            </form>
+        </div>
+    
+
+    }    
+</div>
+<!--Scripts-->
+@section Scripts {
+    <script>
+        let editRequest = false;
+
+        function toggleEdit() {
+            editRequest = !editRequest;
+
+            // Toggle visibility using jQuery
+            if (editRequest) {
+                $("#viewMode").hide();
+                $("#editMode").show();
+                $("#editBtn").hide();
+                $("#cancelBtn").show();
+                $("#saveBtn").show();
+            } else {
+                $("#viewMode").show();
+                $("#editMode").hide();
+                $("#editBtn").show();
+                $("#cancelBtn").hide();
+                $("#saveBtn").hide();
+            }
+        }
+
+        let addPatientRepresentative = false;
+
+        function toggleAdd() {
+            addPatientRepresentative = !addPatientRepresentative;
+
+            if (addPatientRepresentative) {
+                $("#viewMode").hide();
+                $("#addMode").show();
+                $("#addBtn").hide();
+                $("#cancelBtn").show();
+                $("#saveBtn").show();
+            } else {
+                $("#viewMode").show();
+                $("#addMode").hide();
+                $("#addBtn").show();
+                $("#cancelBtn").hide();
+                $("#saveBtn").hide();
+            }
+        }
+
+        let newPatientRepresentative = false;
+
+        function toggleNewPatientRepresentative() {
+
+            newPatientRepresentative = !newPatientRepresentative;
+
+            if (newPatientRepresentative) {
+                $("#existingPatientRepresentative").hide();
+                $("#newPatientRepresentative").show();
+            } else {
+                $("#existingPatientRepresentative").show();
+                $("#newPatientRepresentative").hide();
+            }
+        }
+    </script>
+}

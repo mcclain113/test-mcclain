@@ -1,0 +1,79 @@
+@using IS_Proj_HIT.Entities
+@model IS_Proj_HIT.ViewModels.RequestersViewModel
+@{
+    ViewData["Title"] = "Requester Details";
+    var userPermissions = ViewData["UserPermissions"] as List<string>;
+}
+
+<div class="card mt-1" style="border:none;">
+    
+    <div class="card-header requestDetailData">
+        <h3>
+            <a class="btn btn-primary" asp-controller="Requester" asp-action="ViewRequesters">
+                <i class="fas fa-arrow-left"></i>
+            </a>
+
+            Requester Details
+
+            @if (userPermissions != null && (userPermissions.Contains("RequesterEdit") ) )
+            {
+                <a class="btn btn-info float-right m-1" asp-controller="Requester" asp-action="EditRequester"
+                asp-route-id="@Model.Requester.RequesterId" >Edit</a>
+            }
+        </h3>
+    </div>
+    
+    <div class="card-body bg-light" id="viewMode">
+        <div class="container">
+                <input type="hidden" asp-for="Requester.RequesterId" value="@Model.Requester.RequesterId" readonly/>
+                <input type="hidden" asp-for="Address.AddressId" readonly/>
+                <input type="hidden" asp-for="AddressState.StateID" readonly/>
+            <div class="row">
+                <div class="col-4 ">
+                    Name: <b>@Model.Requester.FirstName @Model.Requester.LastName</b>
+                </div>
+                <div class="col-4">
+                    Company: <b>@Model.Requester.CompanyName</b>
+                </div>
+                <div class="col-4">
+                    Requester Status: <b>@Model.Requester.RequesterStatus.RequesterStatus1</b>
+                </div>
+            </div>
+            <hr />
+            <div class="row">
+                <div class="col-4 ">
+                    Requester Type: <b>@Model.Requester.RequesterType.RequesterType1</b>
+                </div>
+                <div class="col-4">
+                    Phone Number: <b>@if (Model.Requester.PhoneNumber != null && Model.Requester.PhoneNumber != "") {
+                            <span class="data">@string.Format("{0:(###) ###-####}", long.Parse(Model.Requester.PhoneNumber))</span>
+                        } else {
+                            <span class="data"></span>
+                        }</b>
+                </div>
+                <div class="col-4">
+                    Email Address: <b>@Model.Requester.EmailAddress</b>
+                </div>
+            </div>
+            <hr />
+            <div class="row">
+                    <label class="col-1">Address:</label>
+                    <span class="col-6">
+                        @if (Model.Address != null && Model.Address.Address2 == null)
+                        { <b> @Model.Address.Address1<br> @Model.Address.City, @Model.AddressState.StateAbbreviation @Model.Address.PostalCode </b>}
+                        else if (Model.Address != null && Model.Address.Address2 != null){<b>
+                            @Model.Address.Address1,  Ste/Apt:  @Model.Address.Address2<br>
+                            @Model.Address.City, @Model.AddressState.StateAbbreviation @Model.Address.PostalCode </b>
+                        }
+                        else{ }
+                    </span>
+            </div>
+            <hr />
+            <div class="row">
+                <div class="col-12">
+                    Comments: <b>@Model.Requester.Comments</b>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

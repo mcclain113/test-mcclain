@@ -1,0 +1,48 @@
+@model IS_Proj_HIT.ViewModels.EncounterStructuredDataViewModel
+@{
+    ViewBag.Title = "Create Department";
+}
+
+<h1>Create</h1>
+
+<h4>Department</h4>
+<hr />
+
+<div class="row">
+    <div class="col-md-10">
+        <form method="post">
+            @Html.AntiForgeryToken()
+            <div class="form-row">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group col-sm-6">
+                    <label asp-for="Department.Name" class="control-label">Department Name</label>
+                    <input asp-for="Department.Name" 
+                        class="form-control" maxlength="100" required
+                        placeholder="Example:  Metrology" />
+                    <span asp-validation-for="Department.Name" class="text-danger"></span>
+                </div>
+                <div class="form-group col-sm-6">
+                    <label asp-for="Department.Description" class="control-label">Department Description</label>
+                    <input asp-for="Department.Description" 
+                        class="form-control"   
+                        placeholder="Example:  The department of metrology"/>
+                    <span asp-validation-for="Department.Description" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                </div>
+
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<div>
+    <a asp-controller="EncounterStructuredData" asp-action="ViewDepartments">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

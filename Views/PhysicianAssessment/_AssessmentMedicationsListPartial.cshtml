@@ -1,0 +1,78 @@
+@using IS_Proj_HIT.DTOs;
+@model IEnumerable<IS_Proj_HIT.DTOs.PhysicianAssessmentAllergyDto>
+
+@{
+    string GetPart(string[] arr, int idx) => (arr != null && idx >= 0 && idx < arr.Length) ? arr[idx].Trim() : string.Empty;
+    var meds = Model?.ToList() ?? new List<IS_Proj_HIT.DTOs.PhysicianAssessmentAllergyDto>();
+}
+
+@if (!meds.Any())
+{
+    <p class="text-muted">No assessment medications recorded.</p>
+}
+else
+{
+    <ul class="list-unstyled">
+        @for (int i = 0; i < meds.Count; i++)
+        {
+            var a = meds[i];
+            var desc = a?.Description ?? string.Empty;
+            var parts = desc.Split(new[] { '|' }, StringSplitOptions.None);
+
+            string genericName = string.Empty;
+            string activeStrength = string.Empty;
+            string dosageForm = string.Empty;
+            string brandName = string.Empty;
+            string deliveryRoute = string.Empty;
+            string frequency = string.Empty;
+
+            if (parts.Length >= 6)
+            {
+                // New format: generic|activeStrength|dosageForm|brand|route|frequency
+                genericName = GetPart(parts, 0);
+                activeStrength = GetPart(parts, 1);
+                dosageForm = GetPart(parts, 2);
+                brandName = GetPart(parts, 3);
+                deliveryRoute = GetPart(parts, 4);
+                frequency = GetPart(parts, 5);
+            }
+
+            <li>
+                <div class="row">
+                    <div class="col-12 col-lg-6">
+                        <div>
+                            @genericName &middot @if(!string.IsNullOrEmpty(activeStrength)){<text> @activeStrength</text>} @if(!string.IsNullOrEmpty(dosageForm)){<text> @dosageForm</text>}
+                        </div>
+                        @if(!string.IsNullOrEmpty(brandName))
+                        {
+                            <div class="text-secondary mt-1">
+                                commonly known as:
+                                <span class="text-secondary">@((brandName ?? string.Empty).ToUpperInvariant())</span>
+                            </div>
+                        }
+                    </div>
+
+                    <div class="col-12 col-lg-6 text-lowercase">
+                        take
+                        @if(!string.IsNullOrEmpty(dosageForm)){<text> @dosageForm</text>} 
+                        @if(!string.IsNullOrEmpty(deliveryRoute)){<text> @deliveryRoute </text>}
+                        @if(!string.IsNullOrEmpty(frequency)){ <text> @frequency</text> }
+                    </div>
+                </div>
+                    @* Hidden inputs so the main form posts these values back *@
+                    <input type="hidden" name="AssessmentMedications[@i].PhysicianAssessmentAllergyId" value="@(a.PhysicianAssessmentAllergyId?.ToString() ?? "")" />
+                    <input type="hidden" name="AssessmentMedications[@i].PhysicianAssessmentId" value="@(a.PhysicianAssessmentId?.ToString() ?? "")" />
+                    <input type="hidden" name="AssessmentMedications[@i].Description" value="@a.Description" />
+                    <input type="hidden" name="AssessmentMedications[@i].SortOrder" value="@a.SortOrder" />
+                    <input type="hidden" name="AssessmentMedications[@i].Type" value="@a.Type" />
+
+            </li>
+
+            @* render separator after every item except the last *@
+            @if (i < meds.Count - 1)
+            {
+                <li><hr class="my-2" /></li>
+            }
+        }
+    </ul>
+}

@@ -1,0 +1,288 @@
+@model IS_Proj_HIT.ViewModels.BirthRegistry.PrenatalCareViewModel
+@*
+    PURPOSE:
+    Read-only display of prenatal care data mirroring the edit structure.
+    This has been updated to include all fields from the ViewModel and
+    to match the styling of the editable partials.
+*@
+<div class="card">
+    <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+        <h4 class="mb-0"><i class="fas fa-heartbeat mr-2"></i>Prenatal Care</h4>
+        <span class="badge badge-light text-dark">View Mode</span>
+    </div>
+    <div class="card-body">
+        <div id="viewPrenatalAccordion">
+
+            <!-- Section 1: Prenatal Care Information -->
+            <div class="card">
+                <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center" id="view-heading1">
+                    <button class="btn btn-link text-white" type="button" data-toggle="collapse" data-target="#view-collapse1">
+                        <i class="fas fa-calendar-check mr-2"></i> 1. Prenatal Care Information
+                    </button>
+                </div>
+                <div id="view-collapse1" class="collapse show" aria-labelledby="view-heading1" data-parent="#viewPrenatalAccordion">
+                    <div class="card-body">
+                        <dl class="row mb-0">
+                            <dt class="col-md-4">Date of First Visit</dt>
+                            <dd class="col-md-8">@(Model.DateOfFirstVisit?.ToString("MM/dd/yyyy") ?? "None / No prenatal care")</dd>
+
+                            <dt class="col-md-4">Date of Last Visit</dt>
+                            <dd class="col-md-8">@(Model.DateOfLastVisit?.ToString("MM/dd/yyyy") ?? "Not Recorded")</dd>
+
+                            <dt class="col-md-4">Total Visits</dt>
+                            <dd class="col-md-8">@(Model.TotalNumberPrenatalVisits.HasValue ? Model.TotalNumberPrenatalVisits.ToString() : "Not Recorded")</dd>
+
+                            <dt class="col-md-4">Additional Details</dt>
+                            <dd class="col-md-8">@(string.IsNullOrWhiteSpace(Model.DescPrenatalCare) ? "None" : Model.DescPrenatalCare)</dd>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 2: Mother's Weight & Height -->
+            <div class="card">
+                <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center" id="view-heading2">
+                    <button class="btn btn-link text-white collapsed" type="button" data-toggle="collapse" data-target="#view-collapse2">
+                        <i class="fas fa-ruler-vertical mr-2"></i> 2. Mother's Weight & Height
+                    </button>
+                </div>
+                <div id="view-collapse2" class="collapse show" aria-labelledby="view-heading2" data-parent="#viewPrenatalAccordion">
+                    <div class="card-body">
+                        <dl class="row mb-0">
+                            <dt class="col-md-4">Mother's Height</dt>
+                            <dd class="col-md-8">@(Model.MothersHeightInInches.HasValue ? $"{Model.MothersHeightInInches} inches" : "Not provided")</dd>
+
+                            <dt class="col-md-4">Pre-Pregnancy Weight</dt>
+                            <dd class="col-md-8">@(Model.PrepregnancyWeightInLbs.HasValue ? $"{Model.PrepregnancyWeightInLbs} lbs" : "Not provided")</dd>
+                            
+                            <dt class="col-md-4">Weight at Delivery</dt>
+                            <dd class="col-md-8">@(Model.WeightAtDeliveryInLbs.HasValue ? $"{Model.WeightAtDeliveryInLbs} lbs" : "Not provided")</dd>
+                            
+                            @if (Model.PrepregnancyWeightInLbs.HasValue && Model.WeightAtDeliveryInLbs.HasValue)
+                            {
+                                var gain = Model.WeightAtDeliveryInLbs.Value - Model.PrepregnancyWeightInLbs.Value;
+                                <dt class="col-md-4">Net Gain</dt>
+                                <dd class="col-md-8">@gain lbs</dd>
+                            }
+                        </dl>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 3: Menses -->
+            <div class="card">
+                <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center" id="view-heading3">
+                    <button class="btn btn-link text-white collapsed" type="button" data-toggle="collapse" data-target="#view-collapse3">
+                        <i class="fas fa-calendar-alt mr-2"></i> 3. Menses
+                    </button>
+                </div>
+                <div id="view-collapse3" class="collapse show" aria-labelledby="view-heading3" data-parent="#viewPrenatalAccordion">
+                    <div class="card-body">
+                        <dl class="row mb-0">
+                            <dt class="col-md-4">Date Last Normal Menses</dt>
+                            <dd class="col-md-8">@(Model.DateLastPeriod?.ToString("MM/dd/yyyy") ?? "Not provided")</dd>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 4: Pregnancy History -->
+            <div class="card">
+                <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center" id="view-heading4">
+                    <button class="btn btn-link text-white collapsed" type="button" data-toggle="collapse" data-target="#view-collapse4">
+                        <i class="fas fa-history mr-2"></i> 4. Pregnancy History
+                    </button>
+                </div>
+                <div id="view-collapse4" class="collapse show" aria-labelledby="view-heading4" data-parent="#viewPrenatalAccordion">
+                    <div class="card-body">
+                        <dl class="row mb-0">
+                            <dt class="col-md-5">Previous Live Births (Now Living)</dt>
+                            <dd class="col-md-7">@(Model.PrevLiveBirthsAmountStillLiving ?? 0)</dd>
+
+                            <dt class="col-md-5">Previous Live Births (Now Deceased)</dt>
+                            <dd class="col-md-7">@(Model.PrevLiveBirthsAmountNotLiving ?? 0)</dd>
+
+                            <dt class="col-md-5">Other Pregnancy Outcomes</dt>
+                            <dd class="col-md-7">@(Model.NumberOfOtherPregnancyOutcomes ?? 0)</dd>
+
+                            <dt class="col-md-5">Date of Last Live Birth</dt>
+                            <dd class="col-md-7">@(Model.DateOfLastLiveBirth?.ToString("MM/dd/yyyy") ?? "N/A")</dd>
+
+                            <dt class="col-md-5">Date of Last Other Outcome</dt>
+                            <dd class="col-md-7">@(Model.DateOfLastOtherPregnancyOutcome?.ToString("MM/dd/yyyy") ?? "N/A")</dd>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 5: Risk Factors -->
+            <div class="card">
+                <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center" id="view-heading5">
+                    <button class="btn btn-link text-white collapsed" type="button" data-toggle="collapse" data-target="#view-collapse5">
+                        <i class="fas fa-exclamation-triangle mr-2"></i> 5. Risk Factors
+                    </button>
+                </div>
+                <div id="view-collapse5" class="collapse show" aria-labelledby="view-heading5" data-parent="#viewPrenatalAccordion">
+                    <div class="card-body">
+                        <div class="form-group mb-0">
+                            <label class="font-weight-bold">Identified Risk Factors</label>
+                            <div class="form-control-plaintext border p-2 bg-light">
+                                @{
+                                    var riskFactors = new List<string>();
+                                    if (Model.SelectedRiskFactorIds?.Any() == true)
+                                    {
+                                        riskFactors.AddRange(Model.PregnancyRiskFactors?
+                                            .Where(rf => Model.SelectedRiskFactorIds.Contains(byte.Parse(rf.Value)))
+                                            .Select(rf => rf.Text) ?? Enumerable.Empty<string>());
+                                    }
+                                    if (Model.InfertilityTreatmentReceived) { riskFactors.Add("Pregnancy resulted from infertility treatment"); }
+                                    if (Model.PreviousCesareanDelivery) { riskFactors.Add($"Mother had a previous cesarean delivery ({Model.NumberOfPriorCesareanBirths ?? 0} prior)"); }
+                                    if (Model.SmokingThreeMonthsBeforePregnancy) { riskFactors.Add("Smoking 3 months before pregnancy"); }
+                                    if (Model.SmokingFirstTrimester) { riskFactors.Add("Smoking first trimester"); }
+                                    if (Model.SmokingSecondTrimester) { riskFactors.Add("Smoking second trimester"); }
+                                    if (Model.SmokingThirdTrimester) { riskFactors.Add("Smoking third trimester"); }
+                                }
+                                @if (riskFactors.Any())
+                                {
+                                    <div class="d-flex flex-wrap">
+                                        @foreach (var factor in riskFactors)
+                                        {
+                                            <span class="badge badge-warning mb-1 mr-1">@factor</span>
+                                        }
+                                    </div>
+                                }
+                                else
+                                {
+                                    <span class="text-muted">None recorded</span>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 6: Infections -->
+            <div class="card">
+                <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center" id="view-heading6">
+                    <button class="btn btn-link text-white collapsed" type="button" data-toggle="collapse" data-target="#view-collapse6">
+                        <i class="fas fa-stethoscope mr-2"></i> 6. Infections
+                    </button>
+                </div>
+                <div id="view-collapse6" class="collapse show" aria-labelledby="view-heading6" data-parent="#viewPrenatalAccordion">
+                    <div class="card-body">
+                        <div class="form-group mb-0">
+                            <label class="font-weight-bold">Identified Infections</label>
+                            <div class="form-control-plaintext border p-2 bg-light">
+                                @{
+                                    var infections = Model.PregnancyInfections?
+                                        .Where(i => Model.SelectedInfectionIds?.Contains(byte.Parse(i.Value)) == true)
+                                        .Select(i => i.Text).ToList() ?? new List<string>();
+                                }
+                                @if (infections.Any())
+                                {
+                                    <div class="d-flex flex-wrap">
+                                        @foreach (var infection in infections)
+                                        {
+                                            <span class="badge badge-danger mb-1 mr-1">@infection</span>
+                                        }
+                                    </div>
+                                }
+                                else
+                                {
+                                    <span class="text-muted">None recorded</span>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 7: Obstetric Procedures -->
+            <div class="card">
+                <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center" id="view-heading7">
+                    <button class="btn btn-link text-white collapsed" type="button" data-toggle="collapse" data-target="#view-collapse7">
+                        <i class="fas fa-procedures mr-2"></i> 7. Obstetric Procedures
+                    </button>
+                </div>
+                <div id="view-collapse7" class="collapse show" aria-labelledby="view-heading7" data-parent="#viewPrenatalAccordion">
+                    <div class="card-body">
+                        <dl class="row mb-0">
+                            <dt class="col-md-5">External Cephalic Version</dt>
+                            <dd class="col-md-7">
+                                <span class="badge @(Model.ExternalCephalicVersion ? "badge-success" : "badge-secondary")">
+                                    @(Model.ExternalCephalicVersion ? "Yes" : "No")
+                                </span>
+                            </dd>
+
+                            @if (Model.ExternalCephalicVersion)
+                            {
+                                <dt class="col-md-5">ECV Outcome</dt>
+                                <dd class="col-md-7">
+                                    <span class="badge @(Model.IsExternalCephalicVersionSuccessful == true ? "badge-success" : Model.IsExternalCephalicVersionSuccessful == false ? "badge-danger" : "badge-warning")">
+                                        @(Model.IsExternalCephalicVersionSuccessful.HasValue ? (Model.IsExternalCephalicVersionSuccessful.Value ? "Successful" : "Failed") : "Not recorded")
+                                    </span>
+                                </dd>
+                            }
+
+                            <dt class="col-md-5">Cervical Cerclage Procedure</dt>
+                            <dd class="col-md-7">
+                                <span class="badge @(Model.CervicalCerclageProcedure ? "badge-success" : "badge-secondary")">
+                                    @(Model.CervicalCerclageProcedure ? "Yes" : "No")
+                                </span>
+                            </dd>
+
+                            <dt class="col-md-5">Tocolysis Procedure</dt>
+                            <dd class="col-md-7">
+                                <span class="badge @(Model.TocolysisProcedure ? "badge-success" : "badge-secondary")">
+                                    @(Model.TocolysisProcedure ? "Yes" : "No")
+                                </span>
+                            </dd>
+                            
+                            <dt class="col-md-5">Infertility Treatment Details</dt>
+                            <dd class="col-md-7">@(string.IsNullOrWhiteSpace(Model.DescInfertilityTreatment) ? "None" : Model.DescInfertilityTreatment)</dd>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 8: Social Services -->
+            <div class="card">
+                <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center" id="view-heading8">
+                    <button class="btn btn-link text-white collapsed" type="button" data-toggle="collapse" data-target="#view-collapse8">
+                        <i class="fas fa-hands-helping mr-2"></i> 8. Social Services
+                    </button>
+                </div>
+                <div id="view-collapse8" class="collapse show" aria-labelledby="view-heading8" data-parent="#viewPrenatalAccordion">
+                    <div class="card-body">
+                        <dl class="row mb-0">
+                            <dt class="col-md-4">WIC Recipient</dt>
+                            <dd class="col-md-8">
+                                <span class="badge @(Model.IsWicRecipient == true ? "badge-success" : Model.IsWicRecipient == false ? "badge-secondary" : "badge-warning")">
+                                    @(Model.IsWicRecipient.HasValue ? (Model.IsWicRecipient.Value ? "Yes" : "No") : "Not Recorded")
+                                </span>
+                            </dd>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<style>
+    #viewPrenatalAccordion .card + .card {
+        margin-top: .75rem;
+    }
+
+    .form-control-plaintext {
+        background-color: #f8f9fa;
+        border-radius: .25rem;
+    }
+
+    #viewPrenatalAccordion .card-header button {
+        text-align: left;
+        width: 100%;
+        font-weight: 600;
+    }
+</style>

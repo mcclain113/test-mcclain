@@ -1,0 +1,230 @@
+@model IS_Proj_HIT.ViewModels.PatientVm.PatientMedicationListViewModel
+
+@{
+    ViewData["Title"] = "Patient Medications";
+    var userPermissions = ViewData["UserPermissions"] as List<string>;
+}
+
+<div class="card" data-modal-title="List Medications">
+    <div class="card-header bg-primary text-white">
+        <h4> Patient Active Medications
+            @if (userPermissions != null && (userPermissions.Contains("MedicationListAdd")) )
+            {
+                <a class="btn btn-outline-primary float-right open-create"
+                    href="@Url.Action("CreatePatientMedication", "Patient", new { mrn = Model.Mrn })"
+                    data-modal-title="Add a Patient Medication">
+                    <i class="fas fa-plus"></i>Add A Medication</a>
+            }
+        </h4>
+    </div>
+
+    <div class="bg-light">
+        <table class="stripe nowrap fixed-width" id="activeMedsTable" style="width:100%; border:none">
+            <colgroup>
+                <col style="width: 40%" /> <!-- column 0: Medication Name  -->
+                <col style="width: 20%" /> <!-- column 1: Dosage  -->
+                <col style="width: 5%" /> <!-- column 2: SIG  -->
+                <col style="width: 10%" /> <!-- column 3: Route  -->
+                <col style="width: 10%" /> <!-- column 4: Start Date  -->
+                <col style="width: 15%" /> <!-- column 5: Actions  -->
+            </colgroup>
+            <thead>
+                <tr class="table-primary">
+                    <th scope="col">Medication Name</th>
+                    <th scope="col">Dosage</th>
+                    <th scope="col">SIG</th>
+                    <th scope="col">Route</th>
+                    <th scope="col">Start Date </th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var PatMed in Model.ActiveMeds)
+                {
+                    <tr data-med-id="@PatMed.PatientMedicationListID">
+                        <td>@PatMed.Medications.MedicationGenericName.GenericName/@PatMed.Medications.MedicationBrandName.BrandName</td>
+                        <td>@PatMed.Medications.ActiveStrengthUnits</td>
+                        <td>@PatMed.MedicationFrequencies.FrequencyCode</td>
+                        <td>@PatMed.Medications.MedicationDeliveryRoute.DeliveryRouteName</td>
+                        <td>@PatMed.StartDate.ToString("MM/dd/yyyy")</td>
+                        <td>
+                            @if (userPermissions != null && (userPermissions.Contains("MedicationListView")) )
+                            {
+                                <a class="btn btn-sm btn-primary open-details"
+                                    href="@Url.Action("PatientMedicationDetails", "Patient", new { id = PatMed.PatientMedicationListID })"
+                                    data-med-id="@PatMed.PatientMedicationListID">Details</a>
+                            }
+                            @if (userPermissions != null && (userPermissions.Contains("MedicationListDelete")) )
+                            {
+                                <form asp-action="DeletePatientMedication" asp-controller="Patient"
+                                    asp-route-id="@PatMed.PatientMedicationListID"
+                                    method="post"
+                                    class="d-inline delete-patmed-form"
+                                    data-confirm="Are you sure you want to delete this Patient Medication?">
+                                    @Html.AntiForgeryToken()
+                                    <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                                </form>
+                            }
+                        </td>
+                    </tr>
+                } 
+            </tbody>
+        </table>
+    @if(Model.InactiveMeds != null && Model.InactiveMeds.Any())
+    {
+        <div class="card-header bg-secondary text-white mt-5">
+            <h4>Patient Inactive Medications</h4>
+        </div>
+
+        <table id="inactiveMedsTable" class="stripe nowrap fixed-width" style="width:100%; border:none">
+            <colgroup>
+                <col style="width: 40%" />
+                <col style="width: 20%" />
+                <col style="width: 5%" />
+                <col style="width: 10%" />
+                <col style="width: 10%" />
+                <col style="width: 15%" />
+            </colgroup>
+            <thead>
+                <tr class="table-dark">
+                    <th scope="col">Medication Name</th>
+                    <th scope="col">Dosage</th>
+                    <th scope="col">SIG</th>
+                    <th scope="col">Start Date </th>
+                    <th scope="col">End Date</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var PatMed in Model.InactiveMeds)
+                {
+                    <tr data-med-id="@PatMed.PatientMedicationListID" class="table-light">
+                        <td>@PatMed.Medications.MedicationGenericName.GenericName/@PatMed.Medications.MedicationBrandName.BrandName</td>
+                        <td>@PatMed.Medications.ActiveStrengthUnits</td>
+                        <td>@PatMed.MedicationFrequencies.FrequencyCode</td>
+                        <td>@PatMed.StartDate.ToString("MM/dd/yyyy")</td>
+                        <td>@(PatMed.EndDate != null ? PatMed.EndDate.Value.ToString("MM/dd/yyyy") : "")</td>
+                        <td>
+                            @if (userPermissions != null && (userPermissions.Contains("MedicationListView")) )
+                            {
+                                <a class="btn btn-sm btn-primary open-details"
+                                    href="@Url.Action("PatientMedicationDetails", "Patient", new { id = PatMed.PatientMedicationListID})"
+                                    data-med-id="@PatMed.PatientMedicationListID">Details
+                                </a>
+                            }
+                            @if (userPermissions != null && (userPermissions.Contains("MedicationListDelete")) )
+                            {
+                                <form asp-action="DeletePatientMedication" asp-controller="Patient"
+                                    asp-route-id="@PatMed.PatientMedicationListID"
+                                    method="post"
+                                    class="d-inline delete-patmed-form"
+                                    data-confirm="Are you sure you want to delete this Patient Medication?">
+                                    @Html.AntiForgeryToken()
+                                    <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                                </form>
+                            }
+                        </td>
+                    </tr>
+                } 
+            </tbody>
+        </table>
+    }
+    @Html.AntiForgeryToken()
+    </div>
+</div>  <!-- close the card -->
+
+<style>
+    .card {
+        box-sizing: border-box; /* Ensures padding is included in total width */
+        padding: 0; /* Ensures no extra padding inside the card */
+    }
+
+    .card-header {
+        margin: 0; /* Aligns header with the card body and table */
+    }
+
+    /* Force percentage widths to be honored */
+    table.fixed-width {
+        width: 100%;
+        table-layout: fixed; /* respect col widths */
+    }
+
+    /* Prevent wrapping for all columns except Medication Name (1st column) */
+    table.fixed-width th,
+    table.fixed-width td {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    /* Ensure Medication Name column wraps gracefully */
+    table.fixed-width td:nth-child(1),
+    table.fixed-width th:nth-child(1) {
+        white-space: normal;
+        overflow-wrap: anywhere;
+    }
+
+    /* Make Actions column buttons align nicely */
+    table.fixed-width td .btn {
+        white-space: nowrap;
+    }
+
+    #activeMedsTable_wrapper .dataTables_info,
+    #inactiveMedsTable_wrapper .dataTables_info {
+        margin-left: 1rem;
+    }
+</style>
+
+<script>
+    $(function() {
+        function initMedTables(){
+            if ($.fn.DataTable.isDataTable('#activeMedsTable')) {$('#activeMedsTable').DataTable().destroy();}
+            if ($.fn.DataTable.isDataTable('#inactiveMedsTable')) {$('#inactiveMedsTable').DataTable().destroy();}
+        
+            $('#activeMedsTable').DataTable({
+                columns: [null, null, null, null, null, { orderable: false }],
+                order: [[4, 'desc']],
+                pageLength: 10,
+                searching: false,
+                lengthChange: false,
+                language: {
+                    emptyTable: 'No patient medications found'
+                }
+            });
+
+            if ($('#inactiveMedsTable').length) {
+                $('#inactiveMedsTable').DataTable({
+                    columns: [null, null, null, null, null, { orderable: false }],
+                    order: [[4, 'desc']],
+                    pageLength: 10,
+                    searching: false,
+                    lengthChange: false,
+                    language: {
+                        emptyTable: 'No patient medications found'
+                    }
+                });
+            }
+        }
+    
+        initMedTables();
+
+        // When modal shown, force DataTables to recalc column widths
+        $('#globalModal').on('shown.bs.modal', function () {
+            if ($.fn.DataTable.isDataTable('#activeMedsTable')) {
+            var t = $('#activeMedsTable').DataTable();
+            t.columns.adjust();
+            if (t.responsive) t.responsive.recalc();
+            } else {
+            initMedTables();
+            }
+
+            if ($.fn.DataTable.isDataTable('#inactiveMedsTable')) {
+            var t2 = $('#inactiveMedsTable').DataTable();
+            t2.columns.adjust();
+            if (t2.responsive) t2.responsive.recalc();
+            }
+        });
+    });
+</script>
+<!-- this script handles Delete confirmation whether in regular view or a modal view -->
+<script src="~/js/confirm.js" defer></script>

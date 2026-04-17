@@ -1,0 +1,44 @@
+@model IS_Proj_HIT.ViewModels.PcaStructuredDataViewModel
+@{
+    ViewBag.Title = "Edit PCA Comment Type";
+    var userPermissions = ViewData["UserPermissions"] as List<string>;
+}
+
+<h1>Edit</h1>
+
+<h4>PCA Comment Type</h4>
+<hr />
+
+<div class="row">
+    <div class="col-md-10">
+        <form method="post">
+            @Html.AntiForgeryToken()
+            <div class="form-row">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="PcacommentType.PcacommentTypeId" value="@Model.PcacommentType.PcacommentTypeId" readonly/>
+                <div class="form-group col-sm-6">
+                    <label asp-for="PcacommentType.PcacommentTypeName" class="control-label">PCA Comment Type Name</label>
+                    <input asp-for="PcacommentType.PcacommentTypeName" 
+                        class="form-control" maxlength="50" required
+                        placeholder="Example:  Vitals Notes" />
+                    <span asp-validation-for="PcacommentType.PcacommentTypeName" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <a asp-controller="PcaStructuredData" asp-action="ViewPcaCommentTypes" class="btn btn-outline-danger">Discard Changes</a>
+                </div>           
+                <div class="form-group ml-3">
+                    @if (userPermissions != null && (userPermissions.Contains("StructuredDataEdit")) )
+                    {
+                        <input type="submit" value="Save Changes" class="btn btn-primary" />
+                    }
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

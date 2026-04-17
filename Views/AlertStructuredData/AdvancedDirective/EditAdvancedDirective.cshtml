@@ -1,0 +1,43 @@
+@model IS_Proj_HIT.ViewModels.AlertStructuredData.AlertStructuredDataViewModel
+@{
+    ViewBag.Title = "Edit Advanced Directive";
+}
+
+<h1>Edit</h1>
+
+<h4>Advanced Directive</h4>
+<hr />
+
+<div class="row">
+    <div class="col-md-10">
+        <form method="post">
+            @Html.AntiForgeryToken()
+            <div class="form-row">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="AdvancedDirective.AdvancedDirectiveId" value="@Model.AdvancedDirective.AdvancedDirectiveId" readonly/>
+                <div class="form-group col-sm-6">
+                    <label asp-for="AdvancedDirective.Name" class="control-label">Advanced Directive Name</label>
+                    <input asp-for="AdvancedDirective.Name" 
+                        class="form-control" maxlength="50" required
+                        placeholder="Example:  Advanced Directive" />
+                    <span asp-validation-for="AdvancedDirective.Name" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <input type="submit" value="Save Changes" class="btn btn-primary" />
+                </div>
+
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<div>
+    <a asp-controller="AlertStructuredData" asp-action="ViewAdvancedDirectives">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

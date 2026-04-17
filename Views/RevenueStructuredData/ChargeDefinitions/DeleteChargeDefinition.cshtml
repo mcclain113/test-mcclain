@@ -1,0 +1,53 @@
+@model IS_Proj_HIT.ViewModels.RevenueStructuredDataViewModel
+@{
+    ViewBag.Title = "Delete Physician";
+}
+
+<h1>Delete</h1>
+
+<h3>@ViewData["RegularMessage"]</h3>
+<h3 class="error">@ViewData["ErrorMessage"]</h3>
+
+<h4>Physician</h4>
+<hr />
+
+<div class="row">
+    <div class="col-md-10">
+        <form method="post">
+            @Html.AntiForgeryToken()
+            <div class="form-row">
+
+                <input type="hidden" asp-for="ChargeDefinition.ChargeID" value="@Model.ChargeDefinition.ChargeID" readonly/>
+
+                <div class="form-group col-sm-4">
+                    <label asp-for="ChargeDefinition.ChargeID" class="control-label disabled">Charge ID</label>
+                    <input asp-for="ChargeDefinition.ChargeID" 
+                        class="form-control" />
+                    
+                </div>
+                <div class="form-group col-sm-4">
+                    <label asp-for="ChargeDefinition.LongDescription" class="control-label">Long Description</label>
+                    <input asp-for="ChargeDefinition.LongDescription" 
+                        class="form-control" />
+                    
+                </div>
+                <div class="form-group col-sm-4">
+                    <label asp-for="ChargeDefinition.RevenueCodeID" class="control-label">Revenue Code</label>
+                    <input asp-for="ChargeDefinition.RevenueCodeID" class="form-control"/>
+                    
+                </div>
+               <div class="form-group">
+                    <a asp-controller="RevenueStructuredData" asp-action="ViewChargeDefinitions" class="btn btn-outline-danger">Discard Changes</a>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Delete Charge Definition" class="ml-3 btn btn-primary" />
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<div>
+    <a asp-controller="RevenueStructuredData" asp-action="ViewChargeDefinitions">Back to List</a>
+</div>

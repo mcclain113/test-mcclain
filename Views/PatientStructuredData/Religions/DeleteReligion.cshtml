@@ -1,0 +1,42 @@
+@model IS_Proj_HIT.ViewModels.PatientVm.PatientStructuredDataViewModel
+@{
+    ViewBag.Title = "Delete Religion";
+}
+
+<h1>Delete</h1>
+
+<h3>@ViewData["RegularMessage"]</h3>
+<h3 class="error">@ViewData["ErrorMessage"]</h3>
+
+<h4>Religion</h4>
+<hr />
+
+<div class="row">
+    <div class="col-md-10">
+        <form method="post">
+            @Html.AntiForgeryToken()
+            <div class="form-row">
+                <input type="hidden" asp-for="Religion.ReligionId" value="@Model.Religion.ReligionId" readonly/>
+                
+                <div class="form-group col-sm-6">
+                    <label asp-for="Religion.Name" class="control-label">Religion Name</label>
+                    <input asp-for="Religion.Name" class="form-control"/>
+                </div>
+            </div>
+
+            <div class="form-row"> 
+                <div>
+                    <a class="btn btn-outline-danger" asp-controller="PatientStructuredData" asp-action="ViewReligions">Discard Changes</a>
+                </div>           
+                <div class="form-group">
+                    <input type="submit" value="Delete Item" class="ml-3 btn btn-primary" />
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

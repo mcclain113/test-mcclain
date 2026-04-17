@@ -1,0 +1,46 @@
+@model IS_Proj_HIT.ViewModels.PatientVm.PatientStructuredDataViewModel
+@{
+    ViewBag.Title = "Create Marital Status";
+}
+
+<h1>Create</h1>
+
+<h4>Marital Status</h4>
+<hr />
+
+<div class="row">
+    <div class="col-md-10">
+        <form method="post">
+            @Html.AntiForgeryToken()
+            <div class="form-row">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="MaritalStatus.MaritalStatusId" value="@Model.MaritalStatus.MaritalStatusId" readonly />
+                
+                <div class="form-group col-sm-6">
+                    <label asp-for="MaritalStatus.Name" class="control-label">Marital Status Name</label>
+                    <input asp-for="MaritalStatus.Name" 
+                        class="form-control" maxlength="30" required
+                        placeholder="Example:  Divorced" />
+                    <span asp-validation-for="MaritalStatus.Name" class="text-danger"></span>
+                </div>
+                
+            </div>
+
+            <div class="form-row">            
+                <div class="form-group">
+                    <input type="submit" value="Edit" class="btn btn-primary" />
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+
+<div>
+    <a asp-controller="PatientStructuredData" asp-action="ViewMaritalStatuses">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

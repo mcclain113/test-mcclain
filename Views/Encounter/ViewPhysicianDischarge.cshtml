@@ -1,0 +1,198 @@
+@model IS_Proj_HIT.ViewModels.ViewEncounterPageModel
+
+@{
+    ViewData["Title"] = "Physicians Discharge Summary";
+    var userPermissions = ViewData["UserPermissions"] as List<string>;
+}
+<partial model="Model.Patient" name="PatientBannerPartial" />
+<partial name="_EncounterMenu" model="Model.Encounter" />
+
+<div class="row justify-content-start">
+    <div class="col mx-0 px-0">
+        <div class="card ">
+            <div class="card-header bg-primary text-white">
+                <h4>
+                    Physician Discharge Summary
+
+                    @if (userPermissions != null && (userPermissions.Contains("DischargeSummaryEdit")) )
+                    {
+                        <a
+                            asp-controller="Encounter"
+                            asp-action="PhysicianDischargeEdit"
+                            asp-route-id="@Model.Encounter.EncounterId"
+                            class="btn btn-info btn-md float-right">
+                            Edit
+                        </a>
+                    } 
+                    
+                </h4>
+            </div>
+
+            <input asp-for="@Model.Encounter.EncounterId" name="EncounterId" type="hidden" value="@Model.Encounter.EncounterId"/>
+
+            <div class="card-body bg-light">
+                @* header information for discharge summary view  *@
+                    <div class="row justify-content-around">
+                        <div class="col-sm-12 col-lg-4">
+                            <label style="padding-right: 1em">Admission Date: </label>
+                            <span class="font-weight-bold">@Model.Encounter.AdmitDateTime.ToString("M/d/yyyy")</span>
+                        </div>
+                        <div class="col-sm-12 col-lg-4">
+                            <label style="padding-right: 1em">Discharge Date:</label>
+                            <span class="font-weight-bold">@Model.Encounter.DischargeDateTime?.ToString("M/d/yyyy")</span> 
+                        </div>
+                    </div>
+                    <hr/>
+                    <div class="row justify-content-around">
+                        <div class="col-sm-12 col-lg-4">
+                            <label style="padding-right: 1em">Attending Physician:</label>
+                            <span class="font-weight-bold">@Model.AttendingPhysician?.FirstName @Model.AttendingPhysician?.LastName</span> 
+                        </div>
+                        <div class="col-sm-12 col-lg-4">
+                            <label style="padding-right: 1em">Visit Type:</label>
+                            <span class="font-weight-bold">@Model.Encounter.PlaceOfService.Description</span> 
+                        </div>
+                    </div>
+                    <hr/>
+                @* end header information for discharge summary view  *@
+
+                @* start section for Diagnoses *@ 
+                    <div class="row">
+                        <div class="col-sm-12 mx-3">
+                            <label><strong>Diagnoses: </strong></label><br>
+                            <div class="row form-group mx-3">
+                                <label style="padding-right: 1em;text-decoration: underline;">Admitting Diagnosis:</label>
+                                <p>@Model.Encounter.AdmittingDiagnosis</p>
+                            </div>
+                            <div class="row form-group mx-3">
+                                <label style="padding-right: 1em;text-decoration: underline;">Discharge Diagnosis:</label>
+                                <span>@Model.Encounter.DischargeDiagnosis</span>
+                            </div>
+                        </div>
+                    </div>
+                    <hr/>
+                @* end section for Diagnoses *@ 
+
+                @* start section for Visit Summary *@ 
+                    <div class="row">
+                        <div class="col-sm-12 mx-3">
+                            <label><strong>Visit Summary: </strong></label><br>
+                            <div class="row form-group mx-3">
+                                <label style="padding-right: 1em;text-decoration: underline;">History of present illness:</label>
+
+                                @{
+                                    if(@Model.Encounter.HistoryOfPresentIllness != null){
+                                        <span>@Model.Encounter.HistoryOfPresentIllness</span>
+                                    }
+                                    else{
+                                        <span>@Model.HistoryAndPhysical.HistoryOfPresentIllness</span>
+                                    }
+                                }
+                            </div>
+                            <div class="row form-group mx-3">
+                                <label style="padding-right: 1em;text-decoration: underline;">Significant finding:</label>
+                                <p>@Model.Encounter.SignificantFindings</p>
+                            </div>
+                            <div class="row form-group mx-3">
+                                <label style="padding-right: 1em;text-decoration: underline;">Hospital course:</label>
+                                <span>@Model.Encounter.DischargeHospitalCourse</span>
+                            </div>
+                        </div>
+                    </div>
+                    <hr/>
+                @* end section for Visit Summary *@ 
+
+                @* start section for Discharge Plan *@ 
+                    <div class="row">
+                        <div class="col-sm-12 mx-3">
+                            <label><strong>Discharge Plan: </strong></label><br>
+                            <div class="row form-group mx-3">
+                                <label style="padding-right: 1em;text-decoration: underline;">Discharge disposition note:</label>
+                                <span>@Model.Encounter.DischargeDispositionNote</span>
+                            </div>
+                            <div class="row form-group mx-3">
+                                <label style="padding-right: 1em;text-decoration: underline;">Medications at discharge:</label>
+                                <p>@Model.Encounter.MedicationsOnDischarge</p>
+                            </div>
+                            <div class="row form-group mx-3">
+                                <label style="padding-right: 1em;text-decoration: underline;">Discharge Diet and Instructions:</label>
+                                <span>@Model.Encounter.DischargeDietInstructions</span>
+                            </div>
+                        </div>
+                    </div>
+                    <hr/>
+                @* end section for Discharge Plan *@ 
+
+                @* start section for Provider signatures *@    
+                <div class="row">
+                    <div class="col-12 col-lg-6">
+                        <div class="row ml-3 form-group">
+                            <label style="padding-right: 1em"><strong>Authoring Provider: </strong></label>
+                            <span>@Model.Encounter.DischargeAuthoringProvider?.FirstName @Model.Encounter.DischargeAuthoringProvider?.LastName</span>
+                            <input type="hidden" id="sign" value="@ViewBag.Encounter.DischargeAuthoringProviderId" />
+                        </div>
+                        <div class="row ml-3 form-group">
+                            <label style="padding-right: 1em"><strong>Provider Signature: </strong></label>
+                            <span>@Model.Encounter.DischargeAuthoringProviderSignature</span>
+                        </div>
+                        <div class="row ml-3 form-group">
+                            <label style="padding-right: 1em"><strong>Date Signed: </strong></label>
+                            <span>@Model.Encounter.DischargeAuthoringProviderSignedDate?.ToString("M/d/yyyy")</span>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-lg-6">
+                        <div id="cosign" style="display: none">
+                            <div class="row mb-3 form-group">
+                                <label style="padding-right: 1em"><strong>Co-Provider: </strong></label>
+                                <span>@Model.Encounter.DischargeCoSigningProvider?.FirstName @Model.Encounter.DischargeCoSigningProvider?.LastName</span>
+                            </div>
+                            <div class="row mb-3 form-group">
+                                <label style="padding-right: 1em"><strong>Co-Signature: </strong></label>
+                                <span>@Model.Encounter.DischargeCoSigningProviderSignature</span>
+                            </div>
+                            <div class="row mb-3 form-group" id="timeStamp">
+                                <label style="padding-right: 1em"><strong>Date Signed: </strong></label>
+                                <span>@Model.Encounter.DischargeCoSigningProviderSignedDate?.ToString("M/d/yyyy")</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+@*this function will render the co-signer fields based upon 'ProviderStatusId'value in the db
+triggered by loading the document*@
+    $(document).ready(function() {
+
+        let providerId= $('#sign').val();
+            
+        if(providerId != 0)
+        {
+            let idNumber = ""
+
+            $.ajax({
+                type: "GET",
+                url: "@Url.Action("GetProviderStatusId")",
+                dataType: "json",
+                data: {id: providerId},
+                success: function(result){
+                    idNumber = result.providerIdNumber
+                    if(idNumber == 1)
+                    {
+                        $('#cosign').hide()
+
+                    }
+                    else if(idNumber == 2 || idNumber == 3)
+                    {
+                        $('#cosign').show()
+                    }
+                },
+            });
+        }
+     })
+</script>

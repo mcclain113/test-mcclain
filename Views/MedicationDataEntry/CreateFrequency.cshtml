@@ -1,0 +1,46 @@
+@model IS_Proj_HIT.Entities.MedicationFrequency
+@{
+    ViewBag.Title = "Create Frequency";
+}
+
+<h1>Create</h1>
+
+<h4>Frequency</h4>
+<hr />
+<div class="row">
+    <div class="col-md-10">
+        <form method="post">
+            @Html.AntiForgeryToken()
+            <div class="form-row">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group col-sm-6">
+                    <label asp-for="FrequencyDescription" class="control-label">Frequency Description</label>
+                    <input asp-for="FrequencyDescription" type="text" class="form-control" autocomplete="off" required/>
+                    <span asp-validation-for="FrequencyDescription" class="text-danger"></span>
+                </div>
+                <div class="form-group col-sm-6">
+                    <label asp-for="FrequencyCode" class="control-label">Frequency Code</label>
+                    <input asp-for="FrequencyCode" type="text" class="form-control" autocomplete="off" required/>
+                    <span asp-validation-for="FrequencyDescription" class="text-danger"></span>
+                </div>
+                <input asp-for="LastUpdate" class="form-input" type="hidden" readonly/>
+                @if (ViewBag.ErrorMessage != null) {
+                    <div class="form-group col-12">
+                        <span class="text-danger">@ViewBag.ErrorMessage</span>
+                    </div>
+                }
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                </div>
+            </div>            
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-controller="MedicationDataEntry" asp-action="ViewFrequencies">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

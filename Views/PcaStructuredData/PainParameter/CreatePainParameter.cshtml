@@ -1,0 +1,58 @@
+@model IS_Proj_HIT.ViewModels.PcaStructuredDataViewModel
+@{
+    ViewBag.Title = "Create Pain Parameter";
+    var userPermissions = ViewData["UserPermissions"] as List<string>;
+}
+
+<h1>Create</h1>
+
+<h4>Pain Parameter</h4>
+<hr />
+
+<div class="row">
+    <div class="col-md-10">
+        <form method="post">
+            @Html.AntiForgeryToken()
+            <div class="form-row">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group col-sm-6">
+                    <label asp-for="PainParameter.ParameterName" class="control-label">Pain Parameter Name</label>
+                    <input asp-for="PainParameter.ParameterName" 
+                        class="form-control" maxlength="200" required
+                        placeholder="Example:  Head" />
+                    <span asp-validation-for="PainParameter.ParameterName" class="text-danger"></span>
+                </div>
+                <div class="form-group col-sm-6">
+                    <label asp-for="PainParameter.PainScaleTypeId" class="control-label">Select Care System Type</label>
+                    <select asp-for="PainParameter.PainScaleTypeId" class="form-control" asp-items="ViewBag.PainScaleTypeId" required data-val-required="A Pain Scale Type selection is required"></select>
+                    <span asp-validation-for="PainParameter.PainScaleTypeId" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-12">
+                    <label asp-for="PainParameter.Description" class="control-label">Description</label>
+                    <textarea asp-for="PainParameter.Description" class="form-control" rows="4" maxlength="200" placeholder="Enter description here..."
+                    required></textarea>
+                    <span asp-validation-for="PainParameter.Description" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-row">            
+                <div class="form-group">
+                    @if (userPermissions != null && (userPermissions.Contains("StructuredDataAdd")) )
+                    {               
+                        <input type="submit" value="Create" class="btn btn-primary" />
+                    }
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<div>
+    <a asp-controller="PcaStructuredData" asp-action="ViewPainParameters">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

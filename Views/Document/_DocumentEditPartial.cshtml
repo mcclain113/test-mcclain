@@ -1,0 +1,224 @@
+@model IS_Proj_HIT.ViewModels.DocumentEditViewModel
+
+<!-- declare the variable 'section' -->
+@{var section = Model.Section ?? "";}
+
+<div class="row">
+  <!-- Left: Preview -->
+  <div class="col-md-8 pr-5">
+    @if (Model.IsImage)
+    {
+      <img src="data:@Model.MimeType;base64,@Model.Base64Content"
+          class="img-fluid"
+          style="max-width: 100%; max-height: 750px;"
+      />
+    }
+    else if (Model.IsPdf) { <!-- inline = false will download to the Downloads folder -->
+      <embed src="@Url.Action("DownloadDocument", "Document",
+              new { id = Model.DocumentId, inline = true })"
+            type="application/pdf"
+            width="100%" height="750px" />
+    }
+    else {
+      <p>No inline preview available.</p>
+    }
+  </div>
+  <!-- Right: Properties + Edit fields -->
+  <div class="col-md-4">
+    <form id="documentEditForm"
+          asp-action="EditPartial"
+          asp-controller="Document"
+          method="post">
+      @Html.AntiForgeryToken()
+      <!-- Certain properties must always be sent to the controller setter method -->
+      <input type="hidden" asp-for="DocumentId" />
+      <input type="hidden" asp-for="Section" />
+
+      @if(section == "edit")
+      {
+        <fieldset>
+          <legend>Edit document details</legend>
+          <!-- in the 'Edit' modal view, allow changes to DocumentType, Description, Notes -->
+          <!-- the controller setter method always needs Mrn, EncounterId and DocumentTypeID so include as hidden if not editing -->
+          <input type="hidden" asp-for="Mrn" />
+          <input type="hidden" asp-for="EncounterId" />
+
+          <div class="form-group">
+            <label asp-for="DocumentTypeID"></label>
+            <select asp-for="DocumentTypeID" asp-items="Model.DocumentTypes" class="form-control"></select>
+            <span asp-validation-for="DocumentTypeID" class="text-danger"></span>
+          </div>
+          <div class="form-group">
+            <label asp-for="DocumentDescription"></label>
+            <input asp-for="DocumentDescription" class="form-control" />
+            <span asp-validation-for="DocumentDescription" class="text-danger"></span>
+          </div>
+          <div class="form-group">
+            <label asp-for="Notes"></label>
+            <textarea asp-for="Notes" class="form-control"></textarea>
+            <span asp-validation-for="Notes" class="text-danger"></span>
+          </div>
+        </fieldset>
+      }
+
+      @if(section == "patient2differentpatient")
+      {
+        <fieldset>
+          <legend>Move Patient document to a different Patient</legend>
+          <!-- in the 'Patient to different Patient' modal view, allow changes to Mrn only.  The EncounterId should be null and DocumentTypeID unchanged -->
+          <!-- the controller setter method always needs Mrn, EncounterId and DocumentTypeID so include as hidden if not editing;  however, in this scenario the EncounterId should be Null and remain Null, so setting it directly in the controller method.  No need to pass it here. -->
+          <input type="hidden" asp-for="DocumentTypeID" />
+          <div class="mb-3">
+            <label asp-for="Mrn" class="form-label">Patient (search by MRN, name or DOB)</label>
+
+            <!-- Select2 AJAX-enabled select; value is MRN (id) -->
+            <select id="patient-search"
+                    name="Mrn"
+                    class="form-control select2-ajax-patient"
+                    style="width:100%;">
+              @* If you want to preselect a current MRN (vm.Mrn) render a single option so Select2 shows it *@
+              @if (!string.IsNullOrEmpty(Model.Mrn))
+              {
+                  <option value="@Model.Mrn" selected="selected">
+                      @Model.Mrn - @Model.MimeType <!-- placeholder; will be replaced by JS if needed -->
+                  </option>
+              }
+            </select>
+            <span asp-validation-for="Mrn" class="text-danger"></span>
+          </div>
+
+        </fieldset>
+      }
+
+      @if(section == "patient2encounter")
+      {
+        <fieldset>
+          <legend>Patient document becomes an Encounter Document, same Patient</legend>
+          <!-- in the 'Patient to Encounter' modal view, allow changes to EncounterId, maintaining the same Patient but requiring a new DocumentTypeID -->
+          <!-- the controller setter method always needs Mrn, EncounterId and DocumentTypeID so include as hidden if not editing -->
+          <input type="hidden" asp-for="Mrn" />
+          <div class="form-group">
+            <label asp-for="EncounterId"></label>
+            <select asp-for="EncounterId" asp-items="Model.EncounterSelectList" class="form-control">
+              <option value="">-- none --</option>
+            </select>
+            <span asp-validation-for="EncounterId" class="text-danger"></span>
+            <div class="form-group">
+              <label asp-for="DocumentTypeID"></label>
+              <select asp-for="DocumentTypeID" asp-items="Model.DocumentTypes" class="form-control"></select>
+              <span asp-validation-for="DocumentTypeID" class="text-danger"></span>
+            </div>
+          </div>
+        </fieldset>
+      }
+
+      @if(section == "encounter2encounter")
+      {
+        <fieldset>
+          <legend>Move Encounter Document to a different Encounter, same Patient</legend>
+          <!-- in the 'Encounter to Encounter' modal view, allow changes to EncounterId, maintaining the same Patient and DocumentTypeID -->
+          <!-- the controller setter method always needs Mrn, EncounterId and DocumentTypeID so include as hidden if not editing -->
+          <input type="hidden" asp-for="Mrn" />
+          <input type="hidden" asp-for="DocumentTypeID" />
+          <div class="form-group">
+            <label asp-for="EncounterId"></label>
+            <select asp-for="EncounterId" asp-items="Model.EncounterSelectList" class="form-control">
+              <option value="">-- none --</option>
+            </select>
+            <span asp-validation-for="EncounterId" class="text-danger"></span>
+          </div>
+        </fieldset>
+      }
+
+      @if(section == "patient2differentpatientencounter")
+      {
+        <fieldset>
+          <legend>Patient Document becomes Encounter Document for different Patient</legend>
+          <!-- in the 'Patient Document to Different Patient Encounter Document' modal view, allow changes to Mrn, EncounterId, DocumentTypeID;  however, the EncounterId and DocumentTypeId should not be displayed/changed until the Mrn is selected -->
+          <!-- the controller setter method always needs Mrn, EncounterId and DocumentTypeID so include as hidden if not editing -->
+          <div class="mb-3">
+            <label asp-for="Mrn" class="form-label">Patient</label>
+
+            <!-- Select2 AJAX-enabled select; value is MRN (id) -->
+            <select id="patient-search"
+                    name="Mrn"
+                    class="form-control select2-ajax-patient"
+                    style="width:100%;">
+            </select>
+            <span asp-validation-for="Mrn" class="text-danger"></span>
+          </div>
+
+          <div id="encounter-container" style="display:none;">
+            <div class="form-group">
+              <label asp-for="EncounterId"></label>
+              <select asp-for="EncounterId"
+                      asp-items="Model.EncounterSelectList"
+                      id="EncounterId"
+                      class="form-control"
+                      disabled>
+                <option value="">— Select an encounter —</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label asp-for="DocumentTypeID"></label>
+              <select asp-for="DocumentTypeID" asp-items="Model.DocumentTypes" class="form-control"></select>
+              <span asp-validation-for="DocumentTypeID" class="text-danger"></span>
+            </div>
+          </div>
+
+        </fieldset>
+      }
+
+      @if(section == "encounter2patient")
+      {
+        <fieldset>
+          <legend>Encounter Document becomes Patient Document, same Patient</legend>
+          <!-- in the 'Encounter to Patient' modal view, allow changes to DocumentTypeID -->
+          <!-- the controller setter method always needs Mrn, EncounterId and DocumentTypeID so include as hidden if not editing;  however, in this scenario, the EncounterId needs to become Null and is set directly in the controller method, so no need to pass it here. -->
+          <input type="hidden" asp-for="Mrn" />
+          <div class="form-group">
+            <label asp-for="DocumentTypeID"></label>
+            <select asp-for="DocumentTypeID" asp-items="Model.DocumentTypes" class="form-control"></select>
+            <span asp-validation-for="DocumentTypeID" class="text-danger"></span>
+          </div>
+        </fieldset>
+      }
+
+      @if(section == "encounter2differentpatientencounter")
+      {
+        <fieldset>
+          <legend>Encounter Document becomes Encounter Document, different Patient</legend>
+          <!-- in the 'Encounter Document to Different Patient Encounter Document' modal view, allow changes to Mrn, EncounterId;  however, the EncounterId should not be displayed/changed until the Mrn is selected -->
+          <!-- the controller setter method always needs Mrn, EncounterId and DocumentTypeID so include as hidden if not editing -->
+          <input type="hidden" asp-for="DocumentTypeID" />
+          <div class="mb-3">
+            <label asp-for="Mrn" class="form-label">Patient</label>
+            
+            <!-- Select2 AJAX-enabled select; value is MRN (id) -->
+            <select id="patient-search"
+                    name="Mrn"
+                    class="form-control select2-ajax-patient"
+                    style="width:100%;">
+            </select>
+            <span asp-validation-for="Mrn" class="text-danger"></span>
+          </div>
+
+          <div id="encounter-container" style="display:none;">
+            <div class="form-group">
+              <label asp-for="EncounterId"></label>
+              <select asp-for="EncounterId"
+                      asp-items="Model.EncounterSelectList"
+                      id="EncounterId"
+                      class="form-control"
+                      disabled>
+                <option value="">— Select an encounter —</option>
+              </select>
+            </div>
+          </div>
+        </fieldset>
+      }
+
+      <button type="submit" class="btn btn-primary">Save Changes</button>
+    </form>
+  </div>
+</div>

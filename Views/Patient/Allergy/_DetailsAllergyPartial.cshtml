@@ -1,0 +1,69 @@
+@model IS_Proj_HIT.ViewModels.Allergy.AllergyDetailsViewModel
+@{
+    var userPermissions = ViewData["UserPermissions"] as List<string>;
+}
+
+<div class="card" data-modal-title="Allergy Details">
+    <div class="card-header bg-primary text-white">
+        <h4 class="m-0">Allergy Details
+            @if (userPermissions != null && userPermissions.Contains("AllergyEdit"))
+            {
+                <a class="btn btn-info float-right open-edit"
+                    href="@Url.Action("EditAllergy", "Patient", new { id = Model.PatientAllergyId, mrn = Model.Mrn })"
+                    data-allergyid="@Model.PatientAllergyId" data-modal-title="Edit Allergy">Edit</a>
+            }
+        </h4>
+    </div>
+
+    <div class="card-body bg-light">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12 col-lg-8">
+                    <label>Allergen: </label>
+                    <span class="font-weight-bold">@Model.AllergenDisplay</span>
+                </div>
+                <div class="col-sm-12 col-lg-4">
+                    <label>Active: </label>
+                    <span class="font-weight-bold">@(Model.IsActive ? "Yes" : "No")</span>
+                </div>            
+            </div>
+            <hr class="mt-0"/>
+            <div class="row">
+                <div class="col-sm-4">
+                    <label>Created: </label>
+                    <span><input asp-for="@Model.LastModified" class="takeawayborder bg-light font-weight-bold" type="text" id="longer" readonly /></span>
+                </div>
+                <div class="col-sm-4 form-group">
+                    <label>Start Date: </label>
+                    <span class="font-weight-bold">@Model.StartDate.ToString("MM-dd-yyyy")</span>
+                </div>
+                <div class="col-sm-4 form-group">
+                    <label>End Date: </label>
+                    <span class="font-weight-bold">@((Model.EndDate?.ToString("MM-dd-yyyy")) ?? "—")</span>
+                </div>
+            </div>
+            <hr class="mt-0"/>
+                <div class="row">
+                    <div class="col-sm-4 form-group">
+                        <label>Reaction:</label>
+                        <span class="font-weight-bold ml-3">@Model.ReactionName</span>
+                    </div>
+                </div>
+            <hr class="mt-0"/>
+
+            <div class="row">
+                <div class="col-sm-12 form-group">
+                    <label>Comments: </label>
+                    <span class="font-weight-bold">@Model.Comments</span>
+                </div>
+            </div>
+            <hr class="mt-0"/>
+    </div>
+        <div class="mt-3">
+            <a class="btn btn-secondary back-to-list"
+                href="@Url.Action("ListAllergies", "Patient", new {mrn = Model.Mrn})"
+                data-alertid="@Model.PatientAllergyId">Back to Allergies
+            </a>
+        </div>
+    </div>
+</div>

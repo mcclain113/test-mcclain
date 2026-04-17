@@ -1,0 +1,247 @@
+﻿@model IS_Proj_HIT.ViewModels.EncounterFormViewModel
+
+@{
+    ViewData["Title"] = "Edit Encounter";
+    var userPermissions = ViewData["UserPermissions"] as List<string>;
+}
+
+<partial model="ViewBag.Patient" name="PatientBannerPartial" />
+<partial name="_EncounterMenu" model="Model.encounter"/>
+
+<div class="row justify-content-start" >
+    <div class="col mx-0 px-0"  >
+            <!-- begin the form -->
+            <!-- the form id and name are the same here as for the AddEncounter.cshtml because the validation requirements are the same -->
+        <form asp-action="EditEncounter" id="encounter" method="post" name="encounter">
+            @Html.AntiForgeryToken()
+            <input asp-for="@Model.Mrn" name="MRN" type="hidden" value="@ViewBag.Patient.Mrn" />
+            <input asp-for="@Model.EncounterId" name="EncounterId" type="hidden" value="@Model.EncounterId" id=encounterId/>
+
+                @* ADDING TABS *@
+            <div class="tab-content patient-data">
+                <ul class="nav nav-tabs  flex-row flex-wrap-reverse" id="myTab" role="tablist">
+                    <li class="nav-item flex-sm-shrink-1 flex-grow-0 p-0">
+                        <button class="nav-link active" id="demographics-tab" data-toggle="tab" data-target="#encountertab"
+                        type="button" role="tab" aria-controls="encounter" aria-selected="true">Encounter Information
+                        </button>
+                    </li>
+                    <li class="nav-item flex-sm-shrink-1 flex-grow-0 p-0">
+                        <button class="nav-link" id="discharge-tab" data-toggle="tab" data-target="#dischargetab"
+                        type="button" role="tab" aria-controls="discharge" aria-selected="false">Discharge Information
+                        </button>
+                    </li>
+                </ul>
+                @* END OF ADDING TABS *@
+
+                @*  begin section for the Encounter Tab Content *@
+                <div aria-labelledby="encounter-tab" class="tab-pane active" id="encountertab" role="tabpanel">
+                    <div class="card">
+                        <div class="card-header bg-primary text-white">
+                            <h4>Edit Encounter Information</h4>
+                        </div>  <!-- close the card-header -->
+                        <div class="card-body bg-light">
+                            <div class="container">
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                <input asp-for="@Model.Mrn" name="MRN" type="hidden" value="@ViewBag.Patient.Mrn" />
+                                <div class="row">
+                                    <div class="col-sm-12 col-lg-4 form-group form-inline">
+                                        <label class="mr-1" style="padding-right: 1em">Admission Date Time:</label>
+                                        <input class="form-control" 
+                                            type="datetime-local" 
+                                            asp-for="@Model.AdmitDateTime" 
+                                            name="AdmitDateTime"
+                                            value="@Model.AdmitDateTime.ToString("yyyy-MM-ddTHH:mm")"/>
+                                        <span asp-validation-for="AdmitDateTime" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-sm-12 col-lg-4">
+                                        <label>Facility: </label>
+                                        <span class="font-weight-bold ml-2">@ViewBag.Patient.Facility.Name</span>
+                                    </div>
+                                    <div class="col-sm-12 col-lg-4">
+                                        <input asp-for="@Model.FacilityRegistryOptInOut" name="FacilityRegistryOptInOut" class="form-check form-check-inline" />
+                                        <label class="form-check-label" asp-for="@Model.FacilityRegistryOptInOut">Facility Registry Opt Out</label>
+                                    </div>
+                                </div>  <!-- close the row -->
+                                <hr />
+                                <div class="row">
+                                    <div class="col-sm-12 col-lg-4">
+                                        <label>Department*</label>
+                                        <select class="form-control dropdowns" asp-for="@Model.DepartmentId" asp-items="ViewBag.Departments">
+                                            <option value="">Select Unit</option>
+                                        </select>
+                                        <span asp-validation-for="DepartmentId" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-sm-12 col-lg-4">
+                                        <label>Room Number*</label>
+                                        <input asp-for="@Model.RoomNumber" name="RoomNumber" id="roomNumber" class="form-control roomNumber" />
+                                        <span id="roomNumberError" class="error"></span>
+                                    </div>
+                                </div>  <!-- close the row -->
+                                <hr />
+                                <div class="row">
+                                    <div class="col-12">
+                                        <label>Chief Complaint*</label>
+                                        <textarea asp-for="@Model.ChiefComplaint" name="ChiefComplaint"
+                                            class="form-control w-100" type="text" rows="3"></textarea>
+                                        <span asp-validation-for="ChiefComplaint" class="text-danger"></span>
+                                    </div>
+                                </div>  <!-- close the row -->
+                                <hr />
+                                <div class="row">
+                                    <div class="col-sm-12 col-lg-4">
+                                        <label>Patient Type*</label>
+                                        <select class="form-control dropdowns" id="EncounterTypeId" asp-for="@Model.EncounterTypeId" asp-items="ViewBag.EncounterTypes">
+                                            <option value="">Select Patient Type*</option>
+                                        </select>
+                                        <span asp-validation-for="EncounterTypeId" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-sm-12 col-lg-4">
+                                        <label>Place of Service*</label>
+                                        <select class="form-control dropdowns" id="PlaceOfServiceId" asp-for="@Model.PlaceOfServiceId" asp-items="ViewBag.PlacesOfService">
+                                            <option value="">Select Place of Service</option>
+                                        </select>
+                                        <span asp-validation-for="PlaceOfServiceId" class="text-danger"></span>
+                                    </div>
+                                </div>  <!-- close the row -->
+                                <hr />
+                                <div class="row">
+                                    <div class="col-sm-12 col-lg-4">
+                                        <label>Point of Origin*</label>
+                                        <select class="form-control dropdowns" asp-for="@Model.PointOfOriginId" asp-items="ViewBag.PointsOfOrigin">
+                                            <option value="">Select Point of Origin</option>
+                                        </select>
+                                        <span asp-validation-for="PointOfOriginId" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-sm-12 col-lg-4">
+                                        <label>Admit Type*</label>
+                                        <select class="form-control dropdowns" asp-for="@Model.AdmitTypeId" asp-items="ViewBag.AdmitTypes">
+                                            <option value="">Select Admit Type</option>
+                                        </select>
+                                        <span asp-validation-for="AdmitTypeId" class="text-danger"></span>
+                                    </div>
+                                </div>  <!-- close the row -->
+                                <hr />
+                                <div class="row">
+                                    <div class="col-sm-12 col-lg-4 pb-3">
+                                        <label>Admitting Provider*</label>
+                                        <select class="form-control dropdowns" asp-for="@Model.admittingProviderId" asp-items="ViewBag.Physician">
+                                            <option value="">Select Admitting Provider</option>
+                                        </select>
+                                        <span asp-validation-for="admittingProviderId" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-sm-12 col-lg-4 pb-3">
+                                        <label>Attending Provider*</label>
+                                        <select class="form-control dropdowns" asp-for="@Model.attendingProviderId" asp-items="ViewBag.Physician">
+                                            <option value="">Select Attending Provider</option>
+                                        </select>
+                                        <span asp-validation-for="attendingProviderId" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-sm-12 col-lg-4 pb-3">
+                                        <label>Emergency Provider</label>
+                                        <select class="form-control dropdowns" asp-for="@Model.emergencyProviderId" asp-items="ViewBag.Physician">
+                                            <option value="">Select Emergency Provider</option>
+                                        </select>
+                                        <span asp-validation-for="emergencyProviderId" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-sm-12 col-lg-4 pb-3">
+                                        <label>Primary Care Provider</label>
+                                        <select class="form-control dropdowns" asp-for="@Model.primaryProviderId" asp-items="ViewBag.Physician">
+                                            <option value="">Select Primary Care Provider</option>
+                                        </select>
+                                        <span asp-validation-for="primaryProviderId" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-sm-12 col-lg-4 pb-3">
+                                        <label>Referring Provider</label>
+                                        <select class="form-control dropdowns" asp-for="@Model.referringProviderId" asp-items="ViewBag.Physician">
+                                            <option value="">Select Referring Provider</option>
+                                        </select>
+                                        <span asp-validation-for="referringProviderId" class="text-danger"></span>
+                                    </div>
+                                </div>  <!-- close the row -->
+                            </div>  <!-- close the container -->
+                        </div>  <!-- close the card-body --> 
+                    </div>  <!-- close the card for the Encounter tab -->
+                </div>  <!-- close the encounter-tab div -->
+                @*  end of the Encounter Information Content section  *@
+
+                @*  begin section for the Discharge Tab Content *@
+                <div aria-labelledby="discharge-tab" class="tab-pane" id="dischargetab" role="tabpanel">
+                    <div class="card">
+                        <div class="card-header bg-primary text-white">
+                            <h4>
+                                Discharge Information - @Model.EncounterId
+
+                                @if (userPermissions != null && (userPermissions.Contains("EncounterDischarge")) )
+                                {
+                                    <a asp-action="DischargeEncounter"
+                                        asp-route-encounterId="@Model.EncounterId"                       
+                                        class="btn btn-info float-right">
+                                        @(ViewBag.IsEncounterDischarged ? "Edit Discharge Information" : "Discharge")
+                                    </a>
+                                }
+                            </h4>
+                        </div>  <!-- close the card-header -->
+                        <div class="card-body bg-light">
+                            <div class="container">
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                <input asp-for="@Model.EncounterId" name="EncounterId" type="hidden" value="@Model.EncounterId" />
+                                <input asp-for="AdmitDateTime" name="AdmitDateTime" type="hidden" value="@Model.AdmitDateTime" />
+                                <div class="row">
+                                    <div class="col-sm-12 col-lg-12">
+                                        <label>Discharge Date Time (XX/XX/XXXX 00:00 AM/PM)</label>
+                                        <span class="font-weight-bold"></span>
+                                    @(Model.DischargeDateTime.HasValue ? Model.DischargeDateTime.Value.ToString("M/d/yyyy h:mm tt") : "")</span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12 col-lg-12">
+                                        <label>Discharge Disposition</label>
+                                        <span class="font-weight-bold">@(Model.encounter.DischargeDispositionNavigation is null ? "" : Model.encounter.DischargeDispositionNavigation.Name)</span>
+                                    </div>
+                                </div>  <!-- close the row -->
+                                <div class="row">
+                                    <div class="col-sm-12 col-lg-12">
+                                        <label>Discharge Notes</label>
+                                        <span class="font-weight-bold">@Model.DischargeComment</span>
+                                    </div>
+                                </div>  <!-- close the row -->
+                                <hr />
+                            </div>  <!-- close the container -->
+                        </div>  <!-- close the card-body -->
+                    </div>  <!-- close the card -->
+                </div>  <!-- close the discharge-tab div -->
+                @*  end section for the Discharge Tab Content *@
+
+                <button class="btn btn-primary btn-block" id="btnCreateEncounter" type="submit">Update Encounter</button>
+                <h3 id="validation-failed-message" class="text-center font-weight-bold text-danger border border-danger mt-3 py-2 d-none">Save Failed: Review and resolve errors to continue.
+                </h3>
+                <a href="javascript: history.go(-1)" class="btn btn-cancel mt-3">
+                    Cancel
+                </a>
+            </div>  <!-- close the tab-content div -->
+        </form> <!-- close the form -->
+    </div>  <!-- close the column -->
+</div>  <!-- close the row -->
+
+<style>
+    input.roomNumber.error::placeholder {
+        color: red !important;
+        opacity: 1; /* Ensure the placeholder is fully visible */
+    }
+
+    input.roomNumber.error:focus {
+        color: red;
+        background-color: white;
+        box-shadow: 0 0 0 0.2rem red;
+    }
+
+    input.roomNumber.error {
+        color: red;
+    }
+</style>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script src="~/js/encounter.js"></script>
+}

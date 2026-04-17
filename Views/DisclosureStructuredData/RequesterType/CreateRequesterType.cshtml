@@ -1,0 +1,48 @@
+@model IS_Proj_HIT.ViewModels.DisclosureStructuredData.DisclosureStructuredDataViewModel
+@{
+    ViewBag.Title = "Create Requester Type";
+}
+
+<h1>Create</h1>
+
+<h4>Requester Type</h4>
+<hr />
+
+<div class="row">
+    <div class="col-md-10">
+        <form method="post">
+            @Html.AntiForgeryToken()
+            <div class="form-row">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group col-sm-6">
+                    <label asp-for="RequesterType.RequesterType1" class="control-label">Requester Type Name</label>
+                    <input asp-for="RequesterType.RequesterType1" 
+                        class="form-control" maxlength="50" required
+                        placeholder="Example:  Law Firm" />
+                    <span asp-validation-for="RequesterType.RequesterType1" class="text-danger"></span>
+                </div>
+                <div class="form-group col-sm-6">
+                    <label asp-for="RequesterType.RequesterTypeDescription" class="control-label">Description of Requester Type</label>
+                    <input asp-for="RequesterType.RequesterTypeDescription" 
+                        class="form-control" maxlength="100"  
+                        placeholder="Example:  The Requester is a law Firm or legal entity"/>
+                    <span asp-validation-for="RequesterType.RequesterTypeDescription" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                </div>
+
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<div>
+    <a asp-controller="DisclosureStructuredData" asp-action="ViewRequesterTypes">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

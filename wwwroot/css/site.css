@@ -1,0 +1,776 @@
+﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
+for details on configuring this project to bundle and minify static web assets. */
+
+a.navbar-brand {
+    white-space: normal;
+    text-align: center;
+    word-break: break-all;
+}
+a.navbar-brand:hover {
+    /* background-color: black; */
+    color: white;
+}
+
+.menuLink {
+    color: #46546C;
+    font-weight: bold;
+}
+
+.menuLink:hover {
+    color: #172330;
+}
+
+.currentMenuLink {
+    color:  #18BC9C;
+    font-weight: bold;
+}
+
+.menuListBullet {
+    position: relative;
+    left: 12px;
+    padding-top: 0px;
+    margin-bottom: -1px;
+}
+
+.menuListItem {
+    margin-left: -1em;
+    font-size: small;
+    font-weight: bold;
+}
+
+figure {
+    display: inline-block;
+    vertical-align: top;
+    margin: 5px;
+    padding: 0;
+}
+
+figure img {
+    vertical-align: top;
+    width:100%;
+}
+
+figure figcaption {
+    text-align: right;
+    font-size: small;
+    padding: 5px;
+}
+
+/* this removes the scroll wheel from number inputs.  */
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
+
+.tooltip-inner {
+    text-align: left !important;
+    font-size: medium;
+}
+
+.error {
+    color: red;
+}
+
+.iconButton {
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    float: left;
+}
+
+.red {
+    color: red;
+    font-weight: bold;
+}
+
+.radio-toolbar table label {
+    cursor: pointer;
+}
+.radio-toolbar td {
+    margin: 0;
+    padding:0;
+}
+.radio-toolbar input[type="radio"] {
+    opacity: 0;
+}
+radio-toolbar label {
+    display: inline-block;
+    color: black;
+}
+.radio-toolbar input[type="radio"]:not(checked) + label {
+    color: black;
+    background-color: white;
+    border-radius: .25em;
+    padding: 20px 20px;
+}
+.radio-toolbar input[type="radio"]:checked + label {
+    color: white;
+    background-color: #2C3E50;
+    border-radius: .25em;
+    padding: 20px 20px;
+}
+.radio-toolbar input[type="radio"]:focus + label {
+    color: white;
+    background-color: #2C3E50;
+    border-radius: .25em;
+    padding: 20px 20px;
+}
+.radio-toolbar label:hover {
+    color: white;
+    background-color: #2C3E50;
+    border-radius: .25em;
+    padding: 20px 20px;
+}
+.radio-toolbar input[type="radio"]:not(checked):hover + label {
+    color: palegoldenrod;
+    background-color: #2C3E50;
+    border-radius: .25em;
+    padding: 20px 20px;
+}
+
+.takeawayborder {
+    border: none;
+}
+
+#mrn {
+    text-align: center;
+    border: none;
+}
+
+.mrn {
+    font-size: large;
+    font-weight: bold;
+}
+
+.noborder {
+    border: 0;
+}
+
+.heading{
+    font-weight:bold;
+}
+
+#message{
+    color: red;
+}
+
+.container {
+    font-size: 18px;
+    min-width: 95%;
+}
+
+.m-b-0 {
+    margin-bottom: 0;
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+    font-size: 14px;
+}
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+.border-top {
+  border-top: 1px solid #e5e5e5;
+}
+.border-bottom {
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.box-shadow {
+  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+}
+
+button.accept-policy {
+  font-size: 1rem;
+  line-height: inherit;
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  /* Margin bottom by footer height */
+  margin-bottom: 60px;
+}
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  white-space: nowrap;
+  /* Set the fixed height of the footer here */
+  height: 60px;
+  line-height: 60px; /* Vertically center the text there */
+}
+
+#detailsArea{
+    display:none;
+}
+
+#patientEditGroup {
+    display: none;
+}
+
+#patientDetailsGroup{
+    display:block;
+}
+
+#formatSsnAndSubmitForm {
+    display: none;
+}
+
+.wide {
+    width: 100%;
+}
+
+.alertColor {
+    color: crimson
+}
+
+.widely{
+    min-width: 100%;
+}
+
+.linky {
+    cursor: pointer;
+    text-decoration: dashed; 
+    color: white !important;
+}
+
+#longer {
+    width: 250px;
+}
+
+.modal-header {
+    
+    color: white;
+}
+
+button#modalButton:active{
+    background: #FFFFFF;
+    color: black;
+}
+
+/* legacy custom modals ONLY (opt-in) */
+.modal.modal-offset {
+   position: fixed;
+   top: 15em;
+   right: 6em;
+   bottom: 0;
+   left: 0;
+   z-index: 10040;
+   overflow: auto;
+   overflow-y: auto;
+   color: black;
+}
+
+
+th #classDate:hover{
+    color: #3498DB;
+}
+
+.attribution {
+    text-align: right;
+    font-size: small;
+}
+
+
+/* The Close Button */
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: orange;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* PCA Detail Page Styles */
+#myTabContent dl {
+    margin-bottom: 0;
+}
+
+#myTab {
+    background-color: transparent !important;
+    border: 1px solid #ecf0f1 !important;
+}
+
+#myTab .nav-link:hover, #myTab .nav-link.active {
+    background-color: #2C3E50 !important;
+    color: #FFFFFF !important;
+}
+
+/*
+#myTab .nav-link {
+    color: #3498DB !important;
+}
+ */
+
+/* Phone display */
+@media only screen and (max-width: 42em) {
+    figure {
+        margin: 2px;
+    }
+
+    figure img {
+        vertical-align: top;
+        width: 300px;
+    }
+    figure figcaption {
+        display: none;
+    }
+
+     table, thead, tbody, th, td, tr { 
+		display: block; 
+	}
+	
+    /* thead tr { 
+		position: absolute;
+		top: -9999px;
+		left: -9999px;
+	}
+	
+	tr { border: 1px solid #ccc; }
+    
+    td { 
+		
+		border: none;
+		border-bottom: 1px solid #eee; 
+		position: relative;
+		padding-left: 50%; 
+	} 
+	
+	td:before {  
+		position: absolute; 
+		top: 6px;
+		left: 6px;
+		width: 45%; 
+		padding-right: 10px; 
+		white-space: nowrap;
+	} */
+	 
+}
+
+.m {
+    margin: 10px;
+}
+.m-l {
+    margin-left: 10px;
+}
+.m-r {
+    margin-right: 10px;
+}
+.m-t {
+    margin-top: 10px;
+}
+.m-b {
+    margin-bottom: 10px;
+}
+
+.w-90 {
+    width: 90% !important;
+}
+
+.hidden-row {
+    display: none;
+}
+
+/* Patient Form Custom Checkboxes */
+input#interp {
+width: 0;
+height: 0;
+}
+
+.box {
+    width: 17px;
+    height: 17px;
+    top: 5px;
+    color: white;
+    border: 1px solid gray;
+    position: absolute;
+    background-color: white;
+    border-radius: 2px;
+    margin-left: 5px;
+}
+
+.box:hover {
+    cursor: pointer;
+}
+
+.checkboxcontainer input:checked ~ .box {
+    background-color: #00BFFF;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.box:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the checkmark when checked */
+.checkboxcontainer input:checked ~ .box:after {
+  display: block;
+}
+
+.checkboxcontainer .box:after {
+    left: 6px;
+    top: 3px;
+    width: 4px;
+    height: 8px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+input[type=checkbox]:hover {
+    cursor: pointer;
+}
+
+td input[type="checkbox"] {
+    float: left;
+    margin: 0 auto;
+    width: 100%;
+}
+
+table {
+    border: 1px solid;
+}
+
+tr:nth-of-type(odd) { 
+    background: #eee; 
+  }
+  th { 
+    background: #333; 
+    color: white; 
+    font-weight: bold; 
+  }
+
+td, th { 
+    padding: 6px; 
+    border: 1px solid #ccc; 
+    text-align: left; 
+  }
+
+.encounter-del-btn {
+    margin-right: 15px;
+}
+
+.pagination a {
+    position: relative;
+  display: block;
+  padding: 0.5rem 0.75rem;
+  margin-left: 0;
+  line-height: 1.25;
+  color: #fff;
+  background-color: #18BC9C;
+  border: 2px solid white;
+}
+
+.pagination a:hover {
+    z-index: 2;
+    color: #fff;
+    text-decoration: none;
+    background-color: #0f7864;
+    border-color: transparent;
+}   
+/*
+.currentPage {
+    z-index: 2;
+    color: #fff;
+    text-decoration: none;
+    background-color: #0f7864;
+    border-color: transparent;
+}*/
+.pagination.active {
+    z-index: 1;
+    color: #fff;
+    background-color: #0f7864;
+    border-color: transparent;
+  }
+
+.rotate-90-degrees {
+    transform: rotate(90deg);
+}
+
+.pagination .page-link {
+    position: relative;
+    display: block;
+    padding: 0.5rem 0.75rem;
+    margin-left: 0;
+    line-height: 1.25;
+    color: #fff;
+    background-color: #2C3E50;
+    border: 1px solid #44546A;
+}
+
+.pagination .page-link:hover {
+    z-index: 2;
+    color: #fff;
+    text-decoration: none;
+    background-color: #1e2b37;
+    border-color: #44546A;
+}
+
+.pagination .page-item.active .page-link {
+    z-index: 3;
+    color: #fff;
+    background-color: #18BC9C; 
+    border-color: #18BC9C;
+}
+
+.pagination .page-item.disabled .page-link {
+    color: #6c757d;
+    pointer-events: none;
+    cursor: default;
+    background-color: #fff;
+    border-color: #dee2e6;
+}
+
+.pagination .page-link:focus {
+    z-index: 3;
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(44, 62, 80, 0.25);
+}
+
+/*
+Patient pages styling
+ */
+
+.patient-data fieldset{
+    margin-top:  1rem;
+}
+
+.patient-data .tab-content .tab-pane{
+    padding:  1.25rem;
+}
+
+.patient-data legend {
+    margin-left:  -0.5rem;
+}
+
+.patient-data .nav-tabs .nav-link.active{
+    /* Primary color w/ light text - got colors from bootstrap.css */
+    background-color: #2C3E50;
+    color: #ecf0f1;
+}
+
+.patient-data .nav-tabs .nav-link.active:hover, .nav-tabs .nav-link.active:focus{
+    background-color: #1e2b37;
+    color: #ecf0f1;
+}
+
+.patient-data .nav-link{
+    /* Lighter Primary color w/ light text - got light color from bootstrap.css*/
+    background-color: #465769;
+    color: #ecf0f1;
+}
+
+.patient-data .nav-link:hover{
+    background-color: #354556;
+}
+
+.patient-data .tab-content{
+    border: solid #2C3E50 1px;
+    border-radius: 0 10px 10px 10px;
+}
+
+.patient-data .remove-item-btn{
+    border-radius: 100%;
+}
+
+.patient-data .data{
+    font-weight: bold;
+}
+
+
+/* --------------- BUTTONS -------------- */
+/* nav buttons */
+.btn-nav{
+    color: #46546C;
+    background-color: #D9D9D9;
+    border-color: #44546A;
+}
+.btn-nav:hover{
+    color: #46546C;
+    background-color: #C7C7C7;
+    border-color: #44546A;
+}
+
+/* delete buttons */
+.btn-danger {
+    color: #F2F2F2;
+    background-color: #C00000;
+    border-color: #44546A;
+}
+.btn-danger:hover {
+    color: #F2F2F2;
+    background-color: #AD0000;
+    border-color: #44546A;
+}
+
+/* cancel buttons */
+.btn-cancel {
+    color: #F2F2F2;
+    background-color: #C55A11;
+    border-color: #44546A;
+}
+.btn-cancel:hover {
+    color: #F2F2F2;
+    background-color: #AB4E0F;
+    border-color: #44546A;
+}
+
+/* create buttons */
+.btn-create {
+    color: #46546C;
+    background-color: #FFFFFF;
+    border-color: #44546A;
+}
+.btn-create:hover{
+    color: #FFFFFF;
+    background-color: #44546A;
+    border-color: #44546A;
+}
+
+/* signature pad css */
+canvas#signature {
+    border: 2px solid black;
+  }
+
+.form-control.input-validation-error{
+    outline: red;
+    border-color: red;
+    border: 2px solid red;
+}
+
+/* ---------------Disclosure Pages Styles -------------- */
+.requestDetailData {
+    background-color: #2C3E50;
+    color: #ecf0f1;
+}
+
+.accordion-checkmark {
+    font-size: 1.5rem;
+    color: #28a745;
+    opacity: 0;
+    transform: scale(0.8);
+    transition: all 0.3s ease-in-out;
+}
+
+.accordion-checkmark.show {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* Circular info "i" icon that works on light/dark headers */
+#laborAccordion .info-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 1px solid currentColor;
+  font-size: 12px;
+  line-height: 1;
+  font-weight: 700;
+  margin-left: 6px;
+  color: #007bff;        /* Bootstrap primary */
+  cursor: pointer;
+  text-decoration: none;
+}
+
+/* Disable look for "None of the above" toggle */
+#laborAccordion .option-disabled { opacity: .55; pointer-events: none; }
+
+/* Ensure checkmark visibility and spacing */
+#laborAccordion .accordion-checkmark {
+  font-size: 1.15rem;
+}
+
+.custom-header {
+  color: white;
+}
+
+.custom-header .btn-block {
+  color: white;
+  font-size: 1em;
+}
+
+/* Birth Registry tabs: force single-line labels */
+#birthRegistryTabs .nav-link {
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+/* Optional: slightly reduce font size if space is tight */
+#birthRegistryTabs .nav-link {
+    font-size: 0.95rem;
+}
+
+/* Mother Lookup Modal styling */
+
+#motherLookupModal .modal-content {
+  border: 2px solid #1b2b38 !important;
+  border-radius: 4px !important;
+  overflow: hidden !important;
+}
+
+#motherLookupModal .modal-header {
+  background: #2f4557 !important;
+  color: #fff !important;
+  border-bottom: none !important;
+  padding: 18px 20px !important;
+}
+
+#motherLookupModal .modal-title {
+  font-size: 44px !important;
+  font-weight: 300 !important;
+  line-height: 1 !important;
+}
+
+#motherLookupModal .modal-body {
+  background: #eef2f5 !important;
+  padding: 18px 20px !important;
+}
+
+#motherLookupModal .modal-body .form-control {
+  height: 48px !important;
+  font-size: 18px !important;
+  border-radius: 4px !important;
+}
+
+#motherLookupModal .modal-footer {
+  background: #eef2f5 !important;
+  border-top: none !important;
+  padding: 0 20px 20px !important;
+}
+
+#motherLookupModal .modal-footer .btn.btn-dark {
+  width: 100% !important;
+  height: 56px !important;
+  font-size: 22px !important;
+  background: #2f4557 !important;
+  border: 2px solid #1b2b38 !important;
+  border-radius: 4px !important;
+}

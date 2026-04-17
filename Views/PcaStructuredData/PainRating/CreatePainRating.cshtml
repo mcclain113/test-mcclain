@@ -1,0 +1,56 @@
+@model IS_Proj_HIT.ViewModels.PcaStructuredDataViewModel
+@{
+    ViewBag.Title = "Create Pain Rating";
+    var userPermissions = ViewData["UserPermissions"] as List<string>;
+}
+
+<h1>Create</h1>
+
+<h4>Pain Rating</h4>
+<hr />
+
+<div class="row">
+    <div class="col-md-10">
+        <form method="post">
+            @Html.AntiForgeryToken()
+            <div class="form-row">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group col-sm-6">
+                    <label asp-for="PainRating.Value" class="control-label">Value</label>
+                    <input asp-for="PainRating.Value" type="number"
+                        class="form-control" required/>
+                    <span asp-validation-for="PainRating.Value" class="text-danger"></span>
+                </div>
+                <div class="form-group col-sm-6">
+                    <label asp-for="PainRating.PainParameterId" class="control-label">Select Pain Parameter</label>
+                    <select asp-for="PainRating.PainParameterId" class="form-control" asp-items="ViewBag.PainParameterId" required data-val-required="A Pain Parameter selection is required"></select>
+                    <span asp-validation-for="PainRating.PainParameterId" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-12">
+                    <label asp-for="PainRating.Description" class="control-label">Pain Rating Description</label>
+                    <textarea asp-for="PainRating.Description" class="form-control" rows="4" maxlength="200" placeholder="Enter description here..." required></textarea>
+                <span asp-validation-for="PainRating.Description" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-row">            
+                <div class="form-group">
+                    @if (userPermissions != null && (userPermissions.Contains("StructuredDataAdd")) )
+                    {               
+                        <input type="submit" value="Create" class="btn btn-primary" />
+                    }
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<div>
+    <a asp-controller="PcaStructuredData" asp-action="ViewPainRatings">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

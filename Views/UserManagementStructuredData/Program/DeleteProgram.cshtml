@@ -1,0 +1,45 @@
+@model IS_Proj_HIT.ViewModels.UserManagement.UserManagementStructuredDataViewModel
+@{
+    ViewBag.Title = "Delete Program";
+}
+
+<h1>Delete</h1>
+
+<h3>@ViewData["RegularMessage"]</h3>
+<h3 class="error">@ViewData["ErrorMessage"]</h3>
+
+<h4>Program</h4>
+<hr />
+
+<div class="row">
+    <div class="col-md-10">
+        <form method="post">
+            @Html.AntiForgeryToken()
+            <div class="form-row">
+                
+                <input type="hidden" asp-for="Program.ProgramId" value="@Model.Program.ProgramId" readonly/>
+
+                <div class="form-group col-sm-6">
+                    <label asp-for="Program.Name" class="control-label">Program Name</label>
+                    <input asp-for="Program.Name" class="form-control"  />
+                    
+                </div>
+                <div class="form-group col-sm-6">
+                    <label asp-for="Program.IsActive" class="control-label">Program Status</label>
+                    <select asp-for="Program.IsActive" class="form-control"> 
+                        <option value="true" selected="@(Model.Program.IsActive == true)">Active</option> 
+                        <option value="false" selected="@(Model.Program.IsActive == false)">Inactive</option> 
+                    </select>
+                    
+                </div>
+
+                <div class="form-group">
+                    <a asp-controller="UserManagementStructuredData" asp-action="ViewPrograms" class="btn btn-outline-danger">Discard Changes</a>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Delete Item" class="ml-3 btn btn-primary" />
+                </div>
+            </div>            
+        </form>
+    </div>
+</div>

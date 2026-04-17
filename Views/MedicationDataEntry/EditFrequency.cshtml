@@ -1,0 +1,46 @@
+@model IS_Proj_HIT.Entities.MedicationFrequency
+@{
+    ViewBag.Title = "Edit Frequency";
+}
+
+<h1>Edit</h1>
+
+
+<h4>Frequency</h4>
+<hr />
+<div class="row">
+    <div class="col-md-10">
+        <form method="post">
+            @Html.AntiForgeryToken()
+            <div class="form-row">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="MedicationFrequencyId" value="@Model.MedicationFrequencyId" readonly/>
+                <div class="form-group col-sm-6">
+                    <label asp-for="FrequencyDescription" class="control-label">Frequency Description</label>
+                    <input asp-for="FrequencyDescription" type="text" class="form-control" autocomplete="off" required/>
+                    <span asp-validation-for="FrequencyDescription" class="text-danger"></span>
+                </div>
+                <div class="form-group col-sm-6">
+                    <label asp-for="FrequencyCode" class="control-label">Frequency Code</label>
+                    <input asp-for="FrequencyCode" type="text" class="form-control" autocomplete="off" required/>
+                    <span asp-validation-for="FrequencyDescription" class="text-danger"></span>
+                </div>
+                @if (ViewBag.ErrorMessage != null) {
+                    <div class="form-group col-12">
+                        <span class="text-danger">@ViewBag.ErrorMessage</span>
+                    </div>
+                }
+                <div class="form-group">
+                    <a asp-controller="MedicationDataEntry" asp-action="ViewFrequencies" class="btn btn-outline-danger">Discard Changes</a>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Save Changes" class="ml-3 btn btn-primary" />
+                </div>
+            </div>            
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

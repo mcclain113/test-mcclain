@@ -1,0 +1,119 @@
+@model IS_Proj_HIT.ViewModels.DocumentViewModel
+@{
+    var userPermissions = ViewData["UserPermissions"] as List<string>;
+    var docType = ViewData["docType"] as int?;
+}
+<!-- When docType has value, the view is set for the Encounter Menu, LABS & DIAGNOSTICS links display; otherwise it is set for display as either PATIENT DOCUMENTS (from the Patient Menu) or ENCOUNTER DOCUMENTS  -->
+@if(docType.HasValue)
+{
+    <tr>
+        <td>@Model.DocumentDescription</td>
+        <td>@Model.Notes</td>
+        <td>@Model.CreatedAt</td>
+        <td class="col">
+            @if( (Model.EncounterId != null && userPermissions != null && userPermissions.Contains("EncounterDocumentView") )  ||      (userPermissions != null && userPermissions.Contains("PatientDocumentView")) )
+            {
+                <div class="row mx-auto mb-1">
+                    @if (Model.IsImage)
+                    {
+                        <a href="@Url.Action("DownloadDocument", "Document", new { id = Model.DocumentId })">
+                            <i class="fas fa-download mr-1" aria-hidden="true"></i>
+                            JPG
+                        </a>
+                    }
+                    else if (Model.FileType.ToLower() == "pdf")
+                    {
+                        <a href="@Url.Action("DownloadDocument", "Document", new { id = Model.DocumentId })"
+                        target="_blank">
+                        <i class="fas fa-download mr-1" aria-hidden="true"></i>
+                            PDF
+                        </a>
+                    }
+                    else
+                    {
+                        <a href="@Url.Action("DownloadDocument", "Document", new { id = Model.DocumentId })">
+                            <i class="fas fa-download mr-1" aria-hidden="true"></i>
+                            Download
+                        </a>
+                    }
+                    
+                </div>
+            }
+            @if( (Model.EncounterId != null && userPermissions != null && userPermissions.Contains("EncounterDocumentView") )  ||      (userPermissions != null && userPermissions.Contains("PatientDocumentView")) )
+            {
+                <div class="row mx-auto mb-1">
+                    <button 
+                        type="button"
+                        class="btn btn-nav btn-document-details"
+                        data-id="@Model.DocumentId"
+                        data-doc-type="@(docType.HasValue ? docType.Value.ToString() : "")">
+                        View
+                    </button>
+                </div>
+            }
+            
+        </td>
+    </tr>
+}
+else
+{
+    <tr>
+        <td>@Model.DocumentTypeName</td>
+        <td>@Model.CreatedAt</td>
+        <td>@Model.DocumentDescription</td>
+        <td class="col">
+            @if( (Model.EncounterId != null && userPermissions != null && userPermissions.Contains("EncounterDocumentView") )  ||      (userPermissions != null && userPermissions.Contains("PatientDocumentView")) )
+            {
+                <div class="row mx-auto mb-1">
+                    @if (Model.IsImage)
+                    {
+                        <a href="@Url.Action("DownloadDocument", "Document", new { id = Model.DocumentId })">
+                            <i class="fas fa-download mr-1" aria-hidden="true"></i>
+                            JPG
+                        </a>
+                    }
+                    else if (Model.FileType.ToLower() == "pdf")
+                    {
+                        <a href="@Url.Action("DownloadDocument", "Document", new { id = Model.DocumentId })"
+                        target="_blank">
+                        <i class="fas fa-download mr-1" aria-hidden="true"></i>
+                            PDF
+                        </a>
+                    }
+                    else
+                    {
+                        <a href="@Url.Action("DownloadDocument", "Document", new { id = Model.DocumentId })">
+                            <i class="fas fa-download mr-1" aria-hidden="true"></i>
+                            Download
+                        </a>
+                    }
+                    
+                </div>
+            }
+            @if( (Model.EncounterId != null && userPermissions != null && userPermissions.Contains("EncounterDocumentView") )  ||      (userPermissions != null && userPermissions.Contains("PatientDocumentView")) )
+            {
+                <div class="row mx-auto mb-1">
+                    <button 
+                        type="button"
+                        class="btn btn-nav btn-document-details"
+                        data-id="@Model.DocumentId">
+                        Details
+                    </button>
+                </div>
+            }
+            @if( (Model.EncounterId != null && userPermissions != null && userPermissions.Contains("EncounterDocumentDelete") )  ||      (userPermissions != null && userPermissions.Contains("PatientDocumentDelete")) )
+            {
+                <div>
+                    <form asp-action="DeleteDocument" asp-controller="Document" method="post">
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" name="DocumentId" value="@Model.DocumentId"/>
+                        <button type="submit" class="btn btn-danger mx-auto"
+                            onclick="return confirm('Are you sure you want to delete this document?');">
+                            Delete
+                        </button>
+                    </form>
+                </div>
+            }
+        </td>
+    </tr>
+}

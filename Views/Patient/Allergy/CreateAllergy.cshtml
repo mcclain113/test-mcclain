@@ -1,0 +1,19 @@
+@model IS_Proj_HIT.ViewModels.Allergy.CreateAllergyViewModel
+@{
+    ViewData["Title"] = "Create Allergy";
+    var allergenList = new SelectList(Model.Allergens, "AllergenId", "AllergenName");
+    var reactionList = new SelectList(Model.Reactions, "ReactionId", "Name");
+    var medicationList = new SelectList(Model.MedicationGenericNames, "MedicationGenericId", "GenericName");
+}
+
+<partial name="PatientBannerPartial" model="ViewBag.Patient" class="mw-100" />
+<partial name="_PatientMenu" model="ViewBag.Patient" />
+
+<div class="row justify-content-start">
+    <div class="col mx-0 px-0">
+        <div class="card">
+            @await Html.PartialAsync("Allergy/_CreateAllergyPartial", Model)
+            @Html.AntiForgeryToken()
+        </div>
+    </div>
+</div>

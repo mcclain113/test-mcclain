@@ -1,0 +1,209 @@
+@model IS_Proj_HIT.ViewModels.BirthRegistry.LaborAndDeliveryViewModel
+
+@functions {
+    string TextById(List<SelectListItem> list, int? id)
+    {
+        if (!id.HasValue || list == null) return "Not recorded";
+        var item = list.FirstOrDefault(x => x.Value == id.Value.ToString());
+        return string.IsNullOrWhiteSpace(item?.Text) ? "Not recorded" : item.Text;
+    }
+
+    IEnumerable<string> TextsByIds(List<SelectListItem> list, IEnumerable<int> ids)
+    {
+        if (list == null || ids == null) return Enumerable.Empty<string>();
+        return ids
+        .Select(id => list.FirstOrDefault(x => x.Value == id.ToString())?.Text)
+        .Where(t => !string.IsNullOrWhiteSpace(t));
+    }
+
+    string YesNo(bool? b) => b == true ? "Yes" : b == false ? "No" : "Not recorded";
+}
+
+<div class="card">
+    <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+        <h4 class="mb-0"><i class="fas fa-procedures mr-2"></i>Labor &amp; Delivery Information</h4>
+        <span class="badge badge-light text-dark">View Mode</span>
+    </div>
+
+    <div class="card-body" id="laborViewAccordion">
+
+        <div class="card mb-3">
+            <div class="card-header bg-primary text-white">
+                <button class="btn btn-block text-left text-white" type="button" data-toggle="collapse"
+                    data-target="#lv1" aria-expanded="true">
+                    <i class="fas fa-heartbeat"></i> 1. Characteristics of Labor &amp; Delivery
+                </button>
+            </div>
+            <div id="lv1" class="collapse show" data-parent="#laborViewAccordion">
+                <div class="card-body">
+                    @{
+                        var chosen = (Model?.SelectedCharacteristicIds != null && Model.SelectedCharacteristicIds.Any())
+                        ? TextsByIds(Model.CharacteristicsOfLabor, Model.SelectedCharacteristicIds)
+                        : Enumerable.Empty<string>();
+                        var showNone = Model?.NoCharacteristics == true || !chosen.Any();
+                    }
+
+                    <div class="form-group">
+                        <label class="font-weight-bold">Selected Characteristics</label>
+                        <div class="form-control-plaintext border p-2 bg-light">
+                            @if (Model?.NoCharacteristics == true)
+                            {
+                                @:NONE OF THE ABOVE
+                            }
+                            else if (Model?.SelectedCharacteristicIds != null &&
+                            Model.SelectedCharacteristicIds.Any())
+                            {
+                                <div class="d-flex flex-wrap">
+                                    @foreach (var id in Model.SelectedCharacteristicIds)
+                                    {
+                                        var item = Model.CharacteristicsOfLabor?
+                                        .FirstOrDefault(x => x.Value == id.ToString());
+                                        if (item != null)
+                                        {
+                                            <span class="badge badge-primary mb-1 mr-1">@item.Text</span>
+                                        }
+                                    }
+                                </div>
+                            }
+                            else
+                            {
+                                @:Not specified
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mb-3">
+            <div class="card-header bg-primary text-white">
+                <button class="btn btn-block text-left text-white collapsed" type="button" data-toggle="collapse"
+                    data-target="#lv2">
+                    <i class="fas fa-baby"></i> 2. Method of Delivery
+                </button>
+            </div>
+            <div id="lv2" class="collapse show" data-parent="#laborViewAccordion">
+                <div class="card-body">
+
+                    <div class="form-group">
+                        <label class="font-weight-bold">2.1 Fetal Presentation at Birth</label>
+                        <div class="form-control-plaintext border p-2 bg-light">
+                            @{
+                                var fpText = TextById(Model?.FetalPresentationAtBirths, Model?.FetalPresentationAtBirthId);
+                            }
+                            @if (!string.IsNullOrWhiteSpace(fpText) && fpText != "Not recorded")
+                            {
+                                <span class="badge badge-primary">@fpText</span>
+                            }
+                            else
+                            {
+                                @:Not recorded
+                            }
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="font-weight-bold">2.2 Final Route &amp; Method of Delivery</label>
+                        <div class="form-control-plaintext border p-2 bg-light">
+                            @{
+                                var routeText = TextById(Model?.FinalRouteAndMethodOfDeliveries,
+                                Model?.FinalRouteAndMethodId);
+                            }
+                            @if (!string.IsNullOrWhiteSpace(routeText) && routeText != "Not recorded")
+                            {
+                                <span class="badge badge-primary">@routeText</span>
+                            }
+                            else
+                            {
+                                @:Not recorded
+                            }
+                        </div>
+                    </div>
+
+                    <div class="form-group mb-0">
+                        <label class="font-weight-bold">2.3 Trial of Labor Before Cesarean</label>
+                        <div class="form-control-plaintext border p-2 bg-light">
+                            @{
+                                var trial = Model?.TrialOfLaborBeforeCesarean;
+                                var trialText = YesNo(trial);
+                                var badgeClass = trial == true
+                                ? "badge-success"
+                                : trial == false
+                                ? "badge-secondary"
+                                : "badge-warning";
+                            }
+                            <span class="badge @badgeClass">@trialText</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mb-0">
+            <div class="card-header bg-primary text-white">
+                <button class="btn btn-block text-left text-white collapsed" type="button" data-toggle="collapse"
+                    data-target="#lv3">
+                    <i class="fas fa-hospital"></i> 3. Maternal Morbidity
+                </button>
+            </div>
+            <div id="lv3" class="collapse show" data-parent="#laborViewAccordion">
+                <div class="card-body">
+                    @{
+                        var morbid = (Model?.SelectedMaternalMorbidityIds != null &&
+                        Model.SelectedMaternalMorbidityIds.Any())
+                        ? TextsByIds(Model.MaternalMorbidities, Model.SelectedMaternalMorbidityIds)
+                        : Enumerable.Empty<string>();
+                        var showNoneM = Model?.NoMaternalMorbidities == true || !morbid.Any();
+                    }
+
+                    <div class="form-group mb-0">
+                        <label class="font-weight-bold">Selected Maternal Morbidities</label>
+                        <div class="form-control-plaintext border p-2 bg-light">
+                            @if (Model?.NoMaternalMorbidities == true)
+                            {
+                                @:NONE OF THE ABOVE
+                            }
+                            else if (Model?.SelectedMaternalMorbidityIds != null &&
+                            Model.SelectedMaternalMorbidityIds.Any())
+                            {
+                                <div class="d-flex flex-wrap">
+                                    @foreach (var id in Model.SelectedMaternalMorbidityIds)
+                                    {
+                                        var item = Model.MaternalMorbidities?.FirstOrDefault(x => x.Value == id.ToString());
+                                        if (item != null)
+                                        {
+                                            <span class="badge badge-primary mb-1 mr-1">@item.Text</span>
+                                        }
+                                    }
+                                </div>
+                            }
+                            else
+                            {
+                                @:Not specified
+                            }
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<style>
+    #laborViewAccordion .card+.card {
+        margin-top: .75rem;
+    }
+
+    .form-control-plaintext {
+        background-color: #f8f9fa;
+        border-radius: .25rem;
+    }
+
+    .card-header button {
+        text-align: left;
+        width: 100%;
+        font-weight: 600;
+    }
+</style>

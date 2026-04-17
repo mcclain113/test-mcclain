@@ -1,0 +1,74 @@
+@model List<IS_Proj_HIT.Entities.RequestPriority>
+
+@{
+    ViewData["Title"] = "Disclosure Request Priority";
+}
+
+<div class="row my-3">
+<h3>
+    <a class="btn btn-primary" asp-controller="DisclosureStructuredData" asp-action="Index">
+        <i class="fa fa-arrow-left "></i>
+    </a>
+    Disclosure Request Priorities
+</h3>
+</div>
+
+<p>
+    <a class="btn btn-primary" asp-controller="DisclosureStructuredData" asp-action="CreateRequestPriority">Create New</a>
+</p>
+
+<table class="stripe nowrap" id="requestPriorityTable">
+    <thead>
+        <tr>
+            <th>
+                Id
+            </th>
+            <th>
+                Request Priority
+            </th>
+            <th>
+                Priority Description
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var requestPriority in Model)
+        {
+            <tr>
+                <td>
+                    @requestPriority.PriorityId
+                </td>
+                <td>
+                    @requestPriority.RequestPriority1
+                </td>
+                <td>
+                    @requestPriority.PriorityDescription
+                </td>
+                <td>
+                   
+                    <a class="btn btn-primary" asp-controller="DisclosureStructuredData" asp-action="EditRequestPriority" asp-route-id="@requestPriority.PriorityId">Edit</a>
+                    <a class="btn btn-danger" asp-controller="DisclosureStructuredData" asp-action="DeleteRequestPriority" asp-route-id="@requestPriority.PriorityId">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section scripts{
+    <script>
+        // Creates DataTable
+        // DataTable Documentation found here: https://datatables.net/
+        $(function () {
+            $('#requestPriorityTable').DataTable({
+                columns: [null, null, null, { orderable: false }],
+                order: [[0, 'asc']],
+                pageLength: 10,
+                searching: true,
+                language: {
+                    emptyTable: 'No request priorities found'
+                }
+            });
+        });
+    </script>
+}

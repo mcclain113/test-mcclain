@@ -1,0 +1,56 @@
+@model IS_Proj_HIT.ViewModels.PcaStructuredDataViewModel
+@{
+    ViewBag.Title = "Create Care System Parameter";
+    var userPermissions = ViewData["UserPermissions"] as List<string>;
+}
+
+<h1>Create</h1>
+
+<h4>Care System Parameter</h4>
+<hr />
+
+<div class="row">
+    <div class="col-md-10">
+        <form method="post">
+            @Html.AntiForgeryToken()
+            <div class="form-row">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group col-sm-6">
+                    <label asp-for="CareSystemParameter.Name" class="control-label">Care System Parameter Name</label>
+                    <input asp-for="CareSystemParameter.Name" 
+                        class="form-control" maxlength="100" required
+                        placeholder="Example:  Head" />
+                    <span asp-validation-for="CareSystemParameter.Name" class="text-danger"></span>
+                </div>
+                <div class="form-group col-sm-6">
+                    <label asp-for="CareSystemParameter.CareSystemTypeId" class="control-label">Select Care System Type</label>
+                    <select asp-for="CareSystemParameter.CareSystemTypeId" class="form-control" asp-items="ViewBag.CareSystemTypeId" required data-val-required="A Care System Type selection is required"></select>
+                    <span asp-validation-for="CareSystemParameter.CareSystemTypeId" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-12">
+                    <label asp-for="CareSystemParameter.NormalLimitsDescription" class="control-label">Enter Normal Limits Description</label>
+                    <textarea asp-for="CareSystemParameter.NormalLimitsDescription" class="form-control" rows="4" placeholder="Enter description here..."></textarea>
+                </div>
+            </div>
+            <div class="form-row">            
+                <div class="form-group">
+                    @if (userPermissions != null && (userPermissions.Contains("StructuredDataAdd")) )
+                    {               
+                        <input type="submit" value="Create" class="btn btn-primary" />
+                    }
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<div>
+    <a asp-controller="PcaStructuredData" asp-action="ViewCareSystemParameters">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

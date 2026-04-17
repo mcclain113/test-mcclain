@@ -1,0 +1,243 @@
+@model IS_Proj_HIT.ViewModels.OrdersViewModel
+
+@{
+    ViewData["Title"] = "Order Details";
+    var userPermissions = ViewData["UserPermissions"] as List<string>;
+}
+
+<partial name="PatientBannerPartial" model="Model.Patient" class="mw-100"/>
+<partial name="_EncounterMenu" model="Model.Encounter"/>
+
+    <div class="row justify-content-start" >
+        <div class="col mx-0 px-0"  >
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h4>
+                        Order Information
+                        @if (userPermissions != null && (userPermissions.Contains("OrdersEdit")) )
+                        {                            
+                            <a  asp-controller="Order"
+                                asp-action="EditOrder" 
+                                asp-route-id="@Model.OrderInfo.OrderInfoId" 
+                                class="btn btn-info btn-sm float-right">
+                                Edit
+                            </a>
+                        }
+                    </h4>
+                </div>
+                <div class="card-body bg-light">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-12 col-lg-4 ml-0 pl-0">
+                                <label>Level of Care: </label>
+                                <span class="font-weight-bold ml-2">@Model.Encounter.EncounterType.Name</span>
+                            </div>
+                            <div class="col-sm-12 col-lg-4">
+                                <label>Department: </label>
+                                <span class="font-weight-bold ml-2">@Model.Encounter.Department.Name</span>
+                            </div>
+                            <div class="col-sm-12 col-lg-4">
+                                <label>Attending Physician: </label>
+                                <span class="font-weight-bold ml-2">@Model.AttendingPhysician?.LastName</span>
+                            </div>
+                        </div>
+                        <hr />
+                        
+                        <div class="row">
+                            <div class="col-sm-12 col-lg-4 ml-0 pl-0">
+                                <label>Order Date: </label>
+                                <span class="font-weight-bold ml-2">@Model.OrderInfo.OrderDate</span>
+                            </div>
+                            <div class="col-sm-12 col-lg-4">
+                                <label>Order Type: </label>
+                                <span class="font-weight-bold ml-2">@Model.OrderInfo.OrderType.OrderName</span>
+                            </div>
+                            <div class="col-sm-12 col-lg-4">
+                                <label>Order Priority: </label>
+                                <span class="font-weight-bold ml-2">@Model.OrderInfo.Priority.PriorityName</span>
+                            </div>
+                        </div>
+                        <hr />
+
+                        @if(Model.OrderInfo.OrderTypeId == 2)
+                        {
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="row form-group mx-3">
+                                        <label>Admitting Diagnosis:</label>
+                                        <span class="col-12 font-weight-bold ml-2">@Model.OrderInfo.AdmittingDiagnosis</span>
+                                    </div>
+                                    <div class="row form-group mx-3">
+                                        <label>Notes:</label>
+                                        <span class="col-12 font-weight-bold ml-2 notes-content">@Model.OrderInfo.Notes</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr />   
+                        }
+                        else if (Model.OrderInfo.OrderTypeId == 5) 
+                        {
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="row form-group mx-3">
+                                        <label>Reason for Test:</label>
+                                        <span class="col-12 font-weight-bold ml-2">@Model.OrderInfo.TestReason</span>
+                                    </div>
+                                    <div class="row form-group mx-3">
+                                        <label>Notes:</label>
+                                        <span class="col-12 font-weight-bold ml-2 notes-content">@Model.OrderInfo.Notes</span>
+                                    </div>
+                                    @if(Model.OrderInfo.IsFasting ?? false)
+                                    {
+                                        <div class="row form-group mx-3">
+                                            <label>Fasting Required for</label>
+                                            <span class="col-auto font-weight-bold ml-2">@Model.OrderInfo.HoursFasting</span>
+                                            <label class="ml-2">Hours</label>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="row form-group mx-3">
+                                            <label>Fasting Not Required</label>
+                                        </div>
+                                    }
+                                    
+                                </div>
+                            </div>
+                            <hr />
+                        }
+                        else
+                        {
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="row form-group mx-3">
+                                        @if(Model.OrderInfo.OrderTypeId == 6)
+                                        {
+                                            <label>Reason for Exam:</label>
+                                        }
+                                        else
+                                        {
+                                            <label>Reason for Service:</label>
+                                        }
+                                        <span class="col-12 font-weight-bold ml-2">@Model.OrderInfo.TestReason</span>
+                                    </div>
+                                    <div class="row form-group mx-3">
+                                        <label>Notes:</label>
+                                        <span class="col-12 font-weight-bold ml-2 notes-content">@Model.OrderInfo.Notes</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr />
+                        }
+
+                        @if(Model.OrderInfo.IsVerbalOrder)
+                        {
+                            <div class="row">
+                                <div class="form-group col-sm-4">
+                                    <label>Author (verbal order):</label>
+                                    <span class="font-weight-bold ml-2">@Model.OrderInfo.Author.FirstName @Model.OrderInfo.Author.LastName</span>
+                                </div>
+                                <div class="form-group col-sm-4">
+                                    <label>Author Signature (verbal order):</label>
+                                    <span class="font-weight-bold ml-2">@Model.OrderInfo.AuthorESignature</span>
+                                </div>
+                                <div class="form-group col-sm-4">
+                                    <label>Date Signed (verbal order):</label>
+                                    <span class="font-weight-bold ml-2">@Model.OrderInfo.AuthorSignedDate</span>
+                                </div>
+                            </div>
+                            <hr />
+                        }
+
+                        <div class="row">
+                            <div class="col-12 col-lg-6">
+                                <div class="row mb-3 form-group">
+                                    <label class="col-sm-4">Ordering Provider:</label>
+                                    <div class="col-sm-8 justify-content-center">
+                                        <span class="font-weight-bold ml-2">@Model.OrderInfo.OrderingProvider.FirstName  @Model.OrderInfo.OrderingProvider.LastName</span>
+                                    </div>
+                                </div>
+                                <div class="row mb-3 form-group">
+                                    <label class="col-sm-4">Provider Signature:</label>
+                                    <div class="col-sm-8 justify-content-center">
+                                        <span class="font-weight-bold ml-2">@Model.OrderInfo.ProviderESignature</span>
+                                    </div>
+                                </div>
+                                <div class="row mb-3 form-group">
+                                    <label class="col-sm-4">Date signed: </label>
+                                    <div class="col-sm-8 justify-content-center">
+                                        <span class="font-weight-bold ml-2">@Model.OrderInfo.ProviderSignedDate</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            @if(Model.OrderInfo.OrderingProvider.ProviderStatusId != 1)
+                            {
+                                <div class="col-12 col-lg-6">
+                                    <div class="row mb-3 form-group">
+                                        <label class="col-sm-4">Co-Signing Provider:</label>
+                                        <div class="col-sm-8 justify-content-center">
+                                            <span class="font-weight-bold ml-2">@Model.OrderInfo.AuthenticatingProvider.FirstName  @Model.OrderInfo.AuthenticatingProvider.LastName</span>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3 form-group">
+                                        <label class="col-sm-4">Signature:</label>
+                                        <div class="col-sm-8 justify-content-center">
+                                            <span class="font-weight-bold ml-2">@Model.OrderInfo.AuthenticatingProviderESignature</span>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3 form-group">
+                                        <label class="col-sm-4">Date signed: </label>
+                                        <div class="col-sm-8 justify-content-center">
+                                            <span class="font-weight-bold ml-2">@Model.OrderInfo.AuthenticatingProviderSignedDate</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                            
+                        </div>
+                        <hr />
+                        
+                        @if(Model.OrderInfo.IsOrderComplete)
+                        { <div class="row">
+                            <div class="col-sm-12 col-lg-4 ml-0 pl-0">
+                                <label>Completed By: </label>
+                                <span class="font-weight-bold ml-2">@(Model.OrderInfo.CompletedByProvider != null ? Model.OrderInfo.CompletedByProvider.FirstName+" "+Model.OrderInfo.CompletedByProvider.LastName : "No Author")</span>
+                            </div>
+                            <div class="col-sm-12 col-lg-6">
+                                <label>Completed on: </label>
+                                <span class="font-weight-bold ml-2">@Model.OrderInfo.OrderCompletedDateTime</span>
+                            </div>
+                          </div>
+                        <hr />
+                        }
+                        
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <a class="btn btn-secondary ml-2 mt-2" 
+                                asp-controller="Order"
+                                asp-action="ListOrders"
+                                asp-route-id="@Model.Encounter.EncounterId">Return to List</a>
+                </div>
+                @if(!Model.OrderInfo.IsOrderComplete && (userPermissions != null && (userPermissions.Contains("OrdersEdit"))))
+                {
+                    <div class="form-group">
+                        <a class="btn btn-primary ml-2 mt-2" asp-controller="Order"
+                            asp-action="CompleteOrder"
+                            asp-route-orderId="@Model.OrderInfo.OrderInfoId">Complete this Order</a>
+                    </div>
+                }
+
+            </div>
+        </div>
+    </div>
+
+<style>
+    .notes-content {
+        white-space: pre-wrap; /* this handles new lines within <span> */
+    }
+</style>

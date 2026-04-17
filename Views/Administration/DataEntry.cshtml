@@ -1,0 +1,28 @@
+﻿@model IEnumerable<string>
+
+@{
+    ViewBag.Title = "PCA Data Entry";
+}
+<div class="row my-3">
+<h3>
+    <a class="btn btn-primary" asp-action="Index">
+        <i class="fa fa-arrow-left "></i>
+    </a>
+     PCA Data Entry Managements
+</h3>
+</div>
+
+<div class="container">
+    <div class="row">
+        @foreach (var entityName in Model)
+        {
+            <div class="col-sm-4 col-lg-3 mb-3">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <a class="btn btn-outline-primary" asp-page="/PCA/@entityName/Index">@ConversionService.ConvertTableName(@entityName)</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

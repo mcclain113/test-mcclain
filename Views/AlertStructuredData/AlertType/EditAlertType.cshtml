@@ -1,0 +1,49 @@
+@model IS_Proj_HIT.ViewModels.AlertStructuredData.AlertStructuredDataViewModel
+@{
+    ViewBag.Title = "Edit Alert Type";
+}
+
+<h1>Edit</h1>
+
+<h4>Alert Type</h4>
+<hr />
+
+<div class="row">
+    <div class="col-md-10">
+        <form method="post">
+            @Html.AntiForgeryToken()
+            <div class="form-row">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="AlertType.AlertId" value="@Model.AlertType.AlertId" readonly/>
+                <div class="form-group col-sm-6">
+                    <label asp-for="AlertType.Name" class="control-label">Alert Type Name</label>
+                    <input asp-for="AlertType.Name" 
+                        class="form-control" maxlength="50" required
+                        placeholder="Example:  Advanced Directive" />
+                    <span asp-validation-for="AlertType.Name" class="text-danger"></span>
+                </div>
+                <div class="form-group col-sm-6">
+                    <label asp-for="AlertType.Description" class="control-label">Description</label>
+                    <input asp-for="AlertType.Description" 
+                        class="form-control"  
+                        placeholder="Example:  Designates whether the patient has advanced directives"/>
+                    <span asp-validation-for="AlertType.Description" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <input type="submit" value="Save Changes" class="btn btn-primary" />
+                </div>
+
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<div>
+    <a asp-controller="AlertStructuredData" asp-action="ViewAlertTypes">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

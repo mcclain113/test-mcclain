@@ -1,0 +1,475 @@
+@model IS_Proj_HIT.ViewModels.PatientVm.PatientViewModel
+
+<!-- Nested Accordion Starts Here -->
+<div id="nestedAccordion" @(ViewBag.ViewPatientDetails ? "hidden" : "")>
+    <div class="card">
+        <div class="card-header custom-header bg-secondary validate not-required" id="nestedHeadingOne">
+            <h5 class="mb-0">
+                <button class="btn btn-block" type="button" data-toggle="collapse" data-target="#nestedCollapseOne" aria-expanded="true" aria-controls="nestedCollapseOne">
+                    Primary Insurance
+                </button>
+            </h5>
+        </div>
+
+        <div id="nestedCollapseOne" class="collapse show" aria-labelledby="nestedHeadingOne" data-parent="#nestedAccordion">
+            <fieldset class="validate-insurance1">
+            <div class="card-body">
+                <!-- Content for the nested accordion item 1 -->
+                <div class="row">
+                    <div class="col-3 form-group">
+                        <label for="Guarantor1">Guarantor
+                            <a href="#" class="fas font-weight-normal fa-question-circle fa-xs info" data-offset="10% 10%" 
+                            data-toggle="popover" data-trigger="focus hover" data-placement="top" container="body" customClass="w-90"
+                            title="Guarantor" data-content="The person responsible to pay the bill. The guarantor is always the 
+                                patient unless the patient is an incapacitated adult or an unemancipated minor (under age 18), in which 
+                                case, the guarantor is the patient's parent or legal guardian."></a>
+                        </label>
+                        <!-- The site.js includes form validation but requires 'asp-for' attributes to match exactly what is in the javascript function and requires the <span class="error"></span> for validation to work properly  -->
+                        <input asp-for="PrimaryInsurance.Guarantor" id="Guarantor1" type="text" class="validate form-control" placeholder="Guarantor" maxlength="100"/>
+                        <span class="error"></span>
+                        <div class="invalid-summary text-danger" style="display:none">
+                            Please enter Guarantor Name
+                        </div>
+                    </div>
+                    <div class="col-3 form-group">
+                        <label for="PrimaryInsuranceProvider">Insurance Provider</label> 
+                        <select id="PrimaryInsuranceProvider" class="validate not-required form-control" asp-items="ViewBag.InsuranceProviders" asp-for="PrimaryInsurance.InsuranceProviderId">
+                        <option value="">Select Primary Insurance Provider</option>
+                        </select>
+                    </div>
+                    <div class="col-3 form-group">
+                        <label for="Subscriber1">Subscriber
+                            <a href="#" class="fas font-weight-normal fa-question-circle fa-xs info" data-offset="10% 10%" 
+                            data-toggle="popover" data-trigger="focus hover" data-placement="top" container="body" customClass="w-90"
+                            title="Subscriber" data-content="The person who pays for health insurance premiums or whose employment 
+                                is the basis for membership in the insurance plan. May be referred to as the member."></a>
+                        </label>
+                        <input asp-for="PrimaryInsurance.Subscriber" id="Subscriber1" type="text" class="validate not-required form-control" placeholder="Subscriber" maxlength="100"/>
+                    </div>
+                    <div class="col-3 form-group">
+                        <label for="RelationshipToPatient1">Relationship to Patient</label> 
+                        <select id="RelationshipToPatient1" class="validate not-required form-control" asp-items="ViewBag.Relationships" asp-for="PrimaryInsurance.SubscriberRelationshipID">
+                        <option value="">Select Subscriber Relationship to Patient</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-3 form-group">
+                        <label for="SubscriberNumber1">Subscriber Number</label>
+                        <input asp-for="PrimaryInsurance.SubscriberNumber" id="SubscriberNumber1" type="text" class="validate not-required form-control" placeholder="Subscriber Number" maxlength="50"/>
+                    </div>
+                    <div class="col-2 form-group">
+                        <label for="GroupNumber1">Group Number</label>
+                        <input asp-for="PrimaryInsurance.GroupNumber" id="GroupNumber1" type="text" class="validate not-required form-control" placeholder="Group Number" maxlength="20"/>
+                    </div>
+                    <div class="col-3 form-group">
+                        <label for="PlanName1">Plan Name</label>
+                        <input asp-for="PrimaryInsurance.PlanName" id="PlanName1" type="text" class="validate not-required form-control" placeholder="Plan Name" maxlength="100" />
+                    </div>
+                    <div class="col-2 form-group">
+                        <label for="PlanNumber1">Plan Number</label>
+                        <input asp-for="PrimaryInsurance.PlanNumber" id="PlanNumber1" type="text" class="validate not-required form-control" placeholder="Plan Number" maxlength="20"/>
+                    </div>
+                    <div class="col-2 form-group">
+                        <label for="EffectiveDate1">Effective Date</label>
+                        <input asp-for="PrimaryInsurance.EffectiveDate" id="EffectiveDate1" type="date" class="validate not-required form-control" value="" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col form-group">
+                        <label for="InsuranceNotes1">Notes</label>
+                        <textarea asp-for="PrimaryInsurance.Notes" id="InsuranceNotes1" class="validate not-required form-control" rows="5" placeholder="Notes"></textarea>
+                    </div>
+                </div>
+                <input asp-for="PrimaryInsurance.InsuranceOrder" value="0" class="hidden" style="display: none;"/>
+            </div>
+            </fieldset>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-header custom-header bg-secondary" id="nestedHeadingTwo">
+            <h5 class="mb-0">
+                <button class="btn btn-block collapsed" type="button" data-toggle="collapse" data-target="#nestedCollapseTwo" aria-expanded="false" aria-controls="nestedCollapseTwo">
+                    Secondary Insurance
+                </button>
+            </h5>
+        </div>
+        <div id="nestedCollapseTwo" class="collapse" aria-labelledby="nestedHeadingTwo" data-parent="#nestedAccordion">
+            <fieldset class="validate-insurance2">
+            <div class="card-body">
+                <!-- Content for the nested accordion item 2 -->
+                <div class="row">
+                    <div class="col-3 form-group">
+                        <label for="Guarantor2">Guarantor
+                            <a href="#" class="fas font-weight-normal fa-question-circle fa-xs info" data-offset="10% 10%" 
+                            data-toggle="popover" data-trigger="focus hover" data-placement="top" container="body" customClass="w-90"
+                            title="Guarantor" data-content="The person responsible to pay the bill. The guarantor is always the 
+                                patient unless the patient is an incapacitated adult or an unemancipated minor (under age 18), in which 
+                                case, the guarantor is the patient's parent or legal guardian."></a>
+                        </label>
+                        <input asp-for="SecondaryInsurance.Guarantor" id="Guarantor2" type="text" class="validate2 form-control" placeholder="Guarantor" maxlength="100"/>
+                        <span class="error"></span>
+                        <div class="invalid-summary text-danger" style="display:none">
+                            Please enter Guarantor Name
+                        </div>
+                    </div>
+                    <div class="col-3 form-group">
+                        <label for="SecondaryInsuranceProvider">Insurance Provider</label> 
+                        <select id="SecondaryInsuranceProvider" class="validate not-required form-control" asp-items="ViewBag.InsuranceProviders" asp-for="SecondaryInsurance.InsuranceProviderId">
+                        <option value="">Select Secondary Insurance Provider</option>
+                        </select>
+                    </div>
+                    <div class="col-3 form-group">
+                        <label for="Subscriber2">Subscriber
+                            <a href="#" class="fas font-weight-normal fa-question-circle fa-xs info" data-offset="10% 10%" 
+                            data-toggle="popover" data-trigger="focus hover" data-placement="top" container="body" customClass="w-90"
+                            title="Subscriber" data-content="The person who pays for health insurance premiums or whose employment 
+                                is the basis for membership in the insurance plan. May be referred to as the member."></a>
+                        </label>
+                        <input asp-for="SecondaryInsurance.Subscriber" id="Subscriber2" type="text" class="validate2 not-required form-control" placeholder="Subscriber" maxlength="100"/>
+                    </div>
+                    <div class="col-3 form-group">
+                        <label for="RelationshipToPatient2">Relationship to Patient</label> 
+                        <select id="RelationshipToPatient2" class="validate2 not-required form-control" asp-items="ViewBag.Relationships" asp-for="SecondaryInsurance.SubscriberRelationshipID">
+                        <option value="">Select Subscriber Relationship to Patient</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-3 form-group">
+                        <label for="SubscriberNumber2">Subscriber Number</label>
+                        <input asp-for="SecondaryInsurance.SubscriberNumber" id="SubscriberNumber2" type="text" class="validate2 not-required form-control" placeholder="Subscriber Number" maxlength="50"/>
+                    </div>
+                    <div class="col-2 form-group">
+                        <label for="GroupNumber2">Group Number</label>
+                        <input asp-for="SecondaryInsurance.GroupNumber" id="GroupNumber2" type="text" class="validate2 not-required form-control" placeholder="Group Number" maxlength="20"/>
+                    </div>
+                    <div class="col-3 form-group">
+                        <label for="PlanName2">Plan Name</label>
+                        <input asp-for="SecondaryInsurance.PlanName" id="PlanName2" type="text" class="validate2 not-required form-control" placeholder="Plan Name" maxlength="100" />
+                    </div>
+                    <div class="col-2 form-group">
+                        <label for="PlanNumber2">Plan Number</label>
+                        <input asp-for="SecondaryInsurance.PlanNumber" id="PlanNumber2" type="text" class="validate2 not-required form-control" placeholder="Plan Number" maxlength="20"/>
+                    </div>
+                    <div class="col-2 form-group">
+                        <label for="EffectiveDate2">Effective Date</label>
+                        <input asp-for="SecondaryInsurance.EffectiveDate" id="EffectiveDate2" type="date" class="validate2 not-required form-control" value="" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col form-group">
+                        <label for="InsuranceNotes2">Notes</label>
+                        <textarea asp-for="SecondaryInsurance.Notes" id="InsuranceNotes2" class="validate2 not-required form-control" rows="5" placeholder="Notes"></textarea>
+                    </div>
+                </div>
+                <input asp-for="SecondaryInsurance.InsuranceOrder" value="1" class="hidden" style="display: none;"/>
+            </div>
+            </fieldset>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-header custom-header bg-secondary" id="nestedHeadingThree">
+            <h5 class="mb-0">
+                <button class="btn btn-block collapsed" type="button" data-toggle="collapse" data-target="#nestedCollapseThree" aria-expanded="false" aria-controls="nestedCollapseThree">
+                    Tertiary Insurance
+                </button>
+            </h5>
+        </div>
+        <div id="nestedCollapseThree" class="collapse" aria-labelledby="nestedHeadingThree" data-parent="#nestedAccordion">
+            <fieldset class="validate-insurance3">
+            <div class="card-body">
+                <!-- Content for the nested accordion item 3 -->
+                <div class="row">
+                    <div class="col-3 form-group">
+                        <label for="Guarantor3">Guarantor
+                            <a href="#" class="fas font-weight-normal fa-question-circle fa-xs info" data-offset="10% 10%" 
+                            data-toggle="popover" data-trigger="focus hover" data-placement="top" container="body" customClass="w-90"
+                            title="Guarantor" data-content="The person responsible to pay the bill. The guarantor is always the 
+                                patient unless the patient is an incapacitated adult or an unemancipated minor (under age 18), in which 
+                                case, the guarantor is the patient's parent or legal guardian."></a>
+                        </label>
+                        <input asp-for="TertiaryInsurance.Guarantor" id="Guarantor3" type="text" class="validate3 form-control" placeholder="Guarantor" maxlength="100"/>
+                        <span class="error"></span>
+                        <div class="invalid-summary text-danger" style="display:none">
+                            Please enter Guarantor Name
+                        </div>
+                    </div>
+                    <div class="col-3 form-group">
+                        <label for="TertiaryInsuranceProvider">Insurance Provider</label> 
+                        <select id="TertiaryInsuranceProvider" class="validate not-required form-control" asp-items="ViewBag.InsuranceProviders" asp-for="TertiaryInsurance.InsuranceProviderId">
+                        <option value="">Select Tertiary Insurance Provider</option>
+                        </select>
+                    </div>
+                    <div class="col-3 form-group">
+                        <label for="Subscriber3">Subscriber
+                            <a href="#" class="fas font-weight-normal fa-question-circle fa-xs info" data-offset="10% 10%" 
+                            data-toggle="popover" data-trigger="focus hover" data-placement="top" container="body" customClass="w-90"
+                            title="Subscriber" data-content="The person who pays for health insurance premiums or whose employment 
+                                is the basis for membership in the insurance plan. May be referred to as the member."></a>
+                        </label>
+                        <input asp-for="TertiaryInsurance.Subscriber" id="Subscriber3" type="text" class="validate3 not-required form-control" placeholder="Subscriber" maxlength="100"/>
+                    </div>
+                    <div class="col-3 form-group">
+                        <label for="RelationshipToPatient3">Relationship to Patient</label> 
+                        <select id="RelationshipToPatient3" class="validate3 not-required form-control" asp-items="ViewBag.Relationships" asp-for="TertiaryInsurance.SubscriberRelationshipID">
+                        <option value="">Select Subscriber Relationship to Patient</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-3 form-group">
+                        <label for="SubscriberNumber3">Subscriber Number</label>
+                        <input asp-for="TertiaryInsurance.SubscriberNumber" id="SubscriberNumber3" type="text" class="validate3 not-required form-control" placeholder="Subscriber Number" maxlength="50"/>
+                    </div>
+                    <div class="col-2 form-group">
+                        <label for="GroupNumber3">Group Number</label>
+                        <input asp-for="TertiaryInsurance.GroupNumber" id="GroupNumber3" type="text" class="form-control" placeholder="Group Number" maxlength="20"/>
+                    </div>
+                    <div class="col-3 form-group">
+                        <label for="PlanName3">Plan Name</label>
+                        <input asp-for="TertiaryInsurance.PlanName" id="PlanName3" type="text" class="validate3 not-required form-control" placeholder="Plan Name" maxlength="100" />
+                    </div>
+                    <div class="col-2 form-group">
+                        <label for="PlanNumber3">Plan Number</label>
+                        <input asp-for="TertiaryInsurance.PlanNumber" id="PlanNumber3" type="text" class="validate3 not-required form-control" placeholder="Plan Number" maxlength="20"/>
+                    </div>
+                    <div class="col-2 form-group">
+                        <label for="EffectiveDate3">Effective Date</label>
+                        <input asp-for="TertiaryInsurance.EffectiveDate" id="EffectiveDate3" type="date" class="validate3 not-required form-control" value="" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col form-group">
+                        <label for="InsuranceNotes3">Notes</label>
+                        <textarea asp-for="TertiaryInsurance.Notes" id="InsuranceNotes3" class="validate3 not-required form-control" rows="5" placeholder="Notes"></textarea>
+                    </div>
+                </div>
+                <input asp-for="TertiaryInsurance.InsuranceOrder" value="2" class="hidden" style="display: none;"/>
+            </div>
+            </fieldset>
+        </div>
+    </div>
+</div>
+<!-- Nested Accordion Ends Here -->
+
+<div @(!ViewBag.ViewPatientDetails ? "hidden" : "")>
+    <div class="row">
+        <div class="col-4 ml-3">
+            <h5><u>Primary Insurance</u></h5>
+            <div class="row">
+                <label>Guarantor: </label>
+                <span class="data ml-2">@(Model.PrimaryInsurance?.Guarantor ?? "")</span> 
+            </div>
+            <div class="row">
+                <label>Insurance Provider: </label>
+                <span class="data ml-2">@(Model.PrimaryInsurance?.InsuranceProvider?.ProviderName ?? "")</span>
+            </div>
+            <div class="row">
+                <label>Subscriber: </label>
+                <span class="data ml-2">@(Model.PrimaryInsurance?.Subscriber ?? "")</span>
+            </div>
+            <div class="row">
+                @if(Model.PrimaryInsurance?.Relationship != null)
+                {
+                <label>Relationship: </label>
+                <span class="data ml-2">@(Model.PrimaryInsurance?.Relationship.Name ?? "N/A")</span>
+                }
+                else 
+                {
+                <label>Relationship: </label>
+                <span class="data ml-2"></span>
+                }
+            </div>
+            <div class="row">
+                <label>Subscriber Number: </label>
+                <span class="data ml-2">@(Model.PrimaryInsurance?.SubscriberNumber ?? "")</span> 
+            </div>
+            <div class="row">
+                <label>Group Number: </label>
+                <span class="data ml-2">@(Model.PrimaryInsurance?.GroupNumber ?? "")</span>
+            </div>
+            <div class="row">
+                <label>Plan Name: </label>
+                <span class="data ml-2">@(Model.PrimaryInsurance?.PlanName ?? "")</span>
+            </div>
+            <div class="row">
+                <label>Plan Number: </label>
+                <span class="data ml-2">@(Model.PrimaryInsurance?.PlanNumber ?? "")</span> 
+            </div>
+            <div class="row">
+                @if(Model.PrimaryInsurance?.EffectiveDate.ToString("MM/dd/yyyy") == "01/01/0001")
+                {
+                    <label>Effective Date: </label>
+                    <span class="data ml-2"></span>
+                }
+                else
+                {
+                    <label>Effective Date: </label>
+                    <span class="data ml-2">@(Model.PrimaryInsurance?.EffectiveDate.ToString("MM/dd/yyyy") ?? "")</span>
+                }  
+            </div>
+            <div class="row">
+                <label>Notes: </label>
+                <span class="data ml-2">@(Model.PrimaryInsurance?.Notes ?? "")</span> 
+            </div>
+        </div> <!-- close the Primary Insurance column  -->
+        
+        @if(Model.SecondaryInsurance != null)
+        {
+            <div class="col-4 ml-3">
+                <h5><u>Secondary Insurance</u></h5>
+                <div class="row">
+                    <label>Guarantor: </label>
+                    <span class="data ml-2">@(Model.SecondaryInsurance?.Guarantor ?? "")</span> 
+                </div>
+                <div class="row">
+                    <label>Insurance Provider: </label>
+                    <span class="data ml-2">@(Model.SecondaryInsurance?.InsuranceProvider?.ProviderName ?? "")</span>
+                </div>
+                <div class="row">
+                    <label>Subscriber: </label>
+                    <span class="data ml-2">@(Model.SecondaryInsurance?.Subscriber ?? "")</span>
+                </div>
+                <div class="row">
+                    @if(Model.SecondaryInsurance?.Relationship != null)
+                    {
+                    <label>Relationship: </label>
+                    <span class="data ml-2">@(Model.SecondaryInsurance?.Relationship.Name ?? "N/A")</span>
+                    }
+                    else 
+                    {
+                    <label>Relationship: </label>
+                    <span class="data ml-2"></span>
+                    }
+                </div>
+                <div class="row">
+                    <label>Subscriber Number: </label>
+                    <span class="data ml-2">@(Model.SecondaryInsurance?.SubscriberNumber ?? "")</span> 
+                </div>
+                <div class="row">
+                    <label>Group Number: </label>
+                    <span class="data ml-2">@(Model.SecondaryInsurance?.GroupNumber ?? "")</span>
+                </div>
+                <div class="row">
+                    <label>Plan Name: </label>
+                    <span class="data ml-2">@(Model.SecondaryInsurance?.PlanName ?? "")</span>
+                </div>
+                <div class="row">
+                    <label>Plan Number: </label>
+                    <span class="data ml-2">@(Model.SecondaryInsurance?.PlanNumber ?? "")</span> 
+                </div>
+                <div class="row">
+                    @if(Model.SecondaryInsurance?.EffectiveDate.ToString("MM/dd/yyyy") == "01/01/0001")
+                    {
+                        <label>Effective Date: </label>
+                        <span class="data ml-2"></span>
+                    }
+                    else
+                    {
+                        <label>Effective Date: </label>
+                        <span class="data ml-2">@(Model.SecondaryInsurance?.EffectiveDate.ToString("MM/dd/yyyy") ?? "")</span>
+                    }  
+                </div>
+                <div class="row">
+                    <label>Notes: </label>
+                    <span class="data ml-2">@(Model.SecondaryInsurance?.Notes ?? "")</span> 
+                </div>
+            </div> <!-- close the SecondaryInsurance column  -->
+        }
+
+        @if(Model.TertiaryInsurance != null)
+        {
+            <div class="col-3 ml-3">
+                <h5><u>Tertiary Insurance</u></h5>
+                <div class="row">
+                    <label>Guarantor: </label>
+                    <span class="data ml-2">@(Model.TertiaryInsurance?.Guarantor ?? "")</span> 
+                </div>
+                <div class="row">
+                    <label>Insurance Provider: </label>
+                    <span class="data ml-2">@(Model.TertiaryInsurance?.InsuranceProvider?.ProviderName ?? "")</span>
+                </div>
+                <div class="row">
+                    <label>Subscriber: </label>
+                    <span class="data ml-2">@(Model.TertiaryInsurance?.Subscriber ?? "")</span>
+                </div>
+                <div class="row">
+                    @if(Model.TertiaryInsurance?.Relationship != null)
+                    {
+                    <label>Relationship: </label>
+                    <span class="data ml-2">@(Model.TertiaryInsurance?.Relationship.Name ?? "N/A")</span>
+                    }
+                    else 
+                    {
+                    <label>Relationship: </label>
+                    <span class="data ml-2"></span>
+                    }
+                </div>
+                <div class="row">
+                    <label>Subscriber Number: </label>
+                    <span class="data ml-2">@(Model.TertiaryInsurance?.SubscriberNumber ?? "")</span> 
+                </div>
+                <div class="row">
+                    <label>Group Number: </label>
+                    <span class="data ml-2">@(Model.TertiaryInsurance?.GroupNumber ?? "")</span>
+                </div>
+                <div class="row">
+                    <label>Plan Name: </label>
+                    <span class="data ml-2">@(Model.TertiaryInsurance?.PlanName ?? "")</span>
+                </div>
+                <div class="row">
+                    <label>Plan Number: </label>
+                    <span class="data ml-2">@(Model.TertiaryInsurance?.PlanNumber ?? "")</span> 
+                </div>
+                <div class="row">
+                    @if(Model.TertiaryInsurance?.EffectiveDate.ToString("MM/dd/yyyy") == "01/01/0001")
+                    {
+                        <label>Effective Date: </label>
+                        <span class="data ml-2"></span>
+                    }
+                    else
+                    {
+                        <label>Effective Date: </label>
+                        <span class="data ml-2">@(Model.TertiaryInsurance?.EffectiveDate.ToString("MM/dd/yyyy") ?? "")</span>
+                    }  
+                </div>
+                <div class="row">
+                    <label>Notes: </label>
+                    <span class="data ml-2">@(Model.TertiaryInsurance?.Notes ?? "")</span> 
+                </div>
+            </div> <!-- close the Tertiary Insurance column  -->
+        }
+    </div> <!-- close the row  -->
+</div> <!-- close the entire details view  -->
+
+<style>
+    .info{
+        position: relative;
+        bottom: 5px;
+        color:  black;
+        text-decoration: none;
+    }
+    .info:hover{
+        cursor: pointer;
+        background-color: initial;
+        color:  initial;
+        text-decoration: none;
+    }
+    
+    .popover{
+        max-width: 500px;
+    }
+
+    .custom-header {
+        color: white; /* Set text color to white */
+    }
+
+    .custom-header .btn-block {
+        color: white; /* Set button text color to white */
+        font-size: 1em;
+    }
+</style>

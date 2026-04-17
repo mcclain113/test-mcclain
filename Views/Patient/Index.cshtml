@@ -1,0 +1,211 @@
+﻿@using IS_Proj_HIT.Entities
+@model IS_Proj_HIT.ViewModels.PatientVm.PatientListViewModel
+
+@{
+    ViewData["Title"] = "Patient List";
+    var userPermissions = ViewData["UserPermissions"] as List<string>;
+}
+<div  class="card patient-search-data">
+    <div class="card-header bg-primary text-white d-flex align-items-center justify-content-between">
+        <h4 class="mb-0">Patient List</h4>
+        <div id="sessionFacilityBadgeContainer">
+            @if (!string.IsNullOrWhiteSpace(Model.SessionFacilityName))
+            {
+                <span id="sessionFacilityBadge" class="badge ml-3">Facility in Session:  @Model.SessionFacilityName</span>
+            }
+        </div>
+        <div>
+            <a asp-controller="Patient" asp-action="PatientSearch" class="btn btn-outline-primary float-right"><i class="fas fa-search"></i> Find Another Patient</a>
+            @if (userPermissions != null && (userPermissions.Contains("PatientAdd")) )
+            {
+                <a asp-action="CreatePatient" class="btn btn-create float-right mr-3"><i class="fa fa-plus" aria-hidden="true"></i> Create New Patient</a>
+            }
+            <!-- Toggle button: show All Facilities table -->
+            @if (userPermissions != null && (userPermissions.Contains("PatientListAllFacilities")) )
+            {
+                <button id="toggleFacilityTables" type="button" class="btn btn-outline-light float-right mr-3">
+                    Show All Facilities
+                </button>
+            }
+        </div>
+    </div>
+
+    <div class="card-body bg-light">
+        <!-- Session facility table (visible by default) -->
+        <div id="sessionFacilityContainer">
+            <table class="stripe" id="sessionFacilityTab">
+                <thead>
+                    <tr>
+                        <th scope="col">
+                            MRN
+                        </th>
+                        <th scope="col" hidden>
+                            Last Name
+                        </th>
+                        <th scope="col">
+                            Name
+                        </th>
+                        <th scope="col">
+                            Date of Birth
+                        </th>
+                        <th scope="col">
+                            Action
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var patient in Model.PatientsSessionFacility)
+                    {
+                        <tr>
+                            <td>@patient.Mrn</td>
+                            <td hidden>@patient.Person.LastName</td>
+                            <td>@($"{patient.Person.FirstName} {patient.Person.LastName}")</td>
+                            <td>@(patient.Person.Dob.HasValue ? patient.Person.Dob.Value.ToShortDateString() : string.Empty)</td>
+                            <td>
+                                <a asp-action="ViewPatientDetails" asp-route-id="@patient.Mrn" class="btn btn-nav">Details</a>
+
+                                @if (userPermissions != null && (userPermissions.Contains("PatientDelete")) )
+                                {
+                                    <a asp-action="DeletePatient" asp-route-id="@patient.Mrn" onclick="if (!confirm('Are you sure?')) return false"
+                                        class="btn btn-danger">Delete</a>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        <!-- All facilities table (hidden by default) -->
+        <div id="allFacilityContainer" style="display:none;">
+            <table class="stripe" id="allFacilityTab">
+                <thead>
+                    <tr>
+                        <th scope="col">
+                            MRN
+                        </th>
+                        <th scope="col" hidden>
+                            Last Name
+                        </th>
+                        <th scope="col">
+                            Name
+                        </th>
+                        <th scope="col">
+                            Date of Birth
+                        </th>
+                        <th scope="col">
+                            Facility
+                        </th>
+                        <th scope="col">
+                            Action
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var patient in Model.PatientsAllFacilities)
+                    {
+                        <tr>
+                            <td>@patient.Mrn</td>
+                            <td hidden>@patient.Person.LastName</td>
+                            <td>@($"{patient.Person.FirstName} {patient.Person.LastName}")</td>
+                            <td>@(patient.Person.Dob.HasValue ? patient.Person.Dob.Value.ToShortDateString() : string.Empty)</td>
+                            <td>@patient.Facility.Name</td>
+                            <td>
+                                <a asp-action="ViewPatientDetails" asp-route-id="@patient.Mrn" class="btn btn-nav">Details</a>
+
+                                @if (userPermissions != null && (userPermissions.Contains("PatientDelete")) )
+                                {
+                                    <a asp-action="DeletePatient" asp-route-id="@patient.Mrn" onclick="if (!confirm('Are you sure?')) return false"
+                                        class="btn btn-danger">Delete</a>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+<script>
+    $(document).ready(function () {
+        // Initialize both DataTables and keep references
+        var sessionTable = $('#sessionFacilityTab').DataTable({
+            columns: [
+                null,
+                { visible: false, orderable: true },
+                null,
+                null,
+                { orderable: false }
+            ],
+            order: [[1, 'asc']],
+            pageLength: 50,
+            searching: true,
+            language: { emptyTable: 'No Patients in database.' }
+        });
+
+        var allTable = $('#allFacilityTab').DataTable({
+            autoWidth: false,
+            responsive: true,
+            scrollX: true,
+            columns: [
+                null,
+                { visible: false, orderable: true },
+                null,
+                null,
+                null,
+                { orderable: false }
+            ],
+            order: [[4, 'asc'], [1, 'asc']],
+            pageLength: 50,
+            searching: true,
+            language: { emptyTable: 'No Patients in database.' }
+        });
+
+        // Capture badge HTML so we can restore it later
+        var $badge = $('#sessionFacilityBadge');
+        var badgeHtml = $badge.length ? $badge.prop('outerHTML') : null;
+        
+        // Ensure the hidden table's columns are adjusted when shown
+        function showAllFacilities() {
+            $('#sessionFacilityContainer').hide();
+            $('#allFacilityContainer').show();
+
+            // remove badge from DOM (not just hide)
+            $('#sessionFacilityBadge').remove();
+
+            // Adjust columns after showing
+            allTable.columns.adjust().draw();
+            $('#toggleFacilityTables').text('Show Session Facility');
+        }
+
+        function showSessionFacility() {
+            $('#allFacilityContainer').hide();
+            $('#sessionFacilityContainer').show();
+
+            // restore badge if it was removed
+            if (!$('#sessionFacilityBadge').length && badgeHtml) {
+                $('#sessionFacilityBadgeContainer').html(badgeHtml);
+            }
+
+            requestAnimationFrame(function () {
+                sessionTable.columns.adjust().draw();
+            });
+            $('#toggleFacilityTables').text('Show All Facilities');
+        }
+
+        // Toggle button click handler
+        $('#toggleFacilityTables').on('click', function () {
+            if ($('#allFacilityContainer').is(':visible')) {
+                showSessionFacility();
+            } else {
+                showAllFacilities();
+            }
+        });
+
+        // Optional: if the button should reflect initial state
+        $('#toggleFacilityTables').text($('#allFacilityContainer').is(':visible') ? 'Show Session Facility' : 'Show All Facilities');
+    });
+</script>
+}

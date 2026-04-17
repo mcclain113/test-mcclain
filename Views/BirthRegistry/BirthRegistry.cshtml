@@ -1,0 +1,468 @@
+@using Microsoft.EntityFrameworkCore.Metadata.Internal
+@model IS_Proj_HIT.ViewModels.BirthRegistry.BirthRegistryViewModel
+
+@{
+    ViewData["Title"] = ViewBag.Mode == "create" ? "Create Birth Registry" :
+    ViewBag.Mode == "edit" ? "Edit Birth Registry" :
+    "View Birth Registry";
+    var preselectedMotherMrn = ViewBag.PreselectedMotherMrn as string;
+    var mode = ViewBag.Mode as string;
+    var birthId = ViewBag.BirthId;
+    var activeTab = (ViewBag.ActiveTab as string) ?? "mother";
+}
+
+<div class="container-fluid mt-2">
+    <div class="row">
+        <div class="col-12">
+            <div class="patient-data card bg-secondary">
+                <div class="card-header custom-header bg-primary">
+                    <div class="d-flex justify-content-between align-items-start text-white">
+                        <div>
+                            @if (mode == "create")
+                            {
+                                <h2 class="mb-0">
+                                    <i class="fas fa-plus-circle"></i> Create New Birth Registry
+                                </h2>
+                                @if (!string.IsNullOrEmpty(preselectedMotherMrn))
+                                {
+                                    <small class="d-block mt-2">
+                                        <i class="fas fa-info-circle"></i> Pre-selected Mother MRN:
+                                        <strong>@preselectedMotherMrn</strong>
+                                    </small>
+                                }
+                            }
+                            else if (mode == "edit")
+                            {
+                                <h4 class="mb-1">
+                                    <small><i class="fas fa-edit mr-1"></i></small>Edit Birth Registry
+                                </h4>
+                                @if (Model.HasMotherInformation)
+                                {
+                                    <div class="mt-2">
+                                        <small class="d-block">
+                                            <i class="fas fa-female"></i> Mother: <strong>@Model.MotherFullName</strong>
+                                            @if (!string.IsNullOrEmpty(Model.MotherMrn))
+                                            {
+                                                <span class="ml-2">(MRN: @Model.MotherMrn)</span>
+                                            }
+                                        </small>
+                                        @if (Model.HasNewbornInformation)
+                                        {
+                                            <small class="d-block">
+                                                <i class="fas fa-baby"></i> Newborn: <strong>@Model.NewbornFullName</strong>
+                                                @if (!string.IsNullOrEmpty(Model.NewbornMrn))
+                                                {
+                                                    <span class="ml-2">(MRN: @Model.NewbornMrn)</span>
+                                                }
+                                            </small>
+                                        }
+                                    </div>
+                                }
+                            }
+                            else if (mode == "view")
+                            {
+                                <h4 class="mb-1">
+                                    <small><i class="fas fa-eye mr-1"></i></small>View Birth Registry
+                                </h4>
+                                @if (Model.HasMotherInformation)
+                                {
+                                    <div class="mt-2">
+                                        <small class="d-block">
+                                            <i class="fas fa-female"></i> Mother: <strong>@Model.MotherFullName</strong>
+                                            @if (!string.IsNullOrEmpty(Model.MotherMrn))
+                                            {
+                                                <span class="ml-2">(MRN: @Model.MotherMrn)</span>
+                                            }
+                                            @if (!string.IsNullOrEmpty(Model.MotherDateOfBirth))
+                                            {
+                                                <span class="ml-2">DOB: @Model.MotherDateOfBirth</span>
+                                            }
+                                        </small>
+                                        @if (Model.HasNewbornInformation)
+                                        {
+                                            <small class="d-block">
+                                                <i class="fas fa-baby"></i> Newborn: <strong>@Model.NewbornFullName</strong>
+                                                @if (!string.IsNullOrEmpty(Model.NewbornMrn))
+                                                {
+                                                    <span class="ml-2">(MRN: @Model.NewbornMrn)</span>
+                                                }
+                                                @if (!string.IsNullOrEmpty(Model.NewbornDateOfBirth))
+                                                {
+                                                    <span class="ml-2">Born: @Model.NewbornDateOfBirth</span>
+                                                }
+                                            </small>
+                                        }
+                                    </div>
+                                }
+                            }
+                        </div>
+
+                        <div class="d-flex flex-column align-items-end">
+                            @if (mode == "view" || mode == "edit")
+                            {
+                                <div class="btn-group mb-2" role="group">
+                                    @if (mode == "view")
+                                    {
+                                        @if (Model.IsComplete)
+                                        {
+                                            <a href="@Url.Action("PrintBirthRegistry", "BirthRegistry", new { id = birthId })"
+                                                class="btn btn-success btn-sm mr-2" target="_blank">
+                                                <i class="fas fa-print w-auto"></i> Print
+                                            </a>
+                                        }
+                                        <a href="#"
+                                           class="btn btn-info text-white mb-1 mode-switch-btn" 
+                                           data-target-mode="edit"
+                                           data-birth-id="@birthId"> Edit
+                                        </a>
+                                    }
+                                    @if (mode == "edit")
+                                    {
+                                        <a href="#" 
+                                           class="btn btn-nav btn-sm mode-switch-btn" 
+                                           data-target-mode="view"
+                                           data-birth-id="@birthId"> View
+                                        </a>
+                                    }
+                                </div>
+                            }
+                            <a asp-action="BirthRegistryArchive" class="btn btn-light btn-sm">
+                                <i class="fas fa-arrow-left"></i> Return to Archive
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body bg-light">
+                    <div id="global-alert-container"></div>
+
+                    @if (mode == "edit" || mode == "view")
+                    {
+                        <div class="d-flex justify-content-end m-0 p-0">
+                            <button type="button" class="btn btn-sm btn-outline-primary mr-2" id="expandAllAccordions">
+                                <i class="fas fa-expand-alt"></i> Expand All
+                            </button>
+                            <button type="button" class="btn btn-sm btn-outline-secondary" id="collapseAllAccordions">
+                                <i class="fas fa-compress-alt"></i> Collapse All
+                            </button>
+                        </div>
+                    }
+
+
+                    <form name="birthRegistry" id="birthRegistryForm" novalidate>
+                        @Html.AntiForgeryToken()
+
+                        @if (!string.IsNullOrEmpty(preselectedMotherMrn))
+                        {
+                            <input type="hidden" id="preselectedMotherMrn" value="@preselectedMotherMrn" />
+                        }
+
+                        <input type="hidden" id="currentMode" value="@mode" />
+                        <input type="hidden" id="currentBirthId" value="@birthId" />
+
+                        <ul class="nav nav-tabs d-flex flex-nowrap" id="birthRegistryTabs" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link @(activeTab == "mother" ? "active" : "")" id="mother-tab"
+                                    data-toggle="tab" href="#mother" role="tab" aria-controls="mother"
+                                    aria-selected="@(activeTab == "mother" ? "true" : "false")">
+                                    Mother Information
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link @(activeTab == "newborn" ? "active" : "")" id="newborn-tab"
+                                    data-toggle="tab" href="#newborn" role="tab" aria-controls="newborn"
+                                    aria-selected="@(activeTab == "newborn" ? "true" : "false")">
+                                    Newborn Information
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link @(activeTab == "facility" ? "active" : "")" id="facility-tab"
+                                    data-toggle="tab" href="#facility" role="tab" aria-controls="facility"
+                                    aria-selected="@(activeTab == "facility" ? "true" : "false")">
+                                    Facility &amp; Certifier
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link @(activeTab == "father" ? "active" : "")" id="father-tab"
+                                    data-toggle="tab" href="#father" role="tab" aria-controls="father"
+                                    aria-selected="@(activeTab == "father" ? "true" : "false")">
+                                    Parent 2 Information
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link @(activeTab == "prenatal" ? "active" : "")" id="prenatal-tab"
+                                    data-toggle="tab" href="#prenatal" role="tab" aria-controls="prenatal"
+                                    aria-selected="@(activeTab == "prenatal" ? "true" : "false")">
+                                    Prenatal Information
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link @(activeTab == "labor" ? "active" : "")" id="labor-tab"
+                                    data-toggle="tab" href="#labor" role="tab" aria-controls="labor"
+                                    aria-selected="@(activeTab == "labor" ? "true" : "false")">
+                                    Labor & Delivery
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link @(activeTab == "finalize" ? "active" : "")" id="finalize-tab"
+                                    data-toggle="tab" href="#finalize" role="tab" aria-controls="finalize"
+                                    aria-selected="@(activeTab == "finalize" ? "true" : "false")">
+                                    Finalize & Submit
+                                </a>
+                            </li>
+                        </ul>
+
+                        <div class="tab-content mt-3" id="birthRegistryTabContent">
+                            <div class="tab-pane fade @(activeTab == "mother" ? "show active" : "")" id="mother"
+                                role="tabpanel" aria-labelledby="mother-tab">
+                                <div id="mother-content">
+                                    @if (mode == "create" || mode == "edit")
+                                    {
+                                        await Html.RenderPartialAsync("Mother/_EditMotherInformationPartial",
+                                        Model.MothersInformationViewModel);
+                                    }
+                                    else
+                                    {
+                                        await Html.RenderPartialAsync("Mother/_ViewMotherInformationPartial",
+                                        Model.MothersInformationViewModel);
+                                    }
+                                </div>
+                            </div>
+
+                            <div class="tab-pane fade @(activeTab == "facility" ? "show active" : "")" id="facility"
+                                role="tabpanel" aria-labelledby="facility-tab">
+                                <div id="facility-content">
+                                    @if (mode == "create" || mode == "edit")
+                                    {
+                                        await Html.RenderPartialAsync("Facility/_EditFacilityDataPartial",
+                                        Model.FacilityViewModel);
+                                    }
+                                    else
+                                    {
+                                        await Html.RenderPartialAsync("Facility/_ViewFacilityDataPartial",
+                                        Model.FacilityViewModel);
+                                    }
+                                </div>
+                            </div>
+
+                            <div class="tab-pane fade @(activeTab == "father" ? "show active" : "")" id="father"
+                                role="tabpanel" aria-labelledby="father-tab">
+                                <div id="father-content">
+                                    @if (mode == "create" || mode == "edit")
+                                    {
+                                        await Html.RenderPartialAsync("Father/_EditFatherInformationPartial",
+                                        Model.FatherInformationViewModel);
+                                    }
+                                    else
+                                    {
+                                        await Html.RenderPartialAsync("Father/_ViewFatherInformationPartial",
+                                        Model.FatherInformationViewModel);
+                                    }
+                                </div>
+                            </div>
+
+                            <div class="tab-pane fade @(activeTab == "prenatal" ? "show active" : "")" id="prenatal"
+                                role="tabpanel" aria-labelledby="prenatal-tab">
+                                <div id="prenatal-content">
+                                    @if (mode == "create" || mode == "edit")
+                                    {
+                                        await Html.RenderPartialAsync("Prenatal/_EditPrenatalCarePartial",
+                                        Model.PrenatalCareViewModel);
+                                    }
+                                    else
+                                    {
+                                        await Html.RenderPartialAsync("Prenatal/_ViewPrenatalCareDetailsPartial",
+                                        Model.PrenatalCareViewModel);
+                                    }
+                                </div>
+                            </div>
+
+                            <div class="tab-pane fade @(activeTab == "newborn" ? "show active" : "")" id="newborn"
+                                role="tabpanel" aria-labelledby="newborn-tab">
+                                <div id="newborn-content">
+                                    @if (mode == "create" || mode == "edit")
+                                    {
+                                        await Html.RenderPartialAsync("Newborn/_EditNewbornInformationPartial",
+                                        Model.NewbornViewModel);
+                                    }
+                                    else
+                                    {
+                                        await Html.RenderPartialAsync("Newborn/_ViewNewbornInformationPartial",
+                                        Model.NewbornViewModel);
+                                    }
+                                </div>
+                            </div>
+
+                            <div class="tab-pane fade @(activeTab == "labor" ? "show active" : "")" id="labor"
+                                role="tabpanel" aria-labelledby="labor-tab">
+                                <div id="labor-content">
+                                    @if (mode == "create" || mode == "edit")
+                                    {
+                                        await Html.RenderPartialAsync("LaborAndDelivery/_EditLaborAndDeliveryPartial",
+                                        Model.LaborAndDeliveryViewModel);
+                                    }
+                                    else
+                                    {
+                                        await Html.RenderPartialAsync("LaborAndDelivery/_ViewLaborAndDeliveryPartial",
+                                        Model.LaborAndDeliveryViewModel);
+                                    }
+                                </div>
+                            </div>
+
+                            <div class="tab-pane fade @(activeTab == "finalize" ? "show active" : "")" id="finalize"
+                                role="tabpanel" aria-labelledby="finalize-tab">
+                                <div id="finalize-content">
+                                    @if (mode == "create" || mode == "edit")
+                                    {
+                                        await Html.RenderPartialAsync("Finalize/_EditFinalizeBirthRegistryPartial",
+                                        Model.FinalizeViewModel);
+                                    }
+                                    else
+                                    {
+                                        await Html.RenderPartialAsync("Finalize/_ViewFinalizeBirthRegistryPartial",
+                                        Model.FinalizeViewModel);
+                                    }
+                                </div>
+                            </div>
+                            <div class="px-4 pb-3">
+                                <button type="button" class="btn btn-primary btn-lg btn-block" id="createRegistryBtn">
+                                    Create Registry
+                                </button>
+                            </div>
+                            <div class="d-flex text-start ml-4 pb-4">
+                                <a asp-action="BirthRegistryArchive" class="btn btn-warning btn-outline-black"
+                                    id="birthRegistryCancelBtn">
+                                    Cancel
+                                </a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@await Html.PartialAsync("Mother/_MotherLookupModal")
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script src="~/js/site.js"></script>
+    <script src="~/js/BirthRegistry/birthRegistryUtils.js"></script>
+    <script src="~/js/BirthRegistry/birthRegistryManager.js" asp-append-version="true"></script>
+    <script src="~/js/BirthRegistry/facility.js"></script>
+    <script src="~/js/BirthRegistry/mother.js" asp-append-version="true"></script>
+    <script src="~/js/BirthRegistry/father.js"></script>
+    <script src="~/js/BirthRegistry/prenatal.js"></script>
+    <script src="~/js/BirthRegistry/labor.js"></script>
+    <script src="~/js/BirthRegistry/newborn.js"></script>
+    <script src="~/js/BirthRegistry/finalize.js"></script>
+    <script src="~/js/BirthRegistry/birthRegistryPage.js" asp-append-version="true"></script>
+
+    <script type="module">
+        $(document).ready(() => {
+            const mode = '@mode';
+            const preselectedMotherMrn = $('#preselectedMotherMrn').val() || null;
+            const birthId = @(ViewBag.BirthId ?? "null");
+            const activeTab = '@activeTab';
+
+            const birthRegistryManager = new BirthRegistryManager(mode, birthId, activeTab);
+
+            if (preselectedMotherMrn) {
+                birthRegistryManager.preselectedMotherMrn = preselectedMotherMrn;
+            }
+
+            birthRegistryManager.registerModule('mother', new window.MotherModule(mode, preselectedMotherMrn, birthRegistryManager));
+            birthRegistryManager.registerModule('father', new FatherModule(mode, birthRegistryManager));
+            birthRegistryManager.registerModule('prenatal', new PrenatalModule(mode, birthRegistryManager));
+            birthRegistryManager.registerModule('newborn', new NewbornModule(mode, birthRegistryManager));
+            birthRegistryManager.registerModule('finalize', new FinalizeModule(mode, birthRegistryManager));
+
+            $('#expandAllAccordions').on('click', function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+                const $birthRegistryCard = $(this).closest('.card');
+                const $collapseElements = $birthRegistryCard.find('.tab-content .collapse:not(.show):not(.tab-pane)');
+
+                $collapseElements.each(function () {
+                    const $this = $(this);
+                    const parent = $this.data('parent');
+                    if (parent) {
+                        $this.data('original-parent', parent);
+                        $this.removeAttr('data-parent');
+                        $this.data('parent', '');
+                    }
+                });
+                $collapseElements.collapse('show');
+                $birthRegistryCard.find('.tab-content .accordion-button.collapsed, .tab-content [data-toggle="collapse"].collapsed')
+                    .removeClass('collapsed')
+                    .attr('aria-expanded', 'true');
+            });
+
+            $('#collapseAllAccordions').on('click', function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+                const $birthRegistryCard = $(this).closest('.card');
+                const $collapseElements = $birthRegistryCard.find('.tab-content .collapse.show:not(.tab-pane)');
+
+                $collapseElements.collapse('hide');
+
+                $birthRegistryCard.find('.tab-content .collapse').each(function () {
+                    const $this = $(this);
+                    const originalParent = $this.data('original-parent');
+                    if (originalParent) {
+                        $this.attr('data-parent', originalParent);
+                        $this.data('parent', originalParent);
+                        $this.removeData('original-parent');
+                    }
+                });
+                $birthRegistryCard.find('.tab-content .accordion-button:not(.collapsed), .tab-content [data-toggle="collapse"]:not(.collapsed)')
+                    .addClass('collapsed')
+                    .attr('aria-expanded', 'false');
+            });
+
+            $('.mode-switch-btn').on('click', function (e) {
+                e.preventDefault();
+
+                const targetMode = $(this).data('target-mode');
+                const birthIdFromBtn = $(this).data('birth-id');
+                const currentTab = $('.nav-link.active').attr('href').replace('#', '');
+
+                const url = targetMode === 'edit'
+                    ? `/BirthRegistry/Edit/${birthIdFromBtn}?tab=${currentTab}`
+                    : `/BirthRegistry/ViewBirthRegistry/${birthIdFromBtn}?tab=${currentTab}`;
+
+                window.location.href = url;
+            });
+        });
+    </script>
+    
+
+    
+
+
+
+    <style>
+        #birthRegistryTabs .nav-link {
+            white-space: nowrap !important;
+            display: inline-flex !important;
+            flex-direction: row !important;
+            align-items: center !important;
+            gap: .35rem !important;
+            margin-right: .2rem;
+
+            padding: .45rem .6rem !important;
+            font-size: .95rem !important;
+        }
+
+        #birthRegistryTabs {
+            flex-wrap: wrap !important;
+        }
+
+        #birthRegistryTabs .nav-item:last-child {
+            margin-right: 0;
+        }
+    </style>
+
+}

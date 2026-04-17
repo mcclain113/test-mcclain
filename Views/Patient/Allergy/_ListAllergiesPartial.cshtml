@@ -1,0 +1,245 @@
+@model IS_Proj_HIT.ViewModels.Allergy.AllergyListViewModel
+@{
+    var userPermissions = ViewData["UserPermissions"] as List<string>;
+    var mrn = ViewData["Mrn"] as string ?? Model.Mrn ?? string.Empty;
+}
+
+<div class="card" data-modal-title="List Allergies">
+    <div class="card-header bg-primary text-white">
+        <h4> Patient Active Allergies
+            @if (userPermissions != null && userPermissions.Contains("AllergyAdd"))
+            {
+                <a asp-controller="Patient" asp-action="CreateAllergy" asp-route-mrn="@mrn" class="btn btn-outline-primary float-right open-create">
+                    <i class="fas fa-plus"></i> Add An Allergy
+                </a>
+            }
+        </h4>
+    </div>
+
+    <div class="bg-light">
+        <table id="activeAllergiesTable" class="stripe nowrap fixed-width" style="width:100%; border:none">
+            <colgroup>
+                <col style="width:20%" />   <!-- column 0: Allergen -->
+                <col style="width:40%"  />  <!-- column 1: Description -->
+                <col style="width:10%"  />  <!-- column 2: Start Date -->
+                <col style="width:10%"  />  <!-- column 3: Active -->
+                <col style="width:20%"  />  <!-- column 4: Actions -->
+            </colgroup>
+
+            <thead>
+                <tr class="table-primary">
+                    <th>Allergen</th>
+                    <th>Description</th>
+                    <th>Start Date</th>
+                    <th>Active</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (var item in Model.ActiveAllergies)
+                {
+                    <tr data-allergyid="@item.PatientAllergyId">
+                        <td>@item.AllergenName</td>
+                        <td class="description">@item.Description</td>
+                        <td>@item.StartDate.ToString("yyyy-MM-dd")</td>
+                        <td>@(item.IsActive ? "Yes" : "No")</td>
+                        <td>
+                                @if (userPermissions != null && (userPermissions.Contains("AllergyView")) )
+                                {
+                                    <a class="btn btn-sm btn-primary open-details"
+                                    href="@Url.Action("DetailsAllergy", "Patient", new { id = item.PatientAllergyId, mrn = Model.Mrn })"
+                                    aria-disabled="true" tabindex="-1"
+                                    data-allergyid="@item.PatientAllergyId">Details</a>
+                                }
+                                @if (userPermissions != null && (userPermissions.Contains("AllergyDelete")) )
+                                {
+                                    <form asp-action="DeleteAllergy" asp-controller="Patient"
+                                        asp-route-id="@item.PatientAllergyId"
+                                        asp-route-mrn="@Model.Mrn"
+                                        method="post"
+                                        class="d-inline delete-allergy-form"
+                                        data-confirm="Are you sure you want to delete this Patient Allergy?">
+                                        @Html.AntiForgeryToken()
+                                        <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                                    </form>
+                                }
+                        </td>
+                    </tr>
+                }
+            
+            </tbody>
+        </table>
+
+        @if(Model.InactiveAllergies != null && Model.InactiveAllergies.Any())
+        {
+            <div class="card-header bg-secondary text-white mt-5">
+                <h4>Patient Inactive Allergies</h4>
+            </div>
+
+            <table id="inactiveAllergiesTable" class="stripe nowrap fixed-width" style="width:100%; border:none">
+                <colgroup>
+                    <col style="width:20%" />
+                    <col style="width:40%" />
+                    <col style="width:10%" />
+                    <col style="width:10%" />
+                    <col style="width:20%" />
+                </colgroup>
+                <thead>
+                    <tr class="table-dark">
+                        <th>Allergen</th>
+                        <th>Description</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.InactiveAllergies)
+                    {
+                        <tr data-allergyid="@item.PatientAllergyId" class="table-light">
+                            <td>@item.AllergenName</td>
+                            <td class="description">@item.Description</td>
+                            <td>@item.StartDate.ToString("yyyy-MM-dd")</td>
+                            <td>@(item.EndDate.HasValue ? item.EndDate.Value.ToString("yyyy-MM-dd") : "")</td>
+                            <td>
+                                    @if (userPermissions != null && (userPermissions.Contains("AllergyView")) )
+                                    {
+                                        <a class="btn btn-sm btn-primary open-details"
+                                        href="@Url.Action("DetailsAllergy", "Patient", new { id = item.PatientAllergyId, mrn = Model.Mrn })"
+                                        aria-disabled="true" tabindex="-1"
+                                        data-allergyid="@item.PatientAllergyId">Details</a>
+                                    }
+                                    @if (userPermissions != null && (userPermissions.Contains("AllergyDelete")) )
+                                    {
+                                        <form asp-action="DeleteAllergy" asp-controller="Patient"
+                                            asp-route-id="@item.PatientAllergyId"
+                                            asp-route-mrn="@Model.Mrn"
+                                            method="post"
+                                            class="d-inline delete-allergy-form"
+                                            data-confirm="Are you sure you want to delete this Patient Allergy?">
+                                            @Html.AntiForgeryToken()
+                                            <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                                        </form>
+                                    }
+                            </td>
+                        </tr>
+                    }
+                
+                </tbody>
+            </table>
+        }
+        @Html.AntiForgeryToken()
+
+    </div>
+</div>
+
+<style>
+    .card {
+        box-sizing: border-box; /* Ensures padding is included in total width */
+        padding: 0; /* Ensures no extra padding inside the card */
+    }
+
+    .card-header {
+        margin: 0; /* Aligns header with the card body and table */
+    }
+
+    /* Force percentage widths to be honored */
+    table.fixed-width {
+        width: 100%;
+        table-layout: fixed; /* respect col widths */
+    }
+
+    /* Prevent wrapping for all columns except Description (2nd column) */
+    table.fixed-width th,
+    table.fixed-width td {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    /* Ensure Description column wraps gracefully */
+    table.fixed-width td:nth-child(2),
+    table.fixed-width th:nth-child(2) {
+        white-space: normal;
+        overflow-wrap: anywhere;
+    }
+
+    /* Make Actions column buttons align nicely */
+    table.fixed-width td .btn {
+        white-space: nowrap;
+    }
+
+    #activeAllergiesTable_wrapper .dataTables_info,
+    #inactiveAllergiesTable_wrapper .dataTables_info {
+        margin-left: 1rem;
+    }
+</style>
+
+<script>
+    $(function () {
+        function initAllergyTables() {
+            if ($.fn.DataTable.isDataTable('#activeAllergiesTable')) {
+            $('#activeAllergiesTable').DataTable().destroy();
+            }
+            if ($.fn.DataTable.isDataTable('#inactiveAllergiesTable')) {
+            $('#inactiveAllergiesTable').DataTable().destroy();
+            }
+
+            $('#activeAllergiesTable').DataTable({
+            autoWidth: false,
+            columns: [
+                { width: "20%" },
+                { width: "40%" },
+                { width: "10%" },
+                { width: "10%" },
+                { width: "20%", orderable: false }
+            ],
+            order: [[2, 'desc']],
+            pageLength: 10,
+            searching: false,
+            lengthChange: false,
+            language: { emptyTable: 'No Active Allergies for this patient.' }
+            });
+
+            if ($('#inactiveAllergiesTable').length) {
+            $('#inactiveAllergiesTable').DataTable({
+                autoWidth: false,
+                columns: [
+                { width: "20%" },
+                { width: "40%" },
+                { width: "10%" },
+                { width: "10%" },
+                { width: "20%", orderable: false }
+                ],
+                order: [[2, 'desc']],
+                pageLength: 10,
+                searching: false,
+                lengthChange: false,
+                language: { emptyTable: 'No Allergies have been created for this patient.' }
+            });
+            }
+        }
+
+        initAllergyTables();
+
+        // When modal shown, force DataTables to recalc column widths
+        $('#globalModal').on('shown.bs.modal', function () {
+            if ($.fn.DataTable.isDataTable('#activeAllergiesTable')) {
+            var t = $('#activeAllergiesTable').DataTable();
+            t.columns.adjust();
+            if (t.responsive) t.responsive.recalc();
+            } else {
+            initAllergyTables();
+            }
+
+            if ($.fn.DataTable.isDataTable('#inactiveAllergiesTable')) {
+            var t2 = $('#inactiveAllergiesTable').DataTable();
+            t2.columns.adjust();
+            if (t2.responsive) t2.responsive.recalc();
+            }
+        });
+    });
+</script>
+<!-- this script handles Delete confirmation whether in regular view or a modal view -->
+<script src="~/js/confirm.js" defer></script>

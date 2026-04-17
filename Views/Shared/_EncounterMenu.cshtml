@@ -1,0 +1,768 @@
+@model IS_Proj_HIT.Entities.Encounter
+<style>
+  /* selector for the menu card wrapper */
+  .encounter-menu-wrapper {
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch; /* smooth scrolling on iOS */
+    max-height: calc(100vh - var(--encounter-menu-vertical-offset, 200px));
+  }
+  .btn-link {
+    text-align: left !important;
+    white-space: normal !important; /* Allows wrapping */
+    display: block; /* Ensures full width */
+  }
+
+  .menuButton{
+      width:100%; 
+      display:flex;  
+      align-items:center; 
+      justify-content:space-between; 
+      padding-right:1rem;
+  }
+
+  .menuText{
+      flex:1; 
+      text-align:left; 
+      white-space:normal;
+  }
+
+  .submenu-caret{
+      flex:0 0 auto; 
+      margin-left:0.5rem;
+  }
+
+  /* keep dialog centered to the viewport */
+  /* Set modal width to 75% of viewport */
+  #globalModal .modal-dialog {
+    position: fixed;  /* positions the dialog to the viewport instead of the container */
+    min-width: 75vw;  /* forces the width regardless of what the content might require so columns aren't collapsed  */
+    left: 50%;  /* these two center the top left corner of the dialog  */
+    top: 50%;
+    transform: translate(-50%, -50%); /* translate back and up to center based upon dialog center point  */
+  }
+
+  #globalModalBody { 
+    max-height: calc(100vh - 100px); 
+    overflow-y: auto; 
+  }
+
+  .modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem;
+      border-bottom: 1px solid #dee2e6;
+      background-color: #f8f9fa;
+  }
+
+  .modal-title {
+      margin: 0;
+      color: #000;
+  }
+
+  /* Ensure modal content does not overflow horizontally */
+  #globalModal .modal-content {
+    overflow-wrap: break-word;
+  }
+
+  /* For very small screens, fall back to full width with margins */
+  @@media (max-width: 576px) {
+    #globalModal .modal-dialog {
+      max-width: calc(100vw - 1rem);
+      margin: 0.5rem;
+    }
+  }
+</style>
+
+  <div class="card col-2 mx-0 px-0 float-left encounter-menu-wrapper">
+    <div class="card-header bg-primary text-white">
+      <h4>
+        Encounter Menu
+      </h4>
+
+      <a asp-controller="Encounter" asp-action="ViewEncounter" asp-route-encounterId="@Model.EncounterId"
+        class="text-white">
+        <small>Return to Encounter</small>
+      </a>
+    </div>
+
+    <div id="accordion" class="accordion accordion-flush mx-0 px-0">
+
+      <div class="card">  <!-- begin ADVANCED DIRECTIVE SCREENING card -->
+        <div class="card-header" id="headingOne">
+          <h5 class="mb-0">
+              <a asp-controller="" asp-action="" asp-route-id="" id="advDirectiveScreening"   class="btn btn-link menuLink disabled">
+                ADVANCED DIRECTIVE SCREENING
+              </a>
+          </h5>
+        </div>
+      </div>  <!-- close ADVANCED DIRECTIVE SCREENING card -->
+
+      <div class="card">  <!-- begin ALERTS card -->
+        <div class="card-header" id="headingSix">
+          <h5 class="mb-0">
+              <!-- must have the class open-in-modal to open it in a modal and must have data-modal-title to display something in the title of the modal  -->
+            <a class="btn btn-link menuLink open-in-modal"
+              href="@Url.Action("ListAlerts", "Patient", new { mrn = Model.MrnNavigation.Mrn, encounterId = Model.EncounterId })"
+              data-modal-title="Alerts"
+              style="text-align:left"
+              id="alertList">
+              ALERTS
+            </a>
+
+          </h5>
+        </div>
+      </div>  <!-- close ALERTS card -->
+
+      <div class="card">  <!-- begin ALLERGIES card -->
+        <div class="card-header" id="headingFour">
+          <h5 class="mb-0">
+                <!-- must have the class open-in-modal to open it in a modal and must have data-modal-title to display something in the title of the modal  -->
+            <a class="btn btn-link menuLink open-in-modal"
+              href="@Url.Action("ListAllergies", "Patient", new { mrn = Model.MrnNavigation.Mrn, encounterId = Model.EncounterId })"
+              data-modal-title="Allergies"
+              style="text-align:left"
+              id="allergies">
+              ALLERGIES
+            </a>
+          </h5>
+        </div>
+      </div>  <!-- close ALLERGIES card -->
+
+      <div class="card">  <!-- begin MEDICATIONS card -->
+        <div class="card-header" id="headingFive">
+          <h5 class="mb-0">
+              <!-- must have the class open-in-modal to open it in a modal and must have data-modal-title to display something in the title of the modal  -->
+            <a class="btn btn-link menuLink open-in-modal"
+              href="@Url.Action("ListMedications", "Patient", new { id = Model.MrnNavigation.Mrn, encounterId = Model.EncounterId })"
+              data-modal-title="Patient Medications"
+              style="text-align:left"
+              id="patientMedicationList">
+              MEDICATIONS
+            </a>
+          </h5>
+        </div>
+      </div>  <!-- close MEDICATIONS card -->
+
+      <div class="card">  <!-- begin PROBLEM LIST card -->
+        <div class="card-header" id="headingSeven">
+          <h5 class="mb-0">
+            <a asp-controller="Patient" asp-action="" asp-route-id="" id="problemList" class="btn btn-link menuLink disabled">
+              PROBLEM LIST
+            </a>
+          </h5>
+        </div>
+      </div>  <!-- close PROBLEM LIST card -->
+
+      <div class="card">  <!-- begin VACCINATIONS card -->
+        <div class="card-header" id="headingEight">
+          <h5 class="mb-0">
+            <a asp-controller="Patient" asp-action="" asp-route-id="" id="vaccinations" class="btn btn-link menuLink disabled">
+              VACCINATIONS
+            </a>
+          </h5>
+        </div>
+      </div>  <!-- close VACCINATIONS card -->
+
+      <div class="card">  <!-- begin PHYSICIAN card -->
+        <div class="card-header" id="headingTwo">
+          <h5 class="mb-0">
+            <button class="btn menuButton menuLink collapsed" data-toggle="collapse"
+              data-target="#physicianDocumentsCollapse" aria-expanded="false" aria-controls="physicianDocumentsCollapse"
+              id="physician">
+              <span class="menuText">PHYSICIAN</span>
+              <i class="fas fa-chevron-down submenu-caret" aria-hidden="true"></i>
+            </button>
+          </h5>
+        </div>
+        <div id="physicianDocumentsCollapse" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+          <div class="card-header m-0 p-0">
+            <div class="btn-group-vertical btn-block">
+              <ul class="menuListBullet ml-3">
+                <li><a class="btn btn-link menuLink menuListItem" asp-controller="PhysicianAssessment"
+                    asp-action="ViewHistoryAndPhysical" asp-route-id="@Model.EncounterId" style="text-align:left"
+                    id="historyAndPhysical">History & Physical</a></li>
+                <li><a class="btn btn-link menuLink menuListItem" asp-controller="Encounter"
+                    asp-action="ViewPhysicianDischarge" asp-route-id="@Model.EncounterId" style="text-align:left"
+                    id="viewPhysicianDischarge">Discharge Summary</a></li>
+                <li><a class="btn btn-link menuLink  menuListItem disabled" asp-controller="Home" asp-action="Index"
+                    style="text-align:left" id="consultations">Consultations</a></li>
+                <li><a class="btn btn-link menuLink  menuListItem disabled" asp-controller="Home" asp-action="Index"
+                    style="text-align:left" id="consultations">Procedures</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>  <!-- close PHYSICIAN card -->
+
+      <div class="card">  <!-- begin ORDERS card -->
+        <div class="card-header" id="headingNine">
+          <h5 class="mb-0">
+            <a asp-controller="Order" asp-action="ListOrders" asp-route-id="@Model.EncounterId" id="listOrders" class="btn btn-link menuLink">
+              ORDERS
+            </a>
+          </h5>
+        </div>
+      </div>  <!-- close ORDERS card -->
+
+      <div class="card">  <!-- begin INTEGRATED NOTES card -->
+        <div class="card-header" id="headingThree">
+          <h5 class="mb-0">
+              <a class="btn btn-link menuLink" asp-controller="Encounter" asp-action="ProgressNotes"
+                  asp-route-id="@Model.EncounterId" id="integratedNotes">
+                INTEGRATED NOTES
+              </a>
+          </h5>
+        </div>
+      </div>  <!-- close INTEGRATED NOTES card -->
+
+      <div class="card">  <!-- begin LABS & DIAGNOSTICS card -->
+        <div class="card-header" id="headingTen">
+          <h5 class="mb-0">
+            <button class="btn menuButton collapsed menuLink" data-toggle="collapse"
+              data-target="#labDiagnosticsCollapse" aria-expanded="false" aria-controls="labDiagnosticsCollapse"
+              id="labAndDiagnostics">
+              <span class="menuText">LABS & DIAGNOSTICS</span>
+              <i class="fas fa-chevron-down submenu-caret" aria-hidden="true"></i>
+            </button>
+          </h5>
+        </div>
+        <div id="labDiagnosticsCollapse" class="collapse" aria-labelledby="headingTen" data-parent="#accordion">
+          <div class="card-body m-0 p-0">
+            <div class="btn-group-vertical btn-block">
+              <ul class="menuListBullet ml-3">
+                <li>
+                  <a class="btn btn-link menuLink menuListItem" asp-controller="Document" asp-action="ViewDocuments" asp-route-mrn="@Model.MrnNavigation.Mrn" asp-route-encounterId="@Model.EncounterId" asp-route-docType="4" data-docType="4" style="text-align:left" id="labPathology">
+                    Lab/Pathology</a>
+                </li>
+                <li>
+                  <a class="btn btn-link menuLink menuListItem" asp-controller="Document" asp-action="ViewDocuments" asp-route-mrn="@Model.MrnNavigation.Mrn" asp-route-encounterId="@Model.EncounterId" asp-route-docType="5" data-docType="5" style="text-align:left" id="radiology">
+                    Radiology</a>
+                </li>
+                <li>
+                  <a class="btn btn-link menuLink menuListItem" asp-controller="Document" asp-action="ViewDocuments" asp-route-mrn="@Model.MrnNavigation.Mrn" asp-route-encounterId="@Model.EncounterId" asp-route-docType="12" data-docType="12" style="text-align:left" id="cardiology">
+                    Cardiology</a>
+                </li>
+                <li>
+                  <a class="btn btn-link menuLink menuListItem" asp-controller="Document" asp-action="ViewDocuments" asp-route-mrn="@Model.MrnNavigation.Mrn" asp-route-encounterId="@Model.EncounterId" asp-route-docType="13" data-docType="13" style="text-align:left" id="otherDiagnostics">
+                    Other Diagnostics</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>  <!-- close LABS & DIAGNOSTICS card -->
+
+      <div class="card">  <!-- begin NURSING CARE card -->
+        <div class="card-header" id="headingTwelve">
+          <h5 class="mb-0">
+            <button class="btn menuButton menuLink collapsed" data-toggle="collapse" data-target="#nursingCollapse"
+              aria-expanded="false" aria-controls="nursingCollapse" id="nursingCare">
+              <span class="menuText">NURSING CARE</span>
+              <i class="fas fa-chevron-down submenu-caret" aria-hidden="true"></i>
+            </button>
+          </h5>
+        </div>
+        <div id="nursingCollapse" class="collapse" aria-labelledby="headingTwelve" data-parent="#accordion">
+          <div class="card-header m-0 p-0">
+            <div class="btn-group-vertical btn-block">
+              <ul class="menuListBullet">
+                <li>
+                  <a class="btn btn-link menuLink menuListItem disabled" asp-controller=""
+                    asp-action="" asp-route-id="" style="text-align:left"
+                    id="patientScreening">
+                    Patient Screening</a>
+                </li>
+                <li><a class="btn btn-link menuLink menuListItem" asp-controller="Encounter" asp-action="PCAIndex"
+                    asp-route-encounterId="@Model.EncounterId" style="text-align:left" id="pcaIndex">
+                    Patient Care Assessment</a>
+                </li>
+                <li>
+                  <a class="btn btn-link menuLink menuListItem disabled" asp-controller=""
+                    asp-action="" asp-route-id="" style="text-align:left"
+                    id="patientCarePlans">
+                    Patient Care Plans</a>
+                </li>
+                <li>
+                  <a class="btn btn-link menuLink menuListItem disabled" asp-controller=""
+                    asp-action="" asp-route-id="" style="text-align:left"
+                    id="flowsheets">
+                    Flowsheets</a>
+                </li>
+                <li>
+                  <a class="btn btn-link menuLink menuListItem disabled" asp-controller=""
+                    asp-action="" asp-route-id="" style="text-align:left"
+                    id="dischargePlanning">
+                    Discharge Planning</a>
+                </li>
+                <li>
+                  <a class="btn btn-link menuLink menuListItem disabled" asp-controller=""
+                    asp-action="" asp-route-id="" style="text-align:left"
+                    id="patientEducation">
+                    Patient Education</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>  <!-- close NURSING CARE card -->
+
+      <div class="card">  <!-- begin MEDICATION ADMINISTRATION RECORD card -->
+        <div class="card-header" id="headingThirteen">
+          <h5 class="mb-0">
+            <button class="btn menuButton menuLink collapsed" data-toggle="collapse" data-target="#medAdminRecordCollapse"
+              aria-expanded="false" aria-controls="medAdminRecordCollapse" id="medAdminRecord">
+              <span class="menuText">MEDICATION ADMINISTRATION RECORD</span>
+              <i class="fas fa-chevron-down submenu-caret" aria-hidden="true"></i>
+            </button>
+          </h5>
+        </div>
+        <div id="medAdminRecordCollapse" class="collapse" aria-labelledby="headingThirteen" data-parent="#accordion">
+          <div class="card-header m-0 p-0">
+            <div class="btn-group-vertical btn-block">
+              <ul class="menuListBullet">
+                <li>
+                  <a class="btn btn-link menuLink menuListItem disabled" asp-controller=""
+                    asp-action="" asp-route-id="" style="text-align:left"
+                    id="">
+                    Potential list item</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>  <!-- close MEDICATION ADMINISTRATION RECORD card -->
+
+      <div class="card">  <!-- begin ADMISSION SCREENING card -->
+        <div class="card-header" id="headingFourteen">
+          <h5 class="mb-0">
+            <a asp-controller="" asp-action="" asp-route-id="" id="" class="btn btn-link menuLink disabled">
+              ADMISSION SCREENING
+            </a>
+          </h5>
+        </div>
+      </div>  <!-- close ADMISSION SCREENING card -->
+
+      <div class="card">  <!-- begin REHABILITATION / THERAPY card -->
+        <div class="card-header" id="headingFifteen">
+          <h5 class="mb-0">
+            <a asp-controller="" asp-action="" asp-route-id="" id="" class="btn btn-link menuLink disabled">
+              REHABILITATION / THERAPY
+            </a>
+          </h5>
+        </div>
+      </div>  <!-- close REHABILITATION / THERAPY card -->
+
+      <div class="card">  <!-- begin ENCOUNTER DOCUMENTS card -->
+        <div class="card-header" id="headingEleven">
+          <h5 class="mb-0">
+            <a class="btn btn-link menuLink" asp-controller="Document" asp-action="ViewDocuments" asp-route-mrn="@Model.MrnNavigation.Mrn" asp-route-encounterId="@Model.EncounterId" asp-route-docType="" style="text-align:left" id="encounterDocuments">
+              ENCOUNTER DOCUMENTS
+            </a>
+          </h5>
+        </div>
+      </div>  <!-- close ENCOUNTER DOCUMENTS card -->
+
+      <div class="card">  <!-- begin ADMINISTRATION card -->
+        <div class="card-header" id="headingSixteen">
+          <h5 class="mb-0">
+            <button class="btn menuButton menuLink collapsed" data-toggle="collapse" data-target="#administrationCollapse"
+              aria-expanded="false" aria-controls="administrationCollapse" id="administration">
+              <span class="menuText">ADMINISTRATION</span>
+              <i class="fas fa-chevron-down submenu-caret" aria-hidden="true"></i>
+            </button>
+          </h5>
+        </div>
+        <div id="administrationCollapse" class="collapse" aria-labelledby="headingSixteen" data-parent="#accordion">
+          <div class="card-header m-0 p-0">
+            <div class="btn-group-vertical btn-block">
+              <ul class="menuListBullet ml-3">
+                <li>
+                  <a class="btn btn-link menuLink menuListItem disabled" asp-controller=""
+                    asp-action="" asp-route-id="" style="text-align:left"
+                    id="">
+                    Encounter Charges</a>
+                </li>
+                <li>
+                  <a class="btn btn-link menuLink menuListItem disabled" asp-controller=""
+                    asp-action="" asp-route-id="" style="text-align:left"
+                    id="">
+                    Encounter Coding</a>
+                </li>
+                <li>
+                  <a class="btn btn-link menuLink menuListItem disabled" asp-controller=""
+                    asp-action="" asp-route-id="" style="text-align:left"
+                    id="">
+                    Pre-authorization</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>  <!-- close ADMINISTRATION card -->
+
+    </div> <!-- close the accordian element -->
+  </div>  <!-- close the underlying card -->
+
+<!-- Global modal: single instance for all sidebar links -->
+<div class="modal fade" id="globalModal" tabindex="-1" role="dialog" aria-modal="true" aria-labelledby="globalModalTitle">
+  <div class="modal-dialog" role="document"> 
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 id="globalModalTitle" class="modal-title"></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" id="globalModalBody">
+        <!-- Partial view content will be injected here -->
+      </div>
+    </div>
+  </div>
+</div>
+@using System.Text.Json
+@{
+  var currentActionName = ViewContext.RouteData.Values["action"].ToString();
+  var docTypeValue = ViewContext.RouteData.Values["docType"]?.ToString()
+                     ?? Context.Request.Query["docType"].ToString()
+                     ?? "";
+}
+
+<script>
+  $(document).ready(function () {
+    var docType = @Html.Raw(JsonSerializer.Serialize(docTypeValue));
+
+    checkForPhysicianAssessment();
+
+    if ('@currentActionName' === 'ViewHistoryAndPhysical') {
+      $('#historyAndPhysical').removeClass('menuLink').addClass('activeMenuLink');
+      $('#physicianDocumentsCollapse').removeClass('collapse');
+    } else if ('@currentActionName' === 'ViewPhysicianDischarge') {
+      $('#viewPhysicianDischarge').removeClass('menuLink').addClass('activeMenuLink');
+      $('#physicianDocumentsCollapse').removeClass('collapse');
+    } else if ('@currentActionName' === 'ListOrders') {
+      $('#listOrders').removeClass('menuLink').addClass('activeMenuLink');
+    } else if ('@currentActionName' === 'Medications') {
+      $('#medications').removeClass('menuLink').addClass('activeMenuLink');
+    } else if ('@currentActionName' === 'PCAIndex') {
+      $('#pcaIndex').removeClass('menuLink').addClass('activeMenuLink');
+      $('#nursingCollapse').removeClass('collapse');
+    } else if ('@currentActionName' === 'ViewDocuments') {
+      // Try to find a child link matching the docType first (because it is in the LABS & DIAGNOSTICS card)
+      var $child = null;
+      if (docType) {
+        // select by data attribute (recommended). Ensure child anchors have data-doctype="4" etc.
+        $child = $('a[data-doctype="' + docType + '"]');
+      }
+      if ($child && $child.length) {
+        // mark only the specific child as active and open its accordion
+        $child.removeClass('menuLink').addClass('activeMenuLink');
+        $('#labDiagnosticsCollapse').removeClass('collapse');
+      } else {
+        // no matching child found -> mark the top-level encounterDocuments active (because it is the ENCOUNTER DOCUMENTS card)
+        var $enc = $('#encounterDocuments');
+        if ($enc.length) {
+          $enc.removeClass('menuLink').addClass('activeMenuLink');
+        }
+      }
+    } else if ('@currentActionName' === 'ProgressNotes') {
+      $('#integratedNotes').removeClass('menuLink').addClass('activeMenuLink');
+    }
+
+    $('#physician').on('click', function (e) {
+      checkForPhysicianAssessment();
+    });
+
+    function checkForPhysicianAssessment() {
+      var link = document.getElementById('viewPhysicianDischarge');
+      var encounterId = @Model.EncounterId;
+      var historyAndPhysicalId = "";
+      $.ajax({
+        type: "GET",
+        url: "/Encounter/GetHistoryAndPhysicalStatus",
+        dataType: "json",
+        data: { id: encounterId },
+        success: function (result) {
+          historyAndPhysicalId = parseInt(result.historyAndPhysicalId);
+
+          if (historyAndPhysicalId > 0) {
+            link.setAttribute("class", "btn btn-link menuLink menuListItem enabled");
+            if ('@currentActionName' === 'ViewPhysicianDischarge') {
+              $('#viewPhysicianDischarge').removeClass('menuLink').addClass('activeMenuLink');
+            }
+          }
+          else {
+            link.setAttribute("class", "btn btn-link menuLink menuListItem disabled");
+          }
+        },
+        error: function (error) {
+          console.log(`Error ${error}`);
+          link.setAttribute("class", "btn btn-link menuLink menuListItem disabled");
+        }
+      })
+    };
+
+  });
+</script>
+
+<!-- js to handle display of any card in the global modal: list, details, edit -->
+<script>
+  $(function () {
+    var $doc = $(document);
+    var $modal = $('#globalModal');
+    var $modalBody = $modal.find('#globalModalBody');
+    var $modalTitle = $modal.find('#globalModalTitle');
+
+    function showLoading(title) {
+      $modalTitle.text(title || 'Loading...');
+      $modalBody.html('<div class="text-center p-4"><div class="spinner-border" role="status" aria-hidden="true"></div></div>');
+      $modal.modal('show');
+    }
+
+    // helper to set/remove background inert/aria-hidden
+    function setBackgroundHidden(hidden) {
+      var modal = document.getElementById('globalModal');
+      var siblings = Array.prototype.slice.call(document.body.children).filter(function (el) {
+        return el !== modal;
+      });
+      if ('inert' in HTMLElement.prototype) {
+        siblings.forEach(function (el) { el.inert = hidden; });
+      } else {
+        siblings.forEach(function (el) {
+          if (hidden) el.setAttribute('aria-hidden', 'true'); else el.removeAttribute('aria-hidden');
+        });
+      }
+    }
+
+    function adjustDataTables() {
+      if (!$.fn.DataTable) return;
+      setTimeout(function () {
+        try {
+          $.each($.fn.dataTable.tables(true), function (i, table) {
+            var dt = $(table).DataTable();
+            dt.columns.adjust();
+            if (dt.responsive) dt.responsive.recalc();
+          });
+        } catch (ex) { }
+      }, 50);
+    }
+
+    function setModalTitleFromContent(defaultTitle) {
+      var provided = $modalBody.find('[data-modal-title]').data('modalTitle');
+      $modalTitle.text(provided || defaultTitle || '');
+    }
+
+    // Generic delegated link handler for opening any sidebar card into modal
+    $doc.on('click', 'a.open-in-modal, a.open-create, a.open-edit, a.open-details, a.back-to-list', function (e) {
+      var $link = $(this);
+      var url = $link.attr('href');
+      if (!url) return true;
+      if ($modal.length === 0) return true;
+
+      e.preventDefault();
+      showLoading($link.data('modalTitle') || $link.attr('title') || 'Loading...');
+
+      $.ajax({
+        url: url,
+        method: 'GET',
+        headers: { 'X-Requested-With': 'XMLHttpRequest' },
+        success: function (html) {
+          $modalBody.html(html);
+          // init select2 inside the injected partial so dropdown is appended to modal and doesn't fall behind the modal
+          $modalBody.find('.meds-select2').select2({
+            width: '100%',
+            dropdownParent: $modalBody
+          });
+          setModalTitleFromContent($link.data('modalTitle') || 'Details');
+          adjustDataTables();
+          $modalBody.attr('tabindex', '-1').focus();
+        },
+        error: function () {
+          $modalBody.html('<div class="text-danger p-3">Failed to load content.</div>');
+          $modalTitle.text('Error');
+        }
+      });
+    });
+
+    // Delegated form submit handler for forms inside the modal body
+    $doc.on('submit', '#globalModalBody form', function (e) {
+      var $form = $(this);
+      if ($modal.length === 0) return true;
+
+      e.preventDefault();
+      var url = $form.attr('action') || window.location.href;
+      var method = ($form.attr('method') || 'POST').toUpperCase();
+      var hasFile = $form.find('input[type=file]').length > 0;
+      var data, processData = true, contentType = 'application/x-www-form-urlencoded; charset=UTF-8';
+
+      if (hasFile) {
+        data = new FormData($form[0]);
+        processData = false;
+        contentType = false;
+      } else {
+        data = $form.serialize();
+      }
+
+      var $overlay = $('<div class="modal-loading-overlay" style="position:absolute;left:0;right:0;top:0;bottom:0;background:rgba(255,255,255,.6);z-index:1000;"><div class="spinner-border" role="status" aria-hidden="true"></div></div>');
+      $modalBody.css('position', 'relative').prepend($overlay);
+
+      $.ajax({
+        url: url,
+        method: method,
+        data: data,
+        processData: processData,
+        contentType: contentType,
+        headers: { 'X-Requested-With': 'XMLHttpRequest' },
+        success: function (response, status, xhr) {
+          var ct = (xhr.getResponseHeader('Content-Type') || '').toLowerCase();
+
+          if (ct.indexOf('application/json') !== -1) {
+            var json = (typeof response === 'string') ? JSON.parse(response) : response;
+            if (json && json.success && json.redirectUrl) {
+              $.ajax({
+                url: json.redirectUrl,
+                method: 'GET',
+                headers: { 'X-Requested-With': 'XMLHttpRequest' },
+                success: function (html) {
+                  $modalBody.html(html);
+                  setModalTitleFromContent('Details');
+                  adjustDataTables();
+                },
+                error: function () {
+                  $modal.modal('hide');
+                  window.location = json.redirectUrl;
+                }
+              });
+              return;
+            }
+            if (json && json.success && json.closeModal) {
+              $modal.modal('hide');
+              if (json.reloadPage) window.location.reload();
+              return;
+            }
+          }
+
+          $modalBody.html(response);
+          setModalTitleFromContent('Details');
+          adjustDataTables();
+          $modalBody.attr('tabindex', '-1').focus();
+        },
+        error: function (xhr) {
+          var msg = 'Failed to save changes.';
+          if (xhr && xhr.responseText) msg += ' ' + xhr.responseText;
+          var $alert = $('<div class="alert alert-danger"></div>').text(msg);
+          $modalBody.prepend($alert);
+        },
+        complete: function () {
+          $overlay.remove();
+        }
+      });
+    });
+
+    // Clear modal content on hide
+    $modal.on('hidden.bs.modal', function () {
+      $modalBody.empty().removeAttr('tabindex');
+      $modalTitle.empty();
+    });
+
+    // Refresh patient alert button(s) after any global modal closes
+    $('#globalModal').on('hidden.bs.modal', function () {
+      try {
+        // Acquire MRN: prefer body data attribute to avoid touching many views
+        var mrn = $('body').data('current-mrn') || '@(Model?.Mrn ?? "")';
+        if (!mrn) return;
+
+        $.ajax({
+          url: '/Patient/GetAlertSummary',
+          method: 'GET',
+          data: { mrn: mrn },
+          dataType: 'json',
+          success: function (data) {
+            if (!data) return;
+
+            // Update existing alert button(s) in-place.
+            // Primary selector uses id from your partial; also update any anchor with href containing ListAlerts?mrn=
+            var $btn = $('#listAlertsButton');
+            if ($btn.length === 0) {
+              // fallback: find any link that points to ListAlerts for this MRN
+              $btn = $('a[href*="/Patient/ListAlerts"][href*="' + mrn + '"]').first();
+            }
+
+            if ($btn.length) {
+              // Adjust class based on whether there are active alerts
+              var hasActive = data.hasActive === true;
+              var newClass = hasActive ? 'btn btn-outline-danger' : 'btn btn-outline-warning';
+              $btn.removeClass('btn-outline-danger btn-outline-warning').addClass(newClass);
+
+              // Replace the inner count text. Keep icon and other markup if present.
+              // Strategy: find an element holding "Alerts X" text, else replace button text
+              var html = $btn.html();
+              // Simple regex approach: replace the "Alerts N" portion if present
+              // This expects markup similar to: <h5 ...><i ...></i> Alerts N</h5>
+              html = html.replace(/Alerts\s*\d+/i, 'Alerts ' + (data.activeAlerts || 0));
+              // If regex didn't match, append count safely
+              if (!/Alerts\s*\d+/i.test($btn.html())) {
+                // try to append inside a heading
+                var $h = $btn.find('h5').first();
+                if ($h.length) {
+                  $h.text($h.text().trim() + ' Alerts ' + (data.activeAlerts || 0));
+                } else {
+                  $btn.text('Alerts ' + (data.activeAlerts || 0));
+                }
+              } else {
+                $btn.html(html);
+              }
+            }
+
+            // If you have other places that need updating (e.g., small banner text elsewhere),
+            // locate them by a consistent selector/data attribute and update similarly.
+          },
+          error: function () {
+            // silent fail: keep current banner if refresh fails
+          }
+        });
+      } catch (e) {
+        // ignore
+      }
+    });
+  });
+</script>
+
+<script>
+  (function () {
+    var key = 'encounterMenuScroll';
+
+    // save current scroll position when a menu link is clicked
+    $('.encounter-menu-wrapper').on('click', 'a', function () {
+      try {
+        sessionStorage.setItem(key, $('.encounter-menu-wrapper').scrollTop());
+      } catch (e) {}
+    });
+
+    // also save on page unload (safety)
+    window.addEventListener('beforeunload', function () {
+      try {
+        sessionStorage.setItem(key, $('.encounter-menu-wrapper').scrollTop());
+      } catch (e) {}
+    });
+
+    // restore when DOM is ready (small delay to ensure layout is stable)
+    $(function () {
+      try {
+        var val = sessionStorage.getItem(key);
+        if (val !== null) {
+          var st = parseInt(val, 10);
+          if (!isNaN(st)) {
+            // use a frame or timeout to let things paint (tweak delay if needed)
+            requestAnimationFrame(function restore() {
+              var $wrap = $('.encounter-menu-wrapper');
+              if ($wrap.length) {
+                $wrap.scrollTop(st);
+              }
+            });
+          }
+        }
+      } catch (e) {}
+    });
+  })();
+</script>

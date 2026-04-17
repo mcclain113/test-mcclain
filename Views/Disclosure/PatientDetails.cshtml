@@ -1,0 +1,322 @@
+﻿@using IS_Proj_HIT.Entities
+@model IS_Proj_HIT.ViewModels.Disclosure.RequestDetailsViewModel
+
+@{
+    ViewData["Title"] = "PatientDetails";
+    var userPermissions = ViewData["UserPermissions"] as List<string>;
+}
+
+<partial name="RequestBannerPartial" model="Model"/>
+<partial name="_RequestMenu" model="Model"/> 
+
+
+<div class="card" style="border:none;">
+    <div class="card-header requestDetailData">
+        <h3>
+
+            Patient Details
+
+            @if (userPermissions != null && (userPermissions.Contains("DisclosureRequestEdit") ) )
+            {
+                <a class="btn btn-info float-right" id="editBtn" onclick="toggleEdit()">Edit</a>
+            }
+            @if(Model.Request.PatientMrn != null)
+            {
+                <button type="button" class="btn btn-outline-success float-right mr-3" data-toggle="modal" data-target="#patientDetailsModal" data-patient-id="@Model.Request.PatientMrn">
+                    View Patient Details
+                </button>
+
+            }
+        </h3>
+
+    </div>
+    <!--View Mode Content-->
+    <div class="card-body bg-light" id="viewMode">
+        <div class="container">
+            <div class="row">
+                <div class="col-4 ">
+                    First Name: <b>@Model.Request.PatientFirstName</b>
+                </div>
+                <div class="col-4">
+                    Last Name: <b>@Model.Request.PatientLastName</b>
+                </div>
+                @if (Model.Request.PatientDob != null)
+                {
+                    <div class="col-4">
+                        Date of Birth: <b>@Model.Request.PatientDob.Value.ToShortDateString()</b>
+                    </div>
+                }
+                else if(Model.Request.PatientDob == null)
+                {
+                    <div class="col-4">
+                        Date of Birth: <b></b>
+                    </div>
+                }
+                else if(Model.Patient.Dob != null)
+                {
+                    <div class="col-4">
+                        Date of Birth: <b>@Model.Patient.Dob.Value.ToShortDateString()</b>
+                    </div>
+                }
+                else
+                {
+                    <div class="col-4">
+                        Date of Birth: <b></b>
+                    </div>
+                }
+            </div>
+            <hr />
+            <div class="row">
+                @if (Model.Request.PatientPhoneNumber != null)
+                {
+                    <div class="col-4 ">
+                        Phone Number: <b class="phone">@Model.Request.PatientPhoneNumber</b>
+                    </div>
+                }
+                else 
+                {
+                    <div class="col-4 ">
+                        Phone Number: <b></b>
+                    </div>
+                }
+                @if(Model.Request.PatientEmailAddress != null)
+                {
+                    <div class="col-4">
+                        Email Address: <b>@Model.Request.PatientEmailAddress</b>
+                    </div>
+                }
+                else
+                {
+                    <div class="col-4">
+                        Email Address: <b></b>
+                    </div>
+                }
+                @if(Model.Request.PatientMrn != null)
+                {
+                    <div class="col-4">
+                        Patient MRN: <b>@Model.Request.PatientMrn</b>
+                    </div>
+                }
+                else
+                {
+                    <div class="col-4">
+                        Patient MRN: <b>N/A</b>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+    <!--Patient Details Modal Content-->
+    <div class="modal fade" style="top: 0;" id="patientDetailsModal" tabindex="-1" role="dialog" aria-labelledby="patientModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-custom-width" role="document">
+            <div class="modal-content">
+                @if(Model.Request.PatientMrn != null)
+                {
+                    <div class="modal-header">
+                        <h3 class="modal-title" id="patientModalLabel">View EHR Patient Details</h3>
+                        <span class="mrn-align modal-title">MRN: @Model.Patient.Mrn</span>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                }
+                <div class="modal-body overflow-auto" id="patientModalBody">
+                    <!-- the loading spinner -->
+                    <div id="spinner" class="fa fa-spinner fa-spin spinner-align" style="font-size:24px; display:none;"></div>
+  
+                    <!-- The content will be loaded here using AJAX -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!--Edit Mode Content-->
+    <form method="post" id="patientEditForm" name="patientEditForm" asp-action="EditPatient">
+        @Html.AntiForgeryToken()
+        <!--If Patient Exists Redirect To Patient Edit Form-->
+        @if(Model.Request.PatientMrn != null)
+        {
+        <div class="card-body bg-light" id="editMode" style="display:none;">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">Existing Patient cannot be edited from this page. To edit this patient you will be redirected to the patient edit page.</div>
+                    <div class="col-12">
+                        <a asp-action="EditPatient" 
+                            asp-route-id="@Model.Patient.Mrn" 
+                            asp-route-requestId="@Model.Request.RequestId"
+                            asp-controller="Patient" class="btn btn-info float-right">
+                            Edit Existing Patient
+                        </a>
+                    </div>
+                </div>
+            </div>   
+        </div>
+            <!--If Patient is not In Patient Table-->
+        } else {
+        <div class="card-body bg-light" id="editMode" style="display:none;">
+            <div class="container">
+                    <input type="hidden" asp-for="@Model.RequestBeingEdited.PatientMrn" value="@Model.RequestBeingEdited.PatientMrn" />
+                    <input type="hidden" asp-for="@Model.RequestBeingEdited.RequestId" value="@Model.RequestBeingEdited.RequestId" />
+                <div class="row">
+                    <div class="col-4 d-flex">
+                        <div><label class="mt-1">First Name: </label></div>
+                        <div class="mx-2">
+                            <input asp-for="@Model.RequestBeingEdited.PatientFirstName"
+                                    type="text"
+                                    placeholder="@Model.RequestBeingEdited.PatientFirstName"
+                                    class="form-control" required/>
+                        </div>
+                    </div>
+                    <div class="col-4 d-flex">
+                        <div><label class="mt-1">Last Name: </label></div>
+                        <div class="mx-2">
+                            <input asp-for="@Model.RequestBeingEdited.PatientLastName"
+                                    type="text"
+                                    placeholder="@Model.RequestBeingEdited.PatientLastName"
+                                    class="form-control" required/>
+                        </div>
+                    </div>
+                    <div class="col-4 d-flex">
+                        <div><label class="mt-1">Date of Birth: </label></div>
+                        <div class="mx-2">
+                            <input asp-for="@Model.RequestBeingEdited.PatientDob"
+                                    type="date"
+                                    placeholder="@Model.RequestBeingEdited.PatientDob"
+                                    class="form-control" />
+                        </div>
+                    </div>                       
+                </div>
+                <hr />
+                <div class="row">
+                    <div class="col-4 d-flex">
+                        <div><label class="mt-1">Phone Number: </label></div>
+                        <div class="mx-2">
+                            <input asp-for="@Model.RequestBeingEdited.PatientPhoneNumber"
+                                    type="text"
+                                    placeholder="@Model.RequestBeingEdited.PatientPhoneNumber"
+                                    class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-4 d-flex">
+                        <div><label class="mt-1">Email Address: </label></div>
+                        <div class="mx-2">
+                            <input asp-for="@Model.RequestBeingEdited.PatientEmailAddress"
+                                    type="text"
+                                    placeholder="@Model.RequestBeingEdited.PatientEmailAddress"
+                                    class="form-control" />
+                        </div>
+                    </div>
+
+                    <div class="col-4 d-flex">
+                        <div><label class="mt-1">Patient MRN: </label></div>
+                        <div class="mx-2">
+                            <input type="text" placeholder="N/A" class="form-control" readonly/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button class="btn btn-primary btn-block" id="saveBtn" type="submit" style="display:none">Update Patient</button>
+        }          
+        <a class="btn btn-secondary text-white float-right mt-3"
+           id="cancelBtn"
+           onclick="toggleEdit(); return confirm('Are you sure you want to Cancel? All changes will be lost.')"
+           asp-action="PatientDetails"
+           style="display:none">Cancel</a>
+    </form>
+</div>
+
+<style>
+    .modal-custom-width {
+        max-width: 90%; /* Adjust the percentage as needed */
+        }
+
+    <!-- added .modal-header and .modal-title here because the defaults were not displaying properly -->
+    .modal-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 1rem;
+        border-bottom: 1px solid #dee2e6;
+        background-color: #f8f9fa;
+    }
+
+    .modal-title {
+        margin: 0;
+        color: #000;
+    }
+
+    .mrn-align {
+        margin-right: auto;
+        margin-left: auto;
+        align-self: center;
+    }
+
+    .spinner-align {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0;
+    }
+
+</style>
+
+
+@section Scripts{
+    <script>
+        let editRequest = false;
+        $('#spinner').hide();
+
+        $('#patientDetailsModal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget); // Button that triggered the modal
+            var patientId = button.data('patient-id'); // Extract info from data-* attributes
+            $('#spinner').show();
+
+            // Load the ViewPatientDetails content into the modal
+            $.ajax({
+                url: '/Patient/ViewPatientDetails',
+                data: { 
+                    id: patientId,  // needed for the controller method
+                    isModal: true  // needed to suppress inclusion of menus and banners
+                     },
+                success: function(response) {
+                    //console.log(response); // Add this line to log the response in the console for debugging
+                    $('#patientModalBody').html(response);
+                    $('#patientDetailsModal').modal('show');
+                },
+                complete: function() {
+                    $('#spinner').hide();
+                },
+                error: function(xhr, status, error) {
+                    console.error("AJAX Error: ", error); // Log any AJAX errors
+                    $('#spinner').hide();
+                    $('#patientModalBody').html('<p>Error loading content.</p>');
+                }
+            });
+        });
+
+        function toggleEdit() {
+            editRequest = !editRequest;
+
+            // Toggle visibility using jQuery
+            if (editRequest) {
+                $("#viewMode").hide();                
+                $("#editMode").show();
+                $("#editBtn").hide();
+                $("#cancelBtn").show();
+                $("#saveBtn").show();
+            } else {
+                $("#viewMode").show();
+                $("#editMode").hide();
+                $("#editBtn").show();
+                $("#cancelBtn").hide();
+                $("#saveBtn").hide();
+            }
+        }
+    </script>
+    }

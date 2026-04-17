@@ -1,0 +1,21 @@
+@model IEnumerable<IS_Proj_HIT.Entities.Document>
+
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th>Document Type</th>
+      <th>Date Created</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    @foreach (var doc in Model)
+    {
+      <tr class="directive-row" data-docid="@doc.DocumentID">
+        <td>@doc.DocumentType.DocumentTypeName</td>
+        <td>@doc.CreatedAt.ToShortDateString()</td>
+        <td>@doc.DocumentDescription</td>
+      </tr>
+    }
+  </tbody>
+</table>

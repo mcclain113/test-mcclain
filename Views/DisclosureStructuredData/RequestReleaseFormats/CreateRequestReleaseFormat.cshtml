@@ -1,0 +1,48 @@
+@model IS_Proj_HIT.ViewModels.DisclosureStructuredData.DisclosureStructuredDataViewModel
+@{
+    ViewBag.Title = "Create Request Release Format";
+}
+
+<h1>Create</h1>
+
+<h4>Request Release Format</h4>
+<hr />
+
+<div class="row">
+    <div class="col-md-10">
+        <form method="post">
+            @Html.AntiForgeryToken()
+            <div class="form-row">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group col-sm-6">
+                    <label asp-for="RequestReleaseFormat.RequestReleaseFormat1" class="control-label">Request Release Format</label>
+                    <input asp-for="RequestReleaseFormat.RequestReleaseFormat1" 
+                        class="form-control" maxlength="50" required
+                        placeholder="Example:  Fax" />
+                    <span asp-validation-for="RequestReleaseFormat.RequestReleaseFormat1" class="text-danger"></span>
+                </div>
+                <div class="form-group col-sm-6">
+                    <label asp-for="RequestReleaseFormat.ReleaseFormatDescription" class="control-label">Description of Format</label>
+                    <input asp-for="RequestReleaseFormat.ReleaseFormatDescription" 
+                        class="form-control" maxlength="100"  
+                        placeholder="Example:  The request release format is fax"/>
+                    <span asp-validation-for="RequestReleaseFormat.ReleaseFormatDescription" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                </div>
+
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<div>
+    <a asp-controller="DisclosureStructuredData" asp-action="ViewRequestReleaseFormats">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,56 @@
+@model IS_Proj_HIT.ViewModels.PatientVm.PatientStructuredDataViewModel
+@{
+    ViewBag.Title = "Delete Race";
+}
+
+<h1>Delete</h1>
+
+<h3>@ViewData["RegularMessage"]</h3>
+<h3 class="error">@ViewData["ErrorMessage"]</h3>
+
+<h4>Race</h4>
+<hr />
+
+<div class="row">
+    <div class="col-md-10">
+        <form method="post">
+            @Html.AntiForgeryToken()
+            <div class="form-row">
+
+                <input type="hidden" asp-for="Race.RaceId" value="@Model.Race.RaceId" readonly/>
+
+                <div class="form-group col-sm-2">
+                    <label asp-for="Race.WhiacCode" class="control-label">WHIAC Code</label>
+                    <input asp-for="Race.WhiacCode" 
+                        class="form-control" 
+                        placeholder="Example:  100" />
+                    <span asp-validation-for="Race.WhiacCode" class="text-danger"></span>
+                </div>
+                <div class="form-group col-sm-4">
+                    <label asp-for="Race.Name" class="control-label">Name</label>
+                    <input asp-for="Race.Name" 
+                        class="form-control" maxlength="50" required
+                        placeholder="Example:  Chinese" />
+                    <span asp-validation-for="Race.Name" class="text-danger"></span>
+                </div>
+                <div class="form-group col-sm-6">
+                    <label class="control-label">Description</label>
+                    <input asp-for="Race.Description" 
+                        class="form-control" 
+                        placeholder="Example:  Description from the WHIAC tables" />
+                    <span asp-validation-for="Race.Description" class="text-danger"></span>
+                </div>
+                
+            </div>
+                
+            <div class="form-row">
+               <div class="form-group">
+                    <a asp-controller="PatientStructuredData" asp-action="ViewRaces" class="btn btn-outline-danger">Discard Changes</a>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Delete Race" class="ml-3 btn btn-primary" />
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

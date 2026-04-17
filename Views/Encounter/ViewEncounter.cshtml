@@ -1,0 +1,180 @@
+﻿@model IS_Proj_HIT.ViewModels.ViewEncounterPageModel
+
+@{
+    ViewData["Title"] = "Encounters";
+    var userPermissions = ViewData["UserPermissions"] as List<string>;
+}
+
+<partial name="PatientBannerPartial" model="Model.Patient" class="mw-100"/>
+<partial name="_EncounterMenu" model="Model.Encounter"/>
+
+<div class="row justify-content-start" >
+    <div class="col mx-0 px-0"  >
+            @* ADDING TABS *@
+        <div class="tab-content patient-data">
+            <ul class="nav nav-tabs flex-row flex-wrap-reverse" id="myTab" role="tablist">
+                <li class="nav-item flex-sm-shrink-1 flex-grow-0 p-0">
+                    <button class="nav-link active" id="demographics-tab" data-toggle="tab" data-target="#encountertab"
+                type="button" role="tab" aria-controls="encounter" aria-selected="true">Encounter Information</button>
+                </li>
+                <li class="nav-item flex-sm-shrink-1 flex-grow-0 p-0">
+                    <button class="nav-link" id="discharge-tab" data-toggle="tab" data-target="#dischargetab"
+                    type="button" role="tab" aria-controls="discharge" aria-selected="false">Discharge Information</button>
+                </li>
+            </ul>
+                @* END OF ADDING TABS *@
+                @* ENCOUNTER TAB CONTENT *@
+            <div aria-labelledby="encounter-tab" class="tab-pane active" id="encountertab" role="tabpanel">
+                <div class="card">
+                    <div class="card-header bg-primary text-white">
+                        <h4>
+                            Encounter Information - @Model.Encounter.EncounterId
+
+                            @if (userPermissions != null && (userPermissions.Contains("EncounterEdit")) )
+                            {
+                                <a asp-action="EditEncounter"
+                                asp-route-encounterId="@Model.Encounter.EncounterId"
+                                class="btn btn-info float-right">
+                                    Edit
+                                </a>
+                            }
+                        </h4>
+                    </div>  <!-- close card header -->
+                    
+                    <div class="card-body bg-light">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-sm-12 col-lg-4 ml-0 pl-0">
+                                    <label>Admission Date/Time: </label>
+                                    <span class="font-weight-bold ml-2">@Model.Encounter.AdmitDateTime.ToString("MM/dd/yyyy hh:mm tt")</span>
+                                </div>
+                                <div class="col-sm-12 col-lg-4">
+                                    <label>Facility: </label>
+                                    <span class="font-weight-bold ml-2">@Model.Encounter.Facility.Name</span>
+                                </div>
+                                <div class="col-sm-12 col-lg-4">
+                                    <label>Facility Registry Opt Out: </label>
+                                    <span class="font-weight-bold ml-2">@(Model.Encounter.FacilityRegistryOptInOut ? "Yes" : "No")</span>
+                                </div>
+                            </div>  <!-- close the row -->
+                            <hr />
+                            <div class="row">
+                                <div class="col-sm-12 col-lg-4 ml-0 pl-0">
+                                    <label>Department: </label>
+                                    <span class="font-weight-bold ml-2">@Model.Encounter.Department.Name</span>
+                                </div>
+                                <div class="col-sm-12 col-lg-4">
+                                    <label>Room Number: </label>
+                                    <span class="font-weight-bold ml-2">@Model.Encounter.RoomNumber</span>
+                                </div>
+                            </div>  <!-- close the row -->
+                            <hr />
+                            <div class="row">
+                                <div class="col-sm-12 col-lg-12 ml-0 pl-0">
+                                    <label>Chief Complaint: </label>
+                                    <span class="font-weight-bold ml-2">@Model.Encounter.ChiefComplaint</span>
+                                </div>
+                            </div>  <!-- close the row -->
+                            <hr />
+                            <div class="row">
+                                <div class="col-sm-12 col-lg-4 ml-0 pl-0">
+                                    <label>Patient Type: </label>
+                                    <span class="font-weight-bold ml-2">@Model.Encounter.EncounterType.Name</span>
+                                </div>
+                                <div class="col-sm-12 col-lg-4">
+                                    <label>Place of Service: </label>
+                                    <span class="font-weight-bold ml-2">@Model.Encounter.PlaceOfService.Description</span>
+                                </div>
+                            </div>  <!-- close the row -->
+                            <hr />
+                            <div class="row">
+                                <div class="col-sm-12 col-lg-4 ml-0 pl-0">
+                                    <label>Point of Origin: </label>
+                                    <span class="font-weight-bold ml-2">@Model.Encounter.PointOfOrigin.Description</span>
+                                </div>
+                                <div class="col-sm-12 col-lg-4">
+                                    <label>Admit Type: </label>
+                                    <span class="font-weight-bold ml-2">@Model.Encounter.AdmitType.Description</span>
+                                </div>
+                            </div> <!-- close the row -->
+                            <hr />
+                            <div class="row">
+                                <div class="col-sm-12 col-lg-4 ml-0 pl-0">
+                                    <label>Admitting Provider: </label>
+                                    <span class="font-weight-bold ml-2">@Model.AdmittingPhysician?.FirstName @Model.AdmittingPhysician?.LastName</span>
+                                </div>
+                                <div class="col-sm-12 col-lg-4">
+                                    <label>Attending Provider: </label>
+                                    <span class="font-weight-bold ml-2">@Model.AttendingPhysician?.FirstName @Model.AttendingPhysician?.LastName</span>
+                                </div>
+                                <div class="col-sm-12 col-lg-4">
+                                    <label>Emergency Provider: </label>
+                                    <span class="font-weight-bold ml-2">@Model.EmergencyPhysician?.FirstName @Model.EmergencyPhysician?.LastName</span>
+                                </div>
+                            </div> <!-- close the row -->
+                            <hr />
+                            <div class="row">
+                                <div class="col-sm-12 col-lg-4 ml-0 pl-0">
+                                    <label>Primary Care Provider: </label>
+                                    <span class="font-weight-bold ml-2">@Model.PrimaryCarePhysician?.FirstName @Model.PrimaryCarePhysician?.LastName</span>
+                                </div>
+                                <div class="col-sm-12 col-lg-4">
+                                    <label>Referring Provider: </label>
+                                    <span class="font-weight-bold ml-2">@Model.ReferringPhysician?.FirstName @Model.ReferringPhysician?.LastName</span>
+                                </div> 
+                            </div> <!-- close the row -->
+                        </div>  <!-- close the container -->
+                    </div>  <!-- close the card-body -->
+                </div>  <!-- close the card for the Encounter Tab -->
+            </div>  <!-- close the encounter-tab -->
+                @* END OF ENCOUNTER TAB CONTENT *@
+                @* DISCHARGE TAB CONTENT *@
+            <div aria-labelledby="discharge-tab" class="tab-pane" id="dischargetab" role="tabpanel">
+                <div class="card-header bg-primary text-white">
+                    <h4>
+                        Discharge Information - @Model.Encounter.EncounterId
+
+                        @if (userPermissions != null && (userPermissions.Contains("EncounterDischarge")) )
+                        {
+                            <a asp-action="DischargeEncounter"
+                                asp-route-encounterId="@Model.Encounter.EncounterId"                       
+                                class="btn btn-info float-right">
+                                @(ViewBag.IsEncounterDischarged ? "Edit Discharge Information" : "Discharge")
+                            </a>
+                        }
+                    </h4>
+                </div>  <!-- close the card-header -->
+                <div class="card-body bg-light">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-12 col-lg-4 ml-0 pl-0">
+                                <label>Discharge Date/Time: </label>
+                                <span class="font-weight-bold">
+                                    @(Model.Encounter.DischargeDateTime.HasValue ? Model.Encounter.DischargeDateTime.Value.ToString("M/d/yyyy h:mm tt") : "")</span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12 col-lg-12 ml-0 pl-0">
+                                <label>Discharge Disposition: </label>
+                                <span class="font-weight-bold">@(Model.Encounter.DischargeDispositionNavigation is null ? "" : Model.Encounter.DischargeDispositionNavigation.Name)</span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12 col-lg-12 ml-0 pl-0">
+                                <label>Discharge notes: </label>
+                                <span class="font-weight-bold">@Model.Encounter.DischargeComment</span>
+                            </div>
+                        </div>
+                    </div>  <!-- close the container -->
+                </div>  <!-- close the card-body -->
+            </div>  <!-- close the discharge-tab -->
+                @* END OF DISCHARGE TAB CONTENT *@
+        </div>  <!-- close the tab-content div -->
+        <a asp-controller="Patient"
+            asp-action="ViewPatientDetails"
+            asp-route-id="@Model.Patient.Mrn" 
+            class="btn btn-nav m-l-1Patient Details">
+            View Patient
+        </a>
+    </div>  <!-- close the column -->
+</div>  <!-- close the row -->

@@ -1,0 +1,14 @@
+@model IS_Proj_HIT.ViewModels.PatientVm.PatientMedicationViewModel
+
+@{
+    ViewData["Title"] = "Edit Patient Medication";
+}
+
+<partial name="PatientBannerPartial" model="Model.CurrentPatient"/>
+<partial name="_PatientMenu" model="Model.CurrentPatient"/>
+
+<div class="card">
+    @{
+        await Html.RenderPartialAsync("Medication/_EditPatientMedicationPartial");
+    }
+</div>

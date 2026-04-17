@@ -1,0 +1,554 @@
+@model IS_Proj_HIT.ViewModels.BirthRegistry.BirthFacilityViewModel
+
+<div class="card" id="facility-card">
+    <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+        <h4 class="mb-0"><i class="fas fa-hospital mr-2"></i>Birth Facility Information</h4>
+        @if (Model.BirthId.HasValue)
+        {
+            <span class="badge badge-warning text-white">Edit Mode</span>
+        }
+    </div>
+
+    <div class="card-body">
+        <form id="facilityForm" asp-controller="BirthRegistry" asp-action="SaveFacilityData" method="post">
+            @Html.AntiForgeryToken()
+            <input type="hidden" asp-for="BirthId" />
+            <input type="hidden" asp-for="AddressId" value="@Model.AddressId" />
+            <input type="hidden" asp-for="FacilityId" value="@Model.FacilityId" />
+            <input type="hidden" asp-for="NonWctmcFacilityId" id="NonWctmcFacilityId" />
+            <input type="hidden" asp-for="FacilityTransferredFromId" id="FacilityTransferredFromId" />
+
+            <div id="facility-reminder" class="facility-reminder shadow-sm">
+                <div class="facility-reminder__header">
+                    <span><i class="fas fa-info-circle mr-2"></i> Reminder</span>
+                    <button id="facility-reminder-close" type="button" class="close ml-2" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="facility-reminder__body">
+                    <p class="mb-2">
+                        For pregnancies resulting in two or more live-born infants, complete this worksheet for the
+                        <em>first</em> live-birth and an Attachment worksheet for each subsequent live-born infant.
+                    </p>
+                    <p class="mb-2">
+                        For any reportable fetal loss in the pregnancy (per Wisconsin requirements), complete the
+                        Facility Worksheet for the Fetal Death Report.
+                    </p>
+                    <p class="mb-2">
+                        All birth certificate information reported for the mother should be for the woman who
+                        delivered the infant. In cases of surrogacy/gestational carrier, report information for the
+                        surrogate/gestational carrier.
+                    </p>
+                </div>
+            </div>
+
+            <button id="facility-reminder-chip" type="button" class="facility-reminder-chip d-none">
+                <i class="fas fa-info-circle mr-1"></i> Reminder
+            </button>
+
+            <div id="facilityAccordion">
+            
+                <div class="card" id="facility-section-1">
+                    <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">
+                            <button class="btn btn-block text-left text-white collapsed" type="button"
+                                data-toggle="collapse" data-target="#facility-collapse1">
+                                <i class="fas fa-hospital"></i> 1. Place of Birth
+                            </button>
+                        </h5>
+                        <span class="checkmark accordion-checkmark d-none">&#10004;</span>
+                    </div>
+
+                    <div id="facility-collapse1" class="collapse" data-parent="#facilityAccordion">
+                        <div class="card-body">
+                            <div class="section-alert mb-2" id="facility-alert-1"></div>
+
+                            <p class="text-muted">
+                                <em>
+                                    Select whether born at WCTMC or a non-WCTMC facility.
+                                    For non-WCTMC, choose the facility from the list.
+                                </em>
+                            </p>
+
+                            <div class="form-group">
+                                <label class="font-weight-bold">Birth Location</label>
+                                <select asp-for="PlaceOfBirth" class="form-control validation-trigger"
+                                    data-validation-group="facility1" data-req="true">
+                                    <option value="">-- Select --</option>
+                                    <option value="WCTMC"
+                                        selected="@(Model.PlaceOfBirth == "WCTMC" ? "selected" : null)">
+                                        WCTMC
+                                    </option>
+                                    <option value="NonFacility"
+                                        selected="@(Model.PlaceOfBirth == "NonFacility" ? "selected" : null)">
+                                        Non-WCTMC Facility
+                                    </option>
+                                </select>
+                                <small class="text-danger field-error d-none" data-for="PlaceOfBirth">
+                                    Please select a birth location.
+                                </small>
+                            </div>
+
+                            <div id="wctmcDetails" class="border rounded p-3 mb-3 bg-light d-none">
+                                <div class="form-row">
+                                    <div class="col-md-6">
+                                        <label class="mb-0">Facility</label>
+                                        <div class="font-weight-bold">Waukesha County Technical Medical Center</div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="mb-0">Facility ID</label>
+                                        <div class="font-weight-bold">9063874824</div>
+                                    </div>
+                                </div>
+                                <div class="form-row mt-2">
+                                    <div class="col-md-6">
+                                        <label class="mb-0">City/Town/Location of Birth</label>
+                                        <div class="font-weight-bold">Pewaukee</div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="mb-0">County of Birth</label>
+                                        <div class="font-weight-bold">Waukesha</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="nonFacilityAddressGroup" class="mt-3 d-none">
+                                <label class="font-weight-bold">
+                                    Select Non-WCTMC Facility (birth occurred in this facility)
+                                </label>
+                                <input type="text" id="nonWctmcFacilitySearch" class="form-control"
+                                    placeholder="Search facility by name, city, or ID..." />
+                                <ul id="nonWctmcFacilityResults" class="list-group mt-1"></ul>
+                                <small class="text-danger field-error d-none" data-for="NonWctmcFacilityId">
+                                    Please select the facility where the birth occurred.
+                                </small>
+
+                                <div id="nonWctmcFacilitySummaryWrap" class="mt-3 d-none">
+                                    <div class="border rounded bg-white p-3">
+                                        <div class="form-row">
+                                            <div class="col-md-6">
+                                                <strong>Facility:</strong>
+                                                <span id="nonWctmcFacilitySummaryName">—</span>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <strong>ID:</strong>
+                                                <span id="nonWctmcFacilitySummaryId">—</span>
+                                            </div>
+                                        </div>
+                                        <div class="form-row mt-2">
+                                            <div class="col-md-6">
+                                                <strong>City:</strong>
+                                                <span id="nonWctmcFacilitySummaryCity">—</span>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <strong>ZIP:</strong>
+                                                <span id="nonWctmcFacilitySummaryPostal">—</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button type="button" id="changeNonWctmcFacilityBtn"
+                                        class="btn btn-link text-danger mt-2 p-0">
+                                        Change selected facility
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="form-group mt-3">
+                                <label class="font-weight-bold">
+                                    Select the type of place where the birth occurred
+                                </label>
+                                <select asp-for="BirthPlaceTypeId" asp-items="Model.BirthPlaceTypes"
+                                    class="form-control validation-trigger" data-validation-group="facility1"
+                                    data-req="true" id="BirthPlaceTypeId">
+                                    <option value="">-- Select Birth Place Type --</option>
+                                </select>
+                                <small class="text-danger field-error d-none" data-for="BirthPlaceTypeId">
+                                    Please select a place type.
+                                </small>
+                            </div>
+
+                            <div id="birthPlaceTypeOtherWrap" class="form-group d-none">
+                                <label class="font-weight-bold">Other details</label>
+                                <input name="BirthPlaceTypeOtherText" class="form-control validation-trigger"
+                                    data-validation-group="facility1" placeholder="Describe the 'Other' place type" />
+                                <small class="text-danger field-error d-none" data-for="BirthPlaceTypeOtherText">
+                                    Please describe the 'Other' place type.
+                                </small>
+                            </div>
+
+                            <div id="homePlannedGroup" class="mt-3 d-none">
+                                <label class="font-weight-bold">Was the home birth planned?</label>
+                                <div class="form-check">
+                                    <input type="radio" id="homePlannedYes" name="IsPlannedHomeBirth" value="true"
+                                        class="form-check-input validation-trigger" data-validation-group="facility1" />
+                                    <label class="form-check-label" for="homePlannedYes">Yes</label>
+                                </div>
+                                <div class="form-check">
+                                    <input type="radio" id="homePlannedNo" name="IsPlannedHomeBirth" value="false"
+                                        class="form-check-input validation-trigger" data-validation-group="facility1" />
+                                    <label class="form-check-label" for="homePlannedNo">No</label>
+                                </div>
+                                <div class="form-check">
+                                    <input type="radio" id="homePlannedUnknown" name="IsPlannedHomeBirth" value=""
+                                        class="form-check-input validation-trigger" data-validation-group="facility1" />
+                                    <label class="form-check-label" for="homePlannedUnknown">Don't Know</label>
+                                </div>
+                                <small class="text-danger field-error d-none" data-for="IsPlannedHomeBirth">
+                                    Please select one option.
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card" id="facility-section-2">
+                    <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">
+                            <button class="btn btn-block text-left text-white collapsed" type="button"
+                                data-toggle="collapse" data-target="#facility-collapse2">
+                                <i class="fas fa-ambulance"></i> 2. Transfer Facility
+                            </button>
+                        </h5>
+                        <span class="checkmark accordion-checkmark d-none">&#10004;</span>
+                    </div>
+
+                    <div id="facility-collapse2" class="collapse" data-parent="#facilityAccordion">
+                        <div class="card-body">
+                            <div class="section-alert mb-2" id="facility-alert-2"></div>
+
+                            <label class="font-weight-bold">
+                                Was the mother transferred to this facility for maternal medical or fetal
+                                indications for delivery?
+                            </label>
+                            <p class="text-muted">
+                                <em>
+                                    Transfers include hospital to hospital, birth facility to hospital, etc.
+                                    Does not include home to hospital.
+                                </em>
+                            </p>
+
+                            <div class="form-check">
+                                <input asp-for="IsMotherTransferred" type="radio" value="true"
+                                    class="form-check-input validation-trigger" id="motherTransferredYes"
+                                    data-validation-group="facility2" />
+                                <label class="form-check-label" for="motherTransferredYes">Yes</label>
+                            </div>
+                            <div class="form-check">
+                                <input asp-for="IsMotherTransferred" type="radio" value="false"
+                                    class="form-check-input validation-trigger" id="motherTransferredNo"
+                                    data-validation-group="facility2" />
+                                <label class="form-check-label" for="motherTransferredNo">No</label>
+                            </div>
+                            <small class="text-danger field-error d-none" data-for="IsMotherTransferred">
+                                Please select Yes or No.
+                            </small>
+
+                            <div id="transferFacilityGroup" class="mt-3 d-none">
+                                <label class="font-weight-bold">Facility the mother was transferred from</label>
+                                <input type="text" id="transferFacilitySearch" class="form-control"
+                                    placeholder="Search facility by name, city, or ID..." />
+                                <ul id="transferFacilityResults" class="list-group mt-1"></ul>
+                                <small class="text-danger field-error d-none" data-for="FacilityTransferredFromId">
+                                    Please select the facility the mother was transferred from.
+                                </small>
+
+                                <div id="transferFacilitySummaryWrap" class="mt-3 d-none">
+                                    <div class="border rounded bg-white p-3">
+                                        <div class="form-row">
+                                            <div class="col-md-6">
+                                                <strong>Facility:</strong>
+                                                <span id="transferFacilitySummaryName">—</span>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <strong>ID:</strong>
+                                                <span id="transferFacilitySummaryId">—</span>
+                                            </div>
+                                        </div>
+                                        <div class="form-row mt-2">
+                                            <div class="col-md-6">
+                                                <strong>City:</strong>
+                                                <span id="transferFacilitySummaryCity">—</span>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <strong>ZIP:</strong>
+                                                <span id="transferFacilitySummaryPostal">—</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button type="button" id="changeTransferFacilityBtn"
+                                        class="btn btn-link text-danger mt-2 p-0">
+                                        Change selected facility
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card" id="facility-section-3">
+                    <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">
+                            <button class="btn btn-block text-left text-white collapsed" data-toggle="collapse"
+                                data-target="#facility-collapse3">
+                                <i class="fas fa-user-md"></i> 3. Delivering Attendant
+                            </button>
+                        </h5>
+                        <span class="checkmark accordion-checkmark d-none">&#10004;</span>
+                    </div>
+
+                    <div id="facility-collapse3" class="collapse" data-parent="#facilityAccordion">
+                        <div class="card-body">
+                            <div class="section-alert mb-2" id="facility-alert-3"></div>
+
+                            <p class="text-muted">
+                                <em>
+                                    National Provider Identifier (The attendant at birth is the individual physically
+                                    present at the delivery who is responsible for the delivery. For example, if an
+                                    intern
+                                    or nurse-midwife delivers an infant under the supervision of an obstetrician who is
+                                    present in the delivery room, the obstetrician should be reported as the attendant.
+                                    If the obstetrician is not physically present, the intern or nurse midwife should be
+                                    reported as the attendant.)
+                                </em>
+                            </p>
+
+                            <div class="form-group">
+                                <label class="font-weight-bold">Select Delivering Attendant</label>
+                                <input type="text" id="physicianSearch" class="form-control"
+                                    placeholder="Search physician by name or NPI..." />
+                                <ul id="physicianResults" class="list-group mt-1"></ul>
+                                <input type="hidden" asp-for="DeliveringAttendantId" id="DeliveringAttendantId" />
+                                <small class="form-text text-muted">
+                                    Choose a physician already in the system.
+                                </small>
+                                <small class="text-danger field-error d-none" data-for="DeliveringAttendantId">
+                                    Please select a delivering attendant.
+                                </small>
+                            </div>
+
+                            <div id="existingAttendantSummary" class="mt-3 d-none">
+                                <div class="border rounded bg-light p-3">
+                                    <div><strong>Name:</strong> <span id="attendantSummaryName">—</span></div>
+                                    <div><strong>NPI:</strong> <span id="attendantSummaryNpi">—</span></div>
+                                    <div><strong>Titles:</strong> <span id="attendantSummaryTitles">—</span></div>
+                                </div>
+                            </div>
+
+                            <div>
+                                <button id="changeAttendantBtn" type="button" class="btn btn-link text-danger d-none">
+                                    Change selected attendant
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card" id="facility-section-4">
+                    <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">
+                            <button class="btn btn-block text-left text-white collapsed" data-toggle="collapse"
+                                data-target="#facility-collapse4">
+                                <i class="fas fa-file-signature"></i> 4. Certifier of Birth
+                            </button>
+                        </h5>
+                        <span class="checkmark accordion-checkmark d-none">&#10004;</span>
+                    </div>
+
+                    <div id="facility-collapse4" class="collapse" data-parent="#facilityAccordion">
+                        <div class="card-body">
+                            <div class="section-alert mb-2" id="facility-alert-4"></div>
+
+                            <p class="text-muted">
+                                <em>
+                                    The certifier is the individual who certifies that the birth occurred. The certifier
+                                    may be different from the delivering attendant.
+                                </em>
+                            </p>
+
+                            <label class="font-weight-bold d-block">
+                                Is the certifier the same as the delivering attendant?
+                            </label>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="IsCertifierAttendant"
+                                    id="certifierYes" value="true" />
+                                <label class="form-check-label" for="certifierYes">Yes</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="IsCertifierAttendant"
+                                    id="certifierNo" value="false" />
+                                <label class="form-check-label" for="certifierNo">No</label>
+                            </div>
+
+                            <small class="text-danger field-error d-none" data-for="IsCertifierAttendant">
+                                Please indicate if certifier is the same as the delivering attendant.
+                            </small>
+
+                            <div id="certifierSummary" class="mt-3 d-none">
+                                <div class="border rounded p-3 bg-light">
+                                    <div class="form-row">
+                                        <div class="col-md-6">
+                                            <label class="mb-0">Certifier</label>
+                                            <div id="certifierSummaryName" class="font-weight-bold">—</div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="mb-0">NPI</label>
+                                            <div id="certifierSummaryNpi" class="font-weight-bold">—</div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row mt-2">
+                                        <div class="col-md-12">
+                                            <label class="mb-0">Titles</label>
+                                            <div id="certifierSummaryTitles" class="font-weight-bold">—</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="certifierSearchGroup" class="mt-3 d-none">
+                                <label class="font-weight-bold">
+                                    Select Certifier (if different from delivering attendant)
+                                </label>
+                                <input type="text" id="certifierSearch" class="form-control"
+                                    placeholder="Search physician by name or NPI..." />
+                                <ul id="certifierResults" class="list-group mt-1"></ul>
+
+                                <input type="hidden" asp-for="CertifierOfBirthId" id="CertifierOfBirthId" />
+                                <small class="text-danger field-error d-none" data-for="CertifierOfBirthId">
+                                    Please select a certifier.
+                                </small>
+
+                                <div id="manualCertifierSummary" class="mt-3 d-none">
+                                    <div class="border rounded p-3 bg-light">
+                                        <div class="form-row">
+                                            <div class="col-md-6">
+                                                <label class="mb-0">Certifier</label>
+                                                <div id="manualCertifierSummaryName" class="font-weight-bold">—</div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="mb-0">NPI</label>
+                                                <div id="manualCertifierSummaryNpi" class="font-weight-bold">—</div>
+                                            </div>
+                                        </div>
+                                        <div class="form-row mt-2">
+                                            <div class="col-md-12">
+                                                <label class="mb-0">Titles</label>
+                                                <div id="manualCertifierSummaryTitles" class="font-weight-bold">—</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card" id="facility-section-5">
+                    <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">
+                            <button class="btn btn-block text-left text-white collapsed" type="button"
+                                data-toggle="collapse" data-target="#facility-collapse5">
+                                <i class="fas fa-pen-fancy"></i> 5. Signature of Certifier
+                            </button>
+                        </h5>
+                        <span class="checkmark accordion-checkmark d-none">&#10004;</span>
+                    </div>
+
+                    <div id="facility-collapse5" class="collapse" data-parent="#facilityAccordion">
+                        <div class="card-body">
+                            <div class="section-alert mb-2" id="facility-alert-5"></div>
+
+                            <div class="form-group">
+                                <label class="font-weight-bold">Signature of Certifier</label>
+                                <input asp-for="CertifierSignature"
+                                    class="form-control validation-trigger signature-input"
+                                    data-validation-group="facility5" data-req="true" />
+                                <small class="text-danger field-error d-none" data-for="CertifierSignature">
+                                    Signature is required.
+                                </small>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="font-weight-bold">Date Certified</label>
+                                <input asp-for="DateCertified" type="date" class="form-control validation-trigger"
+                                    data-validation-group="facility5" data-req="true" data-type="date-not-future" />
+                                <small class="text-danger field-error d-none" data-for="DateCertified">
+                                    Date is required and cannot be in the future.
+                                </small>
+                            </div>
+
+                            <div class="text-right mt-4">
+                                <button type="button" id="saveFacilityBtn" class="btn btn-success">
+                                    <i class="fas fa-save"></i> Save Facility Information
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<style>
+    .signature-input {
+        font-family: "Brush Script MT", "Lucida Handwriting", cursive;
+        font-size: 1.2rem;
+    }
+
+    .accordion-checkmark {
+        font-size: 1.2rem;
+    }
+
+    .field-error {
+        display: block;
+    }
+
+    .option-disabled {
+        opacity: 0.55;
+        pointer-events: none;
+    }
+
+    #attendantTitleCheckboxes .form-check,
+    #certifierTitleCheckboxes .form-check {
+        margin-bottom: .25rem;
+    }
+
+    .facility-reminder {
+        position: relative;
+        top: auto;
+        z-index: 1;
+        background: #f8fbff;
+        border: 1px solid #d6e9ff;
+        border-left: 4px solid #2f86eb;
+        border-radius: .5rem;
+        margin-bottom: 1rem;
+    }
+
+    .facility-reminder__header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: .5rem .75rem;
+        color: #0c4c9b;
+        font-weight: 600;
+        background: #e9f3ff;
+        border-bottom: 1px solid #d6e9ff;
+    }
+
+    .facility-reminder__body {
+        padding: .75rem .75rem 1rem;
+    }
+
+    .facility-reminder-chip {
+        position: relative;
+        top: auto;
+        z-index: 1;
+        border: 1px dashed #9ec6ff;
+        background: #f2f7ff;
+        color: #0c4c9b;
+        border-radius: 999px;
+        padding: .25rem .6rem;
+        margin-bottom: .75rem;
+        font-weight: 600;
+    }
+</style>

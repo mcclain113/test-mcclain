@@ -1,0 +1,51 @@
+@model IS_Proj_HIT.ViewModels.AlertStructuredData.AlertStructuredDataViewModel
+@{
+    ViewBag.Title = "Edit Restriction";
+}
+
+<h1>Edit</h1>
+
+<h4>Restriction</h4>
+<hr />
+
+<div class="row">
+    <div class="col-md-10">
+        <form method="post">
+            @Html.AntiForgeryToken()
+            <div class="form-row">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="Restriction.RestrictionId" value="@Model.Restriction.RestrictionId" readonly/>
+                <div class="form-group col-sm-6">
+                    <label asp-for="Restriction.Name" class="control-label">Restriction Name</label>
+                    <input asp-for="Restriction.Name" 
+                        class="form-control" maxlength="100" required
+                        placeholder="Example:  Legal Hold" />
+                    <span asp-validation-for="Restriction.Name" class="text-danger"></span>
+                </div>
+                <div class="form-group col-sm-6">
+                    <label asp-for="Restriction.IsActive" class="control-label">Active?</label>
+                    <select asp-for="Restriction.IsActive" class="form-control" required>
+                        <option value="">Select</option>
+                        <option value="true">Yes</option>
+                        <option value="false">No</option>
+                    </select>
+                    <span asp-validation-for="Restriction.IsActive" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <input type="submit" value="Save Changes" class="btn btn-primary" />
+                </div>
+
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<div>
+    <a asp-controller="AlertStructuredData" asp-action="ViewRestrictions">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

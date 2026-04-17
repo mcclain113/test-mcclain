@@ -1,0 +1,76 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<!-- <IncludeOpenAPIAnalyzers>true</IncludeOpenAPIAnalyzers> If we use API Analyizers uncomment this! -->
+		<!-- <AddRazorSupportForMvc>true</AddRazorSupportForMvc> We might need -->
+		<UserSecretsId>aspnet-IS_Proj_HIT-9B564BD0-5FDE-46AF-9309-BCB0B8B611E6</UserSecretsId>
+		<LangVersion>latest</LangVersion>
+		<Configurations>Debug;Release;Azure Deploy</Configurations>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+		<WarningsAsErrors>$(WarningsAsErrors)</WarningsAsErrors>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+		<WarningsAsErrors>$(WarningsAsErrors)</WarningsAsErrors>
+	</PropertyGroup>
+	<ItemGroup>
+		<Compile Remove="Migrations\20191001180652_redirect-authentication.cs" />
+		<Compile Remove="Migrations\20191001180652_redirect-authentication.Designer.cs" />
+	</ItemGroup>
+	<ItemGroup>
+		<Content Remove="Views\PCA\Index.cshtml" />
+	</ItemGroup>
+	<ItemGroup>
+		<None Remove="Content\Chosen\chosen-sprite.png" />
+		<None Remove="Content\Chosen\chosen.min.css" />
+		<None Remove="Views\PCA\NewFile.txt" />
+	</ItemGroup>
+	<ItemGroup>
+		<Content Include="Content\Chosen\chosen-sprite.png" />
+		<Content Include="Content\Chosen\chosen.min.css">
+			<CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+		</Content>
+	</ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Castle.Core" Version="5.1.0" />
+		<PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="8.0.0" />
+		<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.0" />
+		<PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="8.0.0" />
+		<PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="8.0.0" />
+		<PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="4.8.0-3.final" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.0" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.0" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.0" />
+		<PackageReference Include="Microsoft.Extensions.FileProviders.Embedded" Version="8.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Identity.Stores" Version="8.0.0" />
+		<PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.0" />
+		<PackageReference Include="ReflectionIT.Mvc.Paging" Version="6.0.1" />
+		<PackageReference Include="ReportViewerCore.NETCore" Version="15.1.33" />
+		<PackageReference Include="System.Configuration.ConfigurationManager" Version="7.0.0" />
+		<PackageReference Include="Microsoft.CodeAnalysis.Common" Version="4.8.0" />
+		<PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.8.0" />
+		<PackageReference Include="Microsoft.CodeAnalysis.Workspaces.Common" Version="4.8.0-3.final" />
+		<PackageReference Include="Selenium.WebDriver" Version="4.4.0" />
+		<PackageReference Include="Selenium.WebDriver.ChromeDriver" Version="105.0.5195.5200" />
+		<PackageReference Include="bootstrap.chosen" Version="1.0.0" />
+	</ItemGroup>
+	<ItemGroup>
+		<Folder Include="Migrations\" />
+		<Folder Include="Models" />
+	</ItemGroup>
+	<ItemGroup>
+		<None Include="wwwroot\css\chosen.min.css" />
+	</ItemGroup>
+	<ItemGroup>
+		<Content Update="Pages\Patient\Ethnicity\Index.cshtml">
+			<ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+			<CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+		</Content>
+	</ItemGroup>
+	<ItemGroup>
+		<Content Include="Reports\**\*.rdlc">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+			<CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+		</Content>
+	</ItemGroup>
+</Project>

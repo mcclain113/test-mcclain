@@ -1,0 +1,118 @@
+@model IS_Proj_HIT.ViewModels.DocumentDetailsViewModel
+@{
+    var userPermissions = ViewData["UserPermissions"] as List<string>;
+    var docType = ViewData["docType"] as int?;
+}
+<div class="row">
+
+  <!-- Left: Preview -->
+  <div class="col-md-8 pr-5">
+    @if (Model.IsImage)
+    {
+      <img src="data:@Model.MimeType;base64,@Model.Base64Content"
+           class="img-fluid"
+           style="max-width: 100%; max-height: 750px;"
+ />
+    }
+    else if (Model.IsPdf) { <!-- inline = false will download to the Downloads folder -->
+      <embed src="@Url.Action("DownloadDocument", "Document",
+               new { id = Model.DocumentId, inline = true })"
+             type="application/pdf"
+             width="100%" height="750px" />
+    }
+    else {
+      <p>No inline preview available.</p>
+    }
+  </div>
+
+  <!-- Right: Properties + Edit button -->
+  <div class="col-md-4">
+    <dl class="row">
+      <dt class="col-sm-3">MRN</dt>
+      <dd class="col-sm-9">@Model.Mrn</dd>
+
+      <dt class="col-sm-3">Type</dt>
+      <dd class="col-sm-9">@Model.DocumentTypeName</dd>
+
+      <dt class="col-sm-3">Filename</dt>
+      <dd class="col-sm-9">@Model.FileName</dd>
+
+      <dt class="col-sm-3">Description</dt>
+      <dd class="col-sm-9">@Model.DocumentDescription</dd>
+
+      <dt class="col-sm-3">Notes</dt>
+      <dd class="col-sm-9">@Model.Notes</dd>
+      
+    </dl>
+    @if(!docType.HasValue)
+    {
+      if( (Model.EncounterId != null && userPermissions != null && userPermissions.Contains("EncounterDocumentEdit") )
+        || (userPermissions != null && userPermissions.Contains("PatientDocumentEdit")) )
+      {
+        <button 
+          type="button"
+          class="btn btn-primary btn-document-edit"
+          data-id="@Model.DocumentId"
+          data-section="edit">
+          Edit Details
+        </button>
+      }
+
+      <h5 class="mt-5">Document Moves:</h5>
+      if( Model.EncounterId == null && userPermissions != null && userPermissions.Contains("PatientDocumentEdit") )
+      {
+        <button 
+          type="button"
+          class="btn btn-secondary btn-block btn-document-edit"
+          data-id="@Model.DocumentId"
+          data-section="patient2differentpatient">
+          Patient Document <i class="fas fa-arrow-right mx-2"></i> Different Patient Document
+        </button>
+
+        <button 
+          type="button"
+          class="btn btn-secondary btn-block btn-document-edit"
+          data-id="@Model.DocumentId"
+          data-section="patient2encounter">
+          Patient Document <i class="fas fa-arrow-right mx-2"></i> Same Patient but Encounter Document
+        </button>
+
+        <button 
+          type="button"
+          class="btn btn-secondary btn-block btn-document-edit"
+          data-id="@Model.DocumentId"
+          data-section="patient2differentpatientencounter">
+          Patient Document <i class="fas fa-arrow-right mx-2"></i> Different Patient but Encounter Document
+        </button>
+      }
+
+      if( Model.EncounterId != null && userPermissions != null && userPermissions.Contains("EncounterDocumentEdit") )
+      {
+        <button 
+          type="button"
+          class="btn btn-secondary btn-block btn-document-edit"
+          data-id="@Model.DocumentId"
+          data-section="encounter2encounter">
+          Encounter Document <i class="fas fa-arrow-right mx-2"></i> Same Patient, Different Encounter
+        </button>
+
+        <button 
+          type="button"
+          class="btn btn-secondary btn-block btn-document-edit"
+          data-id="@Model.DocumentId"
+          data-section="encounter2patient">
+          Encounter Document <i class="fas fa-arrow-right mx-2"></i> Same Patient but Patient Document
+        </button>
+
+        <button 
+          type="button"
+          class="btn btn-secondary btn-block btn-document-edit"
+          data-id="@Model.DocumentId"
+          data-section="encounter2differentpatientencounter">
+          Encounter Document <i class="fas fa-arrow-right mx-2"></i> Different Patient Encounter Document
+        </button>
+      }
+    }
+  </div>
+
+</div>

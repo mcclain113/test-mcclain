@@ -1,0 +1,68 @@
+﻿@model IS_Proj_HIT.Entities.Medication
+@{
+    ViewBag.Title = "Medication Details";
+}
+
+<h1>Medication</h1>
+
+<h3>Details</h3>
+
+<hr />
+<div class="row">
+    <div class="col-md-10">
+        <form method="post">
+            @Html.AntiForgeryToken()
+            <div class="form-row">
+                <div class="form-group col-sm-6">
+                    <label asp-for="MedicationBrandName.BrandName" class="control-label">Brand Name</label>
+                    <input asp-for="MedicationBrandName.BrandName" class="form-control" disabled />
+                </div>
+                <div class="form-group col-sm-6">
+                    <label asp-for="MedicationGenericName.GenericName" class="control-label">Generic Name</label>
+                    <input asp-for="MedicationGenericName.GenericName" class="form-control" disabled />
+                </div> 
+
+                <div class="form-group col-sm-6">
+                    <label asp-for="MedicationDosageForm.DosageForm" class="control-label">Dosage Type</label>
+                    <input asp-for="MedicationDosageForm.DosageForm" class="form-control" disabled />
+                </div>
+                <div class="form-group col-sm-6">
+                    <label asp-for="MedicationDeliveryRoute.DeliveryRouteName" class="control-label">Delivery Route</label>
+                    <input asp-for="MedicationDeliveryRoute.DeliveryRouteName" class="form-control" disabled />
+                </div>
+                <div class="form-group col-sm-6">
+                    <label asp-for="ActiveStrength" class="control-label">Active Strength</label>
+                    <input asp-for="ActiveStrength" class="form-control" disabled />
+                </div>
+                <div class="form-group col-sm-6">
+                    <label asp-for="ActiveIngredientUnits" class="control-label">Active Ingredient Units</label>
+                    <input asp-for="ActiveIngredientUnits" class="form-control" disabled />
+                </div>
+                <div class="form-group col-sm-6">
+                    <label asp-for="ModifiedDate" class="control-label">Date Modified</label>
+                    <input asp-for="ModifiedDate" class="form-control" disabled />
+                </div>
+                <div class="form-group col-sm-6">
+                    <label for="IsActive" class="control-label">Active</label>
+                    @if (Model.IsActive) {
+                        <input id="IsActive" class="form-control" value="Yes" disabled/>
+                    } else {
+                        <input id="IsActive" class="form-control" value="No" disabled/>
+                    }
+                </div>
+                <div class="form-group col-12">
+                    <label asp-for="Ndc" class="control-label">NDC</label>
+                    <input asp-for="Ndc" class="form-control" disabled />
+                </div>
+                <div class="form-group">
+                    <a asp-controller="MedicationDataEntry" asp-action="DeleteMedication" asp-route-id="@Model.MedicationId" class="btn btn-danger">Delete Medication</a>
+                    <a asp-controller="MedicationDataEntry" asp-action="EditMedication" asp-route-id="@Model.MedicationId" class="btn btn-primary">Edit Medication</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-controller="MedicationDataEntry" asp-action="ViewMedications">Back to List</a>
+</div>

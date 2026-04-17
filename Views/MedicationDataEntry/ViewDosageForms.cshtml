@@ -1,0 +1,75 @@
+@model List<IS_Proj_HIT.Entities.MedicationDosageForm>
+
+@{
+    ViewData["Title"] = "Medication Dosage Forms";
+}
+
+<div class="row my-3">
+<h3>
+    <a class="btn btn-primary" asp-controller="MedicationDataEntry" asp-action="Index">
+        <i class="fa fa-arrow-left "></i>
+    </a>
+    Medication Dosage Forms
+</h3>
+</div>
+
+<p>
+    <a class="btn btn-primary" asp-controller="MedicationDataEntry" asp-action="CreateDosageForm">Create New</a>
+</p>
+
+<table class="stripe nowrap" id="dosageFormTable">
+    <thead>
+        <tr>
+            <th>
+                Dosage Form
+            </th>
+            <th>
+                Active
+            </th>
+            <th>
+                Last Modified
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var dosageForm in Model)
+        {
+            @* If the table is not active, grey out the row *@
+            <tr class=@(dosageForm.IsActive ? "" : "bg-secondary")>
+                <td>
+                    @dosageForm.DosageForm
+                </td>
+                <td>
+                    @(dosageForm.IsActive ? "Yes" : "No")
+                </td>
+                <td>
+                    @dosageForm.DateModified.ToString("MM/dd/yyyy")
+                </td>
+                <td>
+                    <a class="btn btn-primary" asp-controller="MedicationDataEntry" asp-action="EditDosageForm" asp-route-id="@dosageForm.DosageFormId">Edit</a>
+                    <a class="btn btn-danger" asp-controller="MedicationDataEntry" asp-action="DeleteDosageForm" asp-route-id="@dosageForm.DosageFormId">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section scripts{
+    <script>
+        // Creates DataTable
+        // DataTable Documentation found here: https://datatables.net/
+        $(function () {
+            $('#dosageFormTable').DataTable({
+                columns: [null, null, null, { orderable: false }],
+                order: [[0, 'asc']],
+                pageLength: 10,
+                searching: true,
+                lengthChange: false,
+                language: {
+                    emptyTable: 'No medication dosage forms found'
+                }
+            });
+        });
+    </script>
+}

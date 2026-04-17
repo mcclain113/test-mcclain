@@ -1,0 +1,44 @@
+@using Microsoft.AspNetCore.Identity
+@using Microsoft.AspNetCore.Http
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+@inject IHttpContextAccessor HttpContextAccessor
+
+@{
+    var requiredAdminPermissions = new[]
+    {
+        "StructuredDataAdd","StructuredDataEdit","StructuredDataView","StructuredDataDelete","SecurityAssignRole","SecurityRemoveRole"
+    };
+}
+
+<ul class="navbar-nav">
+    @if (SignInManager.IsSignedIn(User))
+    {
+        // Get user permissions from session
+        var userPermissions = HttpContextAccessor.HttpContext?.Session.GetString("Permissions")?.Split(',') ?? new string[] { };
+
+        if(userPermissions.Any(permission => requiredAdminPermissions.Contains(permission)))
+        {
+            <li class="nav-item">
+                <a class="nav-link" asp-controller="Administration" asp-action="Index">Administration</a>
+            </li>
+        }
+        <li class="nav-item">
+            <a class="nav-link" asp-controller="Account" asp-action="UpdateProfile">
+               Hello, @UserManager.GetUserName(User)!
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" asp-controller="Account" asp-action="Logout"><i class="fas fa-sign-out-alt"></i>&nbsp;Logout</a>
+        </li>
+    }
+    else
+    {
+        <li class="nav-item">
+            <a class="nav-link" asp-controller="Account" asp-action="Register"><i class="fas fa-user-plus mr-1"></i>&nbsp;Create User Account</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" asp-controller="Account" asp-action="Login"><i class="fas fa-sign-in-alt mr-1"></i>&nbsp;Login</a>
+        </li>
+    }
+</ul>

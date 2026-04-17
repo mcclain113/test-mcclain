@@ -1,0 +1,149 @@
+@model IS_Proj_HIT.ViewModels.MedicationDataEntry.MedicationListViewModel
+
+@{
+    ViewData["Title"] = "Medications";
+}
+
+<div class="row my-3">
+    <h3>
+        <a class="btn btn-primary" asp-controller="MedicationDataEntry" asp-action="Index">
+            <i class="fa fa-arrow-left "></i>
+        </a>
+        Medications
+    </h3>
+</div>
+
+
+<p>
+    <a class="btn btn-primary" asp-controller="MedicationDataEntry" asp-action="CreateMedication">Create New Medication</a>
+    <a class="btn btn-primary" asp-action="NDCRedirect" target="_blank"><i class="fas fa-external-link-alt mr-2"></i>NDC Directory</a>
+</p>
+
+<div class="card">
+    <div class="card-header bg-primary text-white">
+        <h2>Medication Search</h2>
+    </div>
+    <div class="card-body bg-light">
+        <form method="post">
+            @Html.AntiForgeryToken()
+            <div class="form-group">
+                <input type="text" placeholder="Brand Name" asp-for="@Model.BrandSearch" />
+                <input type="text" placeholder="Generic Name" asp-for="@Model.GenericSearch" />
+            </div>
+            <div class="form-group">
+                <button type="submit" asp-route-pageNumber="1" class="btn btn-primary btn-lg btn-block"><i class="fas fa-search"></i> Search</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Brand Name
+            </th>
+            <th>
+                Generic Name
+            </th>
+            <th>
+                Dosage Form
+            </th>
+            <th>
+                Active Strength Units
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var medication in Model.Medications)
+        {
+            <tr>
+                <td>
+                    @medication.MedicationBrandName.BrandName
+                </td>
+                <td>
+                    @medication.MedicationGenericName.GenericName
+                </td>
+                <td>
+                    @medication.MedicationDosageForm.DosageForm
+                </td>
+                <td>
+                    @medication.ActiveStrengthUnits
+                </td>
+                <td>
+                    <a class="btn btn-sm btn-primary" asp-controller="MedicationDataEntry" asp-action="EditMedication" asp-route-id="@medication.MedicationId">Edit</a>
+                    <a class="btn btn-sm btn-secondary" asp-controller="MedicationDataEntry" asp-action="MedicationDetails" asp-route-id="@medication.MedicationId">Details</a>
+                    <a class="btn btn-sm btn-danger" asp-controller="MedicationDataEntry" asp-action="DeleteMedication" asp-route-id="@medication.MedicationId">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@* Custom pagination that uses the _repository method to speed up load times *@
+@* Only display if the Viewbag contains "NumberOfPages", which is created in the AddPagination() Method in the medication controller *@
+@if (ViewBag.NumberOfPages != null) {
+    <form method="post">
+        @Html.AntiForgeryToken()
+        <div class="form-group">
+            <div class="btn-group-lg d-flex justify-content-center" role="group">
+                @* Section to show the "Previous" button and disable it if the page number is 1 *@
+                @if (@Model.PageNumber == 1) {
+                    <button type="submit" class="btn btn-outline-secondary" disabled>Previous</button>
+                } else {
+                    <button type="submit" class="btn btn-outline-secondary" asp-route-pageNumber="@(Model.PageNumber - 1)">Previous</button>
+                }
+                @* If state so that if there are less than 16 pages, just show all of them instead of the "..." and last page *@
+                @if (ViewBag.NumberOfPages < 16) {
+                    @foreach (var pageId in ViewBag.Pages) {
+                        @if (pageId == Model.PageNumber) {
+                            <button type="submit" class="btn btn-primary" disabled>@pageId</button>
+                        } else {
+                            <button type="submit" class="btn btn-outline-secondary" asp-route-pageNumber="@pageId">@pageId</button>
+                        }
+                    }
+                } else {
+                    @* If more than 16 pages, start with current page and then show the next 12 pages *@
+                    @foreach (var pageId in ViewBag.Pages) {
+                        @* If the current page is greater than 2, show "..." and page 1 at the far left *@
+                        @if (pageId == Model.PageNumber) {
+                            @if(pageId > 2) {
+                                <button type="submit" class="btn btn-outline-secondary" asp-route-pageNumber="1">1</button>
+                                <button type="submit" class="btn btn-outline-secondary" disabled>...</button>
+                            }
+                            @* Show the current page as primary color and disabled *@
+                            <button type="submit" class="btn btn-primary" disabled>@pageId</button>
+                            @* Show the next 10 pages after the current page *@
+                            @for(var i = pageId; i < Model.PageNumber + 10; i++) {
+                                @if (i < ViewBag.NumberOfPages) {
+                                    <button type="submit" class="btn btn-outline-secondary" asp-route-pageNumber="@(i + 1)">@(i + 1)</button>
+                                }
+                            }
+                            @* If the current page is less then 11 away from the last page, show "..." and the last at the far right *@
+                            @if (@Model.PageNumber < ViewBag.NumberOfPages - 11) {
+                                <button type="submit" class="btn btn-outline-secondary" disabled>...</button>
+                                <button type="submit" class="btn btn-outline-secondary" asp-route-pageNumber="@ViewBag.NumberOfPages">@ViewBag.NumberOfPages</button>
+                            }
+                        }
+                    }
+                }
+                @* Statement to show the "Next" button and disable it if page number is the last page *@
+                @if (@Model.PageNumber == ViewBag.NumberOfPages) {
+                    <button type="submit" class="btn btn-outline-secondary" disabled>Next</button>
+                } else {
+                    <button type="submit" asp-route-pageNumber="@(Model.PageNumber + 1)" class="btn btn-outline-secondary">Next</button>
+                }
+            </div>
+        </div>
+    </form>
+}
+
+@section scripts{
+<script>
+    // Prevents the "Confirm form resubmission?" popup if the user reloads the page.
+    if (window.history.replaceState) {
+        window.history.replaceState(null, null, window.location.href);
+    }
+</script>
+}

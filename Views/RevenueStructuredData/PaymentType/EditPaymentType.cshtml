@@ -1,0 +1,46 @@
+@model IS_Proj_HIT.ViewModels.RevenueStructuredDataViewModel
+@{
+    ViewBag.Title = "Edit Payment Type";
+}
+
+<h1>Edit</h1>
+
+<h4>Payment Type</h4>
+<hr />
+
+<div class="row">
+    <div class="col-md-10">
+        <form method="post">
+            @Html.AntiForgeryToken()
+            <div class="form-row">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="PaymentType.PaymentTypeId" value="@Model.PaymentType.PaymentTypeId" readonly/>
+                
+                <div class="form-group col-sm-6">
+                    <label asp-for="PaymentType.PaymentType1" class="control-label">Payment Type Name</label>
+                    <input asp-for="PaymentType.PaymentType1" 
+                        class="form-control" maxlength="20" required
+                        placeholder="Example:  Cash" />
+                    <span asp-validation-for="PaymentType.PaymentType1" class="text-danger"></span>
+                </div>
+                
+            </div>
+
+            <div class="form-row">            
+                <div class="form-group">
+                    <input type="submit" value="Save Changes" class="btn btn-primary" />
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+
+<div>
+    <a asp-controller="RevenueStructuredData" asp-action="ViewPaymentTypes">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,69 @@
+@model IS_Proj_HIT.ViewModels.BirthRegistry.MothersInformationViewModel
+
+<div class="card">
+    <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+        <h4 class="mb-0"><i class="fas fa-female mr-2"></i>Mother's Information</h4>
+        @if (ViewBag.Mode == "edit")
+        {
+            <span class="badge badge-warning text-white">Edit Mode</span>
+        }
+    </div>
+    <div class="card-body">
+        
+        @if (Model.IsExistingPatient && !string.IsNullOrEmpty(Model.Mrn))
+        {
+            <div class="alert alert-info d-flex align-items-center" role="alert">
+                <i class="fas fa-info-circle fa-2x mr-3"></i>
+                <div>
+                    <strong>Preselected Patient:</strong> 
+                    Mother information is pre-filled from patient record with MRN: <strong>@Model.Mrn</strong>.
+                </div>
+            </div>
+        }
+        else
+        {
+
+            <div id="patientSearchSection" class="row mb-4 border-bottom pb-3">
+                <div class="col-md-12">
+                    <h5>Search Existing Patient or Create New</h5>
+                    <p class="text-muted small mb-2">
+                        <i class="fas fa-info-circle"></i> Search results exclude male patients.
+                    </p>
+                    <div class="d-flex gap-2 mb-3">
+                        <button class="btn btn-primary" id="openMotherLookupBtn" type="button">
+                            <i class="fas fa-search"></i> Search
+                        </button>
+
+                        <button class="btn btn-success" id="createNewPatientBtn" type="button">
+                            <i class="fas fa-plus"></i> Create New Patient
+                        </button>
+                    </div>
+                    
+                    <div id="searchResults" class="mt-2 d-none">
+                        <div class="table-responsive">
+                            <table class="table table-sm table-hover">
+                                <thead class="table-dark">
+                                    <tr>
+                                        <th>MRN</th>
+                                        <th>Name</th>
+                                        <th>Date of Birth</th>
+                                        <th>SSN</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="searchResultsBody"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+
+        @* Always post IsExistingPatient so backend knows if this is an existing patient *@
+        <input type="hidden" name="IsExistingPatient" id="isExistingPatient" value="@Model.IsExistingPatient.ToString().ToLower()" />
+        <div id="motherInformationAccordion" class="@(Model.IsExistingPatient && Model.Mrn != null ? "" : "d-none")">
+            @await Html.PartialAsync("Mother/_MotherAccordionSections", Model)
+        </div>
+
+    </div>
+</div>

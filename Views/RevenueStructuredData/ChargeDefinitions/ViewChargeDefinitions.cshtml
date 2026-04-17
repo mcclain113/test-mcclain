@@ -1,0 +1,64 @@
+@model List<IS_Proj_HIT.Entities.ChargeDefinition>
+
+@{
+    ViewData["Title"] = "Charge Definition Master";
+}
+
+<div class="row my-3">
+<h3>
+    <a class="btn btn-primary" asp-controller="RevenueStructuredData" asp-action="Index">
+        <i class="fa fa-arrow-left "></i>
+    </a>
+    Charge Definition Master Table
+</h3>
+</div>
+
+<p>
+    <a class="btn btn-primary" asp-controller="RevenueStructuredData" asp-action="CreateChargeDefinition">Create New</a>
+</p>
+
+<table class="stripe nowrap" id="chargeDefinitionTable">
+    <thead>
+        <tr>
+            <th>Code</th>
+            <th>Short Description</th>
+            <th>Revenue Code</th>
+            <th>Status</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var cd in Model)
+        {
+            <tr>
+                <td>@cd.ChargeID</td>
+                <td>@cd.ShortDescription</td>
+                <td>@cd.RevenueCodeID</td>
+                <td>@(cd.IsActive ? "Active" : "Inactive")</td>
+                <td>
+                    <a class="btn btn-info" asp-controller="RevenueStructuredData" asp-action="DetailsChargeDefinition" asp-route-id="@cd.ChargeID">Details</a>
+                    <a class="btn btn-primary" asp-controller="RevenueStructuredData" asp-action="EditChargeDefinition" asp-route-id="@cd.ChargeID">Edit</a>
+                    <a class="btn btn-danger" asp-controller="RevenueStructuredData" asp-action="DeleteChargeDefinition" asp-route-id="@cd.ChargeID">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section scripts{
+    <script>
+        // Creates DataTable
+        // DataTable Documentation found here: https://datatables.net/
+        $(function () {
+            $('#chargeDefinitionTable').DataTable({
+                columns: [null, null, null, null, { orderable: false }],
+                order: [[0, 'asc']],
+                pageLength: 10,
+                searching: true,
+                language: {
+                    emptyTable: 'None found.'
+                }
+            });
+        });
+    </script>
+}

@@ -1,0 +1,81 @@
+﻿@model IEnumerable<IS_Proj_HIT.ViewModels.EncounterPatientViewModel>
+@{
+    ViewData["Title"] = "Encounter List";
+    var userPermissions = ViewData["UserPermissions"] as List<string>;
+}
+
+<div class="row my-3">
+    <div class="col-12">
+        <h3>Checked In Patient Encounters</h3>
+    </div>
+</div>
+<h3 class="error">@ViewData["ErrorMessage"]</h3>
+
+<div class="row">
+    <div class="col-12">
+        <table class="table table-striped table-bordered" id="checkedInPatientsTable">
+            <thead class="bg-primary text-white">
+                <tr>
+                    <th style="text-align: center;" scope="col">MRN</th>
+                    <th style="text-align: center;" scope="col">Patient Name</th>
+                    <th style="text-align: center;" scope="col">Admit Time</th>
+                    <th style="text-align: center;" scope="col">Facility</th>
+                    <th style="text-align: center;" scope="col">Room Number</th>
+                    <th style="text-align: center;" scope="col">View Encounter Details</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var encounter in Model)
+                {
+                    <tr>
+                        <td style="text-align: center;">@encounter.Mrn</td>
+                        <td>
+                            @(string.IsNullOrWhiteSpace(encounter.FirstName)
+                                ? encounter.LastName
+                                : $"{encounter.FirstName.Substring(0, 1)}. {encounter.LastName}")
+                        </td>
+                        <td style="text-align: center;">@encounter.AdmitDateTime</td>
+                        <td style="text-align: center;">@encounter.FacilityName</td>
+                        <td style="text-align: center;">@encounter.RoomNumber</td>
+                        <td id="special">
+                            <a asp-action="ViewEncounter"
+                               asp-route-encounterId="@encounter.EncounterId"
+                               asp-route-allowCheckedInRedirect="true"
+                               class="btn btn-nav">
+                                View
+                            </a>
+                            @if (userPermissions != null && (userPermissions.Contains("EncounterDischarge")) )
+                            {
+                                <a asp-action="DischargeEncounter"
+                                    asp-route-encounterId="@encounter.EncounterId"
+                                    asp-route-allowCheckedInRedirect="true"
+                                    class="btn btn-info">
+                                    Discharge
+                                </a>
+                            }
+                            
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section scripts{
+    <script>
+        // DataTable Documentation found here: https://datatables.net/
+        $(document).ready(function () {
+            // Creates DataTable
+            $('#checkedInPatientsTable').DataTable({
+                columns: [null,null,null,null,null, { orderable: false }],
+                order: [[3, 'asc'],[0, 'asc']],
+                pageLength: 25,
+                searching: true,
+                language: {
+                    emptyTable: 'None found'
+                }
+            });
+        });
+    </script>
+}

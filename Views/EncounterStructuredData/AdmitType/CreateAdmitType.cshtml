@@ -1,0 +1,57 @@
+@model IS_Proj_HIT.ViewModels.EncounterStructuredDataViewModel
+@{
+    ViewBag.Title = "Create Admit Type";
+}
+
+<h1>Create</h1>
+
+<h4>Admit Type</h4>
+<hr />
+
+<h3 class="error">@ViewData["ErrorMessage"]</h3>
+
+<div class="row">
+    <div class="col-md-10">
+        <form method="post">
+            @Html.AntiForgeryToken()
+            <div class="form-row">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group col-sm-2">
+                    <label asp-for="AdmitType.WiPopCode" class="control-label">WiPopCode</label>
+                    <input asp-for="AdmitType.WiPopCode" 
+                        class="form-control" maxlength="1" required
+                        placeholder="Example:  6" />
+                    <span asp-validation-for="AdmitType.WiPopCode" class="text-danger"></span>
+                </div>
+                <div class="form-group col-sm-4">
+                    <label asp-for="AdmitType.Description" class="control-label">Description</label>
+                    <input asp-for="AdmitType.Description" 
+                        class="form-control" maxlength="25"  
+                        placeholder="Example:  Elective"/>
+                    <span asp-validation-for="AdmitType.Description" class="text-danger"></span>
+                </div>
+                <div class="form-group col-sm-6">
+                    <label asp-for="AdmitType.Explaination" class="control-label">Explanation</label>
+                    <input asp-for="AdmitType.Explaination" 
+                        class="form-control"   
+                        placeholder="Example:  The patient's condition allows time..."/>
+                    <span asp-validation-for="AdmitType.Explaination" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                </div>
+
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<div>
+    <a asp-controller="EncounterStructuredData" asp-action="ViewAdmitTypes">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,85 @@
+@model IS_Proj_HIT.ViewModels.MedicationDataEntry.MedicationViewModel
+@{
+    ViewBag.Title = "Edit Medication";
+}
+
+<h1>Edit</h1>
+
+<h4>Medication</h4>
+<hr />
+<div class="row">
+    <div class="col-md-10">
+        <form method="post">
+            @Html.AntiForgeryToken()
+            <div class="form-row">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="Medication.MedicationId" value="@Model.Medication.MedicationId" readonly/>
+                <div class="form-group col-sm-6">
+                    <label asp-for="BrandName.BrandName" class="control-label">Brand Name</label>
+                    <input asp-for="BrandName.BrandName" type="text" class ="form-control" list="datalist-brand-name" autocomplete="off" required/>
+                    <datalist id="datalist-brand-name">
+                        @foreach(IS_Proj_HIT.Entities.MedicationBrandName item in ViewBag.MedicationBrands) {
+                            <option value="@item.BrandName"></option>
+                        }
+                    </datalist>
+                    <span asp-validation-for="BrandName.BrandName" class="text-danger"></span>
+                </div>
+                <div class="form-group col-sm-6">
+                    <label asp-for="GenericName.GenericName" class="control-label">Generic Name</label>
+                    <input asp-for="GenericName.GenericName" type="text" class ="form-control" list="datalist-generic-name" autocomplete="off" required/>
+                    <datalist id="datalist-generic-name">
+                        @foreach(IS_Proj_HIT.Entities.MedicationGenericName item in ViewBag.MedicationGenerics) {
+                            <option value="@item.GenericName"></option>
+                        }
+                    </datalist>
+                    <span asp-validation-for="GenericName.GenericName" class="text-danger"></span>
+                </div> 
+
+                <div class="form-group col-sm-6">
+                    <label asp-for="Medication.DosageFormId" class="control-label">Dosage Type</label>
+                    <select asp-for="Medication.DosageFormId" class="form-control" asp-items="ViewBag.DosageFormId" required></select>
+                </div>
+                <div class="form-group col-sm-6">
+                    <label asp-for="Medication.DeliveryRouteId" class="control-label">Delivery Route</label>
+                    <select asp-for="Medication.DeliveryRouteId" class="form-control" asp-items="ViewBag.DeliveryRouteId" required></select>
+                </div>
+                <div class="form-group col-sm-6">
+                    <label asp-for="Medication.ActiveStrength" class="control-label">Active Strength</label>
+                    <input asp-for="Medication.ActiveStrength" class="form-control" maxlength="100" required />
+                    <span asp-validation-for="Medication.ActiveStrength" class="text-danger"></span>
+                </div>
+                <div class="form-group col-sm-6">
+                    <label asp-for="Medication.ActiveIngredientUnits" class="control-label">Active Ingredient Units</label>
+                    <input asp-for="Medication.ActiveIngredientUnits" class="form-control" maxlength="100" required />
+                    <span asp-validation-for="Medication.ActiveIngredientUnits" class="text-danger"></span>
+                </div>
+                <div class="form-group col-6">
+                    <label asp-for="Medication.Ndc" class="control-label">NDC</label>
+                    <input asp-for="Medication.Ndc" class="form-control" maxlength="100" required/>
+                    <span asp-validation-for="Medication.Ndc" class="text-danger"></span>
+                </div>
+                <div class="form-group mt-4 col-sm-6">
+                    <div class="pt-3">
+                        <input asp-for="Medication.IsActive" class="form-input" type="checkbox"/>
+                        <label asp-for="Medication.IsActive" class="form-check-label">Active</label>
+                    </div>
+                </div>
+                @if (ViewBag.ErrorMessage != null) {
+                    <div class="form-group col-12">
+                        <span class="text-danger">@ViewBag.ErrorMessage</span>
+                    </div>
+                }
+                <div class="form-group">
+                    <a asp-controller="MedicationDataEntry" asp-action="ViewMedications" class="btn btn-outline-danger">Discard Changes</a>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Save Changes" class="ml-3 btn btn-primary" />
+                </div>
+            </div>            
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

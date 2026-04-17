@@ -1,0 +1,148 @@
+@model IS_Proj_HIT.ViewModels.RequestersViewModel
+@{
+    ViewBag.Title = "Create Requester";
+}
+
+<div  class="card">
+    <div class="card-header bg-primary text-white">
+        <h3>
+            <a class="btn btn-primary" asp-controller="Requester" asp-action="ViewRequesters">
+                <i class="fa fa-arrow-left "></i>
+            </a>
+            Create Requester
+        </h3>
+    </div> <!-- close card-header -->
+
+    <div class="card-body bg-light">
+        <div class="card">
+            <div class="card-header bg-primary"></div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-10">
+                        <form method="post">
+                            <div class="form-row">
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                
+                                <div class="form-group col-sm-6">
+                                    <label asp-for="Requester.FirstName" class="control-label">First Name</label>
+                                    <input asp-for="Requester.FirstName" 
+                                        class="form-control" maxlength="50"required
+                                        placeholder="Example:  George" />
+                                    <span asp-validation-for="Requester.FirstName" class="text-danger"></span>
+                                </div>
+                                <div class="form-group col-sm-6">
+                                    <label asp-for="Requester.LastName" class="control-label">Last Name</label>
+                                    <input asp-for="Requester.LastName" 
+                                        class="form-control" maxlength="50" required 
+                                        placeholder="Example:  Jetson"/>
+                                    <span asp-validation-for="Requester.LastName" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group col-sm-4">
+                                    <label asp-for="Requester.CompanyName" class="control-label">Company Name</label>
+                                    <input asp-for="Requester.CompanyName" class="form-control" maxlength="100" placeholder="Example:  Morgan, Morgan and Everett, LLC"/>
+                                    <span asp-validation-for="Requester.CompanyName" class="text-danger"></span>
+                                </div>
+                                <div class="form-group col-sm-4">
+                                    <label asp-for="Requester.RequesterTypeId" class="control-label">Select Requester Type</label>
+                                    <select asp-for="Requester.RequesterTypeId" class ="form-control" asp-items="ViewBag.RequesterTypeId"></select>
+                                    <span asp-validation-for="Requester.RequesterTypeId" class="text-danger"></span>
+                                </div>
+                                <div class="form-group col-sm-4">
+                                    <label asp-for="Requester.RequesterStatusId" class="control-label">Select Requester Status</label>
+                                    <select asp-for="Requester.RequesterStatusId" class="form-control" asp-items="ViewBag.RequesterStatusId"></select>
+                                    <span asp-validation-for="Requester.RequesterStatusId" class="text-danger"></span>
+                                </div>
+                            </div>
+                
+                            <fieldset class="validate-address">
+                                <div class="form-row">
+                                    <div class="form-group col-sm-4">
+                                        <label asp-for="Requester.AddressId" class="control-label">Street Address</label>
+                                        <input asp-for="@Model.Address.Address1" class="validate form-control" maxlength="50" placeholder="Example:  1757 Nightinggale Avenue"/>
+                                        <span asp-validation-for="Address.Address1" class="invalid-summary text-danger" style="display:none">Please enter an Address</span>
+                                    </div>            
+                                    <div class="form-group col-sm-2">
+                                        <label asp-for="Requester.AddressId" class="control-label">Suite or Apt #</label>
+                                        <input asp-for="@Model.Address.Address2" class="validate not-required form-control"maxlength="25" placeholder="Example:  Apt. 14"/>
+                                    </div>
+                                    <div class="form-group col-sm-4">
+                                        <label asp-for="Requester.AddressId" class="control-label">City</label>
+                                        <input asp-for="@Model.Address.City" class="validate form-control"maxlength="50" placeholder="Example:  Platteville"/>
+                                        <span asp-validation-for="Address.City" class="invalid-summary text-danger" style="display:none">Please enter a City</span>
+                                    </div>
+                                    <div class="form-group col-sm-2">
+                                        <label  class="control-label" asp-for="Address.AddressStateID">Select State</label>
+                                        <select class="form-control" asp-for="Address.AddressStateID" asp-items="ViewBag.StateId">
+                                        </select>
+                                        <!-- both State and Country have default values so the 'validate' class is omitted  -->
+                                    </div>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="form-group col-sm-2">
+                                        <label asp-for="Requester.AddressId" class="control-label">Zip Code</label>
+                                        <input asp-for="@Model.Address.PostalCode" class="validate form-control zipcode"maxlength="11" placeholder="Example:  53036"/>
+                                        <span asp-validation-for="Address.PostalCode" class="invalid-summary text-danger" style="display:none">Please enter a Postal Code</span>
+                                    </div>
+                                    <div class="form-group col-sm-4">
+                                        <label asp-for="Requester.AddressId" class="control-label">County</label>
+                                        <input asp-for="@Model.Address.County" class="validate not-required form-control"maxlength="50" placeholder="Example:  Jefferson"/>
+                                    </div>
+                                    <div class="form-group col-sm-6">
+                                        <label  class="control-label" asp-for="Address.CountryId">Select Country</label>
+                                        <select class="form-control" asp-for="Address.CountryId" asp-items="ViewBag.CountryId"></select>
+                                    </div>
+                                </div>
+                            </fieldset>
+
+                            <div class="form-row">
+                                <div class="form-group col-sm-6">
+                                    <label asp-for="Requester.PhoneNumber" class="control-label">Phone Number</label>
+                                    <input asp-for="Requester.PhoneNumber" id="requesterPhoneNumber" class="form-control phone" maxlength="14" placeholder="Example:  414-223-5566"/>
+                                    <span asp-validation-for="Requester.PhoneNumber" class="text-danger"></span>
+                                </div>
+                                <div class="form-group col-sm-6">
+                                    <label asp-for="Requester.EmailAddress" class="control-label">Email Address</label>
+                                    <input asp-for="Requester.EmailAddress" class="form-control" maxlength="100" 
+                                        placeholder="Example:  personsaccount@mymail.com"/>
+                                    <span asp-validation-for="Requester.EmailAddress" class="text-danger"></span>
+                                </div>                
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group col-sm-12">
+                                    <label asp-for="Requester.Comments" class="control-label">Comments</label>
+                                    <textarea name="Requester.Comments" class="form-control"
+                                        id="commentsRequester"
+                                        style="display: block;" rows="2"></textarea>
+                                </div>
+                            </div>
+
+                            <div class="form-row">            
+                                <div class="form-group">
+                                    <input type="submit" value="Create Requester" class="btn btn-primary" />
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+
+
+                <div>
+                    <a asp-controller="Requester" asp-action="ViewRequesters">Back to List</a>
+                </div>
+            </div>  <!-- close inner card-body -->
+        </div>  <!-- close inner card -->
+    </div> <!-- close card-body -->
+</div>  <!-- close card -->
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+}
+
+

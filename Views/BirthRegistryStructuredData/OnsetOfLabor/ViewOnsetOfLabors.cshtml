@@ -1,0 +1,57 @@
+@model List<IS_Proj_HIT.Entities.OnsetOfLabor>
+@{
+    ViewData["Title"] = "Onset Of Labors";
+}
+
+<div class="row my-3">
+    <h3>
+        <a class="btn btn-primary" asp-controller="BirthRegistryStructuredData" asp-action="Index">
+            <i class="fa fa-arrow-left"></i>
+        </a>
+        Onset Of Labors
+    </h3>
+</div>
+
+<p>
+    <a class="btn btn-primary" asp-controller="BirthRegistryStructuredData" asp-action="CreateOnsetOfLabor">Create New</a>
+</p>
+
+<table class="stripe" id="onsetOfLaborTable">
+    <thead>
+        <tr>
+            <th>Onset Of Labor Name</th>
+            <th>Onset Of Labor Description</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var onsetOfLabor in Model)
+        {
+            <tr>
+                <td>@onsetOfLabor.OnsetOfLaborName</td>
+                <td>@onsetOfLabor.OnsetOfLaborDescription</td>
+                <td>
+                    <a class="btn btn-primary" asp-controller="BirthRegistryStructuredData" asp-action="EditOnsetOfLabor" asp-route-id="@onsetOfLabor.OnsetOfLaborId">Edit</a>
+                    <a class="btn btn-danger" asp-controller="BirthRegistryStructuredData" asp-action="DeleteOnsetOfLabor" asp-route-id="@onsetOfLabor.OnsetOfLaborId">Delete</a>
+                </td>
+            </tr>
+        }
+
+    </tbody>
+</table>
+
+@section scripts{
+    <script>
+    // DataTable Documentation found here:  https://datatables.net
+    $(function(){
+        // Create the data table
+        $('#onsetOfLaborTable').DataTable({
+            columns: [null, null, {orderable: false}],
+            order: [[0, 'asc'] ],
+            pageLength: 10,
+            searching: true,
+            language: { emptyTable: 'None found'}
+        });
+    });
+    </script>
+}

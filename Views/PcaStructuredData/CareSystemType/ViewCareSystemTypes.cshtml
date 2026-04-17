@@ -1,0 +1,81 @@
+@model List<IS_Proj_HIT.Entities.CareSystemType>
+
+@{
+    ViewData["Title"] = "Care System Types";
+    var userPermissions = ViewData["UserPermissions"] as List<string>;
+}
+
+<div class="row my-3">
+    <h3>
+        <a class="btn btn-primary" asp-controller="PCAStructuredData" asp-action="Index">
+            <i class="fa fa-arrow-left "></i>
+        </a>
+        Care System Types
+    </h3>
+</div>
+<!-- banner displays used when deleting an item  -->
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success">
+            @TempData["SuccessMessage"]
+        </div>
+    }
+
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger">
+            @TempData["ErrorMessage"]
+        </div>
+    }
+    
+<div>
+    @if (userPermissions != null && (userPermissions.Contains("StructuredDataAdd")) )
+    {
+        <a class="btn btn-primary mb-3" asp-controller="PCAStructuredData" asp-action="CreateCareSystemType">Create New</a>
+    }
+</div>
+
+<table class="stripe nowrap" id="careSystemTypeTable">
+    <thead>
+        <tr>
+            <th>Care System Type Name</th>
+            <th style="text-align: center;">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var careSystemType in Model)
+        {
+            <tr>
+                <td>@careSystemType.Name</td>
+                <td>
+                    @if (userPermissions != null && (userPermissions.Contains("StructuredDataEdit")) )
+                    {
+                        <a class="btn btn-primary" asp-controller="PCAStructuredData" asp-action="EditCareSystemType" asp-route-id="@careSystemType.CareSystemTypeId">Edit</a>
+                    }
+                    @if (userPermissions != null && (userPermissions.Contains("StructuredDataDelete")) )
+                    {
+                        <a class="btn btn-danger" onclick="return confirm('Are you sure?')" asp-controller="PCAStructuredData" asp-action="DeleteCareSystemType" asp-route-id="@careSystemType.CareSystemTypeId">Delete</a>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section scripts{
+    <script>
+        // DataTable Documentation found here: https://datatables.net/
+        $(document).ready(function () {
+            // Creates DataTable
+            $('#careSystemTypeTable').DataTable({
+                columns: [null, { orderable: false }],
+                order: [[0, 'asc']],
+                pageLength: 10,
+                searching: true,
+                language: {
+                    emptyTable: 'None found'
+                }
+            });
+        });
+    </script>
+}

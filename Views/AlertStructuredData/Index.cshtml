@@ -1,0 +1,66 @@
+@{
+    ViewBag.Title = "Alert Data Entry";
+}
+
+<div class="row my-3">
+<h3>
+    <a class="btn btn-primary" asp-controller="Administration" asp-action="Index">
+        <i class="fa fa-arrow-left "></i>
+    </a>
+    Alert Data Entry Management
+</h3>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-4 col-lg-3 mb-3">
+            <div class="card">
+                <div class="card-body text-center">
+                    <a class="btn btn-outline-primary" asp-controller="AlertStructuredData" asp-action="ViewAlertTypes">Alert Types</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4 col-lg-3 mb-3">
+            <div class="card">
+                <div class="card-body text-center">
+                    <a class="btn btn-outline-primary" asp-controller="AlertStructuredData" asp-action="ViewAdvancedDirectives">Advance Directives</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4 col-lg-3 mb-3">
+            <div class="card">
+                <div class="card-body text-center">
+                    <a class="btn btn-outline-primary" asp-controller="AlertStructuredData" asp-action="ViewAllergens">Allergens</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4 col-lg-3 mb-3">
+            <div class="card">
+                <div class="card-body text-center">
+                    <a class="btn btn-outline-primary" asp-controller="AlertStructuredData" asp-action="ViewReactions">Allergen Reaction</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4 col-lg-3 mb-3">
+            <div class="card">
+                <div class="card-body text-center">
+                    <a class="btn btn-outline-primary" asp-controller="AlertStructuredData" asp-action="ViewClinicalReminders">Clinical Reminder</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4 col-lg-3 mb-3">
+            <div class="card">
+                <div class="card-body text-center">
+                    <a class="btn btn-outline-primary" asp-controller="AlertStructuredData" asp-action="ViewFallRisks">Fall Risk</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4 col-lg-3 mb-3">
+            <div class="card">
+                <div class="card-body text-center">
+                    <a class="btn btn-outline-primary" asp-controller="AlertStructuredData" asp-action="ViewRestrictions">Restricted Access Types</a>
+                </div>
+            </div>
+        </div> 
+    </div>
+</div>

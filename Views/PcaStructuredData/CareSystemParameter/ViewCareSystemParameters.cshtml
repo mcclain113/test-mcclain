@@ -1,0 +1,98 @@
+@model List<IS_Proj_HIT.Entities.CareSystemParameter>
+
+@{
+    ViewData["Title"] = "Care System Parameters";
+    var userPermissions = ViewData["UserPermissions"] as List<string>;
+}
+
+<div class="row my-3">
+    <h3>
+        <a class="btn btn-primary" asp-controller="PCAStructuredData" asp-action="Index">
+            <i class="fa fa-arrow-left "></i>
+        </a>
+        Care System Parameters
+    </h3>
+</div>
+<!-- banner displays used when deleting an item  -->
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success">
+            @TempData["SuccessMessage"]
+        </div>
+    }
+
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger">
+            @TempData["ErrorMessage"]
+        </div>
+    }
+    
+<div>
+    @if (userPermissions != null && (userPermissions.Contains("StructuredDataAdd")) )
+    {
+        <a class="btn btn-primary mb-3" asp-controller="PCAStructuredData" asp-action="CreateCareSystemParameter">Create New</a>
+    }
+</div>
+
+<table class="stripe nowrap" id="careSystemParameterTable">
+    <thead>
+        <tr>
+            <th>Care System Parameter Name</th>
+            <th>Normal Limits Description</th>
+            <th>Care System Type</th>
+            <th style="text-align: center;">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var careSystemParameter in Model)
+        {
+            <tr>
+                <td>@careSystemParameter.Name</td>
+                <td>@careSystemParameter.NormalLimitsDescription</td>
+                <td>@careSystemParameter.CareSystemType.Name</td>
+                <td>
+                    @if (userPermissions != null && (userPermissions.Contains("StructuredDataEdit")) )
+                    {
+                        <a class="btn btn-primary" asp-controller="PCAStructuredData" asp-action="EditCareSystemParameter" asp-route-id="@careSystemParameter.CareSystemParameterId">Edit</a>
+                    }
+                    @if (userPermissions != null && (userPermissions.Contains("StructuredDataDelete")) )
+                    {
+                        <a class="btn btn-danger" onclick="return confirm('Are you sure?')" asp-controller="PCAStructuredData" asp-action="DeleteCareSystemParameter" asp-route-id="@careSystemParameter.CareSystemParameterId">Delete</a>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<style>
+    /* Ensure the entire table fits within the view screen */
+    #careSystemParameterTable {
+        table-layout: auto;
+        width: 100%; /* Adjusts the table width to fit the viewport */
+    }
+
+    /* Apply text wrapping to the second column */
+    #careSystemParameterTable td:nth-child(2) {
+        white-space: normal; /* Allows text to wrap within the cell */
+        word-wrap: break-word; /* Break long words if necessary */
+    }
+</style>
+@section scripts{
+    <script>
+        // DataTable Documentation found here: https://datatables.net/
+        $(document).ready(function () {
+            // Creates DataTable
+            $('#careSystemParameterTable').DataTable({
+                columns: [null,null,null, { orderable: false }],
+                ordering: true,
+                order: [],
+                pageLength: 10,
+                searching: true,
+                language: {
+                    emptyTable: 'None found'
+                }
+            });
+        });
+    </script>
+}

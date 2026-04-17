@@ -1,0 +1,42 @@
+@model IS_Proj_HIT.ViewModels.EncounterStructuredDataViewModel
+@{
+    ViewBag.Title = "Delete Point Of Origin";
+}
+
+<h1>Delete</h1>
+
+<h3>@ViewData["RegularMessage"]</h3>
+<h3 class="error">@ViewData["ErrorMessage"]</h3>
+
+<h4>Point Of Origin</h4>
+<hr />
+
+<div class="row">
+    <div class="col-md-10">
+        <form method="post">
+            @Html.AntiForgeryToken()
+            <div class="form-row">
+                
+                <input type="hidden" asp-for="PointOfOrigin.PointOfOriginId" value="@Model.PointOfOrigin.PointOfOriginId" readonly/>
+
+                <div class="form-group col-sm-6">
+                    <label asp-for="PointOfOrigin.WiPopCode" class="control-label">WiPopCode</label>
+                    <input asp-for="PointOfOrigin.WiPopCode" class="form-control" maxlength="1"  />
+                    
+                </div>
+                <div class="form-group col-sm-6">
+                    <label asp-for="PointOfOrigin.Description" class="control-label">PointOfOrigin Description</label>
+                    <input asp-for="PointOfOrigin.Description" class="form-control" />
+                    
+                </div>
+
+                <div class="form-group">
+                    <a asp-controller="EncounterStructuredData" asp-action="ViewPointOfOrigins" class="btn btn-outline-danger">Discard Changes</a>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Delete Item" class="ml-3 btn btn-primary" />
+                </div>
+            </div>            
+        </form>
+    </div>
+</div>

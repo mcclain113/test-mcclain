@@ -1,0 +1,890 @@
+@model IS_Proj_HIT.ViewModels.BirthRegistry.BirthRegistryViewModel
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Birth Registry - @Model.NewbornViewModel?.FullName</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous" />
+    <style>
+        @@media print {
+            body { font-size: 9pt; line-height: 1.2; }
+            .no-print { display: none !important; }
+            .page-break { page-break-before: always; }
+            .avoid-break { page-break-inside: avoid; }
+            @@page { size: letter; margin: 0.4in; }
+            .card { border: 1px solid #000 !important; margin-bottom: 8px !important; }
+            .card-header { padding: 5px 10px !important; }
+            .table td, .table th { padding: 2px 6px !important; font-size: 9pt; }
+            h4 { font-size: 11pt !important; }
+            h5, h6 { font-size: 10pt !important; }
+            .badge { border: 1px solid #000; font-size: 8pt !important; }
+        }
+        
+        @@media screen {
+            body { background-color: #f5f5f5; padding: 20px; }
+            .print-container { max-width: 8.5in; margin: 0 auto; background: white; padding: 0.5in; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+            .print-actions { position: fixed; top: 20px; right: 20px; z-index: 1000; background: white; padding: 10px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.2); }
+        }
+        
+        .print-title { text-align: center; border-bottom: 2px solid #000; padding-bottom: 8px; margin-bottom: 15px; }
+        .print-title h1 { font-size: 18pt; font-weight: bold; margin-bottom: 3px; }
+        .print-title h2 { font-size: 11pt; font-weight: normal; color: #666; margin-bottom: 0; }
+        
+        .subsection-header { background-color: #e9ecef; padding: 4px 10px; font-weight: 600; border-left: 3px solid #007bff; margin: 8px 0 6px 0; font-size: 10pt; }
+        
+        .two-column { display: flex; gap: 12px; }
+        .two-column > div { flex: 1; }
+        
+        .three-column { display: flex; gap: 10px; }
+        .three-column > div { flex: 1; }
+        
+        .signature-display { font-family: 'Brush Script MT', cursive; font-size: 14pt; color: #000080; font-style: italic; }
+        
+        .list-compact { margin: 0; padding-left: 18px; }
+        .list-compact li { margin-bottom: 2px; }
+        
+        .alert-compact { padding: 6px 10px; margin-bottom: 8px; font-size: 9pt; }
+        
+        .official-footer { margin-top: 15px; padding: 8px; border: 2px solid #000; text-align: center; font-size: 8pt; }
+        .print-footer { margin-top: 10px; padding-top: 8px; border-top: 1px solid #000; font-size: 7pt; color: #666; text-align: center; }
+        
+        .yes-badge { background-color: #28a745; color: white; padding: 2px 6px; border-radius: 3px; font-size: 8pt; }
+        .no-badge { background-color: #6c757d; color: white; padding: 2px 6px; border-radius: 3px; font-size: 8pt; }
+        .warning-badge { background-color: #ffc107; color: #212529; padding: 2px 6px; border-radius: 3px; font-size: 8pt; }
+    </style>
+</head>
+<body>
+    <div class="print-actions no-print">
+        <button onclick="window.print()" class="btn btn-primary">
+            <i class="fas fa-print"></i> Print
+        </button>
+        <a href="@Url.Action("ViewBirthRegistry", new { id = Model.BirthId })" class="btn btn-secondary ml-2">
+            <i class="fas fa-arrow-left"></i> Back
+        </a>
+    </div>
+
+    <div class="print-container">
+        <div class="print-title">
+            <h1>UNOFFICIAL CERTIFICATE OF BIRTH</h1>
+            <h2>Waukesha County Technical College Medical Center</h2>
+            <p class="mb-0"><small>Printed: @DateTime.Now.ToString("MM/dd/yyyy hh:mm tt")</small></p>
+        </div>
+
+        <!-- Section 1: Facility -->
+        <div class="card mb-2 avoid-break">
+            <div class="card-header bg-primary text-white py-1">
+                <i class="fas fa-hospital"></i> 1. Birth Facility Information
+            </div>
+            <div class="card-body p-2">
+                <div class="subsection-header"><i class="fas fa-map-marker-alt"></i> 1.1 Place of Birth</div>
+                <table class="table table-sm table-bordered mb-2">
+                    <tr>
+                        <td class="font-weight-bold bg-light" style="width:40%">Birth Location:</td>
+                        <td>
+                            @if (Model.FacilityViewModel?.PlaceOfBirth == "WCTMC")
+                            {
+                                @:WCTMC - Waukesha County Technical College Medical Center
+                            }
+                            else if (Model.FacilityViewModel?.PlaceOfBirth == "NonFacility")
+                            {
+                                @:Non-Facility Birth
+                            }
+                            else
+                            {
+                                @(Model.FacilityViewModel?.Facility?.Name ?? "Other Facility")
+                            }
+                        </td>
+                    </tr>
+                    @if (Model.FacilityViewModel?.PlaceOfBirth == "WCTMC")
+                    {
+                        <tr>
+                            <td class="font-weight-bold bg-light">Facility ID:</td>
+                            <td>9063874824</td>
+                        </tr>
+                        <tr>
+                            <td class="font-weight-bold bg-light">City / County:</td>
+                            <td>Pewaukee, Waukesha County</td>
+                        </tr>
+                    }
+                    else if (Model.FacilityViewModel?.PlaceOfBirth == "NonFacility")
+                    {
+                        @if (Model.FacilityViewModel?.BirthPlaceTypeId.HasValue == true)
+                        {
+                            var typeText = Model.FacilityViewModel.BirthPlaceTypes?.FirstOrDefault(x => x.Value == Model.FacilityViewModel.BirthPlaceTypeId.Value.ToString())?.Text;
+                            <tr>
+                                <td class="font-weight-bold bg-light">Birth Place Type:</td>
+                                <td>@(typeText ?? "Not specified")</td>
+                            </tr>
+                            @if (typeText?.IndexOf("home", StringComparison.OrdinalIgnoreCase) >= 0)
+                            {
+                                <tr>
+                                    <td class="font-weight-bold bg-light">Planned Home Birth:</td>
+                                    <td>@(Model.FacilityViewModel.IsPlannedHomeBirth == true ? "Yes" : Model.FacilityViewModel.IsPlannedHomeBirth == false ? "No" : "Not recorded")</td>
+                                </tr>
+                            }
+                        }
+                        @if (!string.IsNullOrWhiteSpace(Model.FacilityViewModel?.NonFacilityAddressLine1))
+                        {
+                            <tr>
+                                <td class="font-weight-bold bg-light">Address:</td>
+                                <td>
+                                    @Model.FacilityViewModel.NonFacilityAddressLine1
+                                    @if (!string.IsNullOrWhiteSpace(Model.FacilityViewModel.NonFacilityCity))
+                                    {
+                                        <text>, @Model.FacilityViewModel.NonFacilityCity</text>
+                                    }
+                                    @if (!string.IsNullOrWhiteSpace(Model.FacilityViewModel.NonFacilityState))
+                                    {
+                                        <text>, @Model.FacilityViewModel.NonFacilityState</text>
+                                    }
+                                    @Model.FacilityViewModel.NonFacilityZip
+                                </td>
+                            </tr>
+                        }
+                    }
+                </table>
+
+                <div class="subsection-header"><i class="fas fa-ambulance"></i> 1.2 Transfer Facility</div>
+                <table class="table table-sm table-bordered mb-2">
+                    <tr>
+                        <td class="font-weight-bold bg-light" style="width:40%">Mother Transferred:</td>
+                        <td>@(Model.FacilityViewModel?.IsMotherTransferred == true ? "Yes" : "No")</td>
+                    </tr>
+                    @if (Model.FacilityViewModel?.IsMotherTransferred == true && !string.IsNullOrWhiteSpace(Model.FacilityViewModel?.FacilityTransferredFromName))
+                    {
+                        <tr>
+                            <td class="font-weight-bold bg-light">Transferred From:</td>
+                            <td>@Model.FacilityViewModel.FacilityTransferredFromName</td>
+                        </tr>
+                    }
+                </table>
+
+                <div class="subsection-header"><i class="fas fa-user-md"></i> 1.3 Delivering Attendant</div>
+                <table class="table table-sm table-bordered mb-2">
+                    <tr>
+                        <td class="font-weight-bold bg-light" style="width:40%">Name:</td>
+                        <td>@(Model.FacilityViewModel?.AttendantFullName ?? "Not provided")</td>
+                    </tr>
+                    <tr>
+                        <td class="font-weight-bold bg-light">NPI:</td>
+                        <td>@(Model.FacilityViewModel?.AttendantNPI ?? "Not provided")</td>
+                    </tr>
+                    <tr>
+                        <td class="font-weight-bold bg-light">Title:</td>
+                        <td>@(Model.FacilityViewModel?.AttendantTitle ?? "Not provided")</td>
+                    </tr>
+                </table>
+
+                <div class="subsection-header"><i class="fas fa-file-signature"></i> 1.4 Certifier of Birth</div>
+                <table class="table table-sm table-bordered mb-2">
+                    <tr>
+                        <td class="font-weight-bold bg-light" style="width:40%">Same as Attendant:</td>
+                        <td>@(Model.FacilityViewModel?.IsCertifierAttendant == true ? "Yes" : "No")</td>
+                    </tr>
+                    <tr>
+                        <td class="font-weight-bold bg-light">Certifier Name:</td>
+                        <td>@(Model.FacilityViewModel?.CertifierFullName ?? "Not provided")</td>
+                    </tr>
+                    @if (Model.FacilityViewModel?.IsCertifierAttendant != true)
+                    {
+                        <tr>
+                            <td class="font-weight-bold bg-light">Certifier NPI:</td>
+                            <td>@(Model.FacilityViewModel?.CertifierNPI ?? "Not provided")</td>
+                        </tr>
+                        <tr>
+                            <td class="font-weight-bold bg-light">Certifier Title:</td>
+                            <td>@(Model.FacilityViewModel?.CertifierTitle ?? "Not provided")</td>
+                        </tr>
+                    }
+                </table>
+
+                <div class="subsection-header"><i class="fas fa-pen-fancy"></i> 1.5 Signature of Certifier</div>
+                <table class="table table-sm table-bordered mb-0">
+                    <tr>
+                        <td class="font-weight-bold bg-light" style="width:40%">Signature:</td>
+                        <td><span class="signature-display">@(Model.FacilityViewModel?.CertifierSignature ?? "Not recorded")</span></td>
+                    </tr>
+                    <tr>
+                        <td class="font-weight-bold bg-light">Date Certified:</td>
+                        <td>@(Model.FacilityViewModel?.DateCertified?.ToString("MM/dd/yyyy") ?? "Not recorded")</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <!-- Section 2: Mother -->
+        <div class="card mb-2 avoid-break">
+            <div class="card-header bg-primary text-white py-1">
+                <i class="fas fa-female"></i> 2. Mother's Information
+            </div>
+            <div class="card-body p-2">
+                <div class="alert alert-primary alert-compact mb-2">
+                    <strong>Patient Status:</strong> 
+                    @if (Model.MothersInformationViewModel?.IsExistingPatient == true)
+                    {
+                        <text>Existing Patient - MRN: @Model.MothersInformationViewModel.Mrn</text>
+                    }
+                    else
+                    {
+                        <text>New Patient - Information entered manually</text>
+                    }
+                </div>
+
+                <div class="subsection-header"><i class="fas fa-user"></i> 2.1 Basic Demographics</div>
+                <div class="two-column">
+                    <div>
+                        <table class="table table-sm table-bordered mb-2">
+                            <tr>
+                                <td class="font-weight-bold bg-light" style="width:40%">First Name:</td>
+                                <td>@(Model.MothersInformationViewModel?.FirstName ?? "Not provided")</td>
+                            </tr>
+                            <tr>
+                                <td class="font-weight-bold bg-light">Middle Name:</td>
+                                <td>@(Model.MothersInformationViewModel?.MiddleName ?? "Not provided")</td>
+                            </tr>
+                            <tr>
+                                <td class="font-weight-bold bg-light">Last Name:</td>
+                                <td>@(Model.MothersInformationViewModel?.LastName ?? "Not provided")</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div>
+                        <table class="table table-sm table-bordered mb-2">
+                            <tr>
+                                <td class="font-weight-bold bg-light" style="width:40%">Date of Birth:</td>
+                                <td>@(Model.MothersInformationViewModel?.DateOfBirth?.ToString("MM/dd/yyyy") ?? "Not provided")</td>
+                            </tr>
+                            <tr>
+                                <td class="font-weight-bold bg-light">Birth Place:</td>
+                                <td>@(Model.MothersInformationViewModel?.BirthPlace ?? "Not provided")</td>
+                            </tr>
+                            <tr>
+                                <td class="font-weight-bold bg-light">SSN:</td>
+                                <td>@(string.IsNullOrEmpty(Model.MothersInformationViewModel?.SSN) ? "Not provided" : "XXX-XX-" + Model.MothersInformationViewModel.SSN.Substring(Math.Max(0, Model.MothersInformationViewModel.SSN.Length - 4)))</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="subsection-header"><i class="fas fa-home"></i> 2.2 Address Information</div>
+                @if (Model.MothersInformationViewModel?.ResidentialAddress != null)
+                {
+                    var addr = Model.MothersInformationViewModel.ResidentialAddress;
+                    <table class="table table-sm table-bordered mb-2">
+                        <tr>
+                            <td class="font-weight-bold bg-light" style="width:40%">Residential Address:</td>
+                            <td>
+                                @addr.Address1
+                                @if (!string.IsNullOrEmpty(addr.Address2)) { <text>, @addr.Address2</text> }
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="font-weight-bold bg-light">City, State, ZIP:</td>
+                            <td>@addr.City, @addr.AddressState?.StateName @addr.PostalCode</td>
+                        </tr>
+                        <tr>
+                            <td class="font-weight-bold bg-light">County:</td>
+                            <td>@(addr.County ?? "Not provided")</td>
+                        </tr>
+                    </table>
+                }
+                else
+                {
+                    <p class="text-muted mb-2">No residential address on file</p>
+                }
+
+                <div class="subsection-header"><i class="fas fa-globe"></i> 2.3 Cultural & Demographic Information</div>
+                <div class="two-column">
+                    <div>
+                        <table class="table table-sm table-bordered mb-2">
+                            <tr>
+                                <td class="font-weight-bold bg-light" style="width:40%">Religion:</td>
+                                <td>@(Model.MothersInformationViewModel?.Religion?.Name ?? "Not specified")</td>
+                            </tr>
+                            <tr>
+                                <td class="font-weight-bold bg-light">Ethnicity:</td>
+                                <td>@(Model.MothersInformationViewModel?.Ethnicity?.Name ?? "Not specified")</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div>
+                        <table class="table table-sm table-bordered mb-2">
+                            <tr>
+                                <td class="font-weight-bold bg-light" style="width:40%">Education:</td>
+                                <td>@(Model.MothersInformationViewModel?.EducationLevel?.EducationLevelName ?? "Not specified")</td>
+                            </tr>
+                            <tr>
+                                <td class="font-weight-bold bg-light">Race:</td>
+                                <td>
+                                    @if (Model.MothersInformationViewModel?.SelectedRaceIds?.Any() == true)
+                                    {
+                                        @foreach (var raceId in Model.MothersInformationViewModel.SelectedRaceIds)
+                                        {
+                                            var race = Model.MothersInformationViewModel.Races?.FirstOrDefault(r => r.Value == raceId.ToString());
+                                            if (race != null)
+                                            {
+                                                <span class="badge badge-primary mr-1">@race.Text</span>
+                                            }
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <text>Not specified</text>
+                                    }
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="subsection-header"><i class="fas fa-ring"></i> 2.4 Marriage Information</div>
+                <table class="table table-sm table-bordered mb-0">
+                    <tr>
+                        <td class="font-weight-bold bg-light" style="width:33%">Married in Past:</td>
+                        <td style="width:17%">@if (Model.MothersInformationViewModel?.MotherMarriedInPast == true) { <span class="yes-badge">Yes</span> } else { <span class="no-badge">No</span> }</td>
+                        <td class="font-weight-bold bg-light" style="width:33%">Married During Pregnancy:</td>
+                        <td style="width:17%">@if (Model.MothersInformationViewModel?.MotherMarriedDuringPregnancy == true) { <span class="yes-badge">Yes</span> } else { <span class="no-badge">No</span> }</td>
+                    </tr>
+                    <tr>
+                        <td class="font-weight-bold bg-light">Father is Husband:</td>
+                        <td colspan="3">@if (Model.MothersInformationViewModel?.IsFatherHusbandOfMother == true) { <span class="yes-badge">Yes</span> } else { <span class="no-badge">No</span> }</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="page-break"></div>
+
+        <!-- Section 3: Father -->
+        <div class="card mb-2 avoid-break">
+            <div class="card-header bg-primary text-white py-1">
+                <i class="fas fa-male"></i> 3. Father's Information
+            </div>
+            <div class="card-body p-2">
+                <div class="subsection-header"><i class="fas fa-exclamation-triangle"></i> 3.1 Paternity Acknowledgement</div>
+                <table class="table table-sm table-bordered mb-2">
+                    <tr>
+                        <td class="font-weight-bold bg-light" style="width:40%">Paternity Acknowledged:</td>
+                        <td>
+                            @if (Model.FatherInformationViewModel?.HasPaternityAcknowledgement == true)
+                            {
+                                <span class="yes-badge"><i class="fas fa-check"></i> Yes</span>
+                                <small class="ml-2">Father information included on birth certificate</small>
+                            }
+                            else if (Model.FatherInformationViewModel?.HasPaternityAcknowledgement == false)
+                            {
+                                <span class="no-badge"><i class="fas fa-times"></i> No</span>
+                                <small class="ml-2">Father information NOT included on birth certificate</small>
+                            }
+                            else
+                            {
+                                <span class="warning-badge">Not specified</span>
+                            }
+                        </td>
+                    </tr>
+                </table>
+
+                @if (Model.FatherInformationViewModel?.HasPaternityAcknowledgement == true)
+                {
+                    <div class="subsection-header"><i class="fas fa-user"></i> 3.2 Father's Legal Name</div>
+                    <table class="table table-sm table-bordered mb-2">
+                        <tr>
+                            <td class="font-weight-bold bg-light" style="width:40%">Full Name:</td>
+                            <td>
+                                @Model.FatherInformationViewModel?.FirstName
+                                @Model.FatherInformationViewModel?.MiddleName
+                                @Model.FatherInformationViewModel?.LastName
+                                @Model.FatherInformationViewModel?.Suffix
+                            </td>
+                        </tr>
+                    </table>
+
+                    <div class="subsection-header"><i class="fas fa-id-card"></i> 3.3 Personal Information</div>
+                    <div class="two-column">
+                        <div>
+                            <table class="table table-sm table-bordered mb-2">
+                                <tr>
+                                    <td class="font-weight-bold bg-light" style="width:40%">Date of Birth:</td>
+                                    <td>@(Model.FatherInformationViewModel?.DateOfBirth?.ToString("MM/dd/yyyy") ?? "Not provided")</td>
+                                </tr>
+                                <tr>
+                                    <td class="font-weight-bold bg-light">Birth Place:</td>
+                                    <td>@(Model.FatherInformationViewModel?.FatherBirthplace ?? "Not provided")</td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div>
+                            <table class="table table-sm table-bordered mb-2">
+                                <tr>
+                                    <td class="font-weight-bold bg-light" style="width:40%">SSN:</td>
+                                    <td>@(string.IsNullOrEmpty(Model.FatherInformationViewModel?.SSN) ? "Not provided" : "XXX-XX-" + Model.FatherInformationViewModel.SSN.Substring(Math.Max(0, Model.FatherInformationViewModel.SSN.Length - 4)))</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="subsection-header"><i class="fas fa-globe"></i> 3.4 Demographic Information</div>
+                    <table class="table table-sm table-bordered mb-0">
+                        <tr>
+                            <td class="font-weight-bold bg-light" style="width:40%">Education Level:</td>
+                            <td>@(Model.FatherInformationViewModel?.EducationLevel?.EducationLevelName ?? "Not specified")</td>
+                        </tr>
+                        <tr>
+                            <td class="font-weight-bold bg-light">Ethnicity:</td>
+                            <td>@(Model.FatherInformationViewModel?.Ethnicity?.Name ?? "Not specified")</td>
+                        </tr>
+                        <tr>
+                            <td class="font-weight-bold bg-light">Race:</td>
+                            <td>
+                                @if (Model.FatherInformationViewModel?.SelectedRaceIds?.Any() == true)
+                                {
+                                    @foreach (var raceId in Model.FatherInformationViewModel.SelectedRaceIds)
+                                    {
+                                        var race = Model.FatherInformationViewModel.Races?.FirstOrDefault(r => r.Value == raceId.ToString());
+                                        if (race != null)
+                                        {
+                                            <span class="badge badge-primary mr-1">@race.Text</span>
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    <text>Not specified</text>
+                                }
+                            </td>
+                        </tr>
+                    </table>
+                }
+                else
+                {
+                    <div class="alert alert-secondary alert-compact">
+                        <i class="fas fa-info-circle"></i> Father information not included - paternity acknowledgement not completed.
+                    </div>
+                }
+            </div>
+        </div>
+
+        <!-- Section 4: Prenatal -->
+        <div class="card mb-2 avoid-break">
+            <div class="card-header bg-primary text-white py-1">
+                <i class="fas fa-heartbeat"></i> 4. Prenatal Care
+            </div>
+            <div class="card-body p-2">
+                <div class="subsection-header"><i class="fas fa-calendar-check"></i> 4.1 Prenatal Care Information</div>
+                <div class="two-column">
+                    <div>
+                        <table class="table table-sm table-bordered mb-2">
+                            <tr>
+                                <td class="font-weight-bold bg-light" style="width:40%">Date of First Visit:</td>
+                                <td>@(Model.PrenatalCareViewModel?.DateOfFirstVisit?.ToString("MM/dd/yyyy") ?? "None / No prenatal care")</td>
+                            </tr>
+                            <tr>
+                                <td class="font-weight-bold bg-light">Date of Last Visit:</td>
+                                <td>@(Model.PrenatalCareViewModel?.DateOfLastVisit?.ToString("MM/dd/yyyy") ?? "Not Recorded")</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div>
+                        <table class="table table-sm table-bordered mb-2">
+                            <tr>
+                                <td class="font-weight-bold bg-light" style="width:40%">Total Visits:</td>
+                                <td>@(Model.PrenatalCareViewModel?.TotalNumberPrenatalVisits?.ToString() ?? "Not Recorded")</td>
+                            </tr>
+                            <tr>
+                                <td class="font-weight-bold bg-light">Additional Details:</td>
+                                <td>@(string.IsNullOrWhiteSpace(Model.PrenatalCareViewModel?.DescPrenatalCare) ? "None" : Model.PrenatalCareViewModel.DescPrenatalCare)</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="subsection-header"><i class="fas fa-ruler-vertical"></i> 4.2 Mother's Weight & Height</div>
+                <div class="two-column">
+                    <div>
+                        <table class="table table-sm table-bordered mb-2">
+                            <tr>
+                                <td class="font-weight-bold bg-light" style="width:40%">Height:</td>
+                                <td>@(Model.PrenatalCareViewModel?.MothersHeightInInches.HasValue == true ? $"{Model.PrenatalCareViewModel.MothersHeightInInches} inches" : "Not provided")</td>
+                            </tr>
+                            <tr>
+                                <td class="font-weight-bold bg-light">Pre-Pregnancy Weight:</td>
+                                <td>@(Model.PrenatalCareViewModel?.PrepregnancyWeightInLbs.HasValue == true ? $"{Model.PrenatalCareViewModel.PrepregnancyWeightInLbs} lbs" : "Not provided")</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div>
+                        <table class="table table-sm table-bordered mb-2">
+                            <tr>
+                                <td class="font-weight-bold bg-light" style="width:40%">Weight at Delivery:</td>
+                                <td>@(Model.PrenatalCareViewModel?.WeightAtDeliveryInLbs.HasValue == true ? $"{Model.PrenatalCareViewModel.WeightAtDeliveryInLbs} lbs" : "Not provided")</td>
+                            </tr>
+                            @if (Model.PrenatalCareViewModel?.PrepregnancyWeightInLbs.HasValue == true && Model.PrenatalCareViewModel?.WeightAtDeliveryInLbs.HasValue == true)
+                            {
+                                var gain = Model.PrenatalCareViewModel.WeightAtDeliveryInLbs.Value - Model.PrenatalCareViewModel.PrepregnancyWeightInLbs.Value;
+                                <tr>
+                                    <td class="font-weight-bold bg-light">Net Gain:</td>
+                                    <td>@gain lbs</td>
+                                </tr>
+                            }
+                        </table>
+                    </div>
+                </div>
+
+                <div class="subsection-header"><i class="fas fa-calendar-alt"></i> 4.3 Menses & History</div>
+                <table class="table table-sm table-bordered mb-2">
+                    <tr>
+                        <td class="font-weight-bold bg-light" style="width:40%">Date Last Normal Menses:</td>
+                        <td>@(Model.PrenatalCareViewModel?.DateLastPeriod?.ToString("MM/dd/yyyy") ?? "Not provided")</td>
+                    </tr>
+                    <tr>
+                        <td class="font-weight-bold bg-light">Previous Live Births (Living):</td>
+                        <td>@(Model.PrenatalCareViewModel?.PrevLiveBirthsAmountStillLiving ?? 0)</td>
+                    </tr>
+                    <tr>
+                        <td class="font-weight-bold bg-light">Previous Live Births (Deceased):</td>
+                        <td>@(Model.PrenatalCareViewModel?.PrevLiveBirthsAmountNotLiving ?? 0)</td>
+                    </tr>
+                    <tr>
+                        <td class="font-weight-bold bg-light">Other Pregnancy Outcomes:</td>
+                        <td>@(Model.PrenatalCareViewModel?.NumberOfOtherPregnancyOutcomes ?? 0)</td>
+                    </tr>
+                </table>
+
+                <div class="subsection-header"><i class="fas fa-exclamation-triangle"></i> 4.4 Risk Factors</div>
+                @{
+                    var riskFactors = new List<string>();
+                    if (Model.PrenatalCareViewModel?.SelectedRiskFactorIds?.Any() == true)
+                    {
+                        riskFactors.AddRange(Model.PrenatalCareViewModel.PregnancyRiskFactors?
+                            .Where(rf => Model.PrenatalCareViewModel.SelectedRiskFactorIds.Contains(byte.Parse(rf.Value)))
+                            .Select(rf => rf.Text) ?? Enumerable.Empty<string>());
+                    }
+                    if (Model.PrenatalCareViewModel?.InfertilityTreatmentReceived == true) riskFactors.Add("Pregnancy resulted from infertility treatment");
+                    if (Model.PrenatalCareViewModel?.PreviousCesareanDelivery == true) riskFactors.Add($"Mother had a previous cesarean delivery ({Model.PrenatalCareViewModel.NumberOfPriorCesareanBirths ?? 0} prior)");
+                    if (Model.PrenatalCareViewModel?.SmokingThreeMonthsBeforePregnancy == true) riskFactors.Add("Smoking 3 months before pregnancy");
+                    if (Model.PrenatalCareViewModel?.SmokingFirstTrimester == true) riskFactors.Add("Smoking first trimester");
+                    if (Model.PrenatalCareViewModel?.SmokingSecondTrimester == true) riskFactors.Add("Smoking second trimester");
+                    if (Model.PrenatalCareViewModel?.SmokingThirdTrimester == true) riskFactors.Add("Smoking third trimester");
+                }
+                @if (riskFactors.Any())
+                {
+                    <ul class="list-compact">
+                        @foreach (var factor in riskFactors)
+                        {
+                            <li>@factor</li>
+                        }
+                    </ul>
+                }
+                else
+                {
+                    <p class="text-muted mb-1">None recorded</p>
+                }
+
+                <div class="subsection-header"><i class="fas fa-procedures"></i> 4.5 Obstetric Procedures</div>
+                <table class="table table-sm table-bordered mb-2">
+                    <tr>
+                        <td class="font-weight-bold bg-light" style="width:40%">External Cephalic Version:</td>
+                        <td>
+                            @(Model.PrenatalCareViewModel?.ExternalCephalicVersion == true ? "Yes" : "No")
+                            @if (Model.PrenatalCareViewModel?.ExternalCephalicVersion == true)
+                            {
+                                <text> - @(Model.PrenatalCareViewModel.IsExternalCephalicVersionSuccessful == true ? "Successful" : Model.PrenatalCareViewModel.IsExternalCephalicVersionSuccessful == false ? "Failed" : "Outcome not recorded")</text>
+                            }
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="font-weight-bold bg-light">Cervical Cerclage:</td>
+                        <td>@(Model.PrenatalCareViewModel?.CervicalCerclageProcedure == true ? "Yes" : "No")</td>
+                    </tr>
+                    <tr>
+                        <td class="font-weight-bold bg-light">Tocolysis:</td>
+                        <td>@(Model.PrenatalCareViewModel?.TocolysisProcedure == true ? "Yes" : "No")</td>
+                    </tr>
+                    <tr>
+                        <td class="font-weight-bold bg-light">WIC Recipient:</td>
+                        <td>@(Model.PrenatalCareViewModel?.IsWicRecipient == true ? "Yes" : Model.PrenatalCareViewModel?.IsWicRecipient == false ? "No" : "Not Recorded")</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="page-break"></div>
+
+        <!-- Section 5: Labor & Delivery -->
+        <div class="card mb-2 avoid-break">
+            <div class="card-header bg-primary text-white py-1">
+                <i class="fas fa-procedures"></i> 5. Labor & Delivery
+            </div>
+            <div class="card-body p-2">
+                <div class="subsection-header"><i class="fas fa-heartbeat"></i> 5.1 Characteristics of Labor & Delivery</div>
+                @{
+                    var characteristics = Model.LaborAndDeliveryViewModel?.SelectedCharacteristicIds?.Any() == true
+                        ? Model.LaborAndDeliveryViewModel.CharacteristicsOfLabor?
+                            .Where(c => Model.LaborAndDeliveryViewModel.SelectedCharacteristicIds.Contains(int.Parse(c.Value)))
+                            .Select(c => c.Text).ToList() ?? new List<string>()
+                        : new List<string>();
+                    var showNoneChar = Model.LaborAndDeliveryViewModel?.NoCharacteristics == true || !characteristics.Any();
+                }
+                @if (!showNoneChar)
+                {
+                    <ul class="list-compact">
+                        @foreach (var c in characteristics)
+                        {
+                            <li>@c</li>
+                        }
+                    </ul>
+                }
+                else
+                {
+                    <p class="text-muted mb-1">None of the above</p>
+                }
+
+                <div class="subsection-header"><i class="fas fa-baby"></i> 5.2 Method of Delivery</div>
+                <table class="table table-sm table-bordered mb-2">
+                    <tr>
+                        <td class="font-weight-bold bg-light" style="width:40%">Fetal Presentation:</td>
+                        <td>
+                            @{
+                                var presentation = Model.LaborAndDeliveryViewModel?.FetalPresentationAtBirths?.FirstOrDefault(p => p.Value == Model.LaborAndDeliveryViewModel?.FetalPresentationAtBirthId?.ToString());
+                            }
+                            @(presentation?.Text ?? "Not recorded")
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="font-weight-bold bg-light">Final Route & Method:</td>
+                        <td>
+                            @{
+                                var method = Model.LaborAndDeliveryViewModel?.FinalRouteAndMethodOfDeliveries?.FirstOrDefault(m => m.Value == Model.LaborAndDeliveryViewModel?.FinalRouteAndMethodId?.ToString());
+                            }
+                            @(method?.Text ?? "Not recorded")
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="font-weight-bold bg-light">Trial of Labor Before Cesarean:</td>
+                        <td>@(Model.LaborAndDeliveryViewModel?.TrialOfLaborBeforeCesarean == true ? "Yes" : Model.LaborAndDeliveryViewModel?.TrialOfLaborBeforeCesarean == false ? "No" : "Not recorded")</td>
+                    </tr>
+                </table>
+
+                <div class="subsection-header"><i class="fas fa-hospital"></i> 5.3 Maternal Morbidity</div>
+                @{
+                    var morbidities = Model.LaborAndDeliveryViewModel?.SelectedMaternalMorbidityIds?.Any() == true
+                        ? Model.LaborAndDeliveryViewModel.MaternalMorbidities?
+                            .Where(m => Model.LaborAndDeliveryViewModel.SelectedMaternalMorbidityIds.Contains(int.Parse(m.Value)))
+                            .Select(m => m.Text).ToList() ?? new List<string>()
+                        : new List<string>();
+                    var showNoneMorb = Model.LaborAndDeliveryViewModel?.NoMaternalMorbidities == true || !morbidities.Any();
+                }
+                @if (!showNoneMorb)
+                {
+                    <ul class="list-compact">
+                        @foreach (var m in morbidities)
+                        {
+                            <li>@m</li>
+                        }
+                    </ul>
+                }
+                else
+                {
+                    <p class="text-muted mb-0">None of the above</p>
+                }
+            </div>
+        </div>
+
+        <!-- Section 6: Newborn -->
+        <div class="card mb-2 avoid-break">
+            <div class="card-header bg-primary text-white py-1">
+                <i class="fas fa-baby"></i> 6. Newborn Information
+            </div>
+            <div class="card-body p-2">
+                <div class="subsection-header"><i class="fas fa-baby"></i> 6.1 Birth Information</div>
+                <div class="two-column">
+                    <div>
+                        <table class="table table-sm table-bordered mb-2">
+                            <tr>
+                                <td class="font-weight-bold bg-light" style="width:40%">Infant's Name:</td>
+                                <td><strong>@Model.NewbornViewModel?.FullName</strong></td>
+                            </tr>
+                            <tr>
+                                <td class="font-weight-bold bg-light">Date of Birth:</td>
+                                <td>@(Model.NewbornViewModel?.DateAndTimeOfBirth?.ToString("MM/dd/yyyy") ?? "Not provided")</td>
+                            </tr>
+                            <tr>
+                                <td class="font-weight-bold bg-light">Time of Birth:</td>
+                                <td>@(Model.NewbornViewModel?.IsTimeUnknown == true ? "Time unknown" : Model.NewbornViewModel?.DateAndTimeOfBirth?.ToString("HH:mm") ?? "Not provided")</td>
+                            </tr>
+                            <tr>
+                                <td class="font-weight-bold bg-light">Newborn MRN:</td>
+                                <td>@(Model.NewbornViewModel?.NewbornMrn ?? "Not assigned")</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div>
+                        <table class="table table-sm table-bordered mb-2">
+                            <tr>
+                                <td class="font-weight-bold bg-light" style="width:40%">Sex:</td>
+                                <td>
+                                    @{
+                                        var sex = Model.NewbornViewModel?.SexOptions?.FirstOrDefault(s => s.Value == Model.NewbornViewModel?.SexId?.ToString());
+                                    }
+                                    @(sex?.Text ?? "Not specified")
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="font-weight-bold bg-light">Birth Weight:</td>
+                                <td>@(Model.NewbornViewModel?.BirthWeightInLbs?.ToString() ?? "Not provided") lbs</td>
+                            </tr>
+                            <tr>
+                                <td class="font-weight-bold bg-light">Gestational Age:</td>
+                                <td>@(Model.NewbornViewModel?.GestationalAgeEstimateInWeeks?.ToString() ?? "Not provided") weeks</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="subsection-header"><i class="fas fa-chart-line"></i> APGAR Scores</div>
+                <table class="table table-sm table-bordered mb-2">
+                    <tr>
+                        <td class="font-weight-bold bg-light text-center" style="width:16%">1 min</td>
+                        <td class="text-center" style="width:17%">@(Model.NewbornViewModel?.ApgarScoreAt1Minute?.ToString() ?? "N/A")</td>
+                        <td class="font-weight-bold bg-light text-center" style="width:17%">5 min</td>
+                        <td class="text-center" style="width:17%">@(Model.NewbornViewModel?.ApgarScoreAt5Minutes?.ToString() ?? "N/A")</td>
+                        <td class="font-weight-bold bg-light text-center" style="width:16%">10 min</td>
+                        <td class="text-center" style="width:17%">@(Model.NewbornViewModel?.ApgarScoreAt10Minutes?.ToString() ?? "N/A")</td>
+                    </tr>
+                </table>
+
+                <div class="subsection-header"><i class="fas fa-baby-carriage"></i> 6.2 Birth Characteristics</div>
+                <table class="table table-sm table-bordered mb-2">
+                    <tr>
+                        <td class="font-weight-bold bg-light" style="width:40%">Plurality:</td>
+                        <td>
+                            @if (Model.NewbornViewModel?.IsSingleBirth == true)
+                            {
+                                <text>Single birth</text>
+                            }
+                            else
+                            {
+                                <text>Multiple - Plurality: @(Model.NewbornViewModel?.Plurality?.ToString() ?? "N/A"), Birth Order: @(Model.NewbornViewModel?.BirthOrder?.ToString() ?? "N/A")</text>
+                            }
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="font-weight-bold bg-light">Transferred within 24 hours:</td>
+                        <td>
+                            @if (Model.NewbornViewModel?.InfantTransferredWithin24Hours == true)
+                            {
+                                <span class="yes-badge">Yes</span> <text> - @(Model.NewbornViewModel?.NameOfFacilityTransferredTo ?? "Not specified")</text>
+                            }
+                            else if (Model.NewbornViewModel?.InfantTransferredWithin24Hours == false)
+                            {
+                                <span class="no-badge">No</span>
+                            }
+                            else
+                            {
+                                <span class="warning-badge">Not specified</span>
+                            }
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="font-weight-bold bg-light">Infant Living:</td>
+                        <td>@if (Model.NewbornViewModel?.IsInfantStillLiving == true) { <span class="yes-badge">Yes</span> } else if (Model.NewbornViewModel?.IsInfantStillLiving == false) { <span class="no-badge">No</span> } else { <span class="warning-badge">Not specified</span> }</td>
+                    </tr>
+                    <tr>
+                        <td class="font-weight-bold bg-light">Breastfed at Discharge:</td>
+                        <td>@if (Model.NewbornViewModel?.IsInfantBeingBreastfed == true) { <span class="yes-badge">Yes</span> } else if (Model.NewbornViewModel?.IsInfantBeingBreastfed == false) { <span class="no-badge">No</span> } else { <span class="warning-badge">Not specified</span> }</td>
+                    </tr>
+                </table>
+
+                <div class="subsection-header"><i class="fas fa-heartbeat"></i> 6.3 Abnormal Conditions</div>
+                @if (Model.NewbornViewModel?.NoAbnormalities == true)
+                {
+                    <p class="text-success mb-1"><i class="fas fa-check-circle"></i> NO ABNORMALITIES IDENTIFIED</p>
+                }
+                else if (Model.NewbornViewModel?.SelectedAbnormalConditionIds?.Any() == true)
+                {
+                    @foreach (var conditionId in Model.NewbornViewModel.SelectedAbnormalConditionIds)
+                    {
+                        var condition = Model.NewbornViewModel.AbnormalConditions?.FirstOrDefault(c => c.Value == conditionId.ToString());
+                        if (condition != null)
+                        {
+                            <span class="badge badge-warning mr-1 mb-1">@condition.Text</span>
+                        }
+                    }
+                }
+                else
+                {
+                    <p class="text-muted mb-1">Not specified</p>
+                }
+
+                <div class="subsection-header"><i class="fas fa-dna"></i> 6.4 Congenital Anomalies</div>
+                @if (Model.NewbornViewModel?.NoCongenitalAnomalies == true)
+                {
+                    <p class="text-success mb-0"><i class="fas fa-check-circle"></i> NO CONGENITAL ANOMALIES IDENTIFIED</p>
+                }
+                else if (Model.NewbornViewModel?.SelectedCongenitalAnomalyIds?.Any() == true)
+                {
+                    @foreach (var anomalyId in Model.NewbornViewModel.SelectedCongenitalAnomalyIds)
+                    {
+                        var anomaly = Model.NewbornViewModel.CongenitalAnomalies?.FirstOrDefault(a => a.Value == anomalyId.ToString());
+                        if (anomaly != null)
+                        {
+                            <span class="badge badge-danger mr-1 mb-1">@anomaly.Text</span>
+                        }
+                    }
+                }
+                else
+                {
+                    <p class="text-muted mb-0">Not specified</p>
+                }
+            </div>
+        </div>
+
+        <!-- Section 7: Finalize -->
+        <div class="card mb-2 avoid-break">
+            <div class="card-header bg-primary text-white py-1">
+                <i class="fas fa-file-signature"></i> 7. Finalize Birth Record
+            </div>
+            <div class="card-body p-2">
+                @if (!string.IsNullOrWhiteSpace(Model.FinalizeViewModel?.RegistrarSignature))
+                {
+                    <div class="alert alert-success alert-compact">
+                        <i class="fas fa-check-circle"></i> <strong>Record Finalized</strong>
+                    </div>
+                    <table class="table table-sm table-bordered mb-0">
+                        <tr>
+                            <td class="font-weight-bold bg-light" style="width:40%">Registrar Signature:</td>
+                            <td><span class="signature-display">@Model.FinalizeViewModel.RegistrarSignature</span></td>
+                        </tr>
+                        <tr>
+                            <td class="font-weight-bold bg-light">Date of Signature:</td>
+                            <td>@(Model.FinalizeViewModel.DateOfRegistrarSignature?.ToString("MMMM dd, yyyy") ?? "Not recorded")</td>
+                        </tr>
+                    </table>
+                }
+                else
+                {
+                    <div class="alert alert-warning alert-compact mb-0">
+                        <i class="fas fa-exclamation-triangle"></i> <strong>Not Yet Finalized</strong> - Registrar signature required.
+                    </div>
+                }
+            </div>
+        </div>
+        
+        <div class="official-footer">
+            <p class="mb-0"><strong>Waukesha County Technical College Medical Center</strong></p>
+            <p class="mb-0">Generated: @DateTime.Now.ToString("MM/dd/yyyy hh:mm:ss tt")</p>
+        </div>
+
+        <div class="print-footer">
+            <p class="mb-0">This is a computer-generated document. Unauthorized reproduction is prohibited.</p>
+        </div>
+    </div>
+</body>
+</html>

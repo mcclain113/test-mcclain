@@ -1,0 +1,46 @@
+@model IS_Proj_HIT.ViewModels.UserManagement.UserManagementStructuredDataViewModel
+@{
+    ViewBag.Title = "Delete Program Facility";
+}
+
+<h1>Delete</h1>
+
+<h3>@ViewData["RegularMessage"]</h3>
+<h3 class="error">@ViewData["ErrorMessage"]</h3>
+
+<h4>Program Facility</h4>
+<hr />
+
+<div class="row">
+    <div class="col-md-10">
+        <form method="post">
+            @Html.AntiForgeryToken()
+            <div class="form-row">
+
+                <input type="hidden" asp-for="ProgramFacility.ProgramFacilitiesId" value="@Model.ProgramFacility.ProgramFacilitiesId" readonly/>
+
+                <div class="form-group col-sm-4">
+                    <label asp-for="ProgramFacility.Facility.Name" class="control-label">Facility Name</label>
+                    <input asp-for="ProgramFacility.Facility.Name" 
+                        class="form-control"/>
+                    
+                </div>
+                <div class="form-group col-sm-4">
+                    <label asp-for="ProgramFacility.Program.Name" class="control-label">Program Name</label>
+                    <input asp-for="ProgramFacility.Program.Name" 
+                        class="form-control" />
+                    
+                </div>
+            </div>
+            <div class="form-row">
+               <div class="form-group">
+                    <a asp-controller="UserManagementStructuredData" asp-action="ViewProgramFacilities" class="btn btn-outline-danger">Discard Changes</a>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Delete Facility" class="ml-3 btn btn-primary" />
+                </div>
+            </div>
+            
+        </form>
+    </div>
+</div>

@@ -1,0 +1,72 @@
+@model IS_Proj_HIT.ViewModels.Allergy.AllergyEditViewModel
+@{
+    var userPermissions = ViewData["UserPermissions"] as List<string>;
+}
+
+<form asp-action="EditAllergy" method="post">
+    @Html.AntiForgeryToken()
+    <input type="hidden" asp-for="PatientAllergyId" />
+    <input type="hidden" asp-for="Mrn" />
+
+    <div class="card" data-modal-title="Allergy Details">
+        <div class="card-header bg-primary text-white">
+            <h4 class="m-0">Edit Allergy </h4>
+        </div>
+
+        <div class="card-body bg-light">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-12 col-lg-8">
+                        <label>Allergen: </label>
+                        <span class="font-weight-bold">@Model.AllergenDisplay</span>
+                    </div>
+                    <div class="col-sm-12 col-lg-4">
+                        <label>Active: </label>
+                        <span class="font-weight-bold">@(Model.IsActive ? "Yes" : "No")</span>
+                    </div>            
+                </div>
+                <hr class="mt-0"/>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <label>Created: </label>
+                        <span><input asp-for="LastModified" class="takeawayborder bg-light font-weight-bold" type="text" id="longer" readonly /></span>
+                    </div>
+                    <div class="col-sm-4 form-group">
+                        <label>Start Date: </label>
+                        <span class="font-weight-bold">@Model.StartDate.ToString("MM-dd-yyyy")</span>
+                    </div>
+                    <div class="col-sm-4 form-group form-inline">
+                        <label class="mr-2 mb-0">End Date: </label>
+                        <input asp-for="EndDate" class="form-control font-weight-bold" type="date" />
+                        <span asp-validation-for="EndDate" class="text-danger ml-2"></span>
+                    </div>
+                </div>
+                <hr class="mt-0"/>
+                    <div class="row">
+                        <div class="col-sm-4 form-group">
+                            <label>Reaction:</label>
+                            <span class="font-weight-bold ml-3">@Model.ReactionName</span>
+                        </div>
+                    </div>
+                <hr class="mt-0"/>
+
+                <div class="row">
+                    <div class="col-sm-12 form-group">
+                        <label>Comments: </label>
+                        <textarea asp-for="Comments" class="form-control font-weight-bold" rows="3"></textarea>
+                        <span asp-validation-for="Comments" class="text-danger"></span>
+                    </div>
+                </div>
+                <hr class="mt-0"/>
+        
+                <div class="mt-3">
+                    <button type="submit" class="btn btn-primary btn-block">Update Allergy</button>
+                    <a class="btn btn-cancel back-to-list mt-3"
+                        href="@Url.Action("DetailsAllergy", "Patient", new {id = Model.PatientAllergyId, mrn = Model.Mrn})"
+                        data-allergyid="@Model.PatientAllergyId">Cancel
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

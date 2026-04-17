@@ -1,0 +1,383 @@
+@model IS_Proj_HIT.ViewModels.ViewEncounterPageModel
+
+@{
+    ViewData["Title"] = "Physicians Discharge Summary";
+    var userPermissions = ViewData["UserPermissions"] as List<string>;
+    var signer = ViewBag.Providers;
+    var coSigner = ViewBag.Cosigners;
+    var checkForNullDate = ViewBag.checkSignedDateForNull;
+}
+<partial model="Model.Patient" name="PatientBannerPartial" />
+<partial name="_EncounterMenu" model="Model.Encounter" />
+
+<div class="row justify-content-start">
+    <div class="col mx-0 px-0">
+        <div class="card ">
+            <form asp-controller="Encounter" asp-action="PhysicianDischargeEdit"  id="physicianDischargeEdit" method="post" name="physicianDischargeEdit">
+                @Html.AntiForgeryToken()
+                <input asp-for="@Model.Encounter.EncounterId" name="EncounterId" type="hidden"
+                    value="@Model.Encounter.EncounterId" />
+
+                <div class="card-header bg-primary text-white">
+                    <h4> Edit Physician Discharge Summary</h4>
+                </div>
+
+                <div class="card-body bg-light">
+
+                    @* header information for discharge summary view  *@
+                        <div class="row justify-content-around">
+                            <div class="col-sm-12 col-lg-4">
+                                <label style="padding-right: 1em">Admission Date: </label>
+                                <span class="font-weight-bold">@Model.Encounter.AdmitDateTime.ToString("M/d/yyyy")</span>
+                            </div>
+                            <div class="col-sm-12 col-lg-4">
+                                <label style="padding-right: 1em">Discharge Date:</label>
+                                <span class="font-weight-bold">@Model.Encounter.DischargeDateTime?.ToString("M/d/yyyy")</span> 
+                            </div>
+                        </div>
+                        <hr/>
+                        <div class="row justify-content-around">
+                            <div class="col-sm-12 col-lg-4">
+                                <label style="padding-right: 1em">Attending Physician:</label>
+                                <span class="font-weight-bold">@Model.AttendingPhysician?.FirstName @Model.AttendingPhysician?.LastName</span> 
+                            </div>
+                            <div class="col-sm-12 col-lg-4">
+                                <label style="padding-right: 1em">Visit Type:</label>
+                                <span class="font-weight-bold">@Model.Encounter.PlaceOfService.Description</span>  
+                            </div>
+                        </div>
+                        <hr/>
+                    @* end header information for discharge summary view  *@
+
+                    @* start section for Diagnoses *@ 
+                    <div class="row">
+                        <div class="col-sm-12 mx-3">
+                            <label><strong>Diagnoses: </strong></label><br>
+                            <div class="row form-group mx-3">
+                                <label style="padding-right: 1em;text-decoration: underline;">Admitting Diagnosis:</label>
+                                <textarea asp-for="@Model.Encounter.AdmittingDiagnosis" style="width: 100%;" rows="4" name="admittingDiagnosis" id="admittingDiagnosis"
+                                ></textarea>
+                            </div>
+                            <div class="row form-group mx-3">
+                                <label style="padding-right: 1em;text-decoration: underline;">Discharge Diagnosis:</label>
+                                <textarea asp-for="@Model.Encounter.DischargeDiagnosis" style="width: 100%;" rows="4" name="dischargeDiagnosis" id="dischargeDiagnosis"
+                                ></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <hr/>
+                @* end section for Diagnoses *@ 
+
+                @* start section for Visit Summary *@ 
+                    <div class="row">
+                        <div class="col-sm-12 mx-3">
+                            <label><strong>Visit Summary: </strong></label><br>
+                            <div class="row form-group mx-3">
+                                <label style="padding-right: 1em;text-decoration: underline;">History of present illness:</label>
+
+                                @{
+                                    if(@Model.Encounter.HistoryOfPresentIllness != null){
+                                        <textarea asp-for="@Model.Encounter.HistoryOfPresentIllness" style="width: 100%;" rows="4" name="historyOfPresentIllness" id="historyOfPresentIllness"
+                                        ></textarea>
+                                    }
+                                    else{
+                                        <textarea asp-for="@Model.HistoryAndPhysical.HistoryOfPresentIllness" style="width: 100%;" rows="4" name="historyOfPresentIllness" id="historyOfPresentIllness"
+                                        ></textarea>
+                                    }
+                                }
+
+                            </div>
+                            <div class="row form-group mx-3">
+                                <label style="padding-right: 1em;text-decoration: underline;">Significant finding:</label>
+                                <textarea asp-for="@Model.Encounter.SignificantFindings" style="width: 100%;" rows="4" name="significantFindings" id="significantFindings"
+                                ></textarea>
+                            </div>
+                            <div class="row form-group mx-3">
+                                <label style="padding-right: 1em;text-decoration: underline;">Hospital course:</label>
+                                <textarea asp-for="@Model.Encounter.DischargeHospitalCourse" style="width: 100%;" rows="4" name="dischargeHospitalCourse" id="dischargeHospitalCourse"
+                                ></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <hr/>
+                @* end section for Visit Summary *@ 
+                        
+                @* start section for Discharge Plan *@ 
+                    <div class="row">
+                        <div class="col-sm-12 mx-3">
+                            <label><strong>Discharge Plan: </strong></label><br>
+                            <div class="row form-group mx-3">
+                                <label style="padding-right: 1em;text-decoration: underline;">Discharge disposition note:</label>
+                                <textarea asp-for="@Model.Encounter.DischargeDispositionNote" style="width: 100%;" rows="4" name="dischargeDispositionNote" id="dischargeDispositionNote"
+                                ></textarea>
+                            </div>
+                            <div class="row form-group mx-3">
+                                <label style="padding-right: 1em;text-decoration: underline;">Medications at discharge:</label>
+                                <textarea asp-for="@Model.Encounter.MedicationsOnDischarge" style="width: 100%;" rows="4" name="medicationsOnDischarge" id="medicationsOnDischarge"
+                                ></textarea>
+                            </div>
+                            <div class="row form-group mx-3">
+                                <label style="padding-right: 1em;text-decoration: underline;">Discharge Diet and Instructions:</label>
+                                <textarea asp-for="@Model.Encounter.DischargeDietInstructions" style="width: 100%;" rows="4" name="dischargeDietInstructions" id="dischargeDietInstructions"
+                                ></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <hr/>
+                @* end section for Discharge Plan *@                         
+                        
+                @* begin section for Provider signatures *@        
+                    <div class="row">
+                        <div class="col-12 col-lg-6">
+                            <div class="row mb-3 form-group">
+                                <label for="dischargeAuthoringProviderId" class="col-sm-4 col-form-label">Authoring Provider: </label>
+                                <div class="col-sm-8 justify-content-center">
+                                    <select id="physician" class="form-control dropdowns selectable sign"
+                                        asp-for="@Model.Encounter.DischargeAuthoringProviderId"
+                                        asp-items="signer" name="DischargeAuthoringProviderId">   
+                                        <option value="0" selected>Select a Physician</option>
+                                    </select>
+                                    <div class="needProvider" style="display: none; color: red;">
+                                            <span><strong>Please select a provider</strong></span></div>
+                                </div>
+                            </div>
+                            <div class="row mb-3 form-group">
+                                <label for="dischargeAuthoringProviderSignature" class="col-sm-4 col-form-label">Provider Signature: </label>
+                                <div class="col-sm-8 justify-content-center signature" style="display: none;">
+                                    <input class="form-control"
+                                        asp-for="@Model.Encounter.DischargeAuthoringProviderSignature" name="DischargeAuthoringProviderSignature"
+                                        oninput="completeAllFields()"
+                                        placeholder="Provider Signature"
+                                        id="dischargeAuthoringProviderSignature"
+                                        />
+                                </div>       
+                            </div>
+                            <div class="row mb-3 form-group" id="timeStampAuthoring">
+                                <label for="dischargeAuthoringProviderSignedDate" class="col-sm-4 col-form-label">Date Signed: </label>
+                                <div class="col-sm-8 signature" style="display: none;" >
+                                    @if(checkForNullDate){
+                                        <input type="text"  asp-for="@Model.Encounter.DischargeAuthoringProviderSignedDate"
+                                            
+                                            class="form-control"
+                                            value=""
+                                            placeholder="Date/Time"
+                                            id="dischargeAuthoringProviderSignedDate"
+                                        />
+                                    }
+                                    else if(!checkForNullDate)
+                                    {
+                                            <span>@Model.Encounter.DischargeAuthoringProviderSignedDate?.ToString("M/d/yyyy")</span>
+                                            <input type="hidden" asp-for="Encounter.DischargeAuthoringProviderSignedDate" value="@Model.Encounter.DischargeAuthoringProviderSignedDate" />
+                                    }
+                                    
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-lg-6">
+                            <div id="cosign" style="display:none">
+                                <div class="row mb-3 form-group">
+                                    <label for="dischargeCoSigningProviderId" class="col-sm-4 col-form-label">Co-Provider: </label>
+                                    <div class="col-sm-8">
+                                        <select id="dischargeCoSigningProviderId" class="form-control dropdowns cosign"
+                                            asp-for="@Model.Encounter.DischargeCoSigningProviderId" asp-items="coSigner"
+                                            name="DischargeCoSigningProviderId"
+                                            >
+                                            <option value="0" selected>Select a Co-Physician</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row mb-3 form-group">
+                                    <label for="dischargeCoSigningProviderSignature" class="col-sm-4 col-form-label">Co-Signature: </label>
+                                    <div class="col-sm-8 justify-content-center cosignature">
+                                        <input class="form-control"
+                                            asp-for="@Model.Encounter.DischargeCoSigningProviderSignature" name="DischargeCoSigningProviderSignature"
+                                            oninput="provideDateTime()"
+                                            placeholder="Co-Provider Signature"
+                                            id="dischargeCoSigningProviderSignature"/>
+                                    </div>       
+                                </div>
+                                <div class="row mb-3 form-group" id="timeStamp">
+                                    <label for="dischargeCoSigningProviderSignedDate" class="col-sm-4 col-form-label">Date Signed: </label>
+                                    <div class="col-sm-8">
+                                        <input type="text"  asp-for="@Model.Encounter.DischargeCoSigningProviderSignedDate"
+                                        name="DischargeCoSigningProviderSignedDate"
+                                        class="form-control"
+                                        value=""
+                                        placeholder="Date/Time"
+                                        id="dischargeCoSigningProviderSignedDate"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>                    
+                    <hr />
+
+                    @if (userPermissions != null && (userPermissions.Contains("DischargeSummaryEdit")) )
+                    {
+                        <button class="btn btn-primary updater" 
+                        onclick="return setFormSubmit()" 
+                        type="submit">
+                        Update Discharge Summary
+                        </button>
+                    }
+                    <button class="btn btn-secondary" formnovalidate 
+                        asp-controller="Encounter" 
+                        asp-action="ViewPhysicianDischarge"
+                        asp-route-id="@Model.Encounter.EncounterId">Cancel
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<script>
+$(document).ready(function() {
+    let needCosign = false;
+
+    toggleCoSigner();
+    $('.updater').on('mouseover', function(e){ needProvider()});
+    $('.sign').on('click', function(e){ toggleCoSigner(); } );
+    $('.signature').on('input', function(e){ completeAllFields(); });
+    $('.cosignature').on('input', function(e){ provideDateTime(); });
+
+
+    function toggleCoSigner(){
+        let providerId= $('.sign').val();
+            
+        if(providerId != 0)
+        {
+            let idNumber = ""
+
+            $.ajax({
+                type: "GET",
+                url: "@Url.Action("GetProviderStatusId")",
+                dataType: "json",
+                data: {id: providerId},
+                success: function(result){
+                    idNumber = result.providerIdNumber
+                    if(idNumber == 1)
+                    {
+                        $('.signature').show();
+                        $('#cosign').hide()
+                        $('.needProvider').hide();
+
+                    }
+                    else if(idNumber == 2 || idNumber == 3)
+                    {
+                        $('.signature').show();
+                        $('#cosign').show()
+                        $('.needProvider').hide();
+                        needCosign = true;
+                    }
+                }
+            });
+        }
+    };
+
+    function needProvider(){
+    let providerId = $('.sign').val();
+        if(providerId == 0){
+            $('.needProvider').show();
+        }
+    };
+
+    @* this function autopopulates the coSigning Provider date/time stamp at the first input
+        into the CoSigning Provider Signature *@
+    function provideDateTime(){
+        document.getElementById("timeStamp").innerHTML=
+        `
+        <label for="dischargeCoSigningProviderSignedDate" class="col-sm-4 col-form-label">Date Signed: </label>
+            <div class="col-sm-8">
+                <input type="datetime-local" 
+                    name="DischargeCoSigningProviderSignedDate"
+                    class="form-control" value="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm")"
+                    id="dischargeCoSigningProviderSignedDate"/>
+            </div>
+        `
+    };
+
+    @* this function is called by completeAllFields() after all text fields are populated, an authoring physician
+        has been selected and the authoring signature field sees an input; upon that input, it autopopulates
+        the authoring provider date/time stamp *@
+    function provideAuthoringDateTime(){
+        document.getElementById("timeStampAuthoring").innerHTML=
+        `
+        <label for="dischargeAuthoringProviderSignedDate" class="col-sm-4 col-form-label">Date Signed: </label>
+            <div class="col-sm-8">
+                <input type="datetime-local"  
+                    name="DischargeAuthoringProviderSignedDate"
+                    class="form-control" value="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm")"
+                    id="dischargeAuthoringProviderSignedDate"/>
+            </div>
+        `
+    };
+
+    @* this function is triggered by entering input into the Authoring Provider signature and
+        upon that input checks that all text input fields are populated *@
+    function completeAllFields(){
+        let coproviderId= $('.cosign').val();
+        var message = "All fields must be completed before signature.\nPlease complete these fields:  ";
+        var blankFields = [];
+        var inputArray = [
+            { value: document.physicianDischargeEdit.admittingDiagnosis.value, label: "Admitting Diagnosis", name: "admittingDiagnosis"},
+            { value: document.physicianDischargeEdit.dischargeDiagnosis.value, label: "Discharge Diagnosis", name: "dischargeDiagnosis"},
+            { value: document.physicianDischargeEdit.historyOfPresentIllness.value, label: "History of Present Illness", name: "historyOfPresentIllness"},
+            { value: document.physicianDischargeEdit.significantFindings.value, label: "Significant Findings", name: "significantFindings"},
+            { value: document.physicianDischargeEdit.dischargeHospitalCourse.value, label: "Discharge Hospital Course", name: "dischargeHospitalCourse"},
+            { value: document.physicianDischargeEdit.dischargeDispositionNote.value, label: "Discharge Disposition Note", name: "dischargeDispositionNote"},
+            { value: document.physicianDischargeEdit.medicationsOnDischarge.value, label: "Medications on Discharge", name: "medicationsOnDischarge"},
+            { value: document.physicianDischargeEdit.dischargeDietInstructions.value, label: "Discharge Diet Instructions", name: "dischargeDietInstructions"}
+            ];
+
+        for (i in inputArray) {
+            if(inputArray[i].value == ""){
+                blankFields.push(inputArray[i]);
+                message += "\n\t" +(inputArray[i].label);
+            }
+        }
+
+        if(blankFields.length != 0){
+            alert(message);
+            var focusId = blankFields[0].name;
+            document.querySelector('.sign').value = 0;
+            document.getElementById("dischargeAuthoringProviderSignature").value="";
+            document.getElementById("dischargeAuthoringProviderSignedDate").value="";
+            $('.signature').hide();
+            $('#cosign').hide()
+            document.getElementById( focusId ).focus();
+            
+        } else if(coproviderId == 0 && needCosign == true){
+            alert("Please select a CoPhysician");
+            document.getElementById("dischargeAuthoringProviderSignature").value="";
+            document.getElementById("dischargeAuthoringProviderSignedDate").value="";
+            document.getElementById("dischargeCoSigningProviderId").focus();
+        } else {
+            provideAuthoringDateTime(); 
+        }; 
+    };
+
+});
+
+    
+
+    var formSubmit = false;
+    var setFormSubmit = function() {
+        formSubmit = true;
+    };
+
+    window.onload = function() {
+        window.addEventListener("beforeunload",
+            function(e) {
+                if (formSubmit) {
+                    return undefined;
+                }
+                var message = "If you leave before saving, your changes will be lost.";
+                e.returnValue = message;
+            });
+    };
+
+    
+</script>

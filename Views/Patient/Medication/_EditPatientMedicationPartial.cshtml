@@ -1,0 +1,110 @@
+@model IS_Proj_HIT.ViewModels.PatientVm.PatientMedicationViewModel
+
+<div class="card">
+    <div  class="card-header bg-primary text-white">
+        <h4>Edit Patient Medication</h4>
+    </div>
+
+    <form method="post" asp-action="EditPatientMedication">
+        @Html.AntiForgeryToken()
+        <div class="card-body bg-light">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="PatientMedication.PatientMedicationListID" value="@Model.PatientMedication.PatientMedicationListID" readonly/>
+            <input type="hidden" asp-for="PatientMedication.Mrn" value="@Model.PatientMedication.Mrn" readonly/>
+            <div class="row">
+                <div class="form-group col-sm-12">
+                    <label for="availableMeds-select" class="control-label">Medications Available</label>
+                    <select asp-for="PatientMedication.MedicationID" asp-items="@Model.MedicationsAvailable" class="form-control" id="availableMeds-select" data-val-required="Please select a medication from the list." required><option value="">Select a Medication</option></select>
+                    <span asp-validation-for="PatientMedication.MedicationID" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-sm-6">
+                    <label asp-for="PatientMedication.FrequencyID" class="control-label">Frequency</label>
+                    <select asp-for="PatientMedication.FrequencyID" asp-items="@Model.MedicationFrequencies" class="form-control" required></select>
+                </div>
+                <div class="form-group col-sm-6">
+                    <label asp-for="PatientMedication.OrderingProviderID" class="control-label">Ordering Provider</label>
+                    <select asp-for="PatientMedication.OrderingProviderID" asp-items="@Model.Providers" class="form-control selectable" required></select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-12">
+                    <label asp-for="PatientMedication.Indication" class="control-label">Indication</label>
+                    <input asp-for="PatientMedication.Indication" class="form-control" required />
+                    <span asp-validation-for="PatientMedication.Indication" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <label asp-for="PatientMedication.StartDate" class="control-label">Start Date</label>
+                    <input class="form-control" type="date" asp-for="PatientMedication.StartDate" required />
+                    <span asp-validation-for="PatientMedication.StartDate" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-6">
+                    <label asp-for="PatientMedication.EndDate" class="control-label">End Date</label>
+                    <input class="form-control" type="date" asp-for="PatientMedication.EndDate" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-12">
+                    <label asp-for="PatientMedication.Comments" class="control-label">Comments</label>
+                    <textarea asp-for="PatientMedication.Comments" class="form-control"></textarea>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <label asp-for="PatientMedication.EnteredBy" class="control-label">Entered By</label>
+                    <input asp-for="PatientMedication.EnteredBy" class="form-control" required maxlength="100"></input>
+                    <span asp-validation-for="PatientMedication.EnteredBy" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-6">
+                    <label asp-for="PatientMedication.DateEntered" class="control-label">Date Entered</label>
+                    <input
+                        asp-for="PatientMedication.DateEntered"
+                        class="form-control"
+                        type="datetime-local"
+                        asp-format="{0:yyyy-MM-ddTHH:mm}"
+                        required />
+                    <span asp-validation-for="PatientMedication.DateEntered" class="text-danger"></span>
+                </div>
+            </div>
+            
+            @if (ViewBag.ErrorMessage != null) {
+                <div class="form-group col-12">
+                    <span class="text-danger">@ViewBag.ErrorMessage</span>
+                </div>
+            }
+
+            <button class="btn btn-primary btn-block" onclick="setFormSubmit()" type="submit">Save Changes</button>
+
+            <div>
+                <a asp-controller="Patient" asp-action="PatientMedicationDetails" asp-route-id="@Model.PatientMedication.PatientMedicationListID" class="btn btn-cancel back-to-list mt-3">Discard Changes</a>
+            </div>
+        </div>
+    </form>
+
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script>
+        var formSubmit = false;
+        var setFormSubmit = function () {
+            formSubmit = true;
+        };
+        window.onload = function () {
+            window.addEventListener("beforeunload",
+                function (e) {
+                    if (formSubmit) {
+                        return undefined;
+                    }
+                    var message = "If you leave before saving, your changes will be lost.";
+                    e.returnValue = message;
+            });
+        };
+
+        $("#availableMeds-select").select2();
+    </script>
+}

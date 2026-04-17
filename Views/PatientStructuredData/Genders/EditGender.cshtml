@@ -1,0 +1,44 @@
+@model IS_Proj_HIT.ViewModels.PatientVm.PatientStructuredDataViewModel
+@{
+    ViewBag.Title = "Edit Gender";
+}
+
+<h1>Edit</h1>
+
+<h4>Gender</h4>
+<hr />
+
+<div class="row">
+    <div class="col-md-10">
+        <form method="post">
+            @Html.AntiForgeryToken()
+            <div class="form-row">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="Gender.GenderId" value="@Model.Gender.GenderId" readonly/>
+                
+                <div class="form-group col-sm-6">
+                    <label asp-for="Gender.Name" class="control-label">Gender Name</label>
+                    <input asp-for="Gender.Name" 
+                        class="form-control" maxlength="30" required />
+                    <span asp-validation-for="Gender.Name" class="text-danger"></span>
+                </div>
+               
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <a asp-controller="PatientStructuredData" asp-action="ViewGenders" class="btn btn-outline-danger">Discard Changes</a>
+                </div>
+            
+                <div class="form-group">
+                    <input type="submit" value="Save Changes" class="btn btn-primary ml-3" />
+                </div>
+
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

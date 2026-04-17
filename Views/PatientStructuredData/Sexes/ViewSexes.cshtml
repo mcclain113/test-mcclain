@@ -1,0 +1,62 @@
+@model List<IS_Proj_HIT.Entities.Sex>
+
+@{
+    ViewData["Title"] = "Sexes";
+}
+
+<div class="row my-3">
+    <h3>
+        <a class="btn btn-primary" asp-controller="PatientStructuredData" asp-action="Index">
+            <i class="fa fa-arrow-left "></i>
+        </a>
+        Sexes
+    </h3>
+</div>
+
+<p>
+    <a class="btn btn-primary" asp-controller="PatientStructuredData" asp-action="CreateSex">Create New</a>
+</p>
+
+<table class="stripe nowrap" id="sexTable">
+    <thead>
+        <tr>
+            <th>
+                Sex Name
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var sex in Model)
+        {
+            <tr>
+                <td>
+                    @sex.Name
+                </td>
+                <td>
+                    <a class="btn btn-primary" asp-controller="PatientStructuredData" asp-action="EditSex" asp-route-id="@sex.SexId">Edit</a>
+                    <a class="btn btn-danger" asp-controller="PatientStructuredData" asp-action="DeleteSex" asp-route-id="@sex.SexId">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+@section scripts{
+    <script>
+        // Creates DataTable
+        // DataTable Documentation found here: https://datatables.net/
+        $(function () {
+            $('#sexTable').DataTable({
+                columns: [null, { orderable: false }],
+                order: [[0, 'asc']],
+                pageLength: 10,
+                searching: true,
+                language: {
+                    emptyTable: 'None found'
+                }
+            });
+        });
+    </script>
+}

@@ -1,0 +1,49 @@
+@model IS_Proj_HIT.ViewModels.PhysicianStructuredData.PhysicianStructuredDataViewModel
+@{
+    ViewBag.Title = "Create Specialty";
+}
+
+<h1>Create</h1>
+
+<h4>Specialty</h4>
+<hr />
+
+<div class="row">
+    <div class="col-md-10">
+        <form method="post">
+            @Html.AntiForgeryToken()
+            <div class="form-row">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                
+                <div class="form-group col-sm-6">
+                    <label asp-for="Specialty.Name" class="control-label">Type of Specialty</label>
+                    <input asp-for="Specialty.Name" 
+                        class="form-control" maxlength="100" required
+                        placeholder="Example:  Cardiology" />
+                    <span asp-validation-for="Specialty.Name" class="text-danger"></span>
+                </div>
+                <div class="form-group col-sm-6">
+                    <label asp-for="Specialty.Description" class="control-label">Description of Specialty</label>
+                    <input asp-for="Specialty.Description" 
+                        class="form-control" maxlength="100" 
+                        placeholder="Example:  This field is optional"/>
+                    <span asp-validation-for="Specialty.Description" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                </div>
+
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<div>
+    <a asp-controller="PhysicianStructuredData" asp-action="ViewSpecialties">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

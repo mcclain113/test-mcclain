@@ -1,0 +1,218 @@
+﻿@model IS_Proj_HIT.Entities.Pcarecord;
+@{
+    ViewBag.Title = "Patient Care Assessment";
+    var userPermissions = ViewData["UserPermissions"] as List<string>;
+}
+<partial model="ViewBag.Patient" name="PatientBannerPartial" />
+<partial model="ViewBag.Encounter" name="_EncounterMenu" />
+<div class="card" style="border: none;">
+    <div class="card-header bg-primary text-white">
+        <h4 class="mb-0">
+            Patient Care Assessment
+            <button class="btn-sm btn-outline-primary mb-0" data-placement="right"
+                    data-toggle="tooltip" title="N.A. means that a value was not assessed." type="button">
+                <i class="fas fa-info"></i>
+            </button>
+            @if (userPermissions != null && (userPermissions.Contains("PCAEdit")) )
+            {
+                <a  asp-action="UpdateAssessment"
+                    asp-route-assessmentId="@Model.Pcaid"
+                    asp-route-patientMRN="@ViewBag.Patient.Mrn"
+                    asp-route-encounterId="@Model.Encounter.EncounterId"
+                    class="btn btn-info float-right">
+                    Edit
+                </a>
+            }
+            
+        </h4>
+    </div>
+    <div class="card-body bg-light">
+        <div class="container">
+            <h5 class="d-block pb-1 mb-2"
+                >
+                <span class="float-left">Date Vitals Entered: <b>@Model.DateVitalsAdded?.ToString("g")</b></span>
+                <span class="float-right">Last Modified: <b>@Model.LastModified.ToString("g")</b></span>
+            </h5>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Temperature</th> 
+                        <th>Weight</th>
+                        <th>Height</th>
+                        <th>Head Circumference</th>
+                        <th>Body Mass Index</th>
+                    </tr>
+                </thead>
+                <tbody class="table table-bordered table-secondary" style="color: black">
+                    <tr>
+                        <td>@(Model.Temperature is null ? "N.A." : $"{Model.Temperature} *F ({Model.TempRouteType.TempRouteTypeName})")</td>
+                        <td>@(Model.Weight is null ? "N.A." : $"{Model.Weight} {Model.WeightUnits}")</td>
+                        <td>@(Model.Height is null ? "N.A." : $"{Model.Height} {Model.HeightUnits}")</td>
+                        <td>@(Model.HeadCircumference is null ? "N.A." : $"{Model.HeadCircumference} {Model.HeadCircumferenceUnits}")</td>
+                        <td>@(Model.BodyMassIndex is null ? "N.A." : $"{Model.BodyMassIndex} {Model.Bmimethod.Name} ")</td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Blood Pressure</th>
+                        <th>Pulse</th>
+                        <th>Pulse Oximetry</th>
+                        <th>Respiration (Breaths)</th>
+                        <th>Oxygen Flow Rate</th>
+                        <th>Percent Oxygen</th>
+                        <th>Respiration Assistance Route</th>
+                    </tr>
+                </thead>
+                <tbody  class="table table-bordered table-secondary" style="color: black">
+                    <tr>
+                        <td>
+                            @if (Model.BloodPressureRouteType != null && Model.SystolicBloodPressure != null && Model.DiastolicBloodPressure != null)
+                            {
+                                <button class="btn-sm btn-outline-primary mb-0" data-placement="top"
+                                        data-toggle="tooltip" title="BP Taken Via: @Model.BloodPressureRouteType.Name" type="button">
+                                    <i class="fas fa-info"></i>
+                                </button>
+                            }
+                           @(Model.SystolicBloodPressure is null || Model.DiastolicBloodPressure is null ? "N.A." :
+                                $"{Model.SystolicBloodPressure} / {Model.DiastolicBloodPressure} ")
+                        </td>
+                        <td>
+                            @if (Model.PulseRouteType != null && Model.Pulse != null)
+                            {
+                                <button class="btn-sm btn-outline-primary mb-0" data-placement="top"
+                                        data-toggle="tooltip" title="Pulse Taken Via: @Model.PulseRouteType.PulseRouteTypeName" type="button">
+                                    <i class="fas fa-info"></i>
+                                </button>
+                            }
+                            @(Model.Pulse is null ? "N.A." : $"{Model.Pulse} /min")
+                        </td>
+                        <td>
+                            @(Model.PulseOximetry is null ? "N.A." : $"{Model.PulseOximetry}%")
+                        </td>
+                        <td>
+                            @(Model.Respiration is null ? "N.A." : $"{Model.Respiration} /min")
+                        </td>
+                        <td>
+                             @(string.IsNullOrWhiteSpace(Model.OxygenFlow) ? "N.A." : $"{Model.OxygenFlow} LPM")
+                        </td>
+                        <td>
+                            @(Model.PercentOxygenDelivered is null ? "N.A." : $"{decimal.Round(Model.PercentOxygenDelivered.Value * 100, 2)}%")
+                        </td>
+                        <td>
+                            @(Model.O2deliveryType is null ? "N.A." : $" {Model.O2deliveryType.O2deliveryTypeName}")
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            @if (Model.PainScaleType != null && Model.PcapainAssessments != null && Model.PcapainAssessments.Count > 0)
+            {
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th class="text-center" colspan="99">
+                                <span class="font-weight-normal float-left">
+                                    <button class="btn-sm btn-outline-primary mb-0" data-placement="top"
+                                            data-toggle="tooltip" title="Actual value is based on the cumulative rating from the assessed pain scale." type="button">
+                                        <i class="fas fa-info"></i>
+                                    </button>
+                                    Pain Level | @(Model.PainLevelGoal is null ? "" : $"Goal: {Model.PainLevelGoal} -") Actual: @Model.PcapainAssessments.Sum(a => a.PainRating.Value)
+                                </span>
+                                Pain Assessment - @Model.PainScaleType.PainScaleTypeName
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var pa in Model.PcapainAssessments)
+                        {
+                            <tr>
+                                <td>@pa.PainParameter.ParameterName</td>
+                                <td>@pa.PainRating.Value</td>
+                                <td>@pa.PainRating.Description</td>
+                            </tr>
+                        }
+                        @if (Model.PainScaleType.PainScaleTypeName is "Wong-Baker")
+                        {
+                            <tr>
+                                <td colspan="99">
+                                    <figure>
+                                        <img alt="Pain Scale 0 to 10" src="~/img/FACES_English_Black.jpg">
+                                        <figcaption>
+                                            FACES licensed to Angela Lee February, 2020
+                                        </figcaption>
+                                    </figure>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+
+            @if (Model.Pcacomments != null && Model.Pcacomments.Count > 0)
+            {
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th class="text-center" colspan="3">Notes</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var com in Model.Pcacomments)
+                        {
+                            <tr>
+                                <td>@com.PcacommentType.PcacommentTypeName - @com.Pcacomment1</td>
+                                <td class="d-sm-none d-lg-table-cell">Date Added: @com.DateCommentAdded?.ToString("g")</td>
+                                <td>Last Modified: @com.LastModified.ToString("g")</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+
+            @if (Model.CareSystemAssessments != null && Model.CareSystemAssessments.Count > 0)
+            {
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th class="text-center" colspan="99">System Review</th>
+                        </tr>
+                        <tr>
+                            <th>Group</th>
+                            <th>Parameter</th>
+                            <th>Within Normal Limits</th>
+                            <th>Comment</th>
+                        </tr>
+                    </thead>
+                    <tbody  class="table table-bordered table-secondary" style="color: black">
+                        @foreach (var sa in Model.CareSystemAssessments)
+                        {
+                            <tr>
+                                <td>@sa.CareSystemParameter.CareSystemType.Name</td>
+                                <td>@sa.CareSystemParameter.Name</td>
+                                <td>@((bool) sa.IsWithinNormalLimits ? "Within Normal Limits" : "Abnormal")</td>
+                                <td>@sa.Comment</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+        </div>
+        <hr />
+        <div class="inline-group mt-2">
+            <a asp-controller="Encounter" 
+                asp-action="PCAIndex"
+                asp-route-encounterId="@Model.EncounterId"
+                class="btn btn-nav m-l-1Patient Details">
+                <i class="fas fa-arrow-left"></i> Return
+            </a>
+
+            <a asp-controller="Patient"
+                asp-action="ViewPatientDetails"
+                asp-route-id="@ViewBag.Patient.Mrn" 
+                class="btn btn-nav ml-2 m-l-1Patient Details">
+                View Patient
+            </a>
+        </div>
+    </div>
+</div>

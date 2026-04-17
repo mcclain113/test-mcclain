@@ -1,0 +1,84 @@
+@model List<IS_Proj_HIT.Entities.Race>
+
+@{
+    ViewData["Title"] = "Race";
+}
+
+<div class="row my-3">
+<h3>
+    <a class="btn btn-primary" asp-controller="PatientStructuredData" asp-action="Index">
+        <i class="fa fa-arrow-left "></i>
+    </a>
+    Race
+</h3>
+</div>
+
+<p>
+    <a class="btn btn-primary" asp-controller="PatientStructuredData" asp-action="CreateRace">Create New</a>
+</p>
+
+<table class="stripe nowrap" id="raceTable">
+    <thead>
+        <tr>
+            <th>WHIAC Code</th>
+            <th>Race Name</th>
+            <th>Description</th>
+            <th>Category</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var race in Model)
+        {
+            <tr>
+                <td>@race.WhiacCode</td>
+                <td>@race.Name</td>
+                <td>@race.Description</td>
+                <td>@race.Category</td>
+                <td>
+                    <a class="btn btn-primary" asp-controller="PatientStructuredData" asp-action="EditRace" asp-route-id="@race.RaceId">Edit</a>
+                    <a class="btn btn-danger" asp-controller="PatientStructuredData" asp-action="DeleteRace" asp-route-id="@race.RaceId">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<style>
+.no-wrap {
+    white-space: nowrap;
+}
+</style>
+
+@section scripts{
+    <script>
+        // Creates DataTable
+        // DataTable Documentation found here: https://datatables.net/
+        $(function () {
+    $('#raceTable').DataTable({
+        columns: [null, null, null, null, { orderable: false }],
+        order: [[0, 'asc']],
+        pageLength: 10,
+        searching: true,
+        language: {
+            emptyTable: 'No Race records in database.'
+        },
+        columnDefs: [
+            {
+                targets: [0, 1, 2], // Target the first, second, and third columns (indexes 0, 1, 2)
+                render: function (data, type, row) {
+                    return '<span style="white-space: normal;">' + data + '</span>';
+                }
+            },
+            {
+                targets: -1, // Target the last column (index -1)
+                createdCell: function (td, cellData, rowData, row, col) {
+                    $(td).addClass('no-wrap'); // Add a specific class
+                }
+            }
+        ]
+    });
+});
+
+    </script>
+}

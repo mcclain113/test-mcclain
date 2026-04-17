@@ -1,0 +1,59 @@
+@model List<IS_Proj_HIT.Entities.Restriction>
+
+@{
+    ViewData["Title"] = "Restrictions";
+}
+
+<div class="row my-3">
+    <h3>
+        <a class="btn btn-primary" asp-controller="AlertStructuredData" asp-action="Index">
+            <i class="fa fa-arrow-left "></i>
+        </a>
+        Restrictions
+    </h3>
+</div>
+
+<p>
+    <a class="btn btn-primary" asp-controller="AlertStructuredData" asp-action="CreateRestriction">Create New</a>
+</p>
+
+<table class="stripe nowrap" id="restrictionTable">
+    <thead>
+        <tr>
+            <th>Restriction</th>
+            <th>Status</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var restriction in Model)
+        {
+            <tr>
+                <td>@restriction.Name</td>
+                <td>@(restriction.IsActive ? "Active" : "Inactive")</td>
+                <td>
+                    <a class="btn btn-primary" asp-controller="AlertStructuredData" asp-action="EditRestriction" asp-route-id="@restriction.RestrictionId">Edit</a>
+                    <a class="btn btn-danger" asp-controller="AlertStructuredData" asp-action="DeleteRestriction" asp-route-id="@restriction.RestrictionId">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section scripts{
+    <script>
+        // DataTable Documentation found here: https://datatables.net/
+        $(function () {
+            // Creates DataTable
+            $('#restrictionTable').DataTable({
+                columns: [null, null, { orderable: false }],
+                order: [[0, 'asc']],
+                pageLength: 10,
+                searching: true,
+                language: {
+                    emptyTable: 'None found'
+                }
+            });
+        });
+    </script>
+}

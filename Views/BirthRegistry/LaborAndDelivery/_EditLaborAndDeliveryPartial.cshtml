@@ -1,0 +1,219 @@
+@model IS_Proj_HIT.ViewModels.BirthRegistry.LaborAndDeliveryViewModel
+
+<div class="card">
+    <div class="card-header bg-primary text-white">
+        <h4 class="mb-0"><i class="fas fa-procedures mr-2"></i>Labor & Delivery Information</h4>
+    </div>
+
+    <div class="card-body">
+        <div id="laborAccordion">
+
+            <div class="card">
+                <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">
+                        <button class="btn btn-block text-left text-white" type="button" data-toggle="collapse"
+                            data-target="#collapseCharacteristics" aria-expanded="true">
+                            <i class="fas fa-heartbeat"></i> 1. Characteristics of Labor & Delivery
+                        </button>
+                    </h5>
+                    <span class="checkmark accordion-checkmark d-none">&#10004;</span>
+                </div>
+
+                <div id="collapseCharacteristics" class="collapse show" data-parent="#laborAccordion">
+                    <div class="card-body">
+                        <p>Select all that apply:</p>
+
+                        @foreach (var option in Model.CharacteristicsOfLabor)
+                        {
+                            <div class="form-check mb-2">
+                                <input class="form-check-input validation-trigger characteristic-option" type="checkbox"
+                                    name="SelectedCharacteristicIds" value="@option.Value"
+                                    @(Model.SelectedCharacteristicIds.Contains(byte.Parse(option.Value)) ? "checked" :
+                                                                    "") />
+                                <label class="form-check-label">
+                                    @option.Text
+                                    <span class="info-icon" data-toggle="tooltip" data-tkey="char_@option.Value">i</span>
+                                </label>
+                            </div>
+                        }
+
+                        <div class="form-check mt-3">
+                            <input class="form-check-input characteristic-none" type="checkbox" id="characteristicsNone"
+                                value="0" />
+                            <label class="form-check-label" for="characteristicsNone"><em>None of the above</em></label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">
+                        <button class="btn btn-block text-left text-white collapsed" type="button"
+                            data-toggle="collapse" data-target="#collapseMethod" aria-expanded="false">
+                            <i class="fas fa-baby"></i> 2. Method of Delivery
+                        </button>
+                    </h5>
+                    <span class="checkmark accordion-checkmark d-none">&#10004;</span>
+                </div>
+
+                <div id="collapseMethod" class="collapse" data-parent="#laborAccordion">
+                    <div class="card-body">
+                        <div id="methodNestedAccordion">
+
+                            <div class="card">
+                                <div
+                                    class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                                    <h6 class="mb-0">
+                                        <button class="btn btn-block text-left text-white" type="button"
+                                            data-toggle="collapse" data-target="#collapseMethod21" aria-expanded="true">
+                                            2.1 Fetal Presentation at Birth
+                                        </button>
+                                    </h6>
+                                    <span class="checkmark accordion-checkmark d-none">&#10004;</span>
+
+                                </div>
+                                <div id="collapseMethod21" class="collapse show" data-parent="#methodNestedAccordion">
+                                    <div class="card-body">
+                                        @foreach (var option in Model.FetalPresentationAtBirths)
+                                        {
+                                            <div class="form-check">
+                                                <input class="form-check-input validation-trigger fetal-option" type="radio"
+                                                    name="FetalPresentationAtBirthId" value="@option.Value"
+                                                    @(Model.FetalPresentationAtBirthId == byte.Parse(option.Value) ?
+                                                                                                    "checked" : "") />
+                                                <label class="form-check-label">
+                                                    @option.Text
+                                                    <span class="info-icon" data-toggle="tooltip"
+                                                        data-tkey="fetal_@option.Value">i</span>
+                                                </label>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card">
+                                <div
+                                    class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                                    <h6 class="mb-0">
+                                        <button class="btn btn-block text-left text-white collapsed" type="button"
+                                            data-toggle="collapse" data-target="#collapseMethod22">
+                                            2.2 Final Route & Method of Delivery
+                                        </button>
+                                    </h6>
+                                    <span class="checkmark accordion-checkmark d-none">&#10004;</span>
+
+                                </div>
+                                <div id="collapseMethod22" class="collapse" data-parent="#methodNestedAccordion">
+                                    <div class="card-body">
+                                        @foreach (var option in Model.FinalRouteAndMethodOfDeliveries)
+                                        {
+                                            <div class="form-check">
+                                                <input class="form-check-input validation-trigger method-option"
+                                                    type="radio" name="FinalRouteAndMethodId" value="@option.Value"
+                                                    @(Model.FinalRouteAndMethodId == byte.Parse(option.Value) ? "checked" :
+                                                                                                    "") />
+                                                <label class="form-check-label">
+                                                    @option.Text
+                                                    <span class="info-icon" data-toggle="tooltip"
+                                                        data-tkey="method_@option.Value">i</span>
+                                                </label>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div
+                                    class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                                    <h6 class="mb-0">
+                                        <button class="btn btn-block text-left text-white collapsed" type="button"
+                                            data-toggle="collapse" data-target="#collapseMethod23">
+                                            2.3 Trial of Labor Before Cesarean
+                                        </button>
+                                    </h6>
+                                    <span class="checkmark accordion-checkmark d-none">&#10004;</span>
+                                </div>
+
+                                <div id="collapseMethod23" class="collapse" data-parent="#methodNestedAccordion">
+                                    <div class="card-body">
+                                        <p class="text-muted">
+                                            <em>(Transfers include hospital to hospital, birth facility to hospital,
+                                                etc. Does not include home to hospital.)</em>
+                                        </p>
+
+                                        <div class="form-check">
+                                            <input asp-for="TrialOfLaborBeforeCesarean" type="radio"
+                                                class="form-check-input validation-trigger" id="tolYes" value="true" />
+                                            <label class="form-check-label" for="tolYes">Yes</label>
+                                        </div>
+
+                                        <div class="form-check">
+                                            <input asp-for="TrialOfLaborBeforeCesarean" type="radio"
+                                                class="form-check-input validation-trigger" id="tolNo" value="false" />
+                                            <label class="form-check-label" for="tolNo">No</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">
+                        <button class="btn btn-block text-left text-white collapsed" type="button"
+                            data-toggle="collapse" data-target="#collapseMorbidity" aria-expanded="false">
+                            <i class="fas fa-hospital"></i> 3. Maternal Morbidity
+                        </button>
+                    </h5>
+                    <span class="checkmark accordion-checkmark d-none">&#10004;</span>
+                </div>
+
+                <div id="collapseMorbidity" class="collapse" data-parent="#laborAccordion">
+                    <div class="card-body">
+                        @foreach (var option in Model.MaternalMorbidities)
+                        {
+                            <div class="form-check">
+                                <input class="form-check-input validation-trigger morbidity-option" type="checkbox"
+                                    name="SelectedMaternalMorbidityIds" value="@option.Value"
+                                    @(Model.SelectedMaternalMorbidityIds.Contains(byte.Parse(option.Value)) ? "checked" :
+                                                                    "") />
+                                <label class="form-check-label">
+                                    @option.Text
+                                    <span class="info-icon" data-toggle="tooltip" data-tkey="morb_@option.Value">i</span>
+                                </label>
+                            </div>
+                        }
+
+                        <div class="form-check mt-3">
+                            <input class="form-check-input morbidity-none" type="checkbox" id="morbidityNone"
+                                value="0" />
+                            <label class="form-check-label" for="morbidityNone"><em>None of the above</em></label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="text-right mt-4">
+            <button type="button" id="labor-save-btn" class="btn btn-success">
+                <i class="fas fa-save"></i> Save Labor &amp; Delivery Information
+            </button>
+        </div>
+    </div>
+</div>
+
+@* Expose structured tooltip dictionaries for hydration in JS *@
+<script>
+    window.laborHelp = {
+        char: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.CharacteristicsDescriptions ?? new Dictionary<byte, string>())),
+        fetal: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.FetalPresentationDescriptions ?? new Dictionary<byte, string>())),
+        method: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.FinalRouteAndMethodDescriptions ?? new Dictionary<byte, string>())),
+        morb: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.MaternalMorbidityDescriptions ?? new Dictionary<byte, string>()))
+    };
+</script>

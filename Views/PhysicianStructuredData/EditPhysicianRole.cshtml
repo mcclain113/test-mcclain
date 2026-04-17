@@ -1,0 +1,42 @@
+@model IS_Proj_HIT.ViewModels.PhysicianStructuredData.PhysicianStructuredDataViewModel
+@{
+    ViewBag.Title = "Edit Physician Role";
+}
+
+<h1>Edit</h1>
+
+<h4>Physician Role</h4>
+<hr />
+
+<div class="row">
+    <div class="col-md-10">
+        <form method="post">
+            @Html.AntiForgeryToken()
+            <div class="form-row">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="PhysicianRole.PhysicianRoleId" value="@Model.PhysicianRole.PhysicianRoleId" readonly/>
+
+                <div class="form-group col-sm-6">
+                    <label asp-for="PhysicianRole.Name" class="control-label">Role Name</label>
+                    <input asp-for="PhysicianRole.Name" class="form-control" maxlength="50" required />
+                    <span asp-validation-for="PhysicianRole.Name" class="text-danger"></span>
+                </div>
+                <div class="form-group col-sm-6">
+                    <label asp-for="PhysicianRole.Description" class="control-label">Description</label>
+                    <input asp-for="PhysicianRole.Description" class="form-control" maxlength="100" required />
+                    <span asp-validation-for="PhysicianRole.Description" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <a asp-controller="PhysicianStructuredData" asp-action="ViewPhysicianRoles" class="btn btn-outline-danger">Discard Changes</a>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Save Changes" class="ml-3 btn btn-primary" />
+                </div>
+            </div>            
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

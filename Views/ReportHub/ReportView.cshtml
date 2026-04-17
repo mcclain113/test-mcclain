@@ -1,0 +1,27 @@
+@using IS_Proj_HIT.ViewModels.Reports
+@model ReportDisclosureDisplay
+
+<h1>@Model.ReportName</h1>
+
+<form asp-controller="ReportHub" asp-action="DisclosurePdf" method="post">
+  <label>First Name:</label>
+  <input required name="FirstName" />
+  <label>Last Name:</label>
+  <input required name="LastName" />
+  <button class="btn btn-primary" type="submit">Generate Disclosure Report</button>
+</form>
+@if(!String.IsNullOrEmpty(Model.ReportMessage)) {
+    <h2>@Model.ReportMessage</h2>
+}
+@if(String.IsNullOrEmpty(Model.ReportFile))
+{
+  <p class="text-danger">@Model.ErrorMessage</p>
+
+}
+else
+{
+  <iframe src="@Model.ReportFile" width="100%" height="800px">
+  </iframe>
+}
+@* <iframe src="@Url.Action("DisclosurePdfView", "ReportHub")" width="100%" height="800px">
+</iframe> *@

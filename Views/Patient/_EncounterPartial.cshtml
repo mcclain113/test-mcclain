@@ -1,0 +1,123 @@
+@model IS_Proj_HIT.ViewModels.PatientVm.PatientViewModel
+
+<!-- bring the User's permissions into the view -->
+@{
+    var userPermissions = ViewData["UserPermissions"] as List<string>;
+}
+
+<!-- This view is called by the _PatientAccordianPartial.cshtml only if ViewBag.ViewPatientDetails is true
+        ViewBag.ViewPatientDetails is set in the controller Getter methods for CreatePatient, EditPatient and ViewPatientDetails -->
+<div class="card" style="border: none; margin-top: .15em;">
+    <div class="card-header bg-primary text-white">
+        <h4 class="d-flex align-items-center justify-content-between ml-3">
+            Encounters
+            @if (userPermissions != null && userPermissions.Contains("EncounterAdd") && !ViewBag.OpenEncounter && !ViewBag.PatientDeceased)
+            {
+                 <a asp-controller="Encounter" asp-action="AddEncounter" asp-route-id="@Model.Patient.Mrn"
+                   class="btn btn-outline-primary float-right">
+                    <i class="fas fa-plus"></i> Create New Encounter
+                </a>
+            }
+            else if (userPermissions != null && userPermissions.Contains("EncounterAdd") && ViewBag.OpenEncounter && !ViewBag.PatientDeceased)
+            {
+                <div class="tooltip-container" data-toggle="popover" data-trigger="focus hover" data-placement="top"
+                    title="Error" data-content="This Patient has an open encounter. Please Discharge that encounter.">
+                    <a class="btn btn-outline-info float-right" disabled><i> Create New Encounter</i>
+                    </a>
+                </div>
+            }
+            else if (userPermissions != null && userPermissions.Contains("EncounterAdd") && ViewBag.PatientDeceased)
+            {
+                <div class="tooltip-container" data-toggle="popover" data-trigger="focus hover" data-placement="top"
+                    title="Error" data-content="This Patient is deceased. New encounters cannot be created.">
+                    <a class="btn btn-outline-info float-right" disabled><i> Create New Encounter</i>
+                    </a>
+                </div>
+            }
+        </h4>
+    </div>
+    <div class="card-body bg-light">
+        <div class="container">
+            @if (TempData["Success"] != null)
+            {
+                <div class="alert alert-success">
+                    @TempData["Success"]
+                </div>
+            }
+            @if (TempData["Error"] != null)
+            {
+                <div class="alert alert-danger">
+                    @TempData["Error"]
+                </div>
+            }
+            <table class="table table-striped" id="encounterTable">
+                <thead>
+                    <tr>
+                        <th>Facility</th>
+                        <th>Admitted</th>
+                        <th>Discharged</th>
+                        <th class="d-sm-none d-md-table-cell">Last Modified</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                
+                <tbody>
+                    @foreach (var enc in userPermissions.Contains("SecurityAllFacilities") ? ViewBag.AdminPatientEncounters : ViewBag.PatientEncounters)
+                    {
+                        <tr>
+                            <td>@enc.Facility?.Name</td>
+                            <td>@enc.AdmitDateTime.ToString("g")</td>
+                            <td>@(enc.DischargeDateTime is null ? "NOT DISCHARGED" :
+                                    enc.DischargeDateTime?.ToString("g"))</td>
+                            <td class="d-sm-none d-md-table-cell">@enc.LastModified.ToString("g")</td>
+                            <td>
+                                <a asp-controller="Encounter" asp-action="ViewEncounter"
+                                   asp-route-encounterId="@enc.EncounterId" class="btn btn-nav btn-sm">
+                                    Details
+                                </a>
+                                @if (userPermissions != null && (userPermissions.Contains("EncounterDelete")) )
+                                {
+                                    <a onclick="if (!confirm('Are you sure you want to delete this encounter?')) return false;"
+                                    asp-controller="Encounter"
+                                    asp-action="DeleteEncounter"
+                                    asp-route-encounterId="@enc.EncounterId"
+                                    class="btn btn-danger btn-sm">
+                                    Delete
+                                </a>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@if (userPermissions != null && (userPermissions.Contains("PatientDelete")) )
+{
+    <hr />
+    <div>
+        <a asp-action="DeletePatient" asp-route-id="@Model.Patient.Mrn" onclick="if (!confirm('Are you sure?')) return false"
+           class="btn btn-danger float-right">Delete Patient</a>
+    </div>
+}
+
+@section scripts{
+
+    <script>
+        
+        $(document).ready( function () {
+            $('#encounterTable').DataTable({
+                columns: [null, null, null, null, { orderable: false }],
+                order: [[1, 'asc']],
+                pageLength: 10,
+                searching: true,
+                language: {
+                    emptyTable: 'No Encounters in database.'
+                }
+            });
+        } );
+    </script>
+
+}

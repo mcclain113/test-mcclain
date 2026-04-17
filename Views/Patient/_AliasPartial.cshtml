@@ -1,0 +1,47 @@
+@model IS_Proj_HIT.Entities.PatientAlias
+
+
+    @{
+        var index = (int)ViewData["indexPA"];
+        var detailsIndex = index +1;
+    }
+
+
+<div class="row patientAliases" @(ViewBag.ViewPatientDetails ? "hidden" : "")>
+    <div class="col-4">
+        <div class="form-group">
+            <label for="PatientAliases@index__AliasFirstName">Alias First Name</label><br>
+            <input class="form-control" asp-for="AliasFirstName" id="PatientAliases@index__AliasFirstName" name="PatientAliases[@index].AliasFirstName" maxlength="50" placeholder="Alias First Name"/>
+        </div>
+    </div>
+
+    <div class="col-2">
+        <div class="form-group">
+            <label for="PatientAliases@index__AliasMiddleName">Alias Middle Name</label><br>
+            <input class="form-control" asp-for="AliasMiddleName" id="PatientAliases@index__AliasMiddleName" name="PatientAliases[@index].AliasMiddleName" maxlength="50" placeholder="Alias Middle Name" />
+        </div>
+    </div>
+
+    <div class="col-4">
+        <div class="form-group">
+            <label for="PatientAliases@index__AliasLastName">Alias Last Name</label><br>
+            <input class="form-control" asp-for="AliasLastName" id="PatientAliases@index__AliasLastName" name="PatientAliases[@index].AliasLastName" maxlength="50" placeholder="Alias Last Name"/>
+        </div>
+    </div>
+
+    <div class="col-2">
+        <div class="form-group">
+            <label for="PatientAliases@index__AliasPriority">Alias Priority</label><br>
+            <input class="form-control" type="number" asp-for="AliasPriority" id="PatientAliases@index__AliasPriority" name="PatientAliases[@index].AliasPriority" placeholder="Ex: @detailsIndex" />
+        </div>
+    </div>
+</div>
+
+<div @(!ViewBag.ViewPatientDetails ? "hidden" : "")>
+    <div class="col-12">
+        <div class="form-group">
+            <label>Alias @detailsIndex:</label>
+            <span class="data ml-2">@Model.AliasFirstName @Model.AliasMiddleName @Model.AliasLastName</span>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,123 @@
+@{
+    ViewBag.Title = "User Management";
+    var userPermissions = ViewData["UserPermissions"] as List<string>;
+    var requiredUserManagementPermissions = new[]{"StructuredDataAdd","StructuredDataEdit","StructuredDataDelete","StructuredDataView"};
+    var requiredRoleAssignmentPermissions = new[]{"SecurityAssignRole","SecurityRemoveRole"};
+}
+
+<div class="row my-3">
+<h3>
+    <a class="btn btn-primary" asp-controller="Administration" asp-action="Index">
+        <i class="fa fa-arrow-left "></i>
+    </a>
+    User Management Data Entry
+</h3>
+</div>
+
+<div class="container">
+    <div class="row">
+        @if(userPermissions.Any(permission => requiredUserManagementPermissions.Contains(permission)))
+        {
+            <div class="col-sm-4 col-lg-3 mb-3">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <a class="btn btn-outline-primary" asp-controller="UserManagementStructuredData" asp-action="ViewFacilities">Facilities</a>
+                    </div>
+                </div>
+            </div>
+        }
+
+        @if(userPermissions.Any(permission => requiredUserManagementPermissions.Contains(permission)))
+        {
+            <div class="col-sm-4 col-lg-3 mb-3">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <a class="btn btn-outline-primary" asp-controller="UserManagementStructuredData" asp-action="ViewPermissions">Permissions</a>
+                        <a href="#" class="fas font-weight-normal fa-question-circle fa-s" data-offset="0% 0%" 
+                                data-toggle="popover" data-trigger="focus hover" data-placement="right" container="body" customClass="w-90"
+                                title="Permissions" data-content="Create permissions like PatientAdd, PatientEdit, etc."></a>
+                    </div>
+                </div>
+            </div>
+        }
+ 
+        @if(userPermissions.Any(permission => requiredUserManagementPermissions.Contains(permission)) ||
+            userPermissions.Any(permission => requiredRoleAssignmentPermissions.Contains(permission)) )
+        {
+            <div class="col-sm-4 col-lg-3 mb-3">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <a class="btn btn-outline-primary" asp-controller="UserManagementStructuredData" asp-action="ViewPrograms">Programs</a>
+                        <a href="#" class="fas font-weight-normal fa-question-circle fa-s" data-offset="0% 0%" 
+                                data-toggle="popover" data-trigger="focus hover" data-placement="right" container="body" customClass="w-90"
+                                title="Programs" data-content="Create Programs like Health Information Technology.  Maintain the Users assigned to each Program."></a>
+                    </div>
+                </div>
+            </div>
+        }
+
+        @if(userPermissions.Any(permission => requiredUserManagementPermissions.Contains(permission)))
+        {
+            <div class="col-sm-4 col-lg-3 mb-3">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <a class="btn btn-outline-primary" asp-controller="UserManagementStructuredData" asp-action="ViewProgramFacilities">Program Facilities</a>
+                    </div>
+                </div>
+            </div>
+        }
+
+        @if(userPermissions.Any(permission => requiredUserManagementPermissions.Contains(permission)))
+        {
+            <div class="col-sm-4 col-lg-3 mb-3">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <a class="btn btn-outline-primary" asp-controller="UserManagementStructuredData" asp-action="ViewRolePermissions">Role Permissions</a>
+                        <a href="#" class="fas font-weight-normal fa-question-circle fa-s" data-offset="0% 0%" 
+                                data-toggle="popover" data-trigger="focus hover" data-placement="right" container="body" customClass="w-90"
+                                title="Role Permissions" data-content="Assign various permissions to a Role.  For example, assign the permission PatientAdd to the role HIMS Technician"></a>
+                    </div>
+                </div>
+            </div>
+        }
+
+        @if(userPermissions.Any(permission => requiredUserManagementPermissions.Contains(permission)) ||
+            userPermissions.Any(permission => requiredRoleAssignmentPermissions.Contains(permission)) )
+        {
+            <div class="col-sm-4 col-lg-3 mb-3">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <a class="btn btn-outline-primary" asp-controller="UserManagementStructuredData" asp-action="ViewRoles">Roles</a>
+                        <a href="#" class="fas font-weight-normal fa-question-circle fa-s" data-offset="0% 0%" 
+                                data-toggle="popover" data-trigger="focus hover" data-placement="right" container="body" customClass="w-90"
+                                title="Roles" data-content="Create Roles like HIT Clerk.  Maintain the Users assigned to each Role."></a>
+                    </div>
+                </div>
+            </div>
+        }
+
+        @if(userPermissions.Any(permission => requiredUserManagementPermissions.Contains(permission)))
+        {
+            <div class="col-sm-4 col-lg-3 mb-3">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <a class="btn btn-outline-primary" asp-controller="UserManagementStructuredData" asp-action="ViewSecurityQuestions">Security Questions</a>
+                    </div>
+                </div>
+            </div>
+        }
+
+        @if(userPermissions.Any(permission => requiredUserManagementPermissions.Contains(permission)) ||
+            userPermissions.Any(permission => requiredRoleAssignmentPermissions.Contains(permission)) )
+        {
+            <div class="col-sm-4 col-lg-3 mb-3">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <a class="btn btn-outline-primary" asp-controller="UserManagementStructuredData" asp-action="ViewUsers">Users</a>
+                    </div>
+                </div>
+            </div>
+        }
+
+    </div> <!-- close the row  -->
+</div>

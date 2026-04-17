@@ -1,0 +1,51 @@
+@model IS_Proj_HIT.ViewModels.AlertStructuredData.AlertStructuredDataViewModel
+@{
+    ViewBag.Title = "Edit Fall Risk";
+}
+
+<h1>Edit</h1>
+
+<h4>Fall Risk</h4>
+<hr />
+
+<div class="row">
+    <div class="col-md-10">
+        <form method="post">
+            @Html.AntiForgeryToken()
+            <div class="form-row">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="FallRisk.FallRiskId" value="@Model.FallRisk.FallRiskId" readonly/>
+                <div class="form-group col-sm-6">
+                    <label asp-for="FallRisk.Name" class="control-label">Fall Risk Name</label>
+                    <input asp-for="FallRisk.Name" 
+                        class="form-control" maxlength="100" required
+                        placeholder="Example:  Low Rall Risk (MFS Score 25-50)" />
+                    <span asp-validation-for="FallRisk.Name" class="text-danger"></span>
+                </div>
+                <div class="form-group col-sm-6">
+                    <label asp-for="FallRisk.IsActive" class="control-label">Active?</label>
+                    <select asp-for="FallRisk.IsActive" class="form-control" required>
+                        <option value="">Select</option>
+                        <option value="true">Yes</option>
+                        <option value="false">No</option>
+                    </select>
+                    <span asp-validation-for="FallRisk.IsActive" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <input type="submit" value="Save Changes" class="btn btn-primary" />
+                </div>
+
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<div>
+    <a asp-controller="AlertStructuredData" asp-action="ViewFallRisks">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

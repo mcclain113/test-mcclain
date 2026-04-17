@@ -1,0 +1,68 @@
+@model List<IS_Proj_HIT.Entities.Specialty>
+
+@{
+    ViewData["Title"] = "Specialties";
+}
+
+<div class="row my-3">
+<h3>
+    <a class="btn btn-primary" asp-controller="PhysicianStructuredData" asp-action="Index">
+        <i class="fa fa-arrow-left "></i>
+    </a>
+    Specialties
+</h3>
+</div>
+
+<p>
+    <a class="btn btn-primary" asp-controller="PhysicianStructuredData" asp-action="CreateSpecialty">Create New</a>
+</p>
+
+<table class="stripe nowrap" id="specialtyTable">
+    <thead>
+        <tr>
+            <th>
+                Specialty Name
+            </th>
+            <th>
+                Description
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var specialty in Model)
+        {
+            <tr>
+                <td>
+                    @specialty.Name
+                </td>
+                <td>
+                    @specialty.Description
+                </td>
+                <td>
+                   
+                    <a class="btn btn-primary" asp-controller="PhysicianStructuredData" asp-action="EditSpecialty" asp-route-id="@specialty.SpecialtyId">Edit</a>
+                    <a class="btn btn-danger" asp-controller="PhysicianStructuredData" asp-action="DeleteSpecialty" asp-route-id="@specialty.SpecialtyId">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section scripts{
+    <script>
+        // Creates DataTable
+        // DataTable Documentation found here: https://datatables.net/
+        $(function () {
+            $('#specialtyTable').DataTable({
+                columns: [null, null, { orderable: false }],
+                order: [[0, 'asc']],
+                pageLength: 10,
+                searching: true,
+                language: {
+                    emptyTable: 'None found.'
+                }
+            });
+        });
+    </script>
+}

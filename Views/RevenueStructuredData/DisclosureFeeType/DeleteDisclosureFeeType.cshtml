@@ -1,0 +1,84 @@
+@model IS_Proj_HIT.ViewModels.RevenueStructuredDataViewModel
+@{
+    ViewBag.Title = "Delete Disclosure Fee Type";
+}
+
+<h1>Delete</h1>
+
+<h3>@ViewData["RegularMessage"]</h3>
+<h3 class="error">@ViewData["ErrorMessage"]</h3>
+
+<h4>Disclosure Fee Type</h4>
+<hr />
+
+<div class="row">
+    <div class="col-md-10">
+        <form method="post" id="deleteDisclosureFeeTypeForm" asp-asp-controller="RevenueStructuredData" asp-action="DeleteDisclosureFeeType">
+            @Html.AntiForgeryToken()
+            <div class="form-row">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="DisclosureFeeType.DisclosureFeeTypeId" value="@Model.DisclosureFeeType.DisclosureFeeTypeId" readonly/>
+                
+                <div class="form-group col-sm-2">
+                    <label asp-for="DisclosureFeeType.SortOrder" class="control-label">Sort Order</label>
+                    <input asp-for="DisclosureFeeType.SortOrder" type="number" id="SortOrder"
+                        class="form-control" maxlength="10" required
+                        placeholder="Example:  5" step="1" min="0" />
+                    <span asp-validation-for="DisclosureFeeType.SortOrder" class="text-danger"></span>
+                </div>
+                <div class="form-group col-sm-4">
+                    <label asp-for="DisclosureFeeType.FeeAmount" class="control-label">Fee Amount</label>
+                    <input asp-for="DisclosureFeeType.FeeAmount" type="number"
+                        class="form-control" maxlength="10" required
+                        placeholder="Example:  2.54" />
+                    
+                </div>
+                <div class="form-group col-sm-6">
+                    <label asp-for="DisclosureFeeType.FeeDescription" class="control-label">Fee Description</label>
+                    <input asp-for="DisclosureFeeType.FeeDescription" 
+                        class="form-control" maxlength="200" required 
+                        placeholder="Example:  Pages 1 to 25"/>
+                    
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col-sm-12">
+                    <label asp-for="DisclosureFeeType.Comments" class="control-label">Comments</label>
+                    <input asp-for="DisclosureFeeType.Comments" class="form-control" maxlength="200" placeholder="Example:  per image"/>
+                    
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col-sm-6">
+                    <label asp-for="DisclosureFeeType.EffectiveDate" class="control-label"></label>
+                    <input asp-for="DisclosureFeeType.EffectiveDate" class="form-control" type="date" required/>
+                    
+                </div>                
+            
+                <div class="form-group col-sm-6">
+                    <label asp-for="DisclosureFeeType.ExpirationDate" class="control-label">Expiration Date</label>
+                    <input asp-for="DisclosureFeeType.ExpirationDate" class="form-control" type="date"/>
+                    
+                </div>
+                
+            </div>
+
+            <div class="form-row"> 
+                <div>
+                    <a class="btn btn-outline-danger" asp-controller="RevenueStructuredData" asp-action="ViewDisclosureFeeTypes">Discard Changes</a>
+                </div>           
+                <div class="form-group">
+                    <input type="submit" value="Delete Item" class="ml-3 btn btn-primary" id="btnDelete"/>
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script src="~/js/disclosureFeeType.js"></script>
+}

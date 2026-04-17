@@ -1,0 +1,57 @@
+@model List<IS_Proj_HIT.Entities.CharacteristicOfLabor>
+@{
+    ViewData["Title"] = "Characteristic Of Labors";
+}
+
+<div class="row my-3">
+    <h3>
+        <a class="btn btn-primary" asp-controller="BirthRegistryStructuredData" asp-action="Index">
+            <i class="fa fa-arrow-left"></i>
+        </a>
+        Characteristic Of Labors
+    </h3>
+</div>
+
+<p>
+    <a class="btn btn-primary" asp-controller="BirthRegistryStructuredData" asp-action="CreateCharacteristicOfLabor">Create New</a>
+</p>
+
+<table class="stripe" id="characteristicOfLaborTable">
+    <thead>
+        <tr>
+            <th>Characteristic Of Labor Name</th>
+            <th>Characteristic Of Labor Description</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var characteristicOfLabor in Model)
+        {
+            <tr>
+                <td>@characteristicOfLabor.CharacteristicName</td>
+                <td>@characteristicOfLabor.CharacteristicDescription</td>
+                <td>
+                    <a class="btn btn-primary" asp-controller="BirthRegistryStructuredData" asp-action="EditCharacteristicOfLabor" asp-route-id="@characteristicOfLabor.CharacteristicId">Edit</a>
+                    <a class="btn btn-danger" asp-controller="BirthRegistryStructuredData" asp-action="DeleteCharacteristicOfLabor" asp-route-id="@characteristicOfLabor.CharacteristicId">Delete</a>
+                </td>
+            </tr>
+        }
+
+    </tbody>
+</table>
+
+@section scripts{
+    <script>
+    // DataTable Documentation found here:  https://datatables.net
+    $(function(){
+        // Create the data table
+        $('#birthPlaceTypeTable').DataTable({
+            columns: [null, null, {orderable: false}],
+            order: [[0, 'asc'] ],
+            pageLength: 10,
+            searching: true,
+            language: { emptyTable: 'None found'}
+        });
+    });
+    </script>
+}

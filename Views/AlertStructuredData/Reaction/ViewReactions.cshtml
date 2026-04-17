@@ -1,0 +1,61 @@
+@model List<IS_Proj_HIT.Entities.Reaction>
+
+@{
+    ViewData["Title"] = "Reactions";
+}
+
+<div class="row my-3">
+    <h3>
+        <a class="btn btn-primary" asp-controller="AlertStructuredData" asp-action="Index">
+            <i class="fa fa-arrow-left "></i>
+        </a>
+        Allergen Reactions
+    </h3>
+</div>
+
+<p>
+    <a class="btn btn-primary" asp-controller="AlertStructuredData" asp-action="CreateReaction">Create New</a>
+</p>
+
+<table class="stripe nowrap" id="reactionTable">
+    <thead>
+        <tr>
+            <th>Reaction Name</th>
+            <th>Description</th>
+            <th>Alert Required?</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var reaction in Model)
+        {
+            <tr>
+                <td>@reaction.Name</td>
+                <td>@reaction.Description</td>
+                <td>@(reaction.AlertRequired == true ? "Yes" : reaction.AlertRequired == false ? "No" : "Unknown")</td>
+                <td>
+                    <a class="btn btn-primary" asp-controller="AlertStructuredData" asp-action="EditReaction" asp-route-id="@reaction.ReactionId">Edit</a>
+                    <a class="btn btn-danger" asp-controller="AlertStructuredData" asp-action="DeleteReaction" asp-route-id="@reaction.ReactionId">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section scripts{
+    <script>
+        // DataTable Documentation found here: https://datatables.net/
+        $(function () {
+            // Creates DataTable
+            $('#reactionTable').DataTable({
+                columns: [null, null, null, { orderable: false }],
+                order: [[0, 'asc']],
+                pageLength: 10,
+                searching: true,
+                language: {
+                    emptyTable: 'None found'
+                }
+            });
+        });
+    </script>
+}

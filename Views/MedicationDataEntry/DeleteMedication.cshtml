@@ -1,0 +1,73 @@
+@model IS_Proj_HIT.ViewModels.MedicationDataEntry.MedicationViewModel
+@{
+    ViewData["Title"] = "Delete Medication";
+}
+
+<h1>Delete Medication</h1>
+
+<h3>Are you sure you want to delete this medication?</h3>
+
+<hr />
+<div class="row">
+    <div class="col-md-10">
+        <form method="post">
+            @Html.AntiForgeryToken()
+            <div class="form-row">
+                <input type="hidden" asp-for="Medication.MedicationId" value="@Model.Medication.MedicationId" readonly/>
+                <div class="form-group col-sm-6">
+                    <label asp-for="BrandName.BrandName" class="control-label">Brand Name</label>
+                    <input asp-for="BrandName.BrandName" class="form-control" readonly />
+                </div>
+                <div class="form-group col-sm-6">
+                    <label asp-for="GenericName.GenericName" class="control-label">Generic Name</label>
+                    <input asp-for="GenericName.GenericName" class="form-control" readonly />
+                </div> 
+
+                <div class="form-group col-sm-6">
+                    <label asp-for="DosageForm.DosageForm" class="control-label">Dosage Type</label>
+                    <input asp-for="DosageForm.DosageForm" class="form-control" readonly />
+                </div>
+                <div class="form-group col-sm-6">
+                    <label asp-for="DeliveryRoute.DeliveryRouteName" class="control-label">Delivery Route</label>
+                    <input asp-for="DeliveryRoute.DeliveryRouteName" class="form-control" readonly />
+                </div>
+                <div class="form-group col-sm-6">
+                    <label asp-for="Medication.ActiveStrength" class="control-label">Active Strength</label>
+                    <input asp-for="Medication.ActiveStrength" class="form-control" readonly />
+                </div>
+                <div class="form-group col-sm-6">
+                    <label asp-for="Medication.ActiveIngredientUnits" class="control-label">Active Ingredient Units</label>
+                    <input asp-for="Medication.ActiveIngredientUnits" class="form-control" readonly />
+                </div>
+                <div class="form-group col-sm-6">
+                    <label asp-for="Medication.Ndc" class="control-label">NDC</label>
+                    <input asp-for="Medication.Ndc" class="form-control" readonly />
+                </div>
+                <div class="form-group col-sm-6">
+                    <input type="hidden" asp-for="Medication.IsActive" value="@Model.Medication.IsActive" readonly/>
+                    <label for="IsActive" class="control-label">Active</label>
+                    @if (Model.Medication.IsActive) {
+                        <input id="IsActive" class="form-control" value="Yes" readonly/>
+                    } else {
+                        <input id="IsActive" class="form-control" value="No" readonly/>
+                    }
+                </div>
+                @if (ViewBag.ErrorMessage != null) {
+                    <div class="form-group col-12">
+                        <span class="text-danger">@ViewBag.ErrorMessage</span>
+                    </div>
+                }
+                <div class="form-group">
+                    <a asp-controller="MedicationDataEntry" asp-action="ViewMedications" class="btn btn-outline-secondary">Cancel</a>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Delete" class="ml-3 btn btn-danger" />
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-controller="MedicationDataEntry" asp-action="ViewMedications">Back to List</a>
+</div>

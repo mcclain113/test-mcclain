@@ -1,0 +1,48 @@
+@model IS_Proj_HIT.Entities.MedicationGenericName
+@{
+    ViewData["Title"] = "Delete Generic Name";
+}
+
+<h1>Delete Generic Name</h1>
+
+<h3>Are you sure you want to delete this generic name?</h3>
+<hr />
+<div class="row">
+    <div class="col-md-10">
+        <form method="post">
+            @Html.AntiForgeryToken()
+            <div class="form-row">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="MedicationGenericId" value="@Model.MedicationGenericId" readonly/>
+                <div class="form-group col-sm-9">
+                    <label asp-for="GenericName" class="control-label">Generic Name</label>
+                    <input asp-for="GenericName" type="text" class="form-control" readonly/>
+                </div>
+                <div class="form-group col-sm-3">
+                    <input type="hidden" asp-for="IsActive" value="@Model.IsActive" readonly/>
+                    <label for="IsActive" class="control-label">Active</label>
+                    @if (Model.IsActive) {
+                        <input id="IsActive" class="form-control" value="Yes" readonly/>
+                    } else {
+                        <input id="IsActive" class="form-control" value="No" readonly/>
+                    }
+                </div>
+                @if (ViewBag.ErrorMessage != null) {
+                    <div class="form-group col-12">
+                        <span class="text-danger">@ViewBag.ErrorMessage</span>
+                    </div>
+                }
+                <div class="form-group">
+                    <a asp-controller="MedicationDataEntry" asp-action="ViewGenericNames" class="btn btn-outline-secondary">Cancel</a>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Delete" class="ml-3 btn btn-danger" />
+                </div>
+            </div>            
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

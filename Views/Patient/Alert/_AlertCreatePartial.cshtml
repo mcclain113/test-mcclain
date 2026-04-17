@@ -1,0 +1,247 @@
+@model IS_Proj_HIT.ViewModels.Alert.AlertCreateViewModel
+
+<div class="card" data-modal-title="Create a Patient Alert">
+    <div  class="card-header bg-primary text-white">
+        <h4>Add An Alert</h4>
+    </div>
+    
+    <form method="post" id="alert" name="alert" asp-action="CreateAlert">
+        @Html.AntiForgeryToken()
+        <div class="card-body bg-light">
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <label>Alert Type</label>
+                    <select class="form-control selectable " id="alertType" asp-for="@Model.AlertTypeId" asp-items="ViewBag.AlertType"><option value="0">Select Alert Type</option></select>
+                    <span asp-validation-for="AlertTypeId" class="text-danger"></span>
+                </div>                    
+                <div class="form-group col-md-4">
+                    <label>Start Date</label>
+                    <input asp-for="@Model.StartDate" class="form-control startDate" type="date" value="@(ViewBag.Today.ToString("yyyy-MM-dd"))" id="longer" />
+                    <span asp-validation-for="StartDate" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group col-md-6" id="fallRiskList">
+                    <label>Fall Risk</label>
+                    <select class="form-control selectable " required asp-for="@Model.FallRiskId" asp-items="ViewBag.PatientFallRisk"><option value="0">Select Fall Risk</option></select>
+                    <span asp-validation-for="FallRiskId" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-6" id="restrictionList">
+                    <label>Restriction</label>
+                    <select class="form-control selectable " asp-for="@Model.RestrictionTypeId" asp-items="ViewBag.Restriction"><option value="0">Select Restriction</option></select>
+                    <span asp-validation-for="RestrictionTypeId" class="text-danger"></span>
+                </div>
+                <div class="form-group" hidden>
+                    <label>MRN</label>
+                    <input asp-for="@Model.Mrn" value="@ViewBag.MRN" name="Mrn" id="mrn" readonly data-toggle="popover" data-placement="top" title="This unique ID identifies the patient" maxlength="6" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-12">
+                    <label>Comments</label>
+                    <textarea asp-for="@Model.Comments" name="comments"  rows="3" class="col-12" style="display:block"></textarea>
+                </div>
+            </div>
+
+            <button class="btn btn-primary btn-block mt-3" type="button" id="chk4nulls"  type="button">Create Alert</button>
+                <button class="btn btn-outline-primary" id="realSubmit" hidden type="submit" >Create Alert</button>
+            
+            <div>
+                <a asp-controller="Patient"
+                asp-action="ListAlerts"
+                asp-route-mrn="@ViewBag.MRN"
+                class="btn btn-cancel mt-3 cancel-link ajax-modal-load">Cancel</a>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script>
+(function () {
+    // Scope to the specific form instance rendered by this partial
+    var $form = $('#alert').length ? $('#alert') : $('.modal-body #alert');
+    if (!$form.length) return;
+
+    // Guard: don't initialize twice for same form instance
+    if ($form.data('alert-init')) return;
+    $form.data('alert-init', true);
+
+    // Track submit state on the form element (so beforeunload can check it)
+    $form.data('formSubmit', false);
+
+    // Install a single global beforeunload handler (only once)
+    if (!window._alertPartialBeforeUnloadInstalled) {
+        window._alertPartialBeforeUnloadInstalled = true;
+        window.addEventListener('beforeunload', function (e) {
+            // If any alert form on the page is submitting, allow unload
+            var $anyForm = $('#alert').length ? $('#alert') : $('.modal-body #alert');
+            var isSubmitting = $anyForm.length && $anyForm.data('formSubmit') === true;
+            if (isSubmitting) return undefined;
+            var message = "If you leave before saving, your changes will be lost.";
+            e.returnValue = message;
+        });
+    }
+
+    // Helper functions that operate only inside this form
+    function setFieldError(propName, message) {
+        var $span = $form.find('span[data-valmsg-for="' + propName + '"]');
+        $span.text(message).addClass('field-validation-error').removeClass('field-validation-valid');
+        $form.find('[name="' + propName + '"]').addClass('input-validation-error');
+    }
+
+    function clearFieldError(propName) {
+        var $span = $form.find('span[data-valmsg-for="' + propName + '"]');
+        $span.text('').addClass('field-validation-valid').removeClass('field-validation-error');
+        $form.find('[name="' + propName + '"]').removeClass('input-validation-error');
+    }
+
+    function clearAllFieldErrors() {
+        clearFieldError('AlertTypeId');
+        clearFieldError('StartDate');
+        clearFieldError('FallRiskId');
+        clearFieldError('RestrictionTypeId');
+    }
+
+    // Wire click that validates then triggers the hidden submit
+    $form.find('#chk4nulls').off('click').on('click', function () {
+        clearAllFieldErrors();
+
+        var alerttypevalue = $form.find('#alertType').val();
+        var restrictions = $form.find('#RestrictionTypeId').val();
+        var fallrisks = $form.find('#FallRiskId').val();
+
+        var hasError = false;
+
+        if (!alerttypevalue || alerttypevalue === '' || alerttypevalue === '0') {
+            setFieldError('AlertTypeId', 'Please select an Alert Type.');
+            hasError = true;
+        }
+
+        if ($form.find('.startDate').val() == "") {
+            setFieldError('StartDate', 'Please select a start date.');
+            hasError = true;
+        }
+
+        var alertTypeText = $form.find("#alertType option:selected").text();
+        if (alertTypeText === 'Fall Risk') {
+            if (!fallrisks || fallrisks === '' || fallrisks === '0') {
+                setFieldError('FallRiskId', 'Please select a Fall Risk.');
+                hasError = true;
+            }
+        } else if (alertTypeText === 'Restricted Access') {
+            if (!restrictions || restrictions === '' || restrictions === '0') {
+                setFieldError('RestrictionTypeId', 'Please select a Restriction.');
+                hasError = true;
+            }
+        }
+
+        if (!hasError) {
+            $form.data('formSubmit', true);
+            // trigger the real submit button inside this form
+            $form.find('#realSubmit').click();
+        }
+    });
+
+    // Also set the form flag if the hidden submit button is triggered directly
+    $form.find('#realSubmit').off('click').on('click', function () {
+        $form.data('formSubmit', true);
+    });
+
+    // Clear relevant field-level message when user changes input
+    $form.find('.selectable, .startDate').off('change input').on('change input', function () {
+        var $el = $(this);
+        if ($el.is('#alertType')) clearFieldError('AlertTypeId');
+        if ($el.hasClass('startDate')) clearFieldError('StartDate');
+        if ($el.is('#FallRiskId')) clearFieldError('FallRiskId');
+        if ($el.is('#RestrictionTypeId')) clearFieldError('RestrictionTypeId');
+    });
+
+    // Show/hide logic scoped to this form
+    var $fallRiskList = $form.find('#fallRiskList');
+    var $restrictionList = $form.find('#restrictionList');
+    $fallRiskList.hide();
+    $restrictionList.hide();
+
+    $form.find('#alertType').off('change').on('change', function () {
+        var selectedText = $form.find("#alertType option:selected").text();
+
+        if (selectedText == 'Fall Risk') {
+            $form.find('#FallRiskId').val('0');
+            $form.find('#RestrictionTypeId').val('1');
+            $fallRiskList.show();
+            $restrictionList.hide();
+        } else if (selectedText == 'Restricted Access') {
+            $form.find('#FallRiskId').val('1');
+            $form.find('#RestrictionTypeId').val('0');
+            $fallRiskList.hide();
+            $restrictionList.show();
+        } else {
+            $form.find('#FallRiskId').val('2');
+            $form.find('#RestrictionTypeId').val('2');
+            $fallRiskList.hide();
+            $restrictionList.hide();
+        }
+
+        // clear any field-level errors affected by this change
+        clearFieldError('AlertTypeId');
+        clearFieldError('FallRiskId');
+        clearFieldError('RestrictionTypeId');
+    });
+
+    // Ensure UI initial state is correct (important when partial is loaded into modal)
+    $form.find('#alertType').trigger('change');
+
+    // Optional: when modal hides, clear the formSubmit flag so future opens are fresh
+    // Adjust selector to your modal id if you have one, or remove if not needed
+    var $modal = $form.closest('.modal');
+    if ($modal.length) {
+        $modal.off('hidden.bs.modal.alertInit').on('hidden.bs.modal.alertInit', function () {
+            $form.data('formSubmit', false);
+            // also optionally clear errors
+            clearAllFieldErrors();
+        });
+    }
+})();
+</script>
+
+<script>
+(function () {
+  var $form = $('#alert').length ? $('#alert') : $('.modal-body #alert');
+  if (!$form.length) return;
+
+  // only run when inside the modal
+  var $modal = $form.closest('.modal');
+  if (!$modal.length) return;
+
+  // wire cancel link to load the ListAlerts partial into the same modal
+  $form.find('a.ajax-modal-load').off('click').on('click', function (e) {
+    e.preventDefault();
+    var $link = $(this);
+    var url = $link.attr('href');
+    if (!url) return;
+
+    // show loading state (reuse same modal body)
+    var $modalBody = $modal.find('.modal-body').length ? $modal.find('.modal-body') : $modal.find('#globalModalBody');
+    var $modalTitle = $modal.find('.modal-title').length ? $modal.find('.modal-title') : $modal.find('#globalModalTitle');
+    $modalTitle.text($link.data('modalTitle') || 'Loading...');
+    $modalBody.html('<div class="text-center p-4"><div class="spinner-border" role="status" aria-hidden="true"></div></div>');
+
+    $.ajax({
+      url: url,
+      method: 'GET',
+      headers: { 'X-Requested-With': 'XMLHttpRequest' },
+      success: function (html) {
+        $modalBody.html(html);
+        // If the loaded content has [data-modal-title], use it; otherwise use 'Alerts'
+        var provided = $modalBody.find('[data-modal-title]').data('modalTitle');
+        $modalTitle.text(provided || 'Alerts');
+      },
+      error: function () {
+        $modalBody.html('<div class="text-danger p-3">Failed to load alerts.</div>');
+        $modalTitle.text('Error');
+      }
+    });
+  });
+})();
+</script>

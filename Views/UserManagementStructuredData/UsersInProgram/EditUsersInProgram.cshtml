@@ -1,0 +1,131 @@
+@model IS_Proj_HIT.ViewModels.UserManagement.UserManagementStructuredDataViewModel
+@{
+    ViewData["Title"] = "Edit Users In Program";
+}
+
+<h3 class="d-flex mt-3">
+    <a class="btn btn-primary" asp-controller="UserManagementStructuredData" asp-action="ViewUsersInProgram" asp-route-programId="@Model.Program.ProgramId">
+        <i class="fa fa-arrow-left"></i>
+    </a>
+    <span class="ml-2">Edit Users In Program: <b class="ml-3">@Model.Program.Name</b></span>
+</h3>
+
+<form id="editUsersInProgramForm"> <!-- no routing here as there is a script with ajax below which submits the data  -->
+    @Html.AntiForgeryToken()
+    <input type="hidden" id="programId" value="@Model.Program.ProgramId" />
+
+    <table class="stripe nowrap" id="editUsersInProgramTable">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Assigned</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var user in Model.Users)
+            {
+                var isChecked = ViewBag.UsersInProgram.Contains(user.UserId) ? "checked" : "";
+                <tr id="row-@user.UserId">
+                    <td>@($"{user.FirstName} {user.LastName}")</td>
+                    <td>@user.Email</td>
+                    <td>
+                        <input type="checkbox" id="checkbox-@user.UserId" name="selectedUsers" value="@user.UserId" @isChecked 
+                        style="width: 30px; height: 25px; margin-left: 25px;"/>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <button type="submit" class="btn btn-primary mt-3" id="saveButton">Update List</button>
+</form>
+
+@section scripts {
+    <script>
+        let checkboxStates = {};
+
+        $(function () {
+            const table = $('#editUsersInProgramTable').DataTable({
+                columns: [null, null, null],
+                order: [], // allows order as specified in the controller
+                pageLength: 10,
+                searching: true,
+                language: {
+                    emptyTable: 'No users available'
+                }
+            });
+
+            // Save checkbox states on change
+            $('#editUsersInProgramTable').on('change', 'input[type="checkbox"]', function () {
+                const rowId = $(this).val(); // or any unique identifier for the row
+                checkboxStates[rowId] = $(this).prop('checked');
+            });
+
+            $('#editUsersInProgramTable input[type="checkbox"]').each(function () {
+                const userId = $(this).val();
+                const checkedState = $(this).prop('checked');
+                @* console.log('Checkbox processed:', { userId, checkedState }); // Log each checkbox *@
+
+                checkboxStates[userId] = checkedState;
+            });
+
+
+            // Update checkbox states across all rows on table interactions
+            table.on('search.dt page.dt order.dt', function () {
+                table.rows().every(function () {
+                    const $row = $(this.node());
+                    const checkbox = $row.find('input[type="checkbox"]');
+                    if (checkbox.length > 0) {
+                        const userId = checkbox.val();
+                        checkboxStates[userId] = checkbox.prop('checked'); // Dynamically update state
+                    }
+                });
+            });
+
+            // Save all checkbox states when "Save" button is clicked
+            $('#saveButton').on('click', function () {
+                event.preventDefault(); // Prevent the form's default submit action
+                table.rows().every(function () {
+                    const $row = $(this.node());
+                    const checkbox = $row.find('input[type="checkbox"]');
+                    if (checkbox.length > 0) {
+                        const userId = checkbox.val();
+                        const checkedState = checkbox.prop('checked');
+                        @* console.log('Row processed:', { userId, checkedState }); // Log each row *@
+
+                        checkboxStates[userId] = checkedState;
+                    }
+                });
+
+                @* console.log('Final data sent to backend:', JSON.stringify(checkboxStates, null, 2)); *@
+                const programId = $('#programId').val(); // Retrieve the program ID
+                @* console.log(`Program ID retrieved: ${programId}`); *@
+                const token = $('input[name="__RequestVerificationToken"]').val(); // Get the token
+
+                // Send data to server
+                $.ajax({
+                    type: 'POST',
+                    url: '/UserManagementStructuredData/EditUsersInProgram', 
+                    data: {
+                        programId: programId, // The program ID
+                        selectedUsers: Object.keys(checkboxStates).filter(userId => checkboxStates[userId]), // Send only checked users
+                        __RequestVerificationToken: token // Include the token
+                    },
+                    traditional: true, // Add this to properly serialize arrays
+                    success: function (response) {
+                        if (response.success) 
+                        {
+                            @* alert('Data saved successfully!'); *@
+                            window.location.href = response.redirectUrl; // Redirect after successful AJAX call
+                        }
+                    },
+                    error: function (error) {
+                        console.error('Error sending data:', error);
+                        alert('An error occurred while saving data.');
+                    }
+                });
+            });
+        });
+    </script>
+}

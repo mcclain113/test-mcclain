@@ -1,0 +1,507 @@
+@model IS_Proj_HIT.ViewModels.BirthRegistry.NewbornViewModel
+
+<div id="newbornAccordion">
+    <!-- Hidden fields for JavaScript state management -->
+    <input type="hidden" asp-for="IsExistingPatient" id="newbornIsExistingPatient" />
+    <input type="hidden" asp-for="NewbornMrn" id="newbornMrn" value="@Model.NewbornMrn" />
+    <input type="hidden" asp-for="NewbornId" id="newbornId" value="@Model.NewbornId" />
+    <input type="hidden" asp-for="BirthId" id="birthId" value="@Model.BirthId" />
+
+    <!-- Section 1: Newborn Birth Information -->
+    <div class="card">
+        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center" id="nbHeading1">
+            <h5 class="mb-0">
+                <button class="btn btn-block text-left text-white @(ViewBag.Mode == "edit" ? "no-collapse" : "")" 
+                        type="button" 
+                        data-toggle="collapse" 
+                        data-target="#nbCollapse1" 
+                        aria-expanded="true" 
+                        aria-controls="nbCollapse1">
+                    <i class="fas fa-baby mr-2"></i> 1. Newborn Birth Information
+                </button>
+            </h5>
+            <span class="checkmark accordion-checkmark @(Model.IsExistingPatient ? "show" : "")">&#10004;</span>
+        </div>
+        <div id="nbCollapse1" class="collapse show" aria-labelledby="nbHeading1" 
+             data-parent="@(ViewBag.Mode == "edit" ? "" : "#newbornAccordion")">
+            <div class="card-body">
+                @if (Model.IsExistingPatient)
+                {
+                    <div class="alert alert-info mb-3">
+                        <i class="fas fa-lock"></i> 
+                        Name fields from patient record MRN: <strong>@Model.NewbornMrn</strong> (read-only). All other fields are editable.
+                    </div>
+                }
+                
+                <div>
+                    <label class="control-label font-weight-bold">Infant's Birth Name</label>
+                    <div class="form-group">
+                        <label asp-for="FirstName">First name *</label>
+                        <input asp-for="FirstName" 
+                               name="FirstName" 
+                               type="text"
+                               class="form-control validation-trigger" 
+                               data-validation-group="newborn1"
+                               id="FirstName" 
+                               readonly="@Model.IsExistingPatient" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="MiddleName">Middle name</label>
+                        <input asp-for="MiddleName" 
+                               name="MiddleName" 
+                               type="text"
+                               class="form-control" 
+                               id="MiddleName" 
+                               readonly="@Model.IsExistingPatient" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="LastName">Last name *</label>
+                        <input asp-for="LastName" 
+                               name="LastName" 
+                               type="text"
+                               class="form-control validation-trigger" 
+                               data-validation-group="newborn1"
+                               id="LastName" 
+                               readonly="@Model.IsExistingPatient" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="DateAndTimeOfBirth" class="control-label font-weight-bold">
+                        Infant's Date and Time of Birth *
+                    </label>
+                    <i class="fas fa-info-circle info-icon" data-toggle="tooltip" data-placement="top"
+                        data-html="true"
+                        title="Enter time using 24-hour clock; if unknown, leave blank and check 'Time unknown'."></i>
+                    @if (Model.IsTimeUnknown)
+                    {
+                        <input asp-for="DateAndTimeOfBirth" 
+                               name="DateAndTimeOfBirth"
+                               type="datetime-local" 
+                               class="form-control validation-trigger" 
+                               id="DateAndTimeOfBirth"
+                               data-validation-group="newborn1" 
+                               disabled />
+                    }
+                    else
+                    {
+                        <input asp-for="DateAndTimeOfBirth" 
+                               name="DateAndTimeOfBirth"
+                               type="datetime-local" 
+                               class="form-control validation-trigger" 
+                               id="DateAndTimeOfBirth"
+                               data-validation-group="newborn1" />
+                    }
+                </div>
+
+                <div class="form-check mb-3">
+                    <input asp-for="IsTimeUnknown" 
+                           name="IsTimeUnknown" 
+                           type="checkbox"
+                           class="form-check-input validation-trigger" 
+                           id="IsTimeUnknown"
+                           data-validation-group="newborn1" 
+                           data-mutually-exclusive="true" />
+                    <label class="form-check-label" asp-for="IsTimeUnknown">Time unknown</label>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="BirthWeightInLbs" class="control-label font-weight-bold">
+                        Birthweight (grams)
+                    </label>
+                    <input asp-for="BirthWeightInLbs" 
+                           name="BirthWeightInLbs" 
+                           type="number"
+                           class="form-control validation-trigger" 
+                           id="BirthWeightInLbs"
+                           data-validation-group="newborn1" 
+                           step="0.01" />
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="GestationalAgeEstimateInWeeks" class="control-label font-weight-bold">
+                        Obstetric estimate of gestation at delivery
+                    </label>
+                    <input asp-for="GestationalAgeEstimateInWeeks"
+                           name="GestationalAgeEstimateInWeeks" 
+                           type="number"
+                           class="form-control validation-trigger" 
+                           id="GestationalAgeEstimateInWeeks"
+                           data-validation-group="newborn1"
+                           min="0"
+                           max="50" />
+                </div>
+
+                <p class="font-weight-bold">Sex:</p>
+                @if (Model.SexOptions?.Any() == true)
+                {
+                    @foreach (var sex in Model.SexOptions)
+                    {
+                        <div class="form-check form-check-inline">
+                            <input name="SexId" 
+                                   class="form-check-input validation-trigger"
+                                   type="radio" 
+                                   id="SexId_@(sex.Value)" 
+                                   value="@sex.Value"
+                                   data-validation-group="newborn1"
+                                   @(Model.SexId?.ToString() == sex.Value ? "checked" : "") />
+                            <label class="form-check-label" for="SexId_@(sex.Value)">@sex.Text</label>
+                        </div>
+                    }
+                }
+
+                <p class="text-muted mt-2">
+                    <em>Enter score at 5 minutes; if the score at 5 minutes is less than 6 then ALSO enter the score at 10 minutes.</em>
+                </p>
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <label asp-for="ApgarScoreAt1Minute" class="control-label font-weight-bold">1 MIN:</label>
+                        <input asp-for="ApgarScoreAt1Minute" 
+                               name="ApgarScoreAt1Minute"
+                               type="number" 
+                               class="form-control" 
+                               id="ApgarScoreAt1Minute" 
+                               min="0" 
+                               max="10" />
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label asp-for="ApgarScoreAt5Minutes" class="control-label font-weight-bold">5 MIN:</label>
+                        <input asp-for="ApgarScoreAt5Minutes" 
+                               name="ApgarScoreAt5Minutes"
+                               type="number" 
+                               class="form-control validation-trigger" 
+                               id="ApgarScoreAt5Minutes" 
+                               min="0" 
+                               max="10" 
+                               data-validation-group="newborn1" 
+                               data-special-trigger="apgar5" />
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label asp-for="ApgarScoreAt10Minutes" class="control-label font-weight-bold">10 MIN:</label>
+                        <input asp-for="ApgarScoreAt10Minutes" 
+                               name="ApgarScoreAt10Minutes"
+                               type="number" 
+                               class="form-control" 
+                               id="ApgarScoreAt10Minutes" 
+                               min="0" 
+                               max="10" />
+                    </div>
+                </div>
+
+                @if (ViewBag.Mode != "edit")
+                {
+                    <div class="next-button-container text-right">
+                        <button type="button" class="btn btn-primary next-accordion-btn"
+                            data-target-collapse="#nbCollapse2" disabled>
+                            Next <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+    <!-- Section 2: Birth Characteristics -->
+    <div class="card">
+        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center" id="nbHeading2">
+            <h5 class="mb-0">
+                <button class="btn btn-block text-left text-white @(ViewBag.Mode == "edit" ? "no-collapse" : "collapsed")" 
+                        type="button" 
+                        data-toggle="collapse" 
+                        data-target="#nbCollapse2" 
+                        aria-expanded="@(ViewBag.Mode == "edit" ? "true" : "false")" 
+                        aria-controls="nbCollapse2">
+                    <i class="fas fa-baby-carriage mr-2"></i> 2. Birth Characteristics
+                </button>
+            </h5>
+            <span class="checkmark accordion-checkmark @(Model.IsExistingPatient ? "show" : "")">&#10004;</span>
+        </div>
+        <div id="nbCollapse2" class="collapse @(ViewBag.Mode == "edit" ? "show" : "")" 
+             aria-labelledby="nbHeading2" data-parent="@(ViewBag.Mode == "edit" ? "" : "#newbornAccordion")">
+            <div class="card-body">
+                <p class="font-weight-bold">Plurality and Birth Order</p>
+
+                <div class="form-check mb-2">
+                    <input asp-for="IsSingleBirth" 
+                           name="IsSingleBirth" 
+                           type="checkbox"
+                           class="form-check-input validation-trigger" 
+                           id="IsSingleBirth"
+                           data-validation-group="newborn2" 
+                           data-mutually-exclusive="true" />
+                    <label class="form-check-label" asp-for="IsSingleBirth">Select if Single</label>
+                </div>
+
+                <p class="text-muted mb-2"><em>OR indicate plurality and birth order if not a single birth:</em></p>
+
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label asp-for="Plurality" class="control-label font-weight-bold">Plurality</label>
+                        <input asp-for="Plurality" 
+                               name="Plurality" 
+                               type="number"
+                               class="form-control validation-trigger" 
+                               id="Plurality"
+                               data-validation-group="newborn2"
+                               min="1" />
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label asp-for="BirthOrder" class="control-label font-weight-bold">Birth Order</label>
+                        <input asp-for="BirthOrder" 
+                               name="BirthOrder" 
+                               type="number"
+                               class="form-control validation-trigger" 
+                               id="BirthOrder"
+                               data-validation-group="newborn2"
+                               min="1" />
+                    </div>
+                </div>
+
+                <p class="font-weight-bold mt-3">Was infant transferred within 24 hours of delivery?</p>
+                <div class="form-check form-check-inline">
+                    <input name="InfantTransferredWithin24Hours"
+                           class="form-check-input validation-trigger" 
+                           type="radio" 
+                           id="InfantTransferredWithin24Hours_Yes"
+                           value="true" 
+                           data-validation-group="newborn2" 
+                           data-special-trigger="transfer"
+                           @(Model.InfantTransferredWithin24Hours ? "checked" : "") />
+                    <label class="form-check-label" for="InfantTransferredWithin24Hours_Yes">Yes</label>
+                </div>
+                <div class="form-check form-check-inline mb-2">
+                    <input name="InfantTransferredWithin24Hours"
+                           class="form-check-input validation-trigger" 
+                           type="radio" 
+                           id="InfantTransferredWithin24Hours_No"
+                           value="false" 
+                           data-validation-group="newborn2"
+                           @(!Model.InfantTransferredWithin24Hours ? "checked" : "") />
+                    <label class="form-check-label" for="InfantTransferredWithin24Hours_No">No</label>
+                </div>
+
+                <div class="form-group" 
+                     id="transfer-facility-group" 
+                     style="@(Model.InfantTransferredWithin24Hours ? "" : "display: none;")">
+                    <label asp-for="NameOfFacilityTransferredTo" class="control-label font-weight-bold">
+                        Name of facility transferred to *
+                    </label>
+                    <input asp-for="NameOfFacilityTransferredTo" 
+                           name="NameOfFacilityTransferredTo"
+                           type="text" 
+                           class="form-control validation-trigger" 
+                           id="NameOfFacilityTransferredTo"
+                           data-validation-group="newborn2" />
+                </div>
+
+                <p class="font-weight-bold mt-3">Is infant living at time of report?</p>
+                <div class="form-check form-check-inline">
+                    <input name="IsInfantStillLiving"
+                           class="form-check-input validation-trigger" 
+                           type="radio" 
+                           id="IsInfantStillLiving_Yes"
+                           value="true" 
+                           data-validation-group="newborn2"
+                           @(Model.IsInfantStillLiving ? "checked" : "") />
+                    <label class="form-check-label" for="IsInfantStillLiving_Yes">Yes</label>
+                </div>
+                <div class="form-check form-check-inline mb-2">
+                    <input name="IsInfantStillLiving"
+                           class="form-check-input validation-trigger" 
+                           type="radio" 
+                           id="IsInfantStillLiving_No"
+                           value="false" 
+                           data-validation-group="newborn2"
+                           @(!Model.IsInfantStillLiving ? "checked" : "") />
+                    <label class="form-check-label" for="IsInfantStillLiving_No">No</label>
+                </div>
+
+                <p class="font-weight-bold mt-3">Is infant being breastfed at discharge?</p>
+                <div class="form-check form-check-inline">
+                    <input name="IsInfantBeingBreastfed"
+                           class="form-check-input validation-trigger" 
+                           type="radio" 
+                           id="IsInfantBeingBreastfed_Yes"
+                           value="true" 
+                           data-validation-group="newborn2"
+                           @(Model.IsInfantBeingBreastfed ? "checked" : "") />
+                    <label class="form-check-label" for="IsInfantBeingBreastfed_Yes">Yes</label>
+                </div>
+                <div class="form-check form-check-inline mb-3">
+                    <input name="IsInfantBeingBreastfed"
+                           class="form-check-input validation-trigger" 
+                           type="radio" 
+                           id="IsInfantBeingBreastfed_No"
+                           value="false" 
+                           data-validation-group="newborn2"
+                           @(!Model.IsInfantBeingBreastfed ? "checked" : "") />
+                    <label class="form-check-label" for="IsInfantBeingBreastfed_No">No</label>
+                </div>
+
+                @if (ViewBag.Mode != "edit")
+                {
+                    <div class="next-button-container text-right">
+                        <button type="button" class="btn btn-primary next-accordion-btn"
+                            data-target-collapse="#nbCollapse3" disabled>
+                            Next <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+    <!-- Section 3: Newborn Health Status -->
+    <div class="card">
+        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center" id="nbHeading3">
+            <h5 class="mb-0">
+                <button class="btn btn-block text-left text-white @(ViewBag.Mode == "edit" ? "no-collapse" : "collapsed")" 
+                        type="button" 
+                        data-toggle="collapse" 
+                        data-target="#nbCollapse3" 
+                        aria-expanded="@(ViewBag.Mode == "edit" ? "true" : "false")" 
+                        aria-controls="nbCollapse3">
+                    <i class="fas fa-heartbeat mr-2"></i> 3. Newborn Health Status
+                </button>
+            </h5>
+            <span class="checkmark accordion-checkmark @(Model.IsExistingPatient ? "show" : "")">&#10004;</span>
+        </div>
+        <div id="nbCollapse3" class="collapse @(ViewBag.Mode == "edit" ? "show" : "")" 
+             aria-labelledby="nbHeading3" data-parent="@(ViewBag.Mode == "edit" ? "" : "#newbornAccordion")">
+            <div class="card-body">
+                @if (Model.AbnormalConditions?.Any() == true)
+                {
+                    @foreach (var condition in Model.AbnormalConditions)
+                    {
+                        <div class="form-check">
+                            <input type="checkbox" 
+                                   class="form-check-input validation-trigger"
+                                   name="SelectedAbnormalConditionIds" 
+                                   value="@condition.Value"
+                                   id="SelectedAbnormalConditionIds_@condition.Value" 
+                                   data-validation-group="newborn3"
+                                   @(Model.SelectedAbnormalConditionIds.Contains(byte.Parse(condition.Value)) ? "checked" : "") />
+                            <label class="form-check-label" for="SelectedAbnormalConditionIds_@condition.Value">
+                                @condition.Text
+                                @if (condition.Group != null && !string.IsNullOrEmpty(condition.Group.Name))
+                                {
+                                    <i class="fas fa-info-circle info-icon" data-toggle="tooltip" data-placement="top"
+                                        data-html="true" title="@condition.Group.Name"></i>
+                                }
+                            </label>
+                        </div>
+                    }
+                }
+
+                <div class="form-check">
+                    <input type="checkbox" 
+                           class="form-check-input validation-trigger"
+                           name="NoAbnormalities"
+                           id="NoAbnormalities" 
+                           value="true" 
+                           data-validation-group="newborn3"
+                           data-mutually-exclusive="true" 
+                           @(Model.NoAbnormalities ? "checked" : "") />
+                    <label class="form-check-label" for="NoAbnormalities">NO ABNORMALITIES IDENTIFIED</label>
+                </div>
+
+                @if (ViewBag.Mode != "edit")
+                {
+                    <div class="next-button-container text-right">
+                        <button type="button" class="btn btn-primary next-accordion-btn"
+                            data-target-collapse="#nbCollapse4" disabled>
+                            Next <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+    <!-- Section 4: Congenital Anomalies -->
+    <div class="card">
+        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center" id="nbHeading4">
+            <h5 class="mb-0">
+                <button class="btn btn-block text-left text-white @(ViewBag.Mode == "edit" ? "no-collapse" : "collapsed")" 
+                        type="button" 
+                        data-toggle="collapse" 
+                        data-target="#nbCollapse4" 
+                        aria-expanded="@(ViewBag.Mode == "edit" ? "true" : "false")" 
+                        aria-controls="nbCollapse4">
+                    <i class="fas fa-dna mr-2"></i> 4. Congenital Anomalies
+                </button>
+            </h5>
+            <span class="checkmark accordion-checkmark @(Model.IsExistingPatient ? "show" : "")">&#10004;</span>
+        </div>
+        <div id="nbCollapse4" class="collapse @(ViewBag.Mode == "edit" ? "show" : "")" 
+             aria-labelledby="nbHeading4" data-parent="@(ViewBag.Mode == "edit" ? "" : "#newbornAccordion")">
+            <div class="card-body">
+                @if (Model.CongenitalAnomalies?.Any() == true)
+                {
+                    @foreach (var anomaly in Model.CongenitalAnomalies)
+                    {
+                        <div class="form-check">
+                            <input type="checkbox" 
+                                   class="form-check-input validation-trigger"
+                                   name="SelectedCongenitalAnomalyIds" 
+                                   value="@anomaly.Value"
+                                   id="SelectedCongenitalAnomalyIds_@anomaly.Value" 
+                                   data-validation-group="newborn4"
+                                   @(Model.SelectedCongenitalAnomalyIds.Contains(byte.Parse(anomaly.Value)) ? "checked" : "") />
+                            <label class="form-check-label" for="SelectedCongenitalAnomalyIds_@anomaly.Value">
+                                @anomaly.Text
+                                @if (anomaly.Group != null && !string.IsNullOrEmpty(anomaly.Group.Name))
+                                {
+                                    <i class="fas fa-info-circle info-icon" data-toggle="tooltip" data-placement="top"
+                                        data-html="true" title="@anomaly.Group.Name"></i>
+                                }
+                            </label>
+                        </div>
+                    }
+                }
+
+                <div class="form-check">
+                    <input type="checkbox" 
+                           class="form-check-input validation-trigger"
+                           name="NoCongenitalAnomalies"
+                           id="NoCongenitalAnomalies" 
+                           value="true" 
+                           data-validation-group="newborn4"
+                           data-mutually-exclusive="true" 
+                           @(Model.NoCongenitalAnomalies ? "checked" : "") />
+                    <label class="form-check-label" for="NoCongenitalAnomalies">NO CONGENITAL ANOMALIES IDENTIFIED</label>
+                </div>
+
+                <div class="next-button-container text-right">
+                    @if (ViewBag.Mode == "edit")
+                    {
+                        <button type="button" class="btn btn-success btn-lg save-section-btn">
+                            <i class="fas fa-save"></i> Save Newborn Information
+                        </button>
+                    }
+                    else
+                    {
+                        <button type="button" class="btn btn-primary next-tab-btn" disabled>
+                            Next: Labor And Delivery <i class="fas fa-arrow-right"></i>
+                        </button>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Add JavaScript to handle the disabled state -->
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#IsTimeUnknown').on('change', function() {
+            const isChecked = $(this).is(':checked');
+            $('#DateAndTimeOfBirth').prop('disabled', isChecked);
+            if (isChecked) {
+                $('#DateAndTimeOfBirth').val('');
+            }
+        });
+        const isTimeUnknownChecked = $('#IsTimeUnknown').is(':checked');
+        $('#DateAndTimeOfBirth').prop('disabled', isTimeUnknownChecked);
+    });
+</script>

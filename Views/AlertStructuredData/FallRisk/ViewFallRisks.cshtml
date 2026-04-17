@@ -1,0 +1,59 @@
+@model List<IS_Proj_HIT.Entities.FallRisk>
+
+@{
+    ViewData["Title"] = "Fall Risks";
+}
+
+<div class="row my-3">
+    <h3>
+        <a class="btn btn-primary" asp-controller="AlertStructuredData" asp-action="Index">
+            <i class="fa fa-arrow-left "></i>
+        </a>
+        Fall Risks
+    </h3>
+</div>
+
+<p>
+    <a class="btn btn-primary" asp-controller="AlertStructuredData" asp-action="CreateFallRisk">Create New</a>
+</p>
+
+<table class="stripe nowrap" id="fallRiskTable">
+    <thead>
+        <tr>
+            <th>Fall Risk</th>
+            <th>Status</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var fallRisk in Model)
+        {
+            <tr>
+                <td>@fallRisk.Name</td>
+                <td>@(fallRisk.IsActive ? "Active" : "Inactive")</td>
+                <td>
+                    <a class="btn btn-primary" asp-controller="AlertStructuredData" asp-action="EditFallRisk" asp-route-id="@fallRisk.FallRiskId">Edit</a>
+                    <a class="btn btn-danger" asp-controller="AlertStructuredData" asp-action="DeleteFallRisk" asp-route-id="@fallRisk.FallRiskId">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section scripts{
+    <script>
+        // DataTable Documentation found here: https://datatables.net/
+        $(function () {
+            // Creates DataTable
+            $('#fallRiskTable').DataTable({
+                columns: [null, null, { orderable: false }],
+                order: [[0, 'asc']],
+                pageLength: 10,
+                searching: true,
+                language: {
+                    emptyTable: 'None found'
+                }
+            });
+        });
+    </script>
+}

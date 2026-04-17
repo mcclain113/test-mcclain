@@ -1,0 +1,458 @@
+﻿@using IS_Proj_HIT.Entities
+@model IS_Proj_HIT.ViewModels.Disclosure.RequestDetailsViewModel
+@{
+    ViewData["Title"] = "RequestDetails";
+    var showAllRequestDetails = ViewBag.ShowAllRequestDetails;
+    var userPermissions = ViewData["UserPermissions"] as List<string>;
+}
+
+@if(showAllRequestDetails)
+{
+    <partial name="RequestBannerPartial" model="Model" />
+    <partial name="_RequestMenu" model="Model" />
+}
+
+<div class="card" style="border:none;">
+    <div class="card-header requestDetailData">
+        <h3>
+            Request Details
+
+            @if (userPermissions != null && (userPermissions.Contains("DisclosureRequestEdit") ) )
+            {
+                <a class="btn btn-info float-right" id="editBtn" onclick="toggleEdit()">Edit</a>                             
+            }
+        </h3>
+    </div>
+
+    <!-- View Mode Content -->
+    <div class="card-body bg-light" id="viewMode">
+        <div class="container">
+            <fieldset @(!showAllRequestDetails ? "hidden" : "")>
+                <div class="row">
+                    <div class="col-4">Date Created: <b>@Model.Request.DateCreated</b></div>
+                    @if(Model.EnteredBy != null)
+                    {
+                        <div class="col-4">Entered By: <b>@Model.EnteredBy.FirstName @Model.EnteredBy.LastName</b></div>
+                    }
+                    else
+                    {
+                        <div class="col-4">Entered By: </div>
+                    }
+                </div>
+                <hr />
+                
+                <div class="row">
+                    <div class="col-4">Request Date: <b>@Model.Request.RequestDate</b></div>
+                    <div class="col-4">Requester: <b>@Model.Request.Requester.FirstName @Model.Request.Requester.LastName</b></div>
+                    <div class="col-4">Patient: <b>@Model.Request.PatientFirstName @Model.Request.PatientLastName</b></div>
+                </div>
+                <hr />
+
+                <div class="row">
+                    <div class="col-4">Request Purpose: <b>@Model.Request.RequestPurpose.RequestPurpose1</b></div>
+                    <div class="col-4">Request Priority: <b>@Model.Request.RequestPriority.RequestPriority1</b></div>
+                    @if (Model.Request.DateNeeded != null)
+                    {
+                        <div class="col-4">Date Needed: <b>@Model.Request.DateNeeded</b></div>
+                    }
+                    else
+                    {
+                        <div class="col-4">Date Needed: </div>
+                    }
+                </div>
+                <hr />
+
+                <div class="row">              
+                    @if (Model.Request.IsAuthorizationValid == true && Model.Request.IsAuthorizationValid != null)
+                    {
+                        <div class="col-4">
+                            <span>Authorization Valid?: <b>Yes</b></span>
+                        </div>
+                    }
+                    else if (Model.Request.IsAuthorizationValid == false && Model.Request.IsAuthorizationValid != null)
+                    {
+                        <div class="col-4">
+                            <span>Authorization Valid? <b>No</b></span>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="col-4">
+                            Authorization Valid?: 
+                        </div>
+                    }
+                    <div class="col-4">
+                        @if (Model.Request.IsSpecialAuthorizationRequired == true)
+                        {
+                            <span>Special Authorization Required? <b>Yes</b></span>
+                        }
+                        else
+                        {
+                            <span>Special Authorization Required? <b>No</b></span>
+                        }
+                    </div>
+                    <div class="col-4">
+                        @if (Model.Request.IsAttestationRequired == true)
+                        {
+                            <span>Attestation Required? <b>Yes</b></span>
+                        }
+                        else
+                        {
+                            <span>Attestation Required? <b>No</b></span>
+                        }
+                    </div>
+                </div>
+                <hr />
+
+                <div class="row">
+                    <div class="col-4">
+                        @if (Model.Request.IsTpodisclosure == true)
+                        {
+                            <span>TPO Disclosure? <b>Yes</b></span>
+                        }
+                        else
+                        {
+                            <span>TPO Disclosure? <b>No</b></span>
+                        }
+                    </div>
+                    <div class="col-4">Authorization Expiration Date: <b>@Model.Request.AuthorizationExpirationDate</b></div>
+                </div>
+
+                <hr class="double-line"/>
+            </fieldset>
+
+            <div class="row">
+                <div class="col-4">Request Status: <b>@Model.Request.RequestStatus.RequestStatus1</b></div>
+                <div class="col-4">Request Status Reason: <b>@(Model.Request?.RequestStatusReason?.RequestStatusReason1 ?? "")</b></div>
+
+                <div class="col-4">Request Release Format: <b>@Model.RequestReleaseFormat.RequestReleaseFormat1</b></div>
+            </div>
+            <hr />
+            <div class="row">
+                @if (Model.Request.DateCompleted != null)
+                {
+                    <div class="col-4">Date Completed: <b>@Model.Request.DateCompleted</b></div>
+                }
+                else
+                {
+                    <div class="col-4">Date Completed: </div>
+                }
+
+                @if (Model.Request.CompletedBy != null)
+                {
+                    <div class="col-4">Completed By: <b>@Model.CompletedBy.FirstName @Model.CompletedBy.LastName</b></div>
+                }
+                else
+                {
+                    <div class="col-4">Completed By: </div>
+                }
+                
+            </div>
+            <hr />
+            
+            
+            <div class="row">                
+                <div class="col-12">
+                    <label>Comments:</label><br />
+                    <span><b>@Model.Request.Comments</b></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Mode Content Placeholder -->
+    <form method="post" id="requestEditForm" name="requestEditForm" >
+        @Html.AntiForgeryToken()
+        <div class="card-body bg-light" id="editMode" style="display: none;">
+
+            <input type="hidden" value="@Model.RequestBeingEdited.RequestId" asp-for="@Model.RequestBeingEdited.RequestId" />
+
+            <div class="container">
+                <fieldset @(!showAllRequestDetails ? "hidden" : "")>
+                    <div class="row">
+                        <div class="col-4 d-flex">
+                            <div>
+                                <label for="DateCreated" class="mt-1">Date Created: </label>
+                            </div>
+                            <div class="mx-2">
+                                <input class="form-control" placeholder="@Model.RequestBeingEdited.DateCreated"
+                                    type="date"
+                                    asp-for="RequestBeingEdited.DateCreated"
+                                    name="RequestBeingEdited.DateCreated" required/>
+                            </div>
+                        </div>
+                        <div class="col-4 d-flex">
+                            <div>
+                                <label class="mt-1">Entered By: </label>
+                            </div>
+                            <div class="mx-2">
+                                <select asp-for="@Model.RequestBeingEdited.EnteredBy" 
+                                    asp-items="@Model.UserTableList" 
+                                    placeholder="@Model.RequestBeingEdited.EnteredBy" 
+                                    class="form-control" required></select>
+                            </div>
+                        </div>  
+                    </div>
+                    <hr />
+                    
+                    <div class="row">
+                        <div class="col-4 d-flex">
+                            <div>
+                                <label for="requestDate" class="mt-1">Request Date: </label>
+                            </div>
+                            <div class="mx-2">
+                                <input class="form-control" placeholder="@Model.RequestBeingEdited.RequestDate"
+                                    type="date"
+                                    asp-for="RequestBeingEdited.RequestDate"
+                                    name="RequestBeingEdited.RequestDate" />
+                            </div>
+                        </div>
+                        <div class="col-4 d-flex">
+                            <div>
+                                <label class="mt-1">Requester: </label>
+                            </div>
+                            <div class="mx-2">
+                                <select asp-for="@Model.RequestBeingEdited.RequesterId" asp-items="@Model.Requesters" class="form-control" required></select>
+                            </div>
+                        </div>
+                        <div class="col-4">Patient: <b>@Model.Request.PatientFirstName @Model.Request.PatientLastName</b></div>
+                    </div>
+                    <hr />
+
+                    <div class="row">
+                        <div class="col-4 d-flex">
+                            <div>
+                                <label class="mt-1">Request Purpose: </label>
+                            </div>
+                            <div class="mx-2">
+                                <select asp-for="@Model.RequestBeingEdited.RequestPurposeId" asp-items="@Model.RequestPurposes" class="form-control" required></select>
+                            </div>                                                
+                        </div>
+                        <div class="col-4 d-flex">
+                            <div>
+                                <label class="mt-1">Request Priority: </label>
+                            </div>
+                            <div class="mx-2">
+                                <select asp-for="@Model.RequestBeingEdited.RequestPriorityId" asp-items="@Model.RequestPriorities" class="form-control" required></select>
+                            </div>
+                        </div>
+                        <div class="col-4 d-flex">
+                            <div>
+                                <label for="DateNeeded" class="mt-1">Date Needed: </label>
+                            </div>
+                            <div class="mx-2">
+                                <input class="form-control" placeholder="@Model.RequestBeingEdited.DateNeeded"
+                                    type="date"
+                                    asp-for="RequestBeingEdited.DateNeeded"
+                                    name="RequestBeingEdited.DateNeeded" />
+                            </div>
+                        </div>
+                    </div>
+                    <hr />
+
+                    <div class="row">
+                        <div class="col-4 d-flex">
+                            <div>
+                                <label class="mt-1">Authorization Valid? </label>
+                            </div>
+                            <div class="mx-2">
+                                <select asp-for="@Model.RequestBeingEdited.IsAuthorizationValid" class="form-control">
+                                    <option value="">Select an option</option> <!-- Need this to capture 'null'-->
+                                    <option value="true">Yes</option>
+                                    <option value="false">No</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-4 d-flex">
+                            <div>
+                                <label class="mt-1">Special Authorization? </label>
+                            </div>
+                            <div class="mx-2">
+                                <select asp-for="@Model.RequestBeingEdited.IsSpecialAuthorizationRequired" class="form-control">
+                                    <option value="">Select an option</option> <!-- Need this to capture 'null' -->
+                                    <option value="true">Yes</option>
+                                    <option value="false">No</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-4 d-flex">
+                            <div>
+                                <label class="mt-1">Attestation Required? </label>
+                            </div>
+                            <div class="mx-2">
+                                <select asp-for="@Model.RequestBeingEdited.IsAttestationRequired" class="form-control">
+                                    <option value="">Select an option</option> <!-- Need this to capture 'null' -->
+                                    <option value="true" selected="@Model.RequestBeingEdited.IsAttestationRequired">Yes</option>
+                                    <option value="false" selected="@(!Model.RequestBeingEdited.IsAttestationRequired)">No</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <hr />
+
+                    <div class="row">
+                        <div class="col-4 d-flex">
+                            <div>
+                                <label class="mt-1">TPO Disclosure? </label>
+                            </div>
+                            <div class="mx-2">
+                                <select asp-for="@Model.RequestBeingEdited.IsTpodisclosure" class="form-control">
+                                    <option value="">Select an option</option> <!-- Need this to capture 'null' -->
+                                    <option value="true">Yes</option>
+                                    <option value="false">No</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-4 d-flex">
+                            <div>
+                                <label for="AuthorizationExpirationDate" class="mt-1">Authorization Expiration Date: </label>
+                            </div>
+                            <div class="mx-2">
+                                <input class="form-control" placeholder="@Model.RequestBeingEdited.AuthorizationExpirationDate"
+                                    type="date"
+                                    asp-for="RequestBeingEdited.AuthorizationExpirationDate"
+                                    name="RequestBeingEdited.AuthorizationExpirationDate" />
+                            </div>
+                        </div>
+                    </div>
+                    <hr class="double-line"/>
+                </fieldset>
+
+                <div class="row">
+                    <div class="col-4 d-flex">
+                        <div>
+                            <label class="mt-1">Request Status: </label>
+                        </div>
+                        <div class="mx-2">
+                            <select asp-for="@Model.RequestBeingEdited.RequestStatusId" asp-items="@Model.RequestStatuses" class="form-control"></select>
+                        </div>
+                    </div>
+                    <div class="col-4 d-flex">
+                        <div>
+                            <label class="mt-1">Request Status Reason: </label>
+                        </div>
+                        <div class="mx-2">
+                            <select asp-for="@Model.RequestBeingEdited.RequestStatusReasonId" asp-items="@Model.RequestStatusReasons" class="form-control"></select>
+                        </div>
+                    </div>
+                    <div class="col-4 d-flex">
+                        <div>
+                            <label class="mt-1">Request Release Format: </label>
+                        </div>
+                        <div class="mx-2">
+                            <select asp-for="@Model.RequestBeingEdited.RequestReleaseFormatId" asp-items="@Model.RequestReleaseFormats" class="form-control"></select>
+                        </div>
+                    </div>
+                </div>
+                <hr />
+                
+                <div class="row">
+                    <div class="col-4 d-flex">
+                        <div>
+                            <label for="DateCompleted" class="mt-1">Date Completed: </label>
+                        </div>
+                        <div class="mx-2">
+                            <input class="form-control" placeholder="@Model.RequestBeingEdited.DateCompleted"
+                                    type="date"
+                                    asp-for="RequestBeingEdited.DateCompleted"
+                                    name="RequestBeingEdited.DateCompleted" />
+                        </div>
+                    </div>
+                    <div class="col-4 d-flex">
+                        <div>
+                            <label class="mt-1">Completed By: </label>
+                        </div>
+                        <div class="mx-2">
+                            <select asp-for="RequestBeingEdited.CompletedBy"
+                                    asp-items="Model.UserTableList"
+                                    class="form-control">
+                                @if (Model.Request.CompletedBy == null)
+                                {
+                                    <option value="" selected ></option>
+                                }
+                                else
+                                {
+                                    <option value=""></option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <hr />
+                <div class="row">                   
+                    <div class="col-12">
+                        <label for="Comments">Comments:</label>
+                        <textarea asp-for="@Model.RequestBeingEdited.Comments" class="form-control"></textarea>
+                    </div>
+                </div>
+            </div>        
+        </div>
+
+        <!-- moved the asp-action from the <form> to the <button> to resolve a submittal conflict when this view is used as a partial within RequestedItemsDetails.cshtml  -->
+        <button class="btn btn-primary btn-block" id="saveBtn" type="submit" style="display:none"
+            asp-controller="Disclosure"
+            asp-action="EditRequest"
+            asp-route-showAllRequestDetails="@showAllRequestDetails">
+            Update Request
+        </button>
+        
+        <h3 id="validation-failed-message" class="text-center font-weight-bold text-danger border border-danger mt-3 py-2 d-none">
+            Save Failed: Review and resolve errors to continue.
+        </h3>
+
+        <!-- If showAllRequestDetails is true, the Cancel button should route to the RequestDetails getter;  If it is false, it should route to the RequestedItemsDetails getter  -->
+        @if(showAllRequestDetails)
+        {
+            <a class="btn btn-secondary text-white mt-3 float-right" 
+                id="cancelBtn"
+                onclick="toggleEdit(); return confirm('Are you sure you want to Cancel? All changes will be lost.')"
+                asp-action="RequestDetails"
+                style="display:none">Cancel</a>
+        }
+        else
+        {
+            <a class="btn btn-secondary text-white mt-3 float-right" 
+                id="cancelBtn"
+                onclick="toggleEdit(); return confirm('Are you sure you want to Cancel? All changes will be lost.')"
+                asp-action="RequestedItemsDetails"
+                style="display:none">Cancel</a>
+        }
+
+    </form>
+
+    
+</div>
+
+<style>
+   .double-line {
+        border: 0;
+        border-top: 3px double #b3b1b1; /* Adjust the color and thickness */
+        margin: 20px 0; /* Adjust the spacing to other objects;  currently the same as a single line */
+        }
+ 
+</style>
+
+@section Scripts{
+    <script>
+        let editRequest = false;
+
+        function toggleEdit() {
+            editRequest = !editRequest;
+
+            // Toggle visibility using jQuery
+            if (editRequest) {
+                $("#viewMode").hide();                
+                $("#editMode").show();
+                $("#editBtn").hide();
+                $("#cancelBtn").show();
+                $("#saveBtn").show();
+            } else {
+                $("#viewMode").show();
+                $("#editMode").hide();
+                $("#editBtn").show();
+                $("#cancelBtn").hide();
+                $("#saveBtn").hide();
+            }
+        }
+    </script>
+}

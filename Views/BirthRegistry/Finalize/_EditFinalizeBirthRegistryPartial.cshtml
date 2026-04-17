@@ -1,0 +1,73 @@
+@model IS_Proj_HIT.ViewModels.BirthRegistry.FinalizeViewModel
+
+<div class="card">
+    <div class="card-header bg-primary text-white">
+        <h4 class="mb-0">
+            <i class="fas fa-file-signature mr-2"></i> Finalize Birth Record
+        </h4>
+    </div>
+    <div class="card-body">
+        <div id="finalize-alert-area"></div>
+
+        <input type="hidden" asp-for="BirthId" />
+
+        <div class="form-group">
+            <label asp-for="RegistrarSignature" class="font-weight-bold">
+                Registrar Signature <span class="text-danger">*</span>
+            </label>
+            <input type="text" 
+                   asp-for="RegistrarSignature" 
+                   class="form-control form-control-lg" 
+                   id="RegistrarSignature" 
+                   placeholder="Enter your full name"
+                   maxlength="100" />
+            <small class="form-text text-muted">
+                By signing, you certify that the information in this birth record is complete.
+            </small>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="DateOfRegistrarSignature" class="font-weight-bold">
+                Date of Signature <span class="text-danger">*</span>
+            </label>
+            <input type="date" 
+                   asp-for="DateOfRegistrarSignature" 
+                   class="form-control" 
+                   id="DateOfRegistrarSignature"
+                   max="@DateTime.Today.ToString("yyyy-MM-dd")" />
+            <small class="form-text text-muted">
+                Select the date you are signing this record. Defaults to today's date.
+            </small>
+        </div>
+
+        <div class="mt-4">
+            <button type="button" 
+                    class="btn btn-success btn-lg save-finalize-btn">
+                <i class="fas fa-save mr-2"></i> Save Finalization
+            </button>
+        </div>
+    </div>
+</div>
+
+<style>
+    .signature-input {
+        font-family: 'Brush Script MT', cursive, 'Dancing Script', serif;
+        font-size: 1.5rem;
+        font-style: italic;
+        color: #000080;
+    }
+</style>
+
+<script>
+    $(document).ready(function() {
+        // Set today's date as default only if the field is empty
+        const dateField = $('#DateOfRegistrarSignature');
+        const currentValue = dateField.val();
+        
+        if (!currentValue || currentValue.trim() === '') {
+            const today = new Date();
+            const formattedDate = today.toISOString().split('T')[0]; // yyyy-mm-dd format
+            dateField.val(formattedDate);
+        }
+    });
+</script>

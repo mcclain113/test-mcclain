@@ -1,0 +1,50 @@
+@model IS_Proj_HIT.Entities.UserTable
+@{
+    ViewData["Title"] = "Edit Profile";
+}
+
+<div class="container">
+    <div class="row justify-content-center">
+        <h1>@ViewData["Title"]</h1>
+    </div>
+    
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success">
+            @TempData["SuccessMessage"]
+        </div>
+    }
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-success">
+            @TempData["Error"]
+        </div>
+    }
+            <form asp-controller="Account" asp-action="UpdateProfile" method="post">
+                @Html.AntiForgeryToken()
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <input type="hidden" asp-for="@Model.UserId"/>
+                <div class="row">
+                    <div class="form-group col-sm-6">
+                        <label for="FirstName">First Name: </label>
+                        <input class="form-control" asp-for="@Model.FirstName" placeholder="First Name" />
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label for="LastName">Last Name: </label>
+                        <input class="form-control" asp-for="@Model.LastName" placeholder="Last Name" />
+                    </div>
+                </div>
+                <hr />
+                <input type="hidden" asp-for="@Model.StartDate" value="@Model.StartDate" />
+                <input type="hidden" asp-for="@Model.EndDate" value="@Model.EndDate" />
+                <input type="hidden" asp-for="@Model.Email" value="@Model.Email" />
+
+                <button type="submit" class="btn btn-primary">Save Changes</button>
+            </form>
+            <a asp-action="AddSecurityQuestions" asp-route-id="@Model.UserId" asp-route-returnUrl="@Url.Action("UpdateProfile", "Account")" class="btn btn-outline-danger mt-3">Reset Security Questions</a>
+            <a asp-action="ResetPassword" asp-route-requiresReset="true" asp-route-redirectToProfile="true" class="btn btn-outline-danger mt-3">Reset Password</a>
+        </div>
+    </div>
+</div>

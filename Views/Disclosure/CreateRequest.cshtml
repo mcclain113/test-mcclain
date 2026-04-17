@@ -1,0 +1,1231 @@
+﻿
+@model IS_Proj_HIT.ViewModels.Disclosure.CreateRequestViewModel
+
+@{
+    ViewData["Title"] = "Create New Request";
+    var requesters = Model.Requesters ?? new List<SelectListItem>();
+}
+
+<h1>Create New Request</h1>
+<h4>New Request</h4>
+<hr />
+<form method="post" id="createRequestForm" asp-action="CreateRequest">
+    @Html.AntiForgeryToken()
+    <div class="card-body bg-light">
+        <div class="accordion mb-2">
+            <!--Basic Details Section-->
+            <div class="card">
+                <div onclick="toggleBasicDetails()"class="card-header bg-primary" id="basicDetailsHeader">
+                    <h5>
+                        <button class="btn btn-block text-left d-flex justify-content-between text-white" type="button" data-toggle="collapse" data-target="#addBasicDetails">
+                            Basic Details <i id="basicDetailsChevron" class="fas fa-chevron-down fa-lg align-self-center"></i>
+                        </button>
+                    </h5>
+                </div>
+                <div id="addBasicDetails" class="collapse show">
+                    <div class="card-body" style="max-height: 800px; overflow-y: auto;">
+                        <div class="container">
+                            <h3>Basic Details</h3>
+                            <div class="row">
+                                <!-- Date Created -->
+                                <div class="form-group col-3">
+                                    <label asp-for="Request.DateCreated" class="control-label">Date Created*</label>
+                                    <input asp-for="Request.DateCreated" type="date" class="form-control" required />
+                                    <span asp-validation-for="Request.DateCreated" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <!--Entered By-->
+                                <div class="form-group col-3">
+                                    <label asp-for="EnteredByFullName" class="control-label">Entered By*</label>
+                                    <input asp-for="EnteredByFullName" type="text" class="form-control" readonly />
+                                    <input asp-for="EnteredByUserId" type="hidden" />
+                                    <span asp-validation-for="EnteredByUserId" class="text-danger"></span>
+                                </div>
+                                <!-- Requester -->
+                                <div class="form-group col-3">
+                                    <label asp-for="Request.RequesterId" class="control-label">Requester*</label>
+                                    <select asp-for="Request.RequesterId" asp-items="Model.Requesters" id="requesterSelect" class="form-control">
+                                        <option value="">Select Requester</option>
+                                    </select>
+                                    <span asp-validation-for="Request.RequesterId" class="text-danger"></span>
+                                    <div class="mt-2">
+                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addRequesterModal">Add New Requester</button>
+                                    </div>
+                                </div>
+                                <!-- Add New Requester Modal with Address Fields -->
+                                <div class="modal fade" style="top: 0" id="addRequesterModal" tabindex="-1" aria-labelledby="addRequesterModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-lg">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="addRequesterModalLabel">Add New Requester</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body" style="max-height: 50vh; overflow-y: auto;">
+                                                <form id="addRequesterForm">
+                                                    <!-- Requester Information -->
+                                                    <h5>Requester Information</h5>
+                                                    <div class="form-row">
+                                                        <div class="form-group col-md-6">
+                                                            <label for="requester.requesterFirstName">First Name*</label>
+                                                            <input type="text" id="requester.requesterFirstName" name="requester.requesterFirstName" class="form-control" >
+                                                        </div>
+                                                        <div class="form-group col-md-6">
+                                                            <label for="requester.requesterLastName">Last Name*</label>
+                                                            <input type="text" id="requester.requesterLastName" name="requester.requesterLastName" class="form-control" >
+                                                        </div>
+                                                        <div class="form-group col-md-6">
+                                                            <label for="requester.companyName">Company Name</label>
+                                                            <input type="text" id="requester.companyName" name="requester.companyName" class="form-control">
+                                                        </div>
+                                                        <div class="form-group col-md-6">
+                                                            <label for="requester.emailAddress">Email</label>
+                                                            <input type="email" id="requester.emailAddress" name="requester.emailAddress" class="form-control">
+                                                        </div>
+                                                        <div class="form-group col-md-6">
+                                                            <label for="requester.phoneNumber">Phone Number</label>
+                                                            <input type="text" id="requester.phoneNumber" name="requester.phoneNumber" class="form-control phone">
+                                                        </div>
+                                                        <div class="form-group col-md-6">
+                                                            <label for="requester.requesterTypeId">Requester Type</label>
+                                                            <select id="requester.requesterTypeId" name="requester.requesterTypeId" class="form-control">
+                                                                @foreach (var type in Model.RequesterTypeOptions)
+                                                                {
+                                                                    <option value="@type.Value">@type.Text</option>
+                                                                }
+                                                            </select>
+                                                        </div>
+                                                        <div class="form-group col-md-6">
+                                                            <label for="requester.requesterStatusId">Requester Status</label>
+                                                            <select id="requester.requesterStatusId" name="requester.requesterStatusId" class="form-control">
+                                                                @foreach (var status in Model.RequesterStatusOptions)
+                                                                {
+                                                                    <option value="@status.Value">@status.Text</option>
+                                                                }
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <!-- Address Information -->
+                                                    <h5 class="mt-3">Address Information</h5>
+                                                    <div class="form-row">
+                                                        <div class="form-group col-md-6">
+                                                            <label for="address.address1">Address Line 1*</label>
+                                                            <input type="text" id="address.address1" name="address.address1" class="form-control" >
+                                                        </div>
+                                                        <div class="form-group col-md-6">
+                                                            <label for="address.address2">Address Line 2</label>
+                                                            <input type="text" id="address.address2" name="address.address2" class="form-control">
+                                                        </div>
+                                                        <div class="form-group col-md-4">
+                                                            <label for="address.city">City*</label>
+                                                            <input type="text" id="address.city" name="address.city" class="form-control" >
+                                                        </div>
+                                                        <div class="form-group col-md-4">
+                                                            <label for="address.AddressStateID">Select State*</label>
+                                                            <select id="address.AddressStateID" name="address.AddressStateID" class="form-control">
+                                                                @foreach (var addressState in Model.AddressStateOptions)
+                                                                {
+                                                                    <option value="@addressState.Value">@addressState.Text</option>
+                                                                }
+                                                            </select>
+                                                        </div>
+                                                        <div class="form-group col-md-4">
+                                                            <label for="address.postalCode">Postal Code*</label>
+                                                            <input type="text" id="address.postalCode" name="address.postalCode" class="form-control zipcode" >
+                                                        </div>
+                                                        <div class="form-group col-md-6">
+                                                            <label for="address.countryId">Country</label>
+                                                            <select id="address.countryId" name="address.countryId" class="form-control">
+                                                                @foreach (var country in Model.CountryOptions)
+                                                                {
+                                                                    <option value="@country.Value">@country.Text</option>
+                                                                }
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            <div class="modal-footer d-flex justify-content-between">
+                                                <button type="button" class="btn btn-primary" onclick="saveRequester()">Save Requester</button>
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Patient -->
+                                <div class="form-group col-3">
+                                    <label asp-for="Request.PatientMrn" class="form-label">Patient*</label>
+                                    <input type="text" class="form-control" id="patientNameInput" placeholder="Search patient by Name, DOB, or MRN..."  />
+                                    <span asp-validation-for="Request.PatientMrn" class="text-danger"></span>
+                                    <input asp-for="Request.PatientMrn" type="hidden" id="patientMrnInput" />
+                                    <div id="patientSearchResults" class="list-group mt-2 position-absolute w-100" style="z-index: 1000; max-height: 300px; overflow-y: auto;"></div>
+                                    <!-- Buttons row -->
+                                    <div class="mt-2 d-flex justify-content-start">
+                                        <button type="button" class="btn btn-primary mr-2" data-toggle="modal" data-target="#addPatientModal" id="addNewPatientButton" style="display: block;" disabled>
+                                            Add New Patient
+                                        </button>
+                                        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#addPatientRepresentativeModal">
+                                            Add Patient Representative
+                                        </button>                   
+                                    </div>
+                                  
+                                    <!-- Hidden fields for Patient -->                           
+                                    <input type="hidden" name="Request.PatientFirstName" value="@Model.Request.PatientFirstName" />
+                                    <input type="hidden" name="Request.PatientLastName" value="@Model.Request.PatientLastName" />
+                                    <input type="hidden" name="Request.PatientDob"value="@Model.Request.PatientDob" />
+                                    <input type="hidden" name="Request.PatientPhoneNumber" value="@Model.Request.PatientPhoneNumber" />
+                                    <input type="hidden" name="Request.PatientEmailAddress" value="@Model.Request.PatientEmailAddress" />
+                                    <input type="hidden" id="isPatientInSystem" name="Request.IsPatientInSystem" value="0" />
+
+                                    <!-- Hidden fields for Patient Representative -->
+                                    <input type="hidden" name="Request.PatientRepresentativeId" value="" />                                   
+                                </div>
+                                <div class="form-group col-3">
+                                    <div id="patientRepresentativeDisplay" class="mt-3" style="display: none;">
+                                        <h5>Patient Representative</h5>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div>
+                                                <p id="repName"></p>
+                                                <p id="repPhone"></p>
+                                                <p id="repEmail"></p>
+                                                <p id="repComments"></p>
+                                            </div>
+                                            <button type="button" class="btn btn-danger" onclick="removePatientRepresentative()" title="Remove">
+                                                <i class="fas fa-trash-alt"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Patient details modal for adding not found patient information -->
+                                <div class="modal fade" style="top: 0" id="addPatientModal" tabindex="-1" aria-labelledby="addPatientModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="addPatientModalLabel">Add New Patient</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="form-group">
+                                                    <label for="modalPatientFirstName">First Name</label>
+                                                    <input type="text" class="form-control" id="modalPatientFirstName"  />
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="modalPatientLastName">Last Name</label>
+                                                    <input type="text" class="form-control" id="modalPatientLastName"  />
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="modalPatientDob">Date of Birth</label>
+                                                    <input type="date" class="form-control" id="modalPatientDob"  />
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="modalPatientPhone">Phone Number</label>
+                                                    <input type="text" class="form-control phone" id="modalPatientPhone" />
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="modalPatientEmail">Email Address</label>
+                                                    <input type="email" class="form-control" id="modalPatientEmail" />
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer d-flex justify-content-between">
+                                                <button type="button" class="btn btn-primary" onclick="savePatient()">Save Patient</button>
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Add Patient Representative Modal -->
+                                <div class="modal fade" style="top: 0" id="addPatientRepresentativeModal" tabindex="-1" aria-labelledby="addPatientRepresentativeModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="addPatientRepresentativeModalLabel">Add Patient Representative</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <form id="addPatientRepresentativeForm">
+                                                    <div class="form-group">
+                                                        <label for="patientRepresentative.representativeFirstName">First Name*</label>
+                                                        <input type="text" class="form-control" id="patientRepresentative.representativeFirstName" name="patientRepresentative.representativeFirstName"  />
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="patientRepresentative.representativeLastName">Last Name*</label>
+                                                        <input type="text" class="form-control" id="patientRepresentative.representativeLastName" name="patientRepresentative.representativeLastName"  />
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="patientRepresentative.representativePhoneNumber">Phone Number</label>
+                                                        <input type="text" class="form-control phone" id="patientRepresentative.representativePhoneNumber" name="patientRepresentative.representativePhoneNumber" />
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="patientRepresentative.representativeEmailAddress">Email Address</label>
+                                                        <input type="email" class="form-control" id="patientRepresentative.representativeEmailAddress" name="patientRepresentative.representativeEmailAddress" />
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="patientRepresentative.comments">Comments</label>
+                                                        <textarea class="form-control" id="patientRepresentative.comments" name="patientRepresentative.comments"></textarea>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            <div class="modal-footer d-flex justify-content-between">
+                                                <button type="button" class="btn btn-primary" onclick="savePatientRepresentative()">Save Patient Representative</button>
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>                          
+                            <div class="row">
+                                <!-- Purpose of Disclosure -->
+                                <div class="form-group col-3">
+                                    <label asp-for="Request.RequestPurposeId" class="control-label">Purpose of Disclosure*</label>
+                                    <select asp-for="Request.RequestPurposeId" asp-items="Model.RequestPurposeOptions" class="form-control" >
+                                        <option value="">Select Purpose</option>
+                                    </select>
+                                    <span asp-validation-for="Request.RequestPurposeId" class="text-danger"></span>                                  
+                                </div>
+                                <!-- Priority -->
+                                <div class="form-group col-3">
+                                    <label asp-for="Request.RequestPriorityId" class="control-label">Priority*</label>
+                                    <select asp-for="Request.RequestPriorityId" asp-items="Model.RequestPriorityOptions" class="form-control" >
+                                        <option value="">Select Request Priority</option>
+                                    </select>
+                                    <span asp-validation-for="Request.RequestPriorityId" class="text-danger"></span>
+                                </div>
+                                <!-- Date Needed -->
+                                <div class="form-group col-3">
+                                    <label asp-for="Request.DateNeeded" class="control-label">Date Needed*</label>
+                                    <input asp-for="Request.DateNeeded" type="date" class="form-control" />
+                                    <span asp-validation-for="Request.DateNeeded" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Request Details Section -->
+            <div class="card">
+                <div onclick="toggleRequestDetails" class="card-header bg-primary" id="requestDetails">
+                    <h5>
+                        <button class="btn btn-block text-left d-flex justify-content-between text-white" type="button" data-toggle="collapse" data-target="#addRequestDetails">
+                            Request Details <i id="requestDetailsChevron" class="fas fa-chevron-right fa-lg align-self-center"></i>
+                        </button>
+                    </h5>
+                </div>
+                <div id="addRequestDetails" class="collapse">
+                    <div class="card-body">
+                        <div class="container">
+                            <h3>Request Details</h3>
+                            <div class="row">
+                                <!-- Requested Items -->
+                                <div class="form-group col-6">
+                                    <label asp-for="RequestedItems" class="control-label">Requested Item(s)*</label>
+                                    <select id="requestedItems" asp-for="SelectedRequestedItemIds" asp-items="Model.RequestedItemsList" class="form-control" multiple style="height: 275px;" ></select>
+                                    
+                                    <div id="selectedItemsDisplay" class="mt-3 d-flex flex-wrap"></div>
+                                    <span asp-validation-for="Request.RequestedItems" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <!-- Release Format -->
+                                <div class="form-group col-3">
+                                    <label asp-for="Request.RequestReleaseFormatId" class="control-label">Release Format*</label>
+                                    <select asp-for="Request.RequestReleaseFormatId" asp-items="Model.RequestReleaseFormats" class="form-control">
+                                        <option value="">Select Release Format</option>
+                                    </select>                       
+                                    <span asp-validation-for="Request.RequestReleaseFormatId" class="text-danger"></span>
+                                </div>
+                                <!-- Request Date -->
+                                <div class="form-group col-3">
+                                    <label asp-for="Request.RequestDate" class="control-label">Request Date</label>
+                                    <input asp-for="Request.RequestDate" type="date" class="form-control" />
+                                    <span asp-validation-for="Request.RequestDate" class="text-danger"></span>
+                                </div>
+                                <!-- Authorization Expiration -->
+                                <div class="form-group col-3">
+                                    <label asp-for="Request.AuthorizationExpirationDate" class="control-label">Authorization Expiration Date</label>
+                                    <input asp-for="Request.AuthorizationExpirationDate" type="date" class="form-control" />
+                                    <span asp-validation-for="Request.AuthorizationExpirationDate" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="row ml-1">
+                                <!-- Authorization Valid -->
+                                <div class="form-group form-check col-3">
+                                    <input asp-for="IsAuthorizationValidChecked" type="checkbox" class="form-check-input" />
+                                    <label asp-for="IsAuthorizationValidChecked" class="form-check-label" style="cursor: pointer;">Authorization Valid?</label>
+                                </div>
+                                <!-- Special Authorization Required -->
+                                <div class="form-group form-check col-3">
+                                    <input asp-for="IsSpecialAuthorizationRequiredChecked" type="checkbox" class="form-check-input" />
+                                    <label asp-for="IsSpecialAuthorizationRequiredChecked" class="form-check-label" style="cursor: pointer;">Special Authorization Required?</label>
+                                </div>
+                                <!-- Attestation Required -->
+                                <div class="form-group form-check col-3 ml-1">
+                                    <input asp-for="IsAttestationRequiredChecked" type="checkbox" class="form-check-input" />
+                                    <label asp-for="IsAttestationRequiredChecked" class="form-check-label" style="cursor: pointer;">Attestation Required?</label>
+                                </div>
+                                <!-- TPO Disclosure -->
+                                <div class="form-group form-check">
+                                    <input asp-for="IsTpoDisclosureChecked" type="checkbox" class="form-check-input" />
+                                    <label asp-for="IsTpoDisclosureChecked" class="form-check-label" style="cursor: pointer;">TPO Disclosure?</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Legal Details Section -->
+            <div class="card">
+                <div onclick="toggleLegalDetails" class="card-header bg-primary" id="legalDetails">
+                    <h5>
+                        <button class="btn btn-block text-left d-flex justify-content-between text-white" type="button" data-toggle="collapse" data-target="#addLegalDetails">
+                            Legal Details <i id="legalDetailsChevron" class="fas fa-chevron-right fa-lg align-self-center"></i>
+                        </button>
+                    </h5>
+                </div>
+                <div id="addLegalDetails" class="collapse">
+                    <div class="card-body">
+                        <div class="container">
+                            <h3>Legal Details</h3>
+                            <div class="row">
+                                <!-- Subpoena -->
+                                <div class="col-3">
+                                    <span>
+                                        <div class="form-group form-check">
+                                            <input asp-for="IsSubpoenaChecked" type="checkbox" class="form-check-input" />
+                                            <label asp-for="IsSubpoenaChecked" class="form-check-label" style="cursor: pointer;">Subpoena</label>
+                                        </div>
+                                        <div class="form-group form-check">
+                                            <input asp-for="IsCourtOrderChecked" type="checkbox" class="form-check-input" />
+                                            <label asp-for="IsCourtOrderChecked" class="form-check-label" style="cursor: pointer;">Court Order</label>
+                                        </div>
+                                    </span>
+                                </div>
+                                <!-- Subpoena Issued Date -->
+                                <div class="form-group col-3">
+                                    <label asp-for="Request.CourtOrderIssueDate" class="control-label">Issued Date:</label>
+                                    <input asp-for="Request.CourtOrderIssueDate" type="date" class="form-control" />
+                                    <span asp-validation-for="Request.CourtOrderIssueDate" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <!-- Hearing Date -->
+                                <div class="form-group col-3">
+                                    <label asp-for="Request.HearingDate" class="control-label">Hearing Date</label>
+                                    <input asp-for="Request.HearingDate" type="date" class="form-control" />
+                                    <span asp-validation-for="Request.HearingDate" class="text-danger"></span>
+                                </div>
+                                <!-- Case Number -->
+                                <div class="form-group col-3">
+                                    <label asp-for="Request.CaseNumber" class="control-label">Case#</label>
+                                    <input asp-for="Request.CaseNumber" type="text" class="form-control" />
+                                    <span asp-validation-for="Request.CaseNumber" class="text-danger"></span>
+                                </div>
+                                <!-- Plaintiff -->
+                                <div class="form-group col-3">
+                                    <label asp-for="Request.Plaintiff" class="control-label">Plaintiff</label>
+                                    <input asp-for="Request.Plaintiff" type="text" class="form-control" />
+                                    <span asp-validation-for="Request.Plaintiff" class="text-danger"></span>
+                                </div>
+                                <!-- Defendant -->
+                                <div class="form-group col-3">
+                                    <label asp-for="Request.Defendant" class="control-label">Defendant</label>
+                                    <input asp-for="Request.Defendant" type="text" class="form-control" />
+                                    <span asp-validation-for="Request.Defendant" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <!-- Request for Personal Appearance -->
+                                <div class="form-group form-check col-3 ml-3">
+                                    <input asp-for="IsRequestForPersonalAppearanceChecked" type="checkbox" class="form-check-input" />
+                                    <label asp-for="IsRequestForPersonalAppearanceChecked" class="form-check-label" style="cursor: pointer;">Request for Personal Appearance?</label>
+                                </div>
+                                <!-- Request for Original Records -->
+                                <div class="form-group form-check col-3">
+                                    <input asp-for="IsRequestForOriginalRecordsChecked" type="checkbox" class="form-check-input" />
+                                    <label asp-for="IsRequestForOriginalRecordsChecked" class="form-check-label" style="cursor: pointer;">Request for Original Records?</label>
+                                </div>
+                                <!-- Request for Certified Records -->
+                                <div class="form-group form-check col-3">
+                                    <input asp-for="IsRequestForCertifiedRecordsChecked" type="checkbox" class="form-check-input" />
+                                    <label asp-for="IsRequestForCertifiedRecordsChecked" class="form-check-label" style="cursor: pointer;">Request for Certified Records?</label>
+                                </div>
+                                <!-- Risk Management Alert -->
+                                <div class="form-group form-check col-2">
+                                    <input asp-for="IsRiskManagementAlertChecked" type="checkbox" class="form-check-input" />
+                                    <label asp-for="IsRiskManagementAlertChecked" class="form-check-label" style="cursor: pointer;">Risk Management Alert</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Request Status Section -->
+                <!-- originally named 'Additional Details' so all of the id follow that naming convention -->
+            <div class="card">
+                <div onclick="toggleAdditionalDetails" class="card-header bg-primary" id="additionalDetails">
+                    <h5>
+                        <button class="btn btn-block text-left d-flex justify-content-between text-white" type="button" data-toggle="collapse" data-target="#addAdditionalDetails">
+                            Request Status <i id="additionalDetailsChevron" class="fas fa-chevron-right fa-lg align-self-center"></i>
+                        </button>
+                    </h5>
+                </div>
+                <div id="addAdditionalDetails" class="collapse">
+                    <div class="card-body">
+                        <div class="container">
+                            <h3>Request Status</h3>
+                            <div class="row">
+                                <!-- Comments -->
+                                <div class="form-group col-3">
+                                    <label asp-for="Request.Comments" class="control-label">Comments</label>
+                                    <textarea asp-for="Request.Comments" class="form-control"></textarea>
+                                    <span asp-validation-for="Request.Comments" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <!-- Status -->
+                                <div class="form-group col-3">
+                                    <label asp-for="Request.RequestStatusId" class="control-label">Status*</label>
+                                    <select asp-for="Request.RequestStatusId" asp-items="Model.RequestStatusOptions" class="form-control" >
+                                        <option value="">Select Status</option>
+                                    </select>
+                                    <span asp-validation-for="Request.RequestStatusId" class="text-danger"></span>
+                                </div>
+                                <!-- Reason -->
+                                <div class="form-group col-3">
+                                    <label asp-for="Request.RequestStatusReasonId" class="control-label">Reason*</label>
+                                    <select asp-for="Request.RequestStatusReasonId" asp-items="Model.StatusReasonOptions" class="form-control" >
+                                        <option value="">Select Reason</option>
+                                    </select>
+                                    <span asp-validation-for="Request.RequestStatusReasonId" class="text-danger"></span>                                
+                                </div>
+                                <!-- Completed By -->
+                                <div class="form-group col-3">
+                                    <label asp-for="CompletedByFullName" class="control-label">Completed By</label>
+                                    <input asp-for="CompletedByUserId" type="hidden" />
+                                    <select asp-for="CompletedByFullName" asp-items="Model.UserOptions" class="form-control">
+                                        <option value="">Select User</option>
+                                    </select>
+                                    <span asp-validation-for="CompletedByUserId" class="text-danger"></span>
+                                </div>
+                                <!-- Completed Date -->
+                                <div class="form-group col-3">
+                                    <label asp-for="Request.DateCompleted" class="control-label">Completed Date</label>
+                                    <input asp-for="Request.DateCompleted" type="date" class="form-control" />
+                                    <span asp-validation-for="Request.DateCompleted" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <!-- Save and Continue Buttons -->
+        <div class="form-group col-3 mt-5">
+            <button type="submit" class="btn btn-primary">Save Request</button>
+                <a asp-controller="Disclosure" asp-action="RequestList" class="btn btn-info">Back to List</a>
+        </div>
+    </div>
+    </div>
+</form>
+
+@section Scripts {
+    <script>
+        /**
+        * Saves a patient representative's details.
+        */
+        function savePatientRepresentative() {          
+            const firstNameField = document.getElementById('patientRepresentative.representativeFirstName');
+            const lastNameField = document.getElementById('patientRepresentative.representativeLastName');
+
+            // Abort if required fields are missing
+            if (!firstNameField || !lastNameField) {               
+                return;
+            }
+
+            // Client-side validation for required fields
+            const requiredFields = [firstNameField, lastNameField];
+            let isValid = true;
+
+            requiredFields.forEach(field => {
+                if (field.value.trim() === '') {
+                    field.classList.add('is-invalid'); 
+                    isValid = false;
+                } else {
+                    field.classList.remove('is-invalid'); 
+                }
+            });
+
+            if (!isValid) {
+                alert("First Name and Last Name are required.");
+                return;
+            }
+
+            // Prepare data for submission
+            const formData = {
+                PatientRepresentative: {
+                    RepresentativeFirstName: firstNameField.value,
+                    RepresentativeLastName: lastNameField.value,
+                    RepresentativePhoneNumber: document.getElementById('patientRepresentative.representativePhoneNumber')?.value || '',
+                    RepresentativeEmailAddress: document.getElementById('patientRepresentative.representativeEmailAddress')?.value || '',
+                    Comments: document.getElementById('patientRepresentative.comments')?.value || ''
+                }
+            };
+
+            // Submit data to the server
+            fetch('/Disclosure/AddPatientRepresentative', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'RequestVerificationToken': document.querySelector('input[name="__RequestVerificationToken"]').value
+                },
+                body: JSON.stringify(formData)
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {                      
+                        document.querySelector('input[name="Request.PatientRepresentativeId"]').value = data.representativeId;
+
+                        document.getElementById("repName").innerText = `${formData.PatientRepresentative.RepresentativeFirstName} ${formData.PatientRepresentative.RepresentativeLastName}`;
+                        document.getElementById("repPhone").innerText = formData.PatientRepresentative.RepresentativePhoneNumber;
+                        document.getElementById("repEmail").innerText = formData.PatientRepresentative.RepresentativeEmailAddress;
+                        document.getElementById("repComments").innerText = formData.PatientRepresentative.Comments;
+                        document.getElementById("patientRepresentativeDisplay").style.display = "block";
+                        document.getElementById('addPatientRepresentativeForm').reset();
+                        $('#addPatientRepresentativeModal').modal('hide');
+                    } else {
+                        alert(data.message || "Failed to save Patient Representative.");
+                    }
+                })
+                .catch(() => alert('Error: Unable to process the request.'));
+        }
+
+        /**
+         * Clears patient representative information from the UI.
+         */
+        function removePatientRepresentative() {
+            // Get the Patient Representative ID
+            var patientRepId = document.querySelector('input[name="Request.PatientRepresentativeId"]').value;
+            
+            // Perform AJAX call to server to remove the Patient Representative record
+            if (patientRepId) {
+                fetch('/Disclosure/RemovePatientRepresentative', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ id: patientRepId })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // Clear the UI
+                        document.querySelector('input[name="Request.PatientRepresentativeId"]').value = "";
+                        document.getElementById("repName").innerText = "";
+                        document.getElementById("repPhone").innerText = "";
+                        document.getElementById("repEmail").innerText = "";
+                        document.getElementById("repComments").innerText = "";
+                        document.getElementById("patientRepresentativeDisplay").style.display = "none";
+                    } else {
+                        alert("Failed to remove Patient Representative. Please try again.");
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert("An error occurred while removing Patient Representative. Please try again.");
+                });
+            }
+        }
+
+
+        /**
+        * Saves requester details entered in AddRequester modal.
+        */
+        function saveRequester() {
+            const requiredFields = [
+                'requester.requesterFirstName',
+                'requester.requesterLastName',
+                'address.address1',
+                'address.city',
+                'address.AddressStateID',
+                'address.postalCode'
+            ];
+
+            let isValid = true;
+            requiredFields.forEach(id => {
+                const field = document.getElementById(id);
+                if (field && field.value.trim() === '') {
+                    field.classList.add('is-invalid'); 
+                    isValid = false;
+                } else if (field) {
+                    field.classList.remove('is-invalid'); 
+                }
+            });
+
+            if (!isValid) {
+                alert("Please fill in all required fields.");
+                return;
+            }
+
+            const formData = {
+                Requester: {
+                    FirstName: document.getElementById('requester.requesterFirstName').value,
+                    LastName: document.getElementById('requester.requesterLastName').value,
+                    CompanyName: document.getElementById('requester.companyName').value,
+                    EmailAddress: document.getElementById('requester.emailAddress').value,
+                    PhoneNumber: document.getElementById('requester.phoneNumber').value,
+                    RequesterTypeId: document.getElementById('requester.requesterTypeId').value,
+                    RequesterStatusId: document.getElementById('requester.requesterStatusId').value
+                },
+                Address: {
+                    Address1: document.getElementById('address.address1').value,
+                    Address2: document.getElementById('address.address2').value,
+                    City: document.getElementById('address.city').value,
+                    AddressStateID: document.getElementById('address.AddressStateID').value,
+                    PostalCode: document.getElementById('address.postalCode').value,
+                    CountryId: document.getElementById('address.countryId').value
+                }
+            };
+
+            fetch('@Url.Action("AddRequester", "Disclosure")', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'RequestVerificationToken': document.querySelector('input[name="__RequestVerificationToken"]').value
+                },
+                body: JSON.stringify(formData)
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        const requesterSelect = document.getElementById('requesterSelect');
+                        const newOption = new Option(data.fullName, data.requesterId, true, true);
+                        requesterSelect.add(newOption, undefined);
+
+                        // Clear form if it exists and close the modal
+                        const addRequesterForm = document.getElementById('addRequesterForm');
+                        if (addRequesterForm) {
+                            addRequesterForm.reset();
+                        }
+                        $('#addRequesterModal').modal('hide');
+                    } else {
+                        alert(data.message || "Failed to add requester.");
+                    }
+                })
+                .catch(() => alert("Error: Unable to process the request."));
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            /**
+            * Initialize dropdown elements for the form.
+            */
+            const requestedItemsDropdown = document.getElementById('requestedItems');
+            const requesterDropdown = document.getElementById('requesterSelect');
+
+            
+            /**
+            *  Toggle UI elements for accordion sections
+            */
+            function toggleBasicDetails() {
+                var element = document.getElementById("basicDetailsChevron");
+                element.classList.toggle("rotateright");
+            }
+
+            function toggleRequestDetails() {
+                var element = document.getElementById("requestDetailsChevron");
+                element.classList.toggle("rotatedown");
+            }
+
+            function toggleLegalDetails() {
+                var element = document.getElementById("legalDetailsChevron");
+                element.classList.toggle("rotatedown");
+            }
+
+            function toggleAdditionalDetails() {
+                var element = document.getElementById("additionalDetailsChevron");
+                element.classList.toggle("rotatedown");
+            }
+            // Assign toggle functions to click events on accordion headers
+            document.getElementById("basicDetailsHeader").onclick = toggleBasicDetails;
+            document.getElementById("requestDetails").onclick = toggleRequestDetails;
+            document.getElementById("legalDetails").onclick = toggleLegalDetails;
+            document.getElementById("additionalDetails").onclick = toggleAdditionalDetails;
+
+
+            /**
+            * Sorting dropdowns alphabetically
+            */
+            function sortOptions(dropdown) {
+                const options = Array.from(dropdown.options)
+                    .sort((a, b) => a.text.localeCompare(b.text));
+
+                dropdown.innerHTML = '';
+                options.forEach(option => dropdown.add(option));
+            }
+
+            // Execute alphabetical sorting on dropdowns when the document is loaded
+            sortOptions(requestedItemsDropdown);
+            sortOptions(requesterDropdown);
+
+            // Array to keep track of selected items for submission.
+            let selectedItemsArray = [];
+
+            /**
+            * Handle form submission with client-side validation and server communication.
+            */
+            document.getElementById('createRequestForm').addEventListener('submit', function (e) {
+                e.preventDefault(); 
+
+                let isValid = validateForm();
+
+                if (isValid) {
+
+                    var formData = new FormData(document.getElementById('createRequestForm'));
+
+                    // Handle checkbox values
+                    ['IsAuthorizationValidChecked', 'IsSpecialAuthorizationRequiredChecked', 'IsAttestationRequiredChecked', 'IsTpoDisclosureChecked',
+                        'IsSubpoenaChecked', 'IsCourtOrderChecked', 'IsRequestForPersonalAppearanceChecked', 'IsRequestForOriginalRecordsChecked',
+                        'IsRequestForCertifiedRecordsChecked', 'IsRiskManagementAlertChecked']
+                        .forEach(id => {
+                            formData.set(id, document.getElementById(id).checked ? 'true' : 'false');
+                        });
+
+                    // Capture multiple selected requested item IDs
+                    const requestedItemsSelect = document.getElementById('requestedItems');
+                    const selectedItems = Array.from(requestedItemsSelect.selectedOptions).map(option => option.value);                   
+
+                    // Add each selected item individually to FormData as repeated entries
+                    selectedItems.forEach(itemId => formData.append('SelectedRequestedItemIds[]', itemId));
+                  
+                    // Send the form data using AJAX
+                    fetch('@Url.Action("CreateRequest", "Disclosure")', {
+                        method: 'POST',
+                        body: formData,
+                        headers: {
+                            'RequestVerificationToken': document.querySelector('input[name="__RequestVerificationToken"]').value
+                        }
+                    })
+                        .then(response => {
+                            if (response.redirected) {
+                                window.location.href = response.url;
+                            } else {
+                                return response.json();
+                            }
+                        })
+                        .then(data => {
+                            if (data && data.success) {
+                                alert("Request was successfully saved.");
+                            } else if (data) {
+                                alert(data.message || "Form submission failed. Please check your input.");
+                            }
+                        })
+                        .catch(() => alert("Error: Unable to process the request."));
+                } else {
+                    alert("Form is not valid, preventing submission.");
+
+                    // Open all accordion sections
+                    const accordions = document.querySelectorAll('.collapse');
+                    accordions.forEach((accordion) => {
+                        if (!accordion.classList.contains('show')) {
+                            new bootstrap.Collapse(accordion, {
+                                show: true
+                            });
+                        }
+                    });
+                }
+            });
+
+            /**
+            * Validate all fields in the form to ensure data is complete before submission.
+            */
+            function validateForm() {
+                let isValid = true;
+                let errorMessage = "This field is required.";
+                let firstInvalidField = null;
+                
+                function setError(element, message) {
+                    let errorSpan = element.parentElement.querySelector('.text-danger');
+                    if (errorSpan) {
+                        errorSpan.textContent = message;
+                    }
+                    element.classList.add('is-invalid');
+                    if (!firstInvalidField) {
+                        firstInvalidField = element; 
+                    }
+                }
+
+                function clearError(element) {
+                    let errorSpan = element.parentElement.querySelector('.text-danger');
+                    if (errorSpan) {
+                        errorSpan.textContent = "";
+                    }
+                    element.classList.remove('is-invalid'); 
+                }
+
+                const fields = document.querySelectorAll('input, select');
+                fields.forEach(field => {
+                    field.addEventListener('input', function () {
+                        if (field.value.trim() !== "") {
+                            clearError(field); 
+                        }
+                    });
+                });
+                // Validate Date Created
+                let dateCreated = document.querySelector('input[name="Request.DateCreated"]');
+                if (!dateCreated.value) {
+                    setError(dateCreated, errorMessage);
+                    isValid = false;
+                } else {
+                    clearError(dateCreated);
+                }
+
+                // Validate Requester is selected from the dropdown
+                let requesterSelect = document.getElementById('requesterSelect');
+                if (!requesterSelect.value) {
+                    setError(requesterSelect, errorMessage);
+                    isValid = false;
+                } else {
+                    clearError(requesterSelect);
+                }
+
+                // Validate Patient
+                let patientNameInput = document.getElementById('patientNameInput');
+                let patientMrnInput = document.getElementById('patientMrnInput');
+                let isPatientInSystem = document.getElementById('isPatientInSystem').value;
+
+                if (!patientNameInput.value || (isPatientInSystem === "1" && !patientMrnInput.value)) {
+                    // Set error on the visible input (patientNameInput)
+                    setError(patientNameInput, errorMessage);
+                    isValid = false;
+                } else {
+                    clearError(patientNameInput);
+                }
+
+
+                // Validate Purpose of Disclosure
+                let purposeSelect = document.getElementById('Request_RequestPurposeId');
+                if (!purposeSelect.value) {
+                    setError(purposeSelect, errorMessage);
+                    isValid = false;
+                } else {
+                    clearError(purposeSelect);
+                }
+
+                // Validate Request Priority
+                let prioritySelect = document.getElementById('Request_RequestPriorityId');
+                if (!prioritySelect.value) {
+                    setError(prioritySelect, errorMessage);
+                    isValid = false;
+                } else {
+                    clearError(prioritySelect);
+                }
+
+                // Validate Date Needed
+                let dateNeeded = document.querySelector('input[name="Request.DateNeeded"]');
+                if (!dateNeeded.value) {
+                    setError(dateNeeded, errorMessage);
+                    isValid = false;
+                } else {
+                    clearError(dateNeeded);
+                }
+
+                // Validate Release Format
+                let releaseFormatSelect = document.getElementById('Request_RequestReleaseFormatId');
+                if (!releaseFormatSelect.value) {
+                    setError(releaseFormatSelect, errorMessage);
+                    isValid = false;
+                } else {
+                    clearError(releaseFormatSelect);
+                }
+
+                // Validate Status
+                let statusSelect = document.getElementById('Request_RequestStatusId');
+                if (!statusSelect.value) {
+                    setError(statusSelect, errorMessage);
+                    isValid = false;
+                } else {
+                    clearError(statusSelect);
+                }
+
+                // Validate Reason
+                let statusReasonSelect = document.getElementById('Request_RequestStatusReasonId');
+                if (!statusReasonSelect.value) {
+                    setError(statusReasonSelect, errorMessage);
+                    isValid = false;
+                } else {
+                    clearError(statusReasonSelect);
+                }
+
+                // Validate Requested Items
+                let requestedItemsSelect = document.getElementById('requestedItems');
+                let selectedOptions = Array.from(requestedItemsSelect.selectedOptions);
+                if (selectedOptions.length === 0) {
+                    setError(requestedItemsSelect, errorMessage);
+                    isValid = false;
+                } else {
+                    clearError(requestedItemsSelect);
+                }
+                
+                if (firstInvalidField) {
+                    firstInvalidField.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    firstInvalidField.focus();
+                }
+
+            return isValid;
+            }
+
+            /**
+            * Initialize requested items dropdown with enhanced selection capabilities.
+            */
+            document.getElementById('requestedItems').addEventListener('mousedown', function (event) {
+                const selectElement = this;
+                const option = event.target;
+
+                // Prevent default behavior to manage selection manually
+                event.preventDefault();
+
+                // Save the current scroll position
+                const scrollPosition = selectElement.scrollTop;
+
+                // Toggle selection of the option
+                option.selected = !option.selected;
+
+                // Update the selected items array based on current selection
+                if (option.selected) {
+                    // Add the item if it was selected
+                    if (!selectedItemsArray.includes(option.value)) {
+                        selectedItemsArray.push(option.value);
+                    }
+                } else {
+                    selectedItemsArray = selectedItemsArray.filter(item => item !== option.value);
+                }
+                selectElement.scrollTop = scrollPosition;
+
+                // Update visual indicators for selected options
+                Array.from(selectElement.options).forEach(option => {
+                    if (selectedItemsArray.includes(option.value)) {
+                        option.classList.add('bg-primary', 'text-light');
+                    } else {
+                        option.classList.remove('bg-primary', 'text-light');
+                    }
+                });
+            });
+
+            /**
+            * Set up patient search functionality and manage modal dialog inputs.
+            */
+            const patientNameInput = document.getElementById('patientNameInput');
+            const patientMrnInput = document.getElementById('patientMrnInput');
+            const patientSearchResults = document.getElementById('patientSearchResults');
+            const addNewPatientButton = document.getElementById('addNewPatientButton');
+            const isPatientInSystemInput = document.getElementById('isPatientInSystem');
+
+            let isSelecting = false;
+
+            // Enable input fields in the modal when adding a new patient.
+            addNewPatientButton.addEventListener('click', function () {
+                document.getElementById('modalPatientFirstName').disabled = false;
+                document.getElementById('modalPatientLastName').disabled = false;
+                document.getElementById('modalPatientDob').disabled = false;
+                document.getElementById('modalPatientPhone').disabled = false;
+                document.getElementById('modalPatientEmail').disabled = false;
+            });
+
+            // Handle patient search based on input, display results or clear them.
+            patientNameInput.addEventListener('input', function () {
+                const searchTerm = this.value.trim();
+
+                if (searchTerm.length > 1) {
+                    fetch(`/Disclosure/SearchPatient?searchTerm=${encodeURIComponent(searchTerm)}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                renderPatientSearchResults(data.patients);
+                                addNewPatientButton.style.display = 'block';
+                                addNewPatientButton.disabled = true;
+                            } else {
+                                patientSearchResults.innerHTML = '<div class="list-group-item">Not in system - click here then click Add New Patient</div>';
+                                addNewPatientButton.style.display = 'block';
+                                addNewPatientButton.disabled = false;
+                            }
+                        })
+                        .catch(() => {
+                            patientSearchResults.innerHTML = '<div class="list-group-item text-danger">Error fetching data</div>';
+                        });
+                } else {
+                    clearSearchResults();
+                    addNewPatientButton.style.display = 'block';
+                    addNewPatientButton.disabled = true;
+                }
+            });
+
+            /**
+            * Render search results as a list of clickable items.
+            */
+            function renderPatientSearchResults(patients) {
+                patientSearchResults.innerHTML = '';
+                patients.forEach(patient => {
+                    const listItem = document.createElement('a');
+                    listItem.href = '#';
+                    listItem.classList.add('list-group-item', 'list-group-item-action');
+                    listItem.dataset.mrn = patient.mrn || ""; 
+                    listItem.dataset.fullname = patient.fullName;
+                    listItem.dataset.firstname = patient.firstName;
+                    listItem.dataset.lastname = patient.lastName;
+                    listItem.dataset.phone = patient.phoneNumber;
+                    listItem.dataset.email = patient.emailAddress;
+                    listItem.innerHTML = `<strong>${patient.fullName}</strong> (DOB: ${patient.dob || 'N/A'})`;
+
+                    listItem.addEventListener('click', function () {
+                        isSelecting = true;
+                        patientNameInput.value = patient.fullName;
+                        patientMrnInput.value = patient.mrn || "";
+
+                        document.querySelector('input[name="Request.PatientFirstName"]').value = patient.firstName;
+                        document.querySelector('input[name="Request.PatientLastName"]').value = patient.lastName;
+                        document.querySelector('input[name="Request.PatientDob"]').value = patient.dob;
+                        document.querySelector('input[name="Request.PatientPhoneNumber"]').value = patient.phoneNumber;
+                        document.querySelector('input[name="Request.PatientEmailAddress"]').value = patient.emailAddress;
+
+                        isPatientInSystemInput.value = patient.mrn ? "1" : "0";
+
+                        clearSearchResults();
+
+                        // Disable modal input fields after selection
+                        document.getElementById('modalPatientFirstName').disabled = true;
+                        document.getElementById('modalPatientLastName').disabled = true;
+                        document.getElementById('modalPatientDob').disabled = true;
+                        document.getElementById('modalPatientPhone').disabled = true;
+                        document.getElementById('modalPatientEmail').disabled = true;
+                    });
+
+                    patientSearchResults.appendChild(listItem);
+                });
+            }
+
+            /**
+            * Clear all search results.
+            */
+            function clearSearchResults() {
+                patientSearchResults.innerHTML = '';
+            }
+
+            // Handle focus loss on patientNameInput
+            patientNameInput.addEventListener('blur', function () {
+                setTimeout(() => {
+                    if (!isSelecting) {
+                        clearSearchResults();
+                    }
+                    isSelecting = false;
+                }, 200);
+            });
+
+            /**
+            * Save manually entered patient data from the modal.
+            */
+            document.querySelector('#addPatientModal .btn-primary').addEventListener('click', savePatient);
+
+            function savePatient() {
+                // Retrieve modal input fields
+                const firstName = document.getElementById('modalPatientFirstName');
+                const lastName = document.getElementById('modalPatientLastName');
+                const dob = document.getElementById('modalPatientDob');
+                const phone = document.getElementById('modalPatientPhone');
+                const email = document.getElementById('modalPatientEmail');
+
+                let isValid = true;
+
+                // Validate required fields (First Name and Last Name)
+                if (!firstName.value.trim()) {
+                    firstName.classList.add('is-invalid');
+                    isValid = false;
+                } else {
+                    firstName.classList.remove('is-invalid');
+                }
+
+                if (!lastName.value.trim()) {
+                    lastName.classList.add('is-invalid');
+                    isValid = false;
+                } else {
+                    lastName.classList.remove('is-invalid');
+                }
+
+                // Stop execution if validation fails
+                if (!isValid) {
+                    alert('First Name and Last Name are required!');
+                    return;
+                }
+
+                // Populate hidden fields in the main form
+                document.querySelector('input[name="Request.PatientFirstName"]').value = firstName.value;
+                document.querySelector('input[name="Request.PatientLastName"]').value = lastName.value;
+                document.querySelector('input[name="Request.PatientDob"]').value = dob.value || '';
+                document.querySelector('input[name="Request.PatientPhoneNumber"]').value = phone.value || '';
+                document.querySelector('input[name="Request.PatientEmailAddress"]').value = email.value || '';
+
+                // Clear MRN input and set the patient name display
+                document.getElementById('patientMrnInput').value = '';
+                document.getElementById('patientNameInput').value = `${firstName.value} ${lastName.value}`;
+
+                // Update isPatientInSystem hidden field
+                document.getElementById('isPatientInSystem').value = "0";
+
+                // Close the modal
+                $('#addPatientModal').modal('hide');
+            }
+        });
+    </script>
+
+    <style>
+        #newPatientFields, #newRequesterFields {
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            margin-top: 10px;
+            transition: max-height 0.5s ease, opacity 0.5s ease;
+        }
+
+            #newPatientFields.show, #newRequesterFields.show {
+                max-height: 700px; /* Adjust height as needed */
+                opacity: 1;
+            }
+
+            #newPatientFields .form-group, #newRequesterFields .form-group {
+                flex: 0 1 auto;
+            }
+
+        .modal-header .modal-title {
+            color: black;
+        }
+
+        #patientRepresentativeDisplay p {
+            margin-bottom: 0.25rem; 
+        }
+
+        button.btn.btn-block.text-left.d-flex.justify-content-between {
+            color: white;
+        }
+
+        i.fas.fa-chevron-right.fa-lg.align-self-center {
+            color: white;
+        }
+
+        i.fas.fa-chevron-down.fa-lg.align-self-center.rotateright {
+            transform: rotate(-90deg);
+            transition: .3s ease-in-out;
+        }
+
+        i.fas.fa-chevron-right.fa-lg.align-self-center.rotatedown {
+            transform: rotate(90deg);
+            transition: .3s ease-in-out;
+        }
+
+        .was-validated .form-control:invalid,
+        .form-control.is-invalid {
+            background-image: none;
+        }
+    </style>
+}

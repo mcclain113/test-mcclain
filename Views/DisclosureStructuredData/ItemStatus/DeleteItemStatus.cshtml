@@ -1,0 +1,43 @@
+@model IS_Proj_HIT.ViewModels.DisclosureStructuredData.DisclosureStructuredDataViewModel
+@{
+    ViewBag.Title = "Delete Item Status";
+}
+
+<h1>Delete</h1>
+
+<h3>@ViewData["RegularMessage"]</h3>
+<h3 class="error">@ViewData["ErrorMessage"]</h3>
+
+<h4>Item Status</h4>
+<hr />
+
+<div class="row">
+    <div class="col-md-10">
+        <form method="post">
+            @Html.AntiForgeryToken()
+            <div class="form-row">
+                
+                <input type="hidden" asp-for="ItemStatus.ItemStatusId" value="@Model.ItemStatus.ItemStatusId" readonly/>
+                <div class="form-group col-sm-2">
+                    <label asp-for="ItemStatus.ItemStatusId" class="control-label">Id</label>
+                    <input asp-for="ItemStatus.ItemStatusId" class="form-control" maxlength="2" disabled />
+                </div>
+                <div class="form-group col-sm-4">
+                    <label asp-for="ItemStatus.ItemStatus1" class="control-label">Name</label>
+                    <input asp-for="ItemStatus.ItemStatus1" class="form-control" maxlength="20" required />
+                </div>
+                <div class="form-group col-sm-6">
+                    <label asp-for="ItemStatus.ItemStatusDescription" class="control-label">Description</label>
+                    <input asp-for="ItemStatus.ItemStatusDescription" class="form-control" maxlength="100" required />
+                </div>
+                                
+                <div class="form-group">
+                    <a asp-controller="DisclosureStructuredData" asp-action="ViewItemStatuses" class="btn btn-outline-danger">Discard Changes</a>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Delete Item" class="ml-3 btn btn-primary" />
+                </div>
+            </div>            
+        </form>
+    </div>
+</div>

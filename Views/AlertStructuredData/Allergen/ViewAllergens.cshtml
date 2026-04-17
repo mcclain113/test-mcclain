@@ -1,0 +1,59 @@
+@model List<IS_Proj_HIT.Entities.Allergen>
+
+@{
+    ViewData["Title"] = "Allergens";
+}
+
+<div class="row my-3">
+    <h3>
+        <a class="btn btn-primary" asp-controller="AlertStructuredData" asp-action="Index">
+            <i class="fa fa-arrow-left "></i>
+        </a>
+        Allergens
+    </h3>
+</div>
+
+<p>
+    <a class="btn btn-primary" asp-controller="AlertStructuredData" asp-action="CreateAllergen">Create New</a>
+</p>
+
+<table class="stripe nowrap" id="allergenTable">
+    <thead>
+        <tr>
+            <th>Allergen Name</th>
+            <th>Description</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var allergen in Model)
+        {
+            <tr>
+                <td>@allergen.AllergenName</td>
+                <td>@allergen.Description</td>
+                <td>
+                    <a class="btn btn-primary" asp-controller="AlertStructuredData" asp-action="EditAllergen" asp-route-id="@allergen.AllergenId">Edit</a>
+                    <a class="btn btn-danger" asp-controller="AlertStructuredData" asp-action="DeleteAllergen" asp-route-id="@allergen.AllergenId">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section scripts{
+    <script>
+        // DataTable Documentation found here: https://datatables.net/
+        $(function () {
+            // Creates DataTable
+            $('#allergenTable').DataTable({
+                columns: [null, null, { orderable: false }],
+                order: [[0, 'asc']],
+                pageLength: 10,
+                searching: true,
+                language: {
+                    emptyTable: 'None found'
+                }
+            });
+        });
+    </script>
+}

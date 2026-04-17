@@ -1,0 +1,27 @@
+﻿@model IS_Proj_HIT.ViewModels.Disclosure.RequestDetailsViewModel
+@{
+    ViewData["Title"] = "Request Details Banner";
+}
+<div class="card mw-100">
+    <div class="card-header bg-primary text-white mw-100">
+        <div class="row">
+            <div class="col-auto my-auto">
+                <a class="btn btn-primary" asp-controller="Disclosure" asp-action="RequestList">                    
+                    <i class="fa fa-arrow-left "></i>
+                </a>
+            </div>
+            <div class="col my-auto">
+                <span class="heading">Request Date: </span>@Model.Request.RequestDate
+            </div>
+            <div class="col  my-auto">
+                <span class="heading">Patient Name: </span>@Model.Request.PatientFirstName @Model.Request.PatientLastName
+            </div>
+            <div class="col my-auto">
+                <span class="heading">Requester: </span>@Model.Requester.FirstName @Model.Requester.LastName
+            </div>
+            <div class="col my-auto">
+                <span class="heading">Request Priority: </span> @Model.Request.RequestPriority.RequestPriority1
+            </div>
+        </div>
+    </div>
+</div>

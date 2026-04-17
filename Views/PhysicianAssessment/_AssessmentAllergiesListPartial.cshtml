@@ -1,0 +1,29 @@
+@using IS_Proj_HIT.DTOs;
+@model IEnumerable<IS_Proj_HIT.DTOs.PhysicianAssessmentAllergyDto>
+
+@{
+    var list = Model?.ToList() ?? new List<IS_Proj_HIT.DTOs.PhysicianAssessmentAllergyDto>();
+}
+
+@if (!list.Any())
+{
+    <p class="text-muted">No assessment allergies recorded.</p>
+}
+else
+{
+    <ul class="list-unstyled">
+        @for (int i = 0; i < list.Count; i++)
+        {
+            var a = list[i];
+            <li class="d-flex justify-content-between align-items-center mb-1">
+                <span>@Html.Encode(a.Description)</span>
+                @* Hidden inputs so the main form posts these values back *@
+                <input type="hidden" name="AssessmentAllergies[@i].PhysicianAssessmentAllergyId" value="@(a.PhysicianAssessmentAllergyId?.ToString() ?? "")" />
+                <input type="hidden" name="AssessmentAllergies[@i].PhysicianAssessmentId" value="@(a.PhysicianAssessmentId?.ToString() ?? "")" />
+                <input type="hidden" name="AssessmentAllergies[@i].Description" value="@a.Description" />
+                <input type="hidden" name="AssessmentAllergies[@i].SortOrder" value="@a.SortOrder" />
+                <input type="hidden" name="AssessmentAllergies[@i].Type" value="@a.Type" />
+            </li>
+        }
+    </ul>
+}

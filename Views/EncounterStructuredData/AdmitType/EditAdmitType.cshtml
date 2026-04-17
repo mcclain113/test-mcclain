@@ -1,0 +1,47 @@
+@model IS_Proj_HIT.ViewModels.EncounterStructuredDataViewModel
+@{
+    ViewBag.Title = "Edit Admit Type";
+}
+
+<h1>Edit</h1>
+
+<h4>Admit Type</h4>
+<hr />
+
+<div class="row">
+    <div class="col-md-10">
+        <form method="post">
+            @Html.AntiForgeryToken()
+            <div class="form-row">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="AdmitType.AdmitTypeId" value="@Model.AdmitType.AdmitTypeId" readonly/>
+
+                <div class="form-group col-sm-2">
+                    <label asp-for="AdmitType.WiPopCode" class="control-label">WiPopCode</label>
+                    <input asp-for="AdmitType.WiPopCode" class="form-control" maxlength="1" required />
+                    <span asp-validation-for="AdmitType.WiPopCode" class="text-danger"></span>
+                </div>
+                <div class="form-group col-sm-4">
+                    <label asp-for="AdmitType.Description" class="control-label">Description</label>
+                    <input asp-for="AdmitType.Description" class="form-control" maxlength="25" required />
+                    <span asp-validation-for="AdmitType.Description" class="text-danger"></span>
+                </div>
+                <div class="form-group col-sm-6">
+                    <label asp-for="AdmitType.Explaination" class="control-label">Explanation</label>
+                    <input asp-for="AdmitType.Explaination" class="form-control" />
+                    <span asp-validation-for="AdmitType.Explaination" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <a asp-controller="EncounterStructuredData" asp-action="ViewAdmitTypes" class="btn btn-outline-danger">Discard Changes</a>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Save Changes" class="ml-3 btn btn-primary" />
+                </div>
+            </div>            
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

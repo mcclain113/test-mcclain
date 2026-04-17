@@ -1,0 +1,1957 @@
+is_global = true
+build_property.TargetFramework = net8.0
+build_property.TargetFramework = net8.0
+build_property.TargetPlatformMinVersion = 
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = true
+build_property.UsingMicrosoftNETSdkWeb = true
+build_property.ProjectTypeGuids = 
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = 
+build_property.InvariantGlobalization = 
+build_property.PlatformNeutralAssembly = 
+build_property.PlatformNeutralAssembly = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property.RootNamespace = IS_Proj_HIT
+build_property.RootNamespace = IS_Proj_HIT
+build_property.ProjectDir = /home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/
+build_property.EnableComHosting = 
+build_property.EnableGeneratedComInterfaceComImportInterop = 
+build_property.RazorLangVersion = 8.0
+build_property.SupportLocalizedComponentNames = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = true
+build_property.MSBuildProjectDirectory = /home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT
+build_property._RazorSourceGeneratorDebug = 
+build_property.EffectiveAnalysisLevelStyle = 8.0
+build_property.EnableCodeStyleSeverity = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Pages/Shared/_Layout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvU2hhcmVkL19MYXlvdXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Pages/Shared/_ValidationScriptsPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvU2hhcmVkL19WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Pages/_ViewImports.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvX1ZpZXdJbXBvcnRzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Pages/_ViewStart.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvX1ZpZXdTdGFydC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/Account/AccessDenied.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQWNjb3VudC9BY2Nlc3NEZW5pZWQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/Account/AddSecurityQuestions.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQWNjb3VudC9BZGRTZWN1cml0eVF1ZXN0aW9ucy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/Account/ForgotPassword.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQWNjb3VudC9Gb3Jnb3RQYXNzd29yZC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/Account/Login.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQWNjb3VudC9Mb2dpbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/Account/Register.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQWNjb3VudC9SZWdpc3Rlci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/Account/RegisteredButWithoutRole.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQWNjb3VudC9SZWdpc3RlcmVkQnV0V2l0aG91dFJvbGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/Account/ResetPassword.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQWNjb3VudC9SZXNldFBhc3N3b3JkLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/Account/SelectRoleAndFacility.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQWNjb3VudC9TZWxlY3RSb2xlQW5kRmFjaWxpdHkuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/Account/UpdateProfile.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQWNjb3VudC9VcGRhdGVQcm9maWxlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/Administration/DataEntry.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQWRtaW5pc3RyYXRpb24vRGF0YUVudHJ5LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/Administration/EncounterDataEntry.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQWRtaW5pc3RyYXRpb24vRW5jb3VudGVyRGF0YUVudHJ5LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/Administration/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQWRtaW5pc3RyYXRpb24vSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/Administration/PatientDataEntry.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQWRtaW5pc3RyYXRpb24vUGF0aWVudERhdGFFbnRyeS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/AlertStructuredData/AdvancedDirective/CreateAdvancedDirective.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQWxlcnRTdHJ1Y3R1cmVkRGF0YS9BZHZhbmNlZERpcmVjdGl2ZS9DcmVhdGVBZHZhbmNlZERpcmVjdGl2ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/AlertStructuredData/AdvancedDirective/DeleteAdvancedDirective.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQWxlcnRTdHJ1Y3R1cmVkRGF0YS9BZHZhbmNlZERpcmVjdGl2ZS9EZWxldGVBZHZhbmNlZERpcmVjdGl2ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/AlertStructuredData/AdvancedDirective/EditAdvancedDirective.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQWxlcnRTdHJ1Y3R1cmVkRGF0YS9BZHZhbmNlZERpcmVjdGl2ZS9FZGl0QWR2YW5jZWREaXJlY3RpdmUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/AlertStructuredData/AdvancedDirective/ViewAdvancedDirectives.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQWxlcnRTdHJ1Y3R1cmVkRGF0YS9BZHZhbmNlZERpcmVjdGl2ZS9WaWV3QWR2YW5jZWREaXJlY3RpdmVzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/AlertStructuredData/AlertType/CreateAlertType.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQWxlcnRTdHJ1Y3R1cmVkRGF0YS9BbGVydFR5cGUvQ3JlYXRlQWxlcnRUeXBlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/AlertStructuredData/AlertType/DeleteAlertType.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQWxlcnRTdHJ1Y3R1cmVkRGF0YS9BbGVydFR5cGUvRGVsZXRlQWxlcnRUeXBlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/AlertStructuredData/AlertType/EditAlertType.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQWxlcnRTdHJ1Y3R1cmVkRGF0YS9BbGVydFR5cGUvRWRpdEFsZXJ0VHlwZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/AlertStructuredData/AlertType/ViewAlertTypes.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQWxlcnRTdHJ1Y3R1cmVkRGF0YS9BbGVydFR5cGUvVmlld0FsZXJ0VHlwZXMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/AlertStructuredData/Allergen/CreateAllergen.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQWxlcnRTdHJ1Y3R1cmVkRGF0YS9BbGxlcmdlbi9DcmVhdGVBbGxlcmdlbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/AlertStructuredData/Allergen/DeleteAllergen.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQWxlcnRTdHJ1Y3R1cmVkRGF0YS9BbGxlcmdlbi9EZWxldGVBbGxlcmdlbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/AlertStructuredData/Allergen/EditAllergen.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQWxlcnRTdHJ1Y3R1cmVkRGF0YS9BbGxlcmdlbi9FZGl0QWxsZXJnZW4uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/AlertStructuredData/Allergen/ViewAllergens.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQWxlcnRTdHJ1Y3R1cmVkRGF0YS9BbGxlcmdlbi9WaWV3QWxsZXJnZW5zLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/AlertStructuredData/ClinicalReminder/CreateClinicalReminder.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQWxlcnRTdHJ1Y3R1cmVkRGF0YS9DbGluaWNhbFJlbWluZGVyL0NyZWF0ZUNsaW5pY2FsUmVtaW5kZXIuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/AlertStructuredData/ClinicalReminder/DeleteClinicalReminder.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQWxlcnRTdHJ1Y3R1cmVkRGF0YS9DbGluaWNhbFJlbWluZGVyL0RlbGV0ZUNsaW5pY2FsUmVtaW5kZXIuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/AlertStructuredData/ClinicalReminder/EditClinicalReminder.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQWxlcnRTdHJ1Y3R1cmVkRGF0YS9DbGluaWNhbFJlbWluZGVyL0VkaXRDbGluaWNhbFJlbWluZGVyLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/AlertStructuredData/ClinicalReminder/ViewClinicalReminders.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQWxlcnRTdHJ1Y3R1cmVkRGF0YS9DbGluaWNhbFJlbWluZGVyL1ZpZXdDbGluaWNhbFJlbWluZGVycy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/AlertStructuredData/FallRisk/CreateFallRisk.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQWxlcnRTdHJ1Y3R1cmVkRGF0YS9GYWxsUmlzay9DcmVhdGVGYWxsUmlzay5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/AlertStructuredData/FallRisk/DeleteFallRisk.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQWxlcnRTdHJ1Y3R1cmVkRGF0YS9GYWxsUmlzay9EZWxldGVGYWxsUmlzay5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/AlertStructuredData/FallRisk/EditFallRisk.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQWxlcnRTdHJ1Y3R1cmVkRGF0YS9GYWxsUmlzay9FZGl0RmFsbFJpc2suY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/AlertStructuredData/FallRisk/ViewFallRisks.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQWxlcnRTdHJ1Y3R1cmVkRGF0YS9GYWxsUmlzay9WaWV3RmFsbFJpc2tzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/AlertStructuredData/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQWxlcnRTdHJ1Y3R1cmVkRGF0YS9JbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/AlertStructuredData/Reaction/CreateReaction.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQWxlcnRTdHJ1Y3R1cmVkRGF0YS9SZWFjdGlvbi9DcmVhdGVSZWFjdGlvbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/AlertStructuredData/Reaction/DeleteReaction.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQWxlcnRTdHJ1Y3R1cmVkRGF0YS9SZWFjdGlvbi9EZWxldGVSZWFjdGlvbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/AlertStructuredData/Reaction/EditReaction.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQWxlcnRTdHJ1Y3R1cmVkRGF0YS9SZWFjdGlvbi9FZGl0UmVhY3Rpb24uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/AlertStructuredData/Reaction/ViewReactions.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQWxlcnRTdHJ1Y3R1cmVkRGF0YS9SZWFjdGlvbi9WaWV3UmVhY3Rpb25zLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/AlertStructuredData/Restriction/CreateRestriction.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQWxlcnRTdHJ1Y3R1cmVkRGF0YS9SZXN0cmljdGlvbi9DcmVhdGVSZXN0cmljdGlvbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/AlertStructuredData/Restriction/DeleteRestriction.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQWxlcnRTdHJ1Y3R1cmVkRGF0YS9SZXN0cmljdGlvbi9EZWxldGVSZXN0cmljdGlvbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/AlertStructuredData/Restriction/EditRestriction.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQWxlcnRTdHJ1Y3R1cmVkRGF0YS9SZXN0cmljdGlvbi9FZGl0UmVzdHJpY3Rpb24uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/AlertStructuredData/Restriction/ViewRestrictions.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQWxlcnRTdHJ1Y3R1cmVkRGF0YS9SZXN0cmljdGlvbi9WaWV3UmVzdHJpY3Rpb25zLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/BirthRegistry/BirthRegistry.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQmlydGhSZWdpc3RyeS9CaXJ0aFJlZ2lzdHJ5LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/BirthRegistry/BirthRegistryArchive.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQmlydGhSZWdpc3RyeS9CaXJ0aFJlZ2lzdHJ5QXJjaGl2ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/BirthRegistry/BirthRegistrySearch.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQmlydGhSZWdpc3RyeS9CaXJ0aFJlZ2lzdHJ5U2VhcmNoLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/BirthRegistry/Facility/_EditFacilityDataPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQmlydGhSZWdpc3RyeS9GYWNpbGl0eS9fRWRpdEZhY2lsaXR5RGF0YVBhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/BirthRegistry/Facility/_ViewFacilityDataPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQmlydGhSZWdpc3RyeS9GYWNpbGl0eS9fVmlld0ZhY2lsaXR5RGF0YVBhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/BirthRegistry/Father/_EditFatherInformationPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQmlydGhSZWdpc3RyeS9GYXRoZXIvX0VkaXRGYXRoZXJJbmZvcm1hdGlvblBhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/BirthRegistry/Father/_ViewFatherInformationPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQmlydGhSZWdpc3RyeS9GYXRoZXIvX1ZpZXdGYXRoZXJJbmZvcm1hdGlvblBhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/BirthRegistry/Finalize/_EditFinalizeBirthRegistryPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQmlydGhSZWdpc3RyeS9GaW5hbGl6ZS9fRWRpdEZpbmFsaXplQmlydGhSZWdpc3RyeVBhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/BirthRegistry/Finalize/_ViewFinalizeBirthRegistryPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQmlydGhSZWdpc3RyeS9GaW5hbGl6ZS9fVmlld0ZpbmFsaXplQmlydGhSZWdpc3RyeVBhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/BirthRegistry/LaborAndDelivery/_EditLaborAndDeliveryPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQmlydGhSZWdpc3RyeS9MYWJvckFuZERlbGl2ZXJ5L19FZGl0TGFib3JBbmREZWxpdmVyeVBhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/BirthRegistry/LaborAndDelivery/_ViewLaborAndDeliveryPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQmlydGhSZWdpc3RyeS9MYWJvckFuZERlbGl2ZXJ5L19WaWV3TGFib3JBbmREZWxpdmVyeVBhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/BirthRegistry/Mother/_EditMotherInformationPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQmlydGhSZWdpc3RyeS9Nb3RoZXIvX0VkaXRNb3RoZXJJbmZvcm1hdGlvblBhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/BirthRegistry/Mother/_MotherAccordionSections.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQmlydGhSZWdpc3RyeS9Nb3RoZXIvX01vdGhlckFjY29yZGlvblNlY3Rpb25zLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/BirthRegistry/Mother/_MotherLookupModal.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQmlydGhSZWdpc3RyeS9Nb3RoZXIvX01vdGhlckxvb2t1cE1vZGFsLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/BirthRegistry/Mother/_MotherLookupResults.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQmlydGhSZWdpc3RyeS9Nb3RoZXIvX01vdGhlckxvb2t1cFJlc3VsdHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/BirthRegistry/Mother/_ViewMotherInformationPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQmlydGhSZWdpc3RyeS9Nb3RoZXIvX1ZpZXdNb3RoZXJJbmZvcm1hdGlvblBhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/BirthRegistry/Newborn/_EditNewbornInformationPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQmlydGhSZWdpc3RyeS9OZXdib3JuL19FZGl0TmV3Ym9ybkluZm9ybWF0aW9uUGFydGlhbC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/BirthRegistry/Newborn/_NewbornAccordionSections.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQmlydGhSZWdpc3RyeS9OZXdib3JuL19OZXdib3JuQWNjb3JkaW9uU2VjdGlvbnMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/BirthRegistry/Newborn/_ViewNewbornInformationPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQmlydGhSZWdpc3RyeS9OZXdib3JuL19WaWV3TmV3Ym9ybkluZm9ybWF0aW9uUGFydGlhbC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/BirthRegistry/Prenatal/_EditPrenatalCarePartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQmlydGhSZWdpc3RyeS9QcmVuYXRhbC9fRWRpdFByZW5hdGFsQ2FyZVBhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/BirthRegistry/Prenatal/_ViewPrenatalCareDetailsPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQmlydGhSZWdpc3RyeS9QcmVuYXRhbC9fVmlld1ByZW5hdGFsQ2FyZURldGFpbHNQYXJ0aWFsLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/BirthRegistry/PrintBirthRegistry.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQmlydGhSZWdpc3RyeS9QcmludEJpcnRoUmVnaXN0cnkuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/BirthRegistryStructuredData/AbnormalCondition/CreateAbnormalCondition.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQmlydGhSZWdpc3RyeVN0cnVjdHVyZWREYXRhL0Fibm9ybWFsQ29uZGl0aW9uL0NyZWF0ZUFibm9ybWFsQ29uZGl0aW9uLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/BirthRegistryStructuredData/AbnormalCondition/DeleteAbnormalCondition.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQmlydGhSZWdpc3RyeVN0cnVjdHVyZWREYXRhL0Fibm9ybWFsQ29uZGl0aW9uL0RlbGV0ZUFibm9ybWFsQ29uZGl0aW9uLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/BirthRegistryStructuredData/AbnormalCondition/EditAbnormalCondition.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQmlydGhSZWdpc3RyeVN0cnVjdHVyZWREYXRhL0Fibm9ybWFsQ29uZGl0aW9uL0VkaXRBYm5vcm1hbENvbmRpdGlvbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/BirthRegistryStructuredData/AbnormalCondition/ViewAbnormalConditions.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQmlydGhSZWdpc3RyeVN0cnVjdHVyZWREYXRhL0Fibm9ybWFsQ29uZGl0aW9uL1ZpZXdBYm5vcm1hbENvbmRpdGlvbnMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/BirthRegistryStructuredData/BirthplaceType/CreateBirthPlaceType.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQmlydGhSZWdpc3RyeVN0cnVjdHVyZWREYXRhL0JpcnRocGxhY2VUeXBlL0NyZWF0ZUJpcnRoUGxhY2VUeXBlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/BirthRegistryStructuredData/BirthplaceType/DeleteBirthPlaceType.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQmlydGhSZWdpc3RyeVN0cnVjdHVyZWREYXRhL0JpcnRocGxhY2VUeXBlL0RlbGV0ZUJpcnRoUGxhY2VUeXBlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/BirthRegistryStructuredData/BirthplaceType/EditBirthPlaceType.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQmlydGhSZWdpc3RyeVN0cnVjdHVyZWREYXRhL0JpcnRocGxhY2VUeXBlL0VkaXRCaXJ0aFBsYWNlVHlwZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/BirthRegistryStructuredData/BirthplaceType/ViewBirthplaceTypes.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQmlydGhSZWdpc3RyeVN0cnVjdHVyZWREYXRhL0JpcnRocGxhY2VUeXBlL1ZpZXdCaXJ0aHBsYWNlVHlwZXMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/BirthRegistryStructuredData/CharacteristicOfLabor/CreateCharacteristicOfLabor.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQmlydGhSZWdpc3RyeVN0cnVjdHVyZWREYXRhL0NoYXJhY3RlcmlzdGljT2ZMYWJvci9DcmVhdGVDaGFyYWN0ZXJpc3RpY09mTGFib3IuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/BirthRegistryStructuredData/CharacteristicOfLabor/DeleteCharacteristicOfLabor.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQmlydGhSZWdpc3RyeVN0cnVjdHVyZWREYXRhL0NoYXJhY3RlcmlzdGljT2ZMYWJvci9EZWxldGVDaGFyYWN0ZXJpc3RpY09mTGFib3IuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/BirthRegistryStructuredData/CharacteristicOfLabor/EditCharacteristicOfLabor.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQmlydGhSZWdpc3RyeVN0cnVjdHVyZWREYXRhL0NoYXJhY3RlcmlzdGljT2ZMYWJvci9FZGl0Q2hhcmFjdGVyaXN0aWNPZkxhYm9yLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/BirthRegistryStructuredData/CharacteristicOfLabor/ViewCharacteristicsOfLabors.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQmlydGhSZWdpc3RyeVN0cnVjdHVyZWREYXRhL0NoYXJhY3RlcmlzdGljT2ZMYWJvci9WaWV3Q2hhcmFjdGVyaXN0aWNzT2ZMYWJvcnMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/BirthRegistryStructuredData/CongenitalAnomaly/CreateCongenitalAnomaly.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQmlydGhSZWdpc3RyeVN0cnVjdHVyZWREYXRhL0Nvbmdlbml0YWxBbm9tYWx5L0NyZWF0ZUNvbmdlbml0YWxBbm9tYWx5LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/BirthRegistryStructuredData/CongenitalAnomaly/DeleteCongenitalAnomaly.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQmlydGhSZWdpc3RyeVN0cnVjdHVyZWREYXRhL0Nvbmdlbml0YWxBbm9tYWx5L0RlbGV0ZUNvbmdlbml0YWxBbm9tYWx5LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/BirthRegistryStructuredData/CongenitalAnomaly/EditCongenitalAnomaly.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQmlydGhSZWdpc3RyeVN0cnVjdHVyZWREYXRhL0Nvbmdlbml0YWxBbm9tYWx5L0VkaXRDb25nZW5pdGFsQW5vbWFseS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/BirthRegistryStructuredData/CongenitalAnomaly/ViewCongenitalAnomalies.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQmlydGhSZWdpc3RyeVN0cnVjdHVyZWREYXRhL0Nvbmdlbml0YWxBbm9tYWx5L1ZpZXdDb25nZW5pdGFsQW5vbWFsaWVzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/BirthRegistryStructuredData/FetalPresentationAtBirth/CreateFetalPresentationAtBirth.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQmlydGhSZWdpc3RyeVN0cnVjdHVyZWREYXRhL0ZldGFsUHJlc2VudGF0aW9uQXRCaXJ0aC9DcmVhdGVGZXRhbFByZXNlbnRhdGlvbkF0QmlydGguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/BirthRegistryStructuredData/FetalPresentationAtBirth/DeleteFetalPresentationAtBirth.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQmlydGhSZWdpc3RyeVN0cnVjdHVyZWREYXRhL0ZldGFsUHJlc2VudGF0aW9uQXRCaXJ0aC9EZWxldGVGZXRhbFByZXNlbnRhdGlvbkF0QmlydGguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/BirthRegistryStructuredData/FetalPresentationAtBirth/EditFetalPresentationAtBirth.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQmlydGhSZWdpc3RyeVN0cnVjdHVyZWREYXRhL0ZldGFsUHJlc2VudGF0aW9uQXRCaXJ0aC9FZGl0RmV0YWxQcmVzZW50YXRpb25BdEJpcnRoLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/BirthRegistryStructuredData/FetalPresentationAtBirth/ViewFetalPresentationAtBirths.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQmlydGhSZWdpc3RyeVN0cnVjdHVyZWREYXRhL0ZldGFsUHJlc2VudGF0aW9uQXRCaXJ0aC9WaWV3RmV0YWxQcmVzZW50YXRpb25BdEJpcnRocy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/BirthRegistryStructuredData/FinalRouteAndMethodOfDelivery/CreateFinalRouteAndMethodOfDelivery.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQmlydGhSZWdpc3RyeVN0cnVjdHVyZWREYXRhL0ZpbmFsUm91dGVBbmRNZXRob2RPZkRlbGl2ZXJ5L0NyZWF0ZUZpbmFsUm91dGVBbmRNZXRob2RPZkRlbGl2ZXJ5LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/BirthRegistryStructuredData/FinalRouteAndMethodOfDelivery/DeleteFinalRouteAndMethodOfDelivery.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQmlydGhSZWdpc3RyeVN0cnVjdHVyZWREYXRhL0ZpbmFsUm91dGVBbmRNZXRob2RPZkRlbGl2ZXJ5L0RlbGV0ZUZpbmFsUm91dGVBbmRNZXRob2RPZkRlbGl2ZXJ5LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/BirthRegistryStructuredData/FinalRouteAndMethodOfDelivery/EditFinalRouteAndMethodOfDelivery.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQmlydGhSZWdpc3RyeVN0cnVjdHVyZWREYXRhL0ZpbmFsUm91dGVBbmRNZXRob2RPZkRlbGl2ZXJ5L0VkaXRGaW5hbFJvdXRlQW5kTWV0aG9kT2ZEZWxpdmVyeS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/BirthRegistryStructuredData/FinalRouteAndMethodOfDelivery/ViewFinalRoutesAndMethodOfDeliveries.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQmlydGhSZWdpc3RyeVN0cnVjdHVyZWREYXRhL0ZpbmFsUm91dGVBbmRNZXRob2RPZkRlbGl2ZXJ5L1ZpZXdGaW5hbFJvdXRlc0FuZE1ldGhvZE9mRGVsaXZlcmllcy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/BirthRegistryStructuredData/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQmlydGhSZWdpc3RyeVN0cnVjdHVyZWREYXRhL0luZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/BirthRegistryStructuredData/MaternalMorbidity/CreateMaternalMorbidity.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQmlydGhSZWdpc3RyeVN0cnVjdHVyZWREYXRhL01hdGVybmFsTW9yYmlkaXR5L0NyZWF0ZU1hdGVybmFsTW9yYmlkaXR5LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/BirthRegistryStructuredData/MaternalMorbidity/DeleteMaternalMorbidity.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQmlydGhSZWdpc3RyeVN0cnVjdHVyZWREYXRhL01hdGVybmFsTW9yYmlkaXR5L0RlbGV0ZU1hdGVybmFsTW9yYmlkaXR5LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/BirthRegistryStructuredData/MaternalMorbidity/EditMaternalMorbidity.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQmlydGhSZWdpc3RyeVN0cnVjdHVyZWREYXRhL01hdGVybmFsTW9yYmlkaXR5L0VkaXRNYXRlcm5hbE1vcmJpZGl0eS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/BirthRegistryStructuredData/MaternalMorbidity/ViewMaternalMorbidities.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQmlydGhSZWdpc3RyeVN0cnVjdHVyZWREYXRhL01hdGVybmFsTW9yYmlkaXR5L1ZpZXdNYXRlcm5hbE1vcmJpZGl0aWVzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/BirthRegistryStructuredData/OnsetOfLabor/CreateOnsetOfLabor.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQmlydGhSZWdpc3RyeVN0cnVjdHVyZWREYXRhL09uc2V0T2ZMYWJvci9DcmVhdGVPbnNldE9mTGFib3IuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/BirthRegistryStructuredData/OnsetOfLabor/DeleteOnsetOfLabor.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQmlydGhSZWdpc3RyeVN0cnVjdHVyZWREYXRhL09uc2V0T2ZMYWJvci9EZWxldGVPbnNldE9mTGFib3IuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/BirthRegistryStructuredData/OnsetOfLabor/EditOnsetOfLabor.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQmlydGhSZWdpc3RyeVN0cnVjdHVyZWREYXRhL09uc2V0T2ZMYWJvci9FZGl0T25zZXRPZkxhYm9yLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/BirthRegistryStructuredData/OnsetOfLabor/ViewOnsetOfLabors.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQmlydGhSZWdpc3RyeVN0cnVjdHVyZWREYXRhL09uc2V0T2ZMYWJvci9WaWV3T25zZXRPZkxhYm9ycy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/BirthRegistryStructuredData/PregnancyInfection/CreatePregnancyInfection.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQmlydGhSZWdpc3RyeVN0cnVjdHVyZWREYXRhL1ByZWduYW5jeUluZmVjdGlvbi9DcmVhdGVQcmVnbmFuY3lJbmZlY3Rpb24uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/BirthRegistryStructuredData/PregnancyInfection/DeletePregnancyInfection.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQmlydGhSZWdpc3RyeVN0cnVjdHVyZWREYXRhL1ByZWduYW5jeUluZmVjdGlvbi9EZWxldGVQcmVnbmFuY3lJbmZlY3Rpb24uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/BirthRegistryStructuredData/PregnancyInfection/EditPregnancyInfection.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQmlydGhSZWdpc3RyeVN0cnVjdHVyZWREYXRhL1ByZWduYW5jeUluZmVjdGlvbi9FZGl0UHJlZ25hbmN5SW5mZWN0aW9uLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/BirthRegistryStructuredData/PregnancyInfection/ViewPregnancyInfections.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQmlydGhSZWdpc3RyeVN0cnVjdHVyZWREYXRhL1ByZWduYW5jeUluZmVjdGlvbi9WaWV3UHJlZ25hbmN5SW5mZWN0aW9ucy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/BirthRegistryStructuredData/PregnancyRiskFactor/CreatePregnancyRiskFactor.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQmlydGhSZWdpc3RyeVN0cnVjdHVyZWREYXRhL1ByZWduYW5jeVJpc2tGYWN0b3IvQ3JlYXRlUHJlZ25hbmN5Umlza0ZhY3Rvci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/BirthRegistryStructuredData/PregnancyRiskFactor/DeletePregnancyRiskFactor.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQmlydGhSZWdpc3RyeVN0cnVjdHVyZWREYXRhL1ByZWduYW5jeVJpc2tGYWN0b3IvRGVsZXRlUHJlZ25hbmN5Umlza0ZhY3Rvci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/BirthRegistryStructuredData/PregnancyRiskFactor/EditPregnancyRiskFactor.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQmlydGhSZWdpc3RyeVN0cnVjdHVyZWREYXRhL1ByZWduYW5jeVJpc2tGYWN0b3IvRWRpdFByZWduYW5jeVJpc2tGYWN0b3IuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/BirthRegistryStructuredData/PregnancyRiskFactor/ViewPregnancyRiskFactors.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQmlydGhSZWdpc3RyeVN0cnVjdHVyZWREYXRhL1ByZWduYW5jeVJpc2tGYWN0b3IvVmlld1ByZWduYW5jeVJpc2tGYWN0b3JzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/Disclosure/CreateRequest.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRGlzY2xvc3VyZS9DcmVhdGVSZXF1ZXN0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/Disclosure/DisclosureDetails.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRGlzY2xvc3VyZS9EaXNjbG9zdXJlRGV0YWlscy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/Disclosure/LegalDetails.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRGlzY2xvc3VyZS9MZWdhbERldGFpbHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/Disclosure/PatientDetails.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRGlzY2xvc3VyZS9QYXRpZW50RGV0YWlscy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/Disclosure/PatientRepresentativeDetails.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRGlzY2xvc3VyZS9QYXRpZW50UmVwcmVzZW50YXRpdmVEZXRhaWxzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/Disclosure/RequestDetails.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRGlzY2xvc3VyZS9SZXF1ZXN0RGV0YWlscy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/Disclosure/RequestedItemsDetails.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRGlzY2xvc3VyZS9SZXF1ZXN0ZWRJdGVtc0RldGFpbHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/Disclosure/RequesterDetails.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRGlzY2xvc3VyZS9SZXF1ZXN0ZXJEZXRhaWxzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/Disclosure/RequestList.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRGlzY2xvc3VyZS9SZXF1ZXN0TGlzdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/DisclosureStructuredData/DocumentRequesteds/CreateDocumentRequested.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRGlzY2xvc3VyZVN0cnVjdHVyZWREYXRhL0RvY3VtZW50UmVxdWVzdGVkcy9DcmVhdGVEb2N1bWVudFJlcXVlc3RlZC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/DisclosureStructuredData/DocumentRequesteds/DeleteDocumentRequested.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRGlzY2xvc3VyZVN0cnVjdHVyZWREYXRhL0RvY3VtZW50UmVxdWVzdGVkcy9EZWxldGVEb2N1bWVudFJlcXVlc3RlZC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/DisclosureStructuredData/DocumentRequesteds/EditDocumentRequested.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRGlzY2xvc3VyZVN0cnVjdHVyZWREYXRhL0RvY3VtZW50UmVxdWVzdGVkcy9FZGl0RG9jdW1lbnRSZXF1ZXN0ZWQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/DisclosureStructuredData/DocumentRequesteds/ViewDocumentRequesteds.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRGlzY2xvc3VyZVN0cnVjdHVyZWREYXRhL0RvY3VtZW50UmVxdWVzdGVkcy9WaWV3RG9jdW1lbnRSZXF1ZXN0ZWRzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/DisclosureStructuredData/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRGlzY2xvc3VyZVN0cnVjdHVyZWREYXRhL0luZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/DisclosureStructuredData/ItemStatus/CreateItemStatus.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRGlzY2xvc3VyZVN0cnVjdHVyZWREYXRhL0l0ZW1TdGF0dXMvQ3JlYXRlSXRlbVN0YXR1cy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/DisclosureStructuredData/ItemStatus/DeleteItemStatus.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRGlzY2xvc3VyZVN0cnVjdHVyZWREYXRhL0l0ZW1TdGF0dXMvRGVsZXRlSXRlbVN0YXR1cy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/DisclosureStructuredData/ItemStatus/EditItemStatus.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRGlzY2xvc3VyZVN0cnVjdHVyZWREYXRhL0l0ZW1TdGF0dXMvRWRpdEl0ZW1TdGF0dXMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/DisclosureStructuredData/ItemStatus/ViewItemStatuses.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRGlzY2xvc3VyZVN0cnVjdHVyZWREYXRhL0l0ZW1TdGF0dXMvVmlld0l0ZW1TdGF0dXNlcy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/DisclosureStructuredData/RequesterStatus/CreateRequesterStatus.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRGlzY2xvc3VyZVN0cnVjdHVyZWREYXRhL1JlcXVlc3RlclN0YXR1cy9DcmVhdGVSZXF1ZXN0ZXJTdGF0dXMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/DisclosureStructuredData/RequesterStatus/DeleteRequesterStatus.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRGlzY2xvc3VyZVN0cnVjdHVyZWREYXRhL1JlcXVlc3RlclN0YXR1cy9EZWxldGVSZXF1ZXN0ZXJTdGF0dXMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/DisclosureStructuredData/RequesterStatus/EditRequesterStatus.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRGlzY2xvc3VyZVN0cnVjdHVyZWREYXRhL1JlcXVlc3RlclN0YXR1cy9FZGl0UmVxdWVzdGVyU3RhdHVzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/DisclosureStructuredData/RequesterStatus/ViewRequesterStatuses.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRGlzY2xvc3VyZVN0cnVjdHVyZWREYXRhL1JlcXVlc3RlclN0YXR1cy9WaWV3UmVxdWVzdGVyU3RhdHVzZXMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/DisclosureStructuredData/RequesterType/CreateRequesterType.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRGlzY2xvc3VyZVN0cnVjdHVyZWREYXRhL1JlcXVlc3RlclR5cGUvQ3JlYXRlUmVxdWVzdGVyVHlwZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/DisclosureStructuredData/RequesterType/DeleteRequesterType.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRGlzY2xvc3VyZVN0cnVjdHVyZWREYXRhL1JlcXVlc3RlclR5cGUvRGVsZXRlUmVxdWVzdGVyVHlwZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/DisclosureStructuredData/RequesterType/EditRequesterType.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRGlzY2xvc3VyZVN0cnVjdHVyZWREYXRhL1JlcXVlc3RlclR5cGUvRWRpdFJlcXVlc3RlclR5cGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/DisclosureStructuredData/RequesterType/ViewRequesterTypes.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRGlzY2xvc3VyZVN0cnVjdHVyZWREYXRhL1JlcXVlc3RlclR5cGUvVmlld1JlcXVlc3RlclR5cGVzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/DisclosureStructuredData/RequestPriorities/CreateRequestPriority.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRGlzY2xvc3VyZVN0cnVjdHVyZWREYXRhL1JlcXVlc3RQcmlvcml0aWVzL0NyZWF0ZVJlcXVlc3RQcmlvcml0eS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/DisclosureStructuredData/RequestPriorities/DeleteRequestPriority.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRGlzY2xvc3VyZVN0cnVjdHVyZWREYXRhL1JlcXVlc3RQcmlvcml0aWVzL0RlbGV0ZVJlcXVlc3RQcmlvcml0eS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/DisclosureStructuredData/RequestPriorities/EditRequestPriority.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRGlzY2xvc3VyZVN0cnVjdHVyZWREYXRhL1JlcXVlc3RQcmlvcml0aWVzL0VkaXRSZXF1ZXN0UHJpb3JpdHkuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/DisclosureStructuredData/RequestPriorities/ViewRequestPriorities.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRGlzY2xvc3VyZVN0cnVjdHVyZWREYXRhL1JlcXVlc3RQcmlvcml0aWVzL1ZpZXdSZXF1ZXN0UHJpb3JpdGllcy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/DisclosureStructuredData/RequestPurposes/CreateRequestPurpose.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRGlzY2xvc3VyZVN0cnVjdHVyZWREYXRhL1JlcXVlc3RQdXJwb3Nlcy9DcmVhdGVSZXF1ZXN0UHVycG9zZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/DisclosureStructuredData/RequestPurposes/DeleteRequestPurpose.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRGlzY2xvc3VyZVN0cnVjdHVyZWREYXRhL1JlcXVlc3RQdXJwb3Nlcy9EZWxldGVSZXF1ZXN0UHVycG9zZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/DisclosureStructuredData/RequestPurposes/EditRequestPurpose.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRGlzY2xvc3VyZVN0cnVjdHVyZWREYXRhL1JlcXVlc3RQdXJwb3Nlcy9FZGl0UmVxdWVzdFB1cnBvc2UuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/DisclosureStructuredData/RequestPurposes/ViewRequestPurposes.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRGlzY2xvc3VyZVN0cnVjdHVyZWREYXRhL1JlcXVlc3RQdXJwb3Nlcy9WaWV3UmVxdWVzdFB1cnBvc2VzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/DisclosureStructuredData/RequestReleaseFormats/CreateRequestReleaseFormat.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRGlzY2xvc3VyZVN0cnVjdHVyZWREYXRhL1JlcXVlc3RSZWxlYXNlRm9ybWF0cy9DcmVhdGVSZXF1ZXN0UmVsZWFzZUZvcm1hdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/DisclosureStructuredData/RequestReleaseFormats/DeleteRequestReleaseFormat.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRGlzY2xvc3VyZVN0cnVjdHVyZWREYXRhL1JlcXVlc3RSZWxlYXNlRm9ybWF0cy9EZWxldGVSZXF1ZXN0UmVsZWFzZUZvcm1hdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/DisclosureStructuredData/RequestReleaseFormats/EditRequestReleaseFormat.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRGlzY2xvc3VyZVN0cnVjdHVyZWREYXRhL1JlcXVlc3RSZWxlYXNlRm9ybWF0cy9FZGl0UmVxdWVzdFJlbGVhc2VGb3JtYXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/DisclosureStructuredData/RequestReleaseFormats/ViewRequestReleaseFormats.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRGlzY2xvc3VyZVN0cnVjdHVyZWREYXRhL1JlcXVlc3RSZWxlYXNlRm9ybWF0cy9WaWV3UmVxdWVzdFJlbGVhc2VGb3JtYXRzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/DisclosureStructuredData/RequestStatus/CreateRequestStatus.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRGlzY2xvc3VyZVN0cnVjdHVyZWREYXRhL1JlcXVlc3RTdGF0dXMvQ3JlYXRlUmVxdWVzdFN0YXR1cy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/DisclosureStructuredData/RequestStatus/DeleteRequestStatus.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRGlzY2xvc3VyZVN0cnVjdHVyZWREYXRhL1JlcXVlc3RTdGF0dXMvRGVsZXRlUmVxdWVzdFN0YXR1cy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/DisclosureStructuredData/RequestStatus/EditRequestStatus.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRGlzY2xvc3VyZVN0cnVjdHVyZWREYXRhL1JlcXVlc3RTdGF0dXMvRWRpdFJlcXVlc3RTdGF0dXMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/DisclosureStructuredData/RequestStatus/ViewRequestStatuses.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRGlzY2xvc3VyZVN0cnVjdHVyZWREYXRhL1JlcXVlc3RTdGF0dXMvVmlld1JlcXVlc3RTdGF0dXNlcy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/DisclosureStructuredData/RequestStatusReasons/CreateRequestStatusReason.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRGlzY2xvc3VyZVN0cnVjdHVyZWREYXRhL1JlcXVlc3RTdGF0dXNSZWFzb25zL0NyZWF0ZVJlcXVlc3RTdGF0dXNSZWFzb24uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/DisclosureStructuredData/RequestStatusReasons/DeleteRequestStatusReason.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRGlzY2xvc3VyZVN0cnVjdHVyZWREYXRhL1JlcXVlc3RTdGF0dXNSZWFzb25zL0RlbGV0ZVJlcXVlc3RTdGF0dXNSZWFzb24uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/DisclosureStructuredData/RequestStatusReasons/EditRequestStatusReason.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRGlzY2xvc3VyZVN0cnVjdHVyZWREYXRhL1JlcXVlc3RTdGF0dXNSZWFzb25zL0VkaXRSZXF1ZXN0U3RhdHVzUmVhc29uLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/DisclosureStructuredData/RequestStatusReasons/ViewRequestStatusReasons.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRGlzY2xvc3VyZVN0cnVjdHVyZWREYXRhL1JlcXVlc3RTdGF0dXNSZWFzb25zL1ZpZXdSZXF1ZXN0U3RhdHVzUmVhc29ucy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/Document/ViewDocuments.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRG9jdW1lbnQvVmlld0RvY3VtZW50cy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/Document/_DocumentDetailsPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRG9jdW1lbnQvX0RvY3VtZW50RGV0YWlsc1BhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/Document/_DocumentEditPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRG9jdW1lbnQvX0RvY3VtZW50RWRpdFBhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/Document/_DocumentRowPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRG9jdW1lbnQvX0RvY3VtZW50Um93UGFydGlhbC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/Encounter/AddEncounter.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRW5jb3VudGVyL0FkZEVuY291bnRlci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/Encounter/AddEncounterDeceasedError.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRW5jb3VudGVyL0FkZEVuY291bnRlckRlY2Vhc2VkRXJyb3IuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/Encounter/AddEncounterOpenError.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRW5jb3VudGVyL0FkZEVuY291bnRlck9wZW5FcnJvci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/Encounter/AddProgressNotes.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRW5jb3VudGVyL0FkZFByb2dyZXNzTm90ZXMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/Encounter/CheckedIn.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRW5jb3VudGVyL0NoZWNrZWRJbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/Encounter/DischargeEncounter.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRW5jb3VudGVyL0Rpc2NoYXJnZUVuY291bnRlci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/Encounter/EditEncounter.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRW5jb3VudGVyL0VkaXRFbmNvdW50ZXIuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/Encounter/EditProgressNote.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRW5jb3VudGVyL0VkaXRQcm9ncmVzc05vdGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/Encounter/EncounterPhysicianFormFields.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRW5jb3VudGVyL0VuY291bnRlclBoeXNpY2lhbkZvcm1GaWVsZHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/Encounter/PCAIndex.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRW5jb3VudGVyL1BDQUluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/Encounter/PhysicianDischargeEdit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRW5jb3VudGVyL1BoeXNpY2lhbkRpc2NoYXJnZUVkaXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/Encounter/ProgressNotes.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRW5jb3VudGVyL1Byb2dyZXNzTm90ZXMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/Encounter/ViewDischarge.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRW5jb3VudGVyL1ZpZXdEaXNjaGFyZ2UuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/Encounter/ViewEncounter.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRW5jb3VudGVyL1ZpZXdFbmNvdW50ZXIuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/Encounter/ViewPhysicianDischarge.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRW5jb3VudGVyL1ZpZXdQaHlzaWNpYW5EaXNjaGFyZ2UuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/Encounter/ViewProgressNote.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRW5jb3VudGVyL1ZpZXdQcm9ncmVzc05vdGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/EncounterStructuredData/AdmitType/CreateAdmitType.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRW5jb3VudGVyU3RydWN0dXJlZERhdGEvQWRtaXRUeXBlL0NyZWF0ZUFkbWl0VHlwZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/EncounterStructuredData/AdmitType/DeleteAdmitType.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRW5jb3VudGVyU3RydWN0dXJlZERhdGEvQWRtaXRUeXBlL0RlbGV0ZUFkbWl0VHlwZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/EncounterStructuredData/AdmitType/EditAdmitType.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRW5jb3VudGVyU3RydWN0dXJlZERhdGEvQWRtaXRUeXBlL0VkaXRBZG1pdFR5cGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/EncounterStructuredData/AdmitType/ViewAdmitTypes.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRW5jb3VudGVyU3RydWN0dXJlZERhdGEvQWRtaXRUeXBlL1ZpZXdBZG1pdFR5cGVzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/EncounterStructuredData/Department/CreateDepartment.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRW5jb3VudGVyU3RydWN0dXJlZERhdGEvRGVwYXJ0bWVudC9DcmVhdGVEZXBhcnRtZW50LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/EncounterStructuredData/Department/DeleteDepartment.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRW5jb3VudGVyU3RydWN0dXJlZERhdGEvRGVwYXJ0bWVudC9EZWxldGVEZXBhcnRtZW50LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/EncounterStructuredData/Department/EditDepartment.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRW5jb3VudGVyU3RydWN0dXJlZERhdGEvRGVwYXJ0bWVudC9FZGl0RGVwYXJ0bWVudC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/EncounterStructuredData/Department/ViewDepartments.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRW5jb3VudGVyU3RydWN0dXJlZERhdGEvRGVwYXJ0bWVudC9WaWV3RGVwYXJ0bWVudHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/EncounterStructuredData/Discharge/CreateDischarge.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRW5jb3VudGVyU3RydWN0dXJlZERhdGEvRGlzY2hhcmdlL0NyZWF0ZURpc2NoYXJnZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/EncounterStructuredData/Discharge/DeleteDischarge.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRW5jb3VudGVyU3RydWN0dXJlZERhdGEvRGlzY2hhcmdlL0RlbGV0ZURpc2NoYXJnZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/EncounterStructuredData/Discharge/EditDischarge.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRW5jb3VudGVyU3RydWN0dXJlZERhdGEvRGlzY2hhcmdlL0VkaXREaXNjaGFyZ2UuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/EncounterStructuredData/Discharge/ViewDischarges.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRW5jb3VudGVyU3RydWN0dXJlZERhdGEvRGlzY2hhcmdlL1ZpZXdEaXNjaGFyZ2VzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/EncounterStructuredData/EncounterType/CreateEncounterType.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRW5jb3VudGVyU3RydWN0dXJlZERhdGEvRW5jb3VudGVyVHlwZS9DcmVhdGVFbmNvdW50ZXJUeXBlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/EncounterStructuredData/EncounterType/DeleteEncounterType.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRW5jb3VudGVyU3RydWN0dXJlZERhdGEvRW5jb3VudGVyVHlwZS9EZWxldGVFbmNvdW50ZXJUeXBlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/EncounterStructuredData/EncounterType/EditEncounterType.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRW5jb3VudGVyU3RydWN0dXJlZERhdGEvRW5jb3VudGVyVHlwZS9FZGl0RW5jb3VudGVyVHlwZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/EncounterStructuredData/EncounterType/ViewEncounterTypes.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRW5jb3VudGVyU3RydWN0dXJlZERhdGEvRW5jb3VudGVyVHlwZS9WaWV3RW5jb3VudGVyVHlwZXMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/EncounterStructuredData/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRW5jb3VudGVyU3RydWN0dXJlZERhdGEvSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/EncounterStructuredData/PlaceOfServiceOutPatient/CreatePlaceOfServiceOutPatient.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRW5jb3VudGVyU3RydWN0dXJlZERhdGEvUGxhY2VPZlNlcnZpY2VPdXRQYXRpZW50L0NyZWF0ZVBsYWNlT2ZTZXJ2aWNlT3V0UGF0aWVudC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/EncounterStructuredData/PlaceOfServiceOutPatient/DeletePlaceOfServiceOutPatient.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRW5jb3VudGVyU3RydWN0dXJlZERhdGEvUGxhY2VPZlNlcnZpY2VPdXRQYXRpZW50L0RlbGV0ZVBsYWNlT2ZTZXJ2aWNlT3V0UGF0aWVudC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/EncounterStructuredData/PlaceOfServiceOutPatient/EditPlaceOfServiceOutPatient.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRW5jb3VudGVyU3RydWN0dXJlZERhdGEvUGxhY2VPZlNlcnZpY2VPdXRQYXRpZW50L0VkaXRQbGFjZU9mU2VydmljZU91dFBhdGllbnQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/EncounterStructuredData/PlaceOfServiceOutPatient/ViewPlaceOfServiceOutPatients.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRW5jb3VudGVyU3RydWN0dXJlZERhdGEvUGxhY2VPZlNlcnZpY2VPdXRQYXRpZW50L1ZpZXdQbGFjZU9mU2VydmljZU91dFBhdGllbnRzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/EncounterStructuredData/PointOfOrigin/CreatePointOfOrigin.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRW5jb3VudGVyU3RydWN0dXJlZERhdGEvUG9pbnRPZk9yaWdpbi9DcmVhdGVQb2ludE9mT3JpZ2luLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/EncounterStructuredData/PointOfOrigin/DeletePointOfOrigin.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRW5jb3VudGVyU3RydWN0dXJlZERhdGEvUG9pbnRPZk9yaWdpbi9EZWxldGVQb2ludE9mT3JpZ2luLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/EncounterStructuredData/PointOfOrigin/EditPointOfOrigin.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRW5jb3VudGVyU3RydWN0dXJlZERhdGEvUG9pbnRPZk9yaWdpbi9FZGl0UG9pbnRPZk9yaWdpbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/EncounterStructuredData/PointOfOrigin/ViewPointOfOrigins.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRW5jb3VudGVyU3RydWN0dXJlZERhdGEvUG9pbnRPZk9yaWdpbi9WaWV3UG9pbnRPZk9yaWdpbnMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/Home/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSG9tZS9JbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/Home/Privacy.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSG9tZS9Qcml2YWN5LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/MedicationDataEntry/CreateBrandName.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvTWVkaWNhdGlvbkRhdGFFbnRyeS9DcmVhdGVCcmFuZE5hbWUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/MedicationDataEntry/CreateDeliveryRoute.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvTWVkaWNhdGlvbkRhdGFFbnRyeS9DcmVhdGVEZWxpdmVyeVJvdXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/MedicationDataEntry/CreateDosageForm.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvTWVkaWNhdGlvbkRhdGFFbnRyeS9DcmVhdGVEb3NhZ2VGb3JtLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/MedicationDataEntry/CreateFrequency.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvTWVkaWNhdGlvbkRhdGFFbnRyeS9DcmVhdGVGcmVxdWVuY3kuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/MedicationDataEntry/CreateGenericName.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvTWVkaWNhdGlvbkRhdGFFbnRyeS9DcmVhdGVHZW5lcmljTmFtZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/MedicationDataEntry/CreateMedication.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvTWVkaWNhdGlvbkRhdGFFbnRyeS9DcmVhdGVNZWRpY2F0aW9uLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/MedicationDataEntry/DeleteBrandName.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvTWVkaWNhdGlvbkRhdGFFbnRyeS9EZWxldGVCcmFuZE5hbWUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/MedicationDataEntry/DeleteDeliveryRoute.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvTWVkaWNhdGlvbkRhdGFFbnRyeS9EZWxldGVEZWxpdmVyeVJvdXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/MedicationDataEntry/DeleteDosageForm.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvTWVkaWNhdGlvbkRhdGFFbnRyeS9EZWxldGVEb3NhZ2VGb3JtLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/MedicationDataEntry/DeleteFrequency.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvTWVkaWNhdGlvbkRhdGFFbnRyeS9EZWxldGVGcmVxdWVuY3kuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/MedicationDataEntry/DeleteGenericName.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvTWVkaWNhdGlvbkRhdGFFbnRyeS9EZWxldGVHZW5lcmljTmFtZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/MedicationDataEntry/DeleteMedication.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvTWVkaWNhdGlvbkRhdGFFbnRyeS9EZWxldGVNZWRpY2F0aW9uLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/MedicationDataEntry/EditBrandName.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvTWVkaWNhdGlvbkRhdGFFbnRyeS9FZGl0QnJhbmROYW1lLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/MedicationDataEntry/EditDeliveryRoute.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvTWVkaWNhdGlvbkRhdGFFbnRyeS9FZGl0RGVsaXZlcnlSb3V0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/MedicationDataEntry/EditDosageForm.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvTWVkaWNhdGlvbkRhdGFFbnRyeS9FZGl0RG9zYWdlRm9ybS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/MedicationDataEntry/EditFrequency.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvTWVkaWNhdGlvbkRhdGFFbnRyeS9FZGl0RnJlcXVlbmN5LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/MedicationDataEntry/EditGenericName.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvTWVkaWNhdGlvbkRhdGFFbnRyeS9FZGl0R2VuZXJpY05hbWUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/MedicationDataEntry/EditMedication.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvTWVkaWNhdGlvbkRhdGFFbnRyeS9FZGl0TWVkaWNhdGlvbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/MedicationDataEntry/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvTWVkaWNhdGlvbkRhdGFFbnRyeS9JbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/MedicationDataEntry/MedicationDetails.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvTWVkaWNhdGlvbkRhdGFFbnRyeS9NZWRpY2F0aW9uRGV0YWlscy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/MedicationDataEntry/ViewBrandNames.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvTWVkaWNhdGlvbkRhdGFFbnRyeS9WaWV3QnJhbmROYW1lcy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/MedicationDataEntry/ViewDeliveryRoutes.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvTWVkaWNhdGlvbkRhdGFFbnRyeS9WaWV3RGVsaXZlcnlSb3V0ZXMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/MedicationDataEntry/ViewDosageForms.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvTWVkaWNhdGlvbkRhdGFFbnRyeS9WaWV3RG9zYWdlRm9ybXMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/MedicationDataEntry/ViewFrequencies.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvTWVkaWNhdGlvbkRhdGFFbnRyeS9WaWV3RnJlcXVlbmNpZXMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/MedicationDataEntry/ViewGenericNames.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvTWVkaWNhdGlvbkRhdGFFbnRyeS9WaWV3R2VuZXJpY05hbWVzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/MedicationDataEntry/ViewMedications.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvTWVkaWNhdGlvbkRhdGFFbnRyeS9WaWV3TWVkaWNhdGlvbnMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/MiscStructuredData/DocumentType/CreateDocumentType.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvTWlzY1N0cnVjdHVyZWREYXRhL0RvY3VtZW50VHlwZS9DcmVhdGVEb2N1bWVudFR5cGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/MiscStructuredData/DocumentType/DeleteDocumentType.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvTWlzY1N0cnVjdHVyZWREYXRhL0RvY3VtZW50VHlwZS9EZWxldGVEb2N1bWVudFR5cGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/MiscStructuredData/DocumentType/EditDocumentType.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvTWlzY1N0cnVjdHVyZWREYXRhL0RvY3VtZW50VHlwZS9FZGl0RG9jdW1lbnRUeXBlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/MiscStructuredData/DocumentType/ViewDocumentTypes.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvTWlzY1N0cnVjdHVyZWREYXRhL0RvY3VtZW50VHlwZS9WaWV3RG9jdW1lbnRUeXBlcy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/MiscStructuredData/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvTWlzY1N0cnVjdHVyZWREYXRhL0luZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/Order/CompleteOrder.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvT3JkZXIvQ29tcGxldGVPcmRlci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/Order/CreateOrder.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvT3JkZXIvQ3JlYXRlT3JkZXIuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/Order/DeleteOrder.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvT3JkZXIvRGVsZXRlT3JkZXIuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/Order/EditOrder.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvT3JkZXIvRWRpdE9yZGVyLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/Order/ListOrders.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvT3JkZXIvTGlzdE9yZGVycy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/Order/ViewOrder.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvT3JkZXIvVmlld09yZGVyLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/Patient/Alert/AlertCreate.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGF0aWVudC9BbGVydC9BbGVydENyZWF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/Patient/Alert/AlertDetails.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGF0aWVudC9BbGVydC9BbGVydERldGFpbHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/Patient/Alert/AlertEdit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGF0aWVudC9BbGVydC9BbGVydEVkaXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/Patient/Alert/ListAlerts.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGF0aWVudC9BbGVydC9MaXN0QWxlcnRzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/Patient/Alert/_AlertCreatePartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGF0aWVudC9BbGVydC9fQWxlcnRDcmVhdGVQYXJ0aWFsLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/Patient/Alert/_AlertDetailsPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGF0aWVudC9BbGVydC9fQWxlcnREZXRhaWxzUGFydGlhbC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/Patient/Alert/_AlertEditPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGF0aWVudC9BbGVydC9fQWxlcnRFZGl0UGFydGlhbC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/Patient/Alert/_ListAlertsPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGF0aWVudC9BbGVydC9fTGlzdEFsZXJ0c1BhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/Patient/Allergy/CreateAllergy.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGF0aWVudC9BbGxlcmd5L0NyZWF0ZUFsbGVyZ3kuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/Patient/Allergy/DetailsAllergy.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGF0aWVudC9BbGxlcmd5L0RldGFpbHNBbGxlcmd5LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/Patient/Allergy/EditAllergy.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGF0aWVudC9BbGxlcmd5L0VkaXRBbGxlcmd5LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/Patient/Allergy/ListAllergies.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGF0aWVudC9BbGxlcmd5L0xpc3RBbGxlcmdpZXMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/Patient/Allergy/_CreateAllergyPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGF0aWVudC9BbGxlcmd5L19DcmVhdGVBbGxlcmd5UGFydGlhbC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/Patient/Allergy/_DetailsAllergyPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGF0aWVudC9BbGxlcmd5L19EZXRhaWxzQWxsZXJneVBhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/Patient/Allergy/_EditAllergyPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGF0aWVudC9BbGxlcmd5L19FZGl0QWxsZXJneVBhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/Patient/Allergy/_ListAllergiesPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGF0aWVudC9BbGxlcmd5L19MaXN0QWxsZXJnaWVzUGFydGlhbC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/Patient/CreatePatient.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGF0aWVudC9DcmVhdGVQYXRpZW50LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/Patient/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGF0aWVudC9JbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/Patient/Medication/CreatePatientMedication.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGF0aWVudC9NZWRpY2F0aW9uL0NyZWF0ZVBhdGllbnRNZWRpY2F0aW9uLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/Patient/Medication/DetailsPatientMedication.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGF0aWVudC9NZWRpY2F0aW9uL0RldGFpbHNQYXRpZW50TWVkaWNhdGlvbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/Patient/Medication/EditPatientMedication.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGF0aWVudC9NZWRpY2F0aW9uL0VkaXRQYXRpZW50TWVkaWNhdGlvbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/Patient/Medication/ListMedications.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGF0aWVudC9NZWRpY2F0aW9uL0xpc3RNZWRpY2F0aW9ucy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/Patient/Medication/_CreatePatientMedicationPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGF0aWVudC9NZWRpY2F0aW9uL19DcmVhdGVQYXRpZW50TWVkaWNhdGlvblBhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/Patient/Medication/_DetailsPatientMedicationPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGF0aWVudC9NZWRpY2F0aW9uL19EZXRhaWxzUGF0aWVudE1lZGljYXRpb25QYXJ0aWFsLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/Patient/Medication/_EditPatientMedicationPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGF0aWVudC9NZWRpY2F0aW9uL19FZGl0UGF0aWVudE1lZGljYXRpb25QYXJ0aWFsLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/Patient/Medication/_ListMedicationsPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGF0aWVudC9NZWRpY2F0aW9uL19MaXN0TWVkaWNhdGlvbnNQYXJ0aWFsLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/Patient/PatientSearch.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGF0aWVudC9QYXRpZW50U2VhcmNoLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/Patient/_AliasPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGF0aWVudC9fQWxpYXNQYXJ0aWFsLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/Patient/_ContactInfoPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGF0aWVudC9fQ29udGFjdEluZm9QYXJ0aWFsLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/Patient/_DemographicsPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGF0aWVudC9fRGVtb2dyYXBoaWNzUGFydGlhbC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/Patient/_EmergencyContactPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGF0aWVudC9fRW1lcmdlbmN5Q29udGFjdFBhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/Patient/_EmploymentPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGF0aWVudC9fRW1wbG95bWVudFBhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/Patient/_EncounterPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGF0aWVudC9fRW5jb3VudGVyUGFydGlhbC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/Patient/_InsurancePartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGF0aWVudC9fSW5zdXJhbmNlUGFydGlhbC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/Patient/_PatientAccordianPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGF0aWVudC9fUGF0aWVudEFjY29yZGlhblBhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/Patient/_PatientDirectivesList.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGF0aWVudC9fUGF0aWVudERpcmVjdGl2ZXNMaXN0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/PatientStructuredData/Countries/CreateCountry.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGF0aWVudFN0cnVjdHVyZWREYXRhL0NvdW50cmllcy9DcmVhdGVDb3VudHJ5LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/PatientStructuredData/Countries/DeleteCountry.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGF0aWVudFN0cnVjdHVyZWREYXRhL0NvdW50cmllcy9EZWxldGVDb3VudHJ5LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/PatientStructuredData/Countries/EditCountry.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGF0aWVudFN0cnVjdHVyZWREYXRhL0NvdW50cmllcy9FZGl0Q291bnRyeS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/PatientStructuredData/Countries/ViewCountries.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGF0aWVudFN0cnVjdHVyZWREYXRhL0NvdW50cmllcy9WaWV3Q291bnRyaWVzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/PatientStructuredData/EducationLevels/CreateEducationLevel.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGF0aWVudFN0cnVjdHVyZWREYXRhL0VkdWNhdGlvbkxldmVscy9DcmVhdGVFZHVjYXRpb25MZXZlbC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/PatientStructuredData/EducationLevels/DeleteEducationLevel.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGF0aWVudFN0cnVjdHVyZWREYXRhL0VkdWNhdGlvbkxldmVscy9EZWxldGVFZHVjYXRpb25MZXZlbC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/PatientStructuredData/EducationLevels/EditEducationLevel.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGF0aWVudFN0cnVjdHVyZWREYXRhL0VkdWNhdGlvbkxldmVscy9FZGl0RWR1Y2F0aW9uTGV2ZWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/PatientStructuredData/EducationLevels/ViewEducationLevels.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGF0aWVudFN0cnVjdHVyZWREYXRhL0VkdWNhdGlvbkxldmVscy9WaWV3RWR1Y2F0aW9uTGV2ZWxzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/PatientStructuredData/Ethnicities/CreateEthnicity.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGF0aWVudFN0cnVjdHVyZWREYXRhL0V0aG5pY2l0aWVzL0NyZWF0ZUV0aG5pY2l0eS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/PatientStructuredData/Ethnicities/DeleteEthnicity.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGF0aWVudFN0cnVjdHVyZWREYXRhL0V0aG5pY2l0aWVzL0RlbGV0ZUV0aG5pY2l0eS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/PatientStructuredData/Ethnicities/EditEthnicity.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGF0aWVudFN0cnVjdHVyZWREYXRhL0V0aG5pY2l0aWVzL0VkaXRFdGhuaWNpdHkuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/PatientStructuredData/Ethnicities/ViewEthnicities.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGF0aWVudFN0cnVjdHVyZWREYXRhL0V0aG5pY2l0aWVzL1ZpZXdFdGhuaWNpdGllcy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/PatientStructuredData/GenderPronouns/CreateGenderPronoun.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGF0aWVudFN0cnVjdHVyZWREYXRhL0dlbmRlclByb25vdW5zL0NyZWF0ZUdlbmRlclByb25vdW4uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/PatientStructuredData/GenderPronouns/DeleteGenderPronoun.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGF0aWVudFN0cnVjdHVyZWREYXRhL0dlbmRlclByb25vdW5zL0RlbGV0ZUdlbmRlclByb25vdW4uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/PatientStructuredData/GenderPronouns/EditGenderPronoun.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGF0aWVudFN0cnVjdHVyZWREYXRhL0dlbmRlclByb25vdW5zL0VkaXRHZW5kZXJQcm9ub3VuLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/PatientStructuredData/GenderPronouns/ViewGenderPronoun.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGF0aWVudFN0cnVjdHVyZWREYXRhL0dlbmRlclByb25vdW5zL1ZpZXdHZW5kZXJQcm9ub3VuLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/PatientStructuredData/Genders/CreateGender.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGF0aWVudFN0cnVjdHVyZWREYXRhL0dlbmRlcnMvQ3JlYXRlR2VuZGVyLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/PatientStructuredData/Genders/DeleteGender.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGF0aWVudFN0cnVjdHVyZWREYXRhL0dlbmRlcnMvRGVsZXRlR2VuZGVyLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/PatientStructuredData/Genders/EditGender.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGF0aWVudFN0cnVjdHVyZWREYXRhL0dlbmRlcnMvRWRpdEdlbmRlci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/PatientStructuredData/Genders/ViewGenders.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGF0aWVudFN0cnVjdHVyZWREYXRhL0dlbmRlcnMvVmlld0dlbmRlcnMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/PatientStructuredData/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGF0aWVudFN0cnVjdHVyZWREYXRhL0luZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/PatientStructuredData/InsuranceProviders/CreateInsuranceProvider.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGF0aWVudFN0cnVjdHVyZWREYXRhL0luc3VyYW5jZVByb3ZpZGVycy9DcmVhdGVJbnN1cmFuY2VQcm92aWRlci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/PatientStructuredData/InsuranceProviders/DeleteInsuranceProvider.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGF0aWVudFN0cnVjdHVyZWREYXRhL0luc3VyYW5jZVByb3ZpZGVycy9EZWxldGVJbnN1cmFuY2VQcm92aWRlci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/PatientStructuredData/InsuranceProviders/EditInsuranceProvider.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGF0aWVudFN0cnVjdHVyZWREYXRhL0luc3VyYW5jZVByb3ZpZGVycy9FZGl0SW5zdXJhbmNlUHJvdmlkZXIuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/PatientStructuredData/InsuranceProviders/ViewInsuranceProviders.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGF0aWVudFN0cnVjdHVyZWREYXRhL0luc3VyYW5jZVByb3ZpZGVycy9WaWV3SW5zdXJhbmNlUHJvdmlkZXJzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/PatientStructuredData/Languages/CreateLanguage.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGF0aWVudFN0cnVjdHVyZWREYXRhL0xhbmd1YWdlcy9DcmVhdGVMYW5ndWFnZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/PatientStructuredData/Languages/DeleteLanguage.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGF0aWVudFN0cnVjdHVyZWREYXRhL0xhbmd1YWdlcy9EZWxldGVMYW5ndWFnZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/PatientStructuredData/Languages/EditLanguage.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGF0aWVudFN0cnVjdHVyZWREYXRhL0xhbmd1YWdlcy9FZGl0TGFuZ3VhZ2UuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/PatientStructuredData/Languages/ViewLanguages.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGF0aWVudFN0cnVjdHVyZWREYXRhL0xhbmd1YWdlcy9WaWV3TGFuZ3VhZ2VzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/PatientStructuredData/LegalStatuses/CreateLegalStatus.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGF0aWVudFN0cnVjdHVyZWREYXRhL0xlZ2FsU3RhdHVzZXMvQ3JlYXRlTGVnYWxTdGF0dXMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/PatientStructuredData/LegalStatuses/DeleteLegalStatus.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGF0aWVudFN0cnVjdHVyZWREYXRhL0xlZ2FsU3RhdHVzZXMvRGVsZXRlTGVnYWxTdGF0dXMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/PatientStructuredData/LegalStatuses/EditLegalStatus.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGF0aWVudFN0cnVjdHVyZWREYXRhL0xlZ2FsU3RhdHVzZXMvRWRpdExlZ2FsU3RhdHVzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/PatientStructuredData/LegalStatuses/ViewLegalStatuses.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGF0aWVudFN0cnVjdHVyZWREYXRhL0xlZ2FsU3RhdHVzZXMvVmlld0xlZ2FsU3RhdHVzZXMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/PatientStructuredData/MaritalStatuses/CreateMaritalStatus.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGF0aWVudFN0cnVjdHVyZWREYXRhL01hcml0YWxTdGF0dXNlcy9DcmVhdGVNYXJpdGFsU3RhdHVzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/PatientStructuredData/MaritalStatuses/DeleteMaritalStatus.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGF0aWVudFN0cnVjdHVyZWREYXRhL01hcml0YWxTdGF0dXNlcy9EZWxldGVNYXJpdGFsU3RhdHVzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/PatientStructuredData/MaritalStatuses/EditMaritalStatus.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGF0aWVudFN0cnVjdHVyZWREYXRhL01hcml0YWxTdGF0dXNlcy9FZGl0TWFyaXRhbFN0YXR1cy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/PatientStructuredData/MaritalStatuses/ViewMaritalStatuses.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGF0aWVudFN0cnVjdHVyZWREYXRhL01hcml0YWxTdGF0dXNlcy9WaWV3TWFyaXRhbFN0YXR1c2VzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/PatientStructuredData/PreferredContactTimes/CreatePreferredContactTime.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGF0aWVudFN0cnVjdHVyZWREYXRhL1ByZWZlcnJlZENvbnRhY3RUaW1lcy9DcmVhdGVQcmVmZXJyZWRDb250YWN0VGltZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/PatientStructuredData/PreferredContactTimes/DeletePreferredContactTime.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGF0aWVudFN0cnVjdHVyZWREYXRhL1ByZWZlcnJlZENvbnRhY3RUaW1lcy9EZWxldGVQcmVmZXJyZWRDb250YWN0VGltZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/PatientStructuredData/PreferredContactTimes/EditPreferredContactTime.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGF0aWVudFN0cnVjdHVyZWREYXRhL1ByZWZlcnJlZENvbnRhY3RUaW1lcy9FZGl0UHJlZmVycmVkQ29udGFjdFRpbWUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/PatientStructuredData/PreferredContactTimes/ViewPreferredContactTimes.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGF0aWVudFN0cnVjdHVyZWREYXRhL1ByZWZlcnJlZENvbnRhY3RUaW1lcy9WaWV3UHJlZmVycmVkQ29udGFjdFRpbWVzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/PatientStructuredData/PreferredModeOfContacts/CreatePreferredModeOfContact.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGF0aWVudFN0cnVjdHVyZWREYXRhL1ByZWZlcnJlZE1vZGVPZkNvbnRhY3RzL0NyZWF0ZVByZWZlcnJlZE1vZGVPZkNvbnRhY3QuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/PatientStructuredData/PreferredModeOfContacts/DeletePreferredModeOfContact.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGF0aWVudFN0cnVjdHVyZWREYXRhL1ByZWZlcnJlZE1vZGVPZkNvbnRhY3RzL0RlbGV0ZVByZWZlcnJlZE1vZGVPZkNvbnRhY3QuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/PatientStructuredData/PreferredModeOfContacts/EditPreferredModeOfContact.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGF0aWVudFN0cnVjdHVyZWREYXRhL1ByZWZlcnJlZE1vZGVPZkNvbnRhY3RzL0VkaXRQcmVmZXJyZWRNb2RlT2ZDb250YWN0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/PatientStructuredData/PreferredModeOfContacts/ViewPreferredModeOfContacts.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGF0aWVudFN0cnVjdHVyZWREYXRhL1ByZWZlcnJlZE1vZGVPZkNvbnRhY3RzL1ZpZXdQcmVmZXJyZWRNb2RlT2ZDb250YWN0cy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/PatientStructuredData/Race/CreateRace.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGF0aWVudFN0cnVjdHVyZWREYXRhL1JhY2UvQ3JlYXRlUmFjZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/PatientStructuredData/Race/DeleteRace.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGF0aWVudFN0cnVjdHVyZWREYXRhL1JhY2UvRGVsZXRlUmFjZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/PatientStructuredData/Race/EditRace.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGF0aWVudFN0cnVjdHVyZWREYXRhL1JhY2UvRWRpdFJhY2UuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/PatientStructuredData/Race/ViewRaces.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGF0aWVudFN0cnVjdHVyZWREYXRhL1JhY2UvVmlld1JhY2VzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/PatientStructuredData/Religions/CreateReligion.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGF0aWVudFN0cnVjdHVyZWREYXRhL1JlbGlnaW9ucy9DcmVhdGVSZWxpZ2lvbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/PatientStructuredData/Religions/DeleteReligion.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGF0aWVudFN0cnVjdHVyZWREYXRhL1JlbGlnaW9ucy9EZWxldGVSZWxpZ2lvbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/PatientStructuredData/Religions/EditReligion.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGF0aWVudFN0cnVjdHVyZWREYXRhL1JlbGlnaW9ucy9FZGl0UmVsaWdpb24uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/PatientStructuredData/Religions/ViewReligions.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGF0aWVudFN0cnVjdHVyZWREYXRhL1JlbGlnaW9ucy9WaWV3UmVsaWdpb25zLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/PatientStructuredData/Sexes/CreateSex.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGF0aWVudFN0cnVjdHVyZWREYXRhL1NleGVzL0NyZWF0ZVNleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/PatientStructuredData/Sexes/DeleteSex.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGF0aWVudFN0cnVjdHVyZWREYXRhL1NleGVzL0RlbGV0ZVNleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/PatientStructuredData/Sexes/EditSex.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGF0aWVudFN0cnVjdHVyZWREYXRhL1NleGVzL0VkaXRTZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/PatientStructuredData/Sexes/ViewSexes.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGF0aWVudFN0cnVjdHVyZWREYXRhL1NleGVzL1ZpZXdTZXhlcy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/PCA/CreateAssessment.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUENBL0NyZWF0ZUFzc2Vzc21lbnQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/PCA/UpdateAssessment.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUENBL1VwZGF0ZUFzc2Vzc21lbnQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/PCA/ViewAssessment.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUENBL1ZpZXdBc3Nlc3NtZW50LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/PcaStructuredData/BloodPressureRouteType/CreateBPRouteType.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGNhU3RydWN0dXJlZERhdGEvQmxvb2RQcmVzc3VyZVJvdXRlVHlwZS9DcmVhdGVCUFJvdXRlVHlwZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/PcaStructuredData/BloodPressureRouteType/EditBPRouteType.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGNhU3RydWN0dXJlZERhdGEvQmxvb2RQcmVzc3VyZVJvdXRlVHlwZS9FZGl0QlBSb3V0ZVR5cGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/PcaStructuredData/BloodPressureRouteType/ViewBPRouteTypes.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGNhU3RydWN0dXJlZERhdGEvQmxvb2RQcmVzc3VyZVJvdXRlVHlwZS9WaWV3QlBSb3V0ZVR5cGVzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/PcaStructuredData/BmiMethod/CreateBmiMethod.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGNhU3RydWN0dXJlZERhdGEvQm1pTWV0aG9kL0NyZWF0ZUJtaU1ldGhvZC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/PcaStructuredData/BmiMethod/EditBmiMethod.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGNhU3RydWN0dXJlZERhdGEvQm1pTWV0aG9kL0VkaXRCbWlNZXRob2QuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/PcaStructuredData/BmiMethod/ViewBmiMethods.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGNhU3RydWN0dXJlZERhdGEvQm1pTWV0aG9kL1ZpZXdCbWlNZXRob2RzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/PcaStructuredData/CareSystemParameter/CreateCareSystemParameter.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGNhU3RydWN0dXJlZERhdGEvQ2FyZVN5c3RlbVBhcmFtZXRlci9DcmVhdGVDYXJlU3lzdGVtUGFyYW1ldGVyLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/PcaStructuredData/CareSystemParameter/EditCareSystemParameter.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGNhU3RydWN0dXJlZERhdGEvQ2FyZVN5c3RlbVBhcmFtZXRlci9FZGl0Q2FyZVN5c3RlbVBhcmFtZXRlci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/PcaStructuredData/CareSystemParameter/ViewCareSystemParameters.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGNhU3RydWN0dXJlZERhdGEvQ2FyZVN5c3RlbVBhcmFtZXRlci9WaWV3Q2FyZVN5c3RlbVBhcmFtZXRlcnMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/PcaStructuredData/CareSystemType/CreateCareSystemType.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGNhU3RydWN0dXJlZERhdGEvQ2FyZVN5c3RlbVR5cGUvQ3JlYXRlQ2FyZVN5c3RlbVR5cGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/PcaStructuredData/CareSystemType/EditCareSystemType.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGNhU3RydWN0dXJlZERhdGEvQ2FyZVN5c3RlbVR5cGUvRWRpdENhcmVTeXN0ZW1UeXBlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/PcaStructuredData/CareSystemType/ViewCareSystemTypes.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGNhU3RydWN0dXJlZERhdGEvQ2FyZVN5c3RlbVR5cGUvVmlld0NhcmVTeXN0ZW1UeXBlcy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/PcaStructuredData/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGNhU3RydWN0dXJlZERhdGEvSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/PcaStructuredData/O2DeliveryType/CreateO2DeliveryType.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGNhU3RydWN0dXJlZERhdGEvTzJEZWxpdmVyeVR5cGUvQ3JlYXRlTzJEZWxpdmVyeVR5cGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/PcaStructuredData/O2DeliveryType/EditO2DeliveryType.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGNhU3RydWN0dXJlZERhdGEvTzJEZWxpdmVyeVR5cGUvRWRpdE8yRGVsaXZlcnlUeXBlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/PcaStructuredData/O2DeliveryType/ViewO2DeliveryTypes.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGNhU3RydWN0dXJlZERhdGEvTzJEZWxpdmVyeVR5cGUvVmlld08yRGVsaXZlcnlUeXBlcy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/PcaStructuredData/PainParameter/CreatePainParameter.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGNhU3RydWN0dXJlZERhdGEvUGFpblBhcmFtZXRlci9DcmVhdGVQYWluUGFyYW1ldGVyLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/PcaStructuredData/PainParameter/EditPainParameter.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGNhU3RydWN0dXJlZERhdGEvUGFpblBhcmFtZXRlci9FZGl0UGFpblBhcmFtZXRlci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/PcaStructuredData/PainParameter/ViewPainParameters.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGNhU3RydWN0dXJlZERhdGEvUGFpblBhcmFtZXRlci9WaWV3UGFpblBhcmFtZXRlcnMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/PcaStructuredData/PainRating/CreatePainRating.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGNhU3RydWN0dXJlZERhdGEvUGFpblJhdGluZy9DcmVhdGVQYWluUmF0aW5nLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/PcaStructuredData/PainRating/EditPainRating.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGNhU3RydWN0dXJlZERhdGEvUGFpblJhdGluZy9FZGl0UGFpblJhdGluZy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/PcaStructuredData/PainRating/ViewPainRatings.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGNhU3RydWN0dXJlZERhdGEvUGFpblJhdGluZy9WaWV3UGFpblJhdGluZ3MuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/PcaStructuredData/PainScaleType/CreatePainScaleType.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGNhU3RydWN0dXJlZERhdGEvUGFpblNjYWxlVHlwZS9DcmVhdGVQYWluU2NhbGVUeXBlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/PcaStructuredData/PainScaleType/EditPainScaleType.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGNhU3RydWN0dXJlZERhdGEvUGFpblNjYWxlVHlwZS9FZGl0UGFpblNjYWxlVHlwZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/PcaStructuredData/PainScaleType/ViewPainScaleTypes.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGNhU3RydWN0dXJlZERhdGEvUGFpblNjYWxlVHlwZS9WaWV3UGFpblNjYWxlVHlwZXMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/PcaStructuredData/PcaCommentType/CreatePcaCommentType.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGNhU3RydWN0dXJlZERhdGEvUGNhQ29tbWVudFR5cGUvQ3JlYXRlUGNhQ29tbWVudFR5cGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/PcaStructuredData/PcaCommentType/EditPcaCommentType.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGNhU3RydWN0dXJlZERhdGEvUGNhQ29tbWVudFR5cGUvRWRpdFBjYUNvbW1lbnRUeXBlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/PcaStructuredData/PcaCommentType/ViewPcaCommentTypes.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGNhU3RydWN0dXJlZERhdGEvUGNhQ29tbWVudFR5cGUvVmlld1BjYUNvbW1lbnRUeXBlcy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/PcaStructuredData/PulseRouteType/CreatePulseRouteType.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGNhU3RydWN0dXJlZERhdGEvUHVsc2VSb3V0ZVR5cGUvQ3JlYXRlUHVsc2VSb3V0ZVR5cGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/PcaStructuredData/PulseRouteType/EditPulseRouteType.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGNhU3RydWN0dXJlZERhdGEvUHVsc2VSb3V0ZVR5cGUvRWRpdFB1bHNlUm91dGVUeXBlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/PcaStructuredData/PulseRouteType/ViewPulseRouteTypes.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGNhU3RydWN0dXJlZERhdGEvUHVsc2VSb3V0ZVR5cGUvVmlld1B1bHNlUm91dGVUeXBlcy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/PcaStructuredData/TempRouteType/CreateTempRouteType.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGNhU3RydWN0dXJlZERhdGEvVGVtcFJvdXRlVHlwZS9DcmVhdGVUZW1wUm91dGVUeXBlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/PcaStructuredData/TempRouteType/EditTempRouteType.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGNhU3RydWN0dXJlZERhdGEvVGVtcFJvdXRlVHlwZS9FZGl0VGVtcFJvdXRlVHlwZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/PcaStructuredData/TempRouteType/ViewTempRouteTypes.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGNhU3RydWN0dXJlZERhdGEvVGVtcFJvdXRlVHlwZS9WaWV3VGVtcFJvdXRlVHlwZXMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/PhysicianAssessment/UpdateHistoryAndPhysical.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGh5c2ljaWFuQXNzZXNzbWVudC9VcGRhdGVIaXN0b3J5QW5kUGh5c2ljYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/PhysicianAssessment/ViewHistoryAndPhysical.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGh5c2ljaWFuQXNzZXNzbWVudC9WaWV3SGlzdG9yeUFuZFBoeXNpY2FsLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/PhysicianAssessment/_AssessmentAllergiesListPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGh5c2ljaWFuQXNzZXNzbWVudC9fQXNzZXNzbWVudEFsbGVyZ2llc0xpc3RQYXJ0aWFsLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/PhysicianAssessment/_AssessmentMedicationsListPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGh5c2ljaWFuQXNzZXNzbWVudC9fQXNzZXNzbWVudE1lZGljYXRpb25zTGlzdFBhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/PhysicianDocsStructuredData/CreateNoteType.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGh5c2ljaWFuRG9jc1N0cnVjdHVyZWREYXRhL0NyZWF0ZU5vdGVUeXBlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/PhysicianDocsStructuredData/CreatePriority.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGh5c2ljaWFuRG9jc1N0cnVjdHVyZWREYXRhL0NyZWF0ZVByaW9yaXR5LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/PhysicianDocsStructuredData/CreateVisitType.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGh5c2ljaWFuRG9jc1N0cnVjdHVyZWREYXRhL0NyZWF0ZVZpc2l0VHlwZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/PhysicianDocsStructuredData/DeleteNoteType.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGh5c2ljaWFuRG9jc1N0cnVjdHVyZWREYXRhL0RlbGV0ZU5vdGVUeXBlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/PhysicianDocsStructuredData/DeletePriority.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGh5c2ljaWFuRG9jc1N0cnVjdHVyZWREYXRhL0RlbGV0ZVByaW9yaXR5LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/PhysicianDocsStructuredData/DeleteVisitType.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGh5c2ljaWFuRG9jc1N0cnVjdHVyZWREYXRhL0RlbGV0ZVZpc2l0VHlwZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/PhysicianDocsStructuredData/EditNoteType.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGh5c2ljaWFuRG9jc1N0cnVjdHVyZWREYXRhL0VkaXROb3RlVHlwZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/PhysicianDocsStructuredData/EditPriority.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGh5c2ljaWFuRG9jc1N0cnVjdHVyZWREYXRhL0VkaXRQcmlvcml0eS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/PhysicianDocsStructuredData/EditVisitType.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGh5c2ljaWFuRG9jc1N0cnVjdHVyZWREYXRhL0VkaXRWaXNpdFR5cGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/PhysicianDocsStructuredData/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGh5c2ljaWFuRG9jc1N0cnVjdHVyZWREYXRhL0luZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/PhysicianDocsStructuredData/ViewNoteTypes.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGh5c2ljaWFuRG9jc1N0cnVjdHVyZWREYXRhL1ZpZXdOb3RlVHlwZXMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/PhysicianDocsStructuredData/ViewPriorities.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGh5c2ljaWFuRG9jc1N0cnVjdHVyZWREYXRhL1ZpZXdQcmlvcml0aWVzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/PhysicianDocsStructuredData/ViewVisitTypes.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGh5c2ljaWFuRG9jc1N0cnVjdHVyZWREYXRhL1ZpZXdWaXNpdFR5cGVzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/PhysicianStructuredData/CreatePhysician.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGh5c2ljaWFuU3RydWN0dXJlZERhdGEvQ3JlYXRlUGh5c2ljaWFuLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/PhysicianStructuredData/CreatePhysicianRole.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGh5c2ljaWFuU3RydWN0dXJlZERhdGEvQ3JlYXRlUGh5c2ljaWFuUm9sZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/PhysicianStructuredData/CreateProviderType.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGh5c2ljaWFuU3RydWN0dXJlZERhdGEvQ3JlYXRlUHJvdmlkZXJUeXBlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/PhysicianStructuredData/CreateSpecialty.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGh5c2ljaWFuU3RydWN0dXJlZERhdGEvQ3JlYXRlU3BlY2lhbHR5LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/PhysicianStructuredData/DeletePhysician.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGh5c2ljaWFuU3RydWN0dXJlZERhdGEvRGVsZXRlUGh5c2ljaWFuLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/PhysicianStructuredData/DeletePhysicianRole.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGh5c2ljaWFuU3RydWN0dXJlZERhdGEvRGVsZXRlUGh5c2ljaWFuUm9sZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/PhysicianStructuredData/DeleteProviderType.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGh5c2ljaWFuU3RydWN0dXJlZERhdGEvRGVsZXRlUHJvdmlkZXJUeXBlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/PhysicianStructuredData/DeleteSpecialty.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGh5c2ljaWFuU3RydWN0dXJlZERhdGEvRGVsZXRlU3BlY2lhbHR5LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/PhysicianStructuredData/DetailsPhysician.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGh5c2ljaWFuU3RydWN0dXJlZERhdGEvRGV0YWlsc1BoeXNpY2lhbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/PhysicianStructuredData/EditPhysician.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGh5c2ljaWFuU3RydWN0dXJlZERhdGEvRWRpdFBoeXNpY2lhbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/PhysicianStructuredData/EditPhysicianRole.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGh5c2ljaWFuU3RydWN0dXJlZERhdGEvRWRpdFBoeXNpY2lhblJvbGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/PhysicianStructuredData/EditProviderType.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGh5c2ljaWFuU3RydWN0dXJlZERhdGEvRWRpdFByb3ZpZGVyVHlwZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/PhysicianStructuredData/EditSpecialty.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGh5c2ljaWFuU3RydWN0dXJlZERhdGEvRWRpdFNwZWNpYWx0eS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/PhysicianStructuredData/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGh5c2ljaWFuU3RydWN0dXJlZERhdGEvSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/PhysicianStructuredData/ViewPhysicianRoles.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGh5c2ljaWFuU3RydWN0dXJlZERhdGEvVmlld1BoeXNpY2lhblJvbGVzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/PhysicianStructuredData/ViewPhysicians.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGh5c2ljaWFuU3RydWN0dXJlZERhdGEvVmlld1BoeXNpY2lhbnMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/PhysicianStructuredData/ViewProviderTypes.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGh5c2ljaWFuU3RydWN0dXJlZERhdGEvVmlld1Byb3ZpZGVyVHlwZXMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/PhysicianStructuredData/ViewSpecialties.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGh5c2ljaWFuU3RydWN0dXJlZERhdGEvVmlld1NwZWNpYWx0aWVzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/ReportHub/Category.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUmVwb3J0SHViL0NhdGVnb3J5LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/ReportHub/ExportReport.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUmVwb3J0SHViL0V4cG9ydFJlcG9ydC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/ReportHub/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUmVwb3J0SHViL0luZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/ReportHub/ReportView.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUmVwb3J0SHViL1JlcG9ydFZpZXcuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/Requester/CreateRequester.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUmVxdWVzdGVyL0NyZWF0ZVJlcXVlc3Rlci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/Requester/DeleteRequester.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUmVxdWVzdGVyL0RlbGV0ZVJlcXVlc3Rlci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/Requester/DetailsRequester.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUmVxdWVzdGVyL0RldGFpbHNSZXF1ZXN0ZXIuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/Requester/EditRequester.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUmVxdWVzdGVyL0VkaXRSZXF1ZXN0ZXIuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/Requester/ViewRequesters.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUmVxdWVzdGVyL1ZpZXdSZXF1ZXN0ZXJzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/RevenueCycle/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUmV2ZW51ZUN5Y2xlL0luZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/RevenueStructuredData/ChargeDefinitions/CreateChargeDefinition.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUmV2ZW51ZVN0cnVjdHVyZWREYXRhL0NoYXJnZURlZmluaXRpb25zL0NyZWF0ZUNoYXJnZURlZmluaXRpb24uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/RevenueStructuredData/ChargeDefinitions/DeleteChargeDefinition.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUmV2ZW51ZVN0cnVjdHVyZWREYXRhL0NoYXJnZURlZmluaXRpb25zL0RlbGV0ZUNoYXJnZURlZmluaXRpb24uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/RevenueStructuredData/ChargeDefinitions/DetailsChargeDefinition.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUmV2ZW51ZVN0cnVjdHVyZWREYXRhL0NoYXJnZURlZmluaXRpb25zL0RldGFpbHNDaGFyZ2VEZWZpbml0aW9uLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/RevenueStructuredData/ChargeDefinitions/EditChargeDefinition.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUmV2ZW51ZVN0cnVjdHVyZWREYXRhL0NoYXJnZURlZmluaXRpb25zL0VkaXRDaGFyZ2VEZWZpbml0aW9uLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/RevenueStructuredData/ChargeDefinitions/ViewChargeDefinitions.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUmV2ZW51ZVN0cnVjdHVyZWREYXRhL0NoYXJnZURlZmluaXRpb25zL1ZpZXdDaGFyZ2VEZWZpbml0aW9ucy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/RevenueStructuredData/DisclosureFeeType/CreateDisclosureFeeType.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUmV2ZW51ZVN0cnVjdHVyZWREYXRhL0Rpc2Nsb3N1cmVGZWVUeXBlL0NyZWF0ZURpc2Nsb3N1cmVGZWVUeXBlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/RevenueStructuredData/DisclosureFeeType/DeleteDisclosureFeeType.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUmV2ZW51ZVN0cnVjdHVyZWREYXRhL0Rpc2Nsb3N1cmVGZWVUeXBlL0RlbGV0ZURpc2Nsb3N1cmVGZWVUeXBlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/RevenueStructuredData/DisclosureFeeType/EditDisclosureFeeType.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUmV2ZW51ZVN0cnVjdHVyZWREYXRhL0Rpc2Nsb3N1cmVGZWVUeXBlL0VkaXREaXNjbG9zdXJlRmVlVHlwZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/RevenueStructuredData/DisclosureFeeType/ViewDisclosureFeeTypes.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUmV2ZW51ZVN0cnVjdHVyZWREYXRhL0Rpc2Nsb3N1cmVGZWVUeXBlL1ZpZXdEaXNjbG9zdXJlRmVlVHlwZXMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/RevenueStructuredData/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUmV2ZW51ZVN0cnVjdHVyZWREYXRhL0luZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/RevenueStructuredData/PaymentType/CreatePaymentType.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUmV2ZW51ZVN0cnVjdHVyZWREYXRhL1BheW1lbnRUeXBlL0NyZWF0ZVBheW1lbnRUeXBlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/RevenueStructuredData/PaymentType/DeletePaymentType.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUmV2ZW51ZVN0cnVjdHVyZWREYXRhL1BheW1lbnRUeXBlL0RlbGV0ZVBheW1lbnRUeXBlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/RevenueStructuredData/PaymentType/EditPaymentType.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUmV2ZW51ZVN0cnVjdHVyZWREYXRhL1BheW1lbnRUeXBlL0VkaXRQYXltZW50VHlwZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/RevenueStructuredData/PaymentType/ViewPaymentTypes.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUmV2ZW51ZVN0cnVjdHVyZWREYXRhL1BheW1lbnRUeXBlL1ZpZXdQYXltZW50VHlwZXMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/RevenueStructuredData/RevenueCodes/CreateRevenueCode.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUmV2ZW51ZVN0cnVjdHVyZWREYXRhL1JldmVudWVDb2Rlcy9DcmVhdGVSZXZlbnVlQ29kZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/RevenueStructuredData/RevenueCodes/DeleteRevenueCode.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUmV2ZW51ZVN0cnVjdHVyZWREYXRhL1JldmVudWVDb2Rlcy9EZWxldGVSZXZlbnVlQ29kZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/RevenueStructuredData/RevenueCodes/EditRevenueCode.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUmV2ZW51ZVN0cnVjdHVyZWREYXRhL1JldmVudWVDb2Rlcy9FZGl0UmV2ZW51ZUNvZGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/RevenueStructuredData/RevenueCodes/ViewRevenueCodes.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUmV2ZW51ZVN0cnVjdHVyZWREYXRhL1JldmVudWVDb2Rlcy9WaWV3UmV2ZW51ZUNvZGVzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/Session/Expired.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2Vzc2lvbi9FeHBpcmVkLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/Shared/Error.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL0Vycm9yLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/Shared/NotFound.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL05vdEZvdW5kLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/Shared/PatientBannerPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL1BhdGllbnRCYW5uZXJQYXJ0aWFsLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/Shared/RequestBannerPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL1JlcXVlc3RCYW5uZXJQYXJ0aWFsLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/Shared/_CookieConsentPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL19Db29raWVDb25zZW50UGFydGlhbC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/Shared/_EncounterMenu.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL19FbmNvdW50ZXJNZW51LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/Shared/_Layout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL19MYXlvdXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/Shared/_LoginPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL19Mb2dpblBhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/Shared/_PatientMenu.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL19QYXRpZW50TWVudS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/Shared/_RequestMenu.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL19SZXF1ZXN0TWVudS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/Shared/_StatusMessages.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL19TdGF0dXNNZXNzYWdlcy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/Shared/_ValidationScriptsPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL19WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/UserManagementStructuredData/Facility/CreateFacility.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvVXNlck1hbmFnZW1lbnRTdHJ1Y3R1cmVkRGF0YS9GYWNpbGl0eS9DcmVhdGVGYWNpbGl0eS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/UserManagementStructuredData/Facility/DeleteFacility.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvVXNlck1hbmFnZW1lbnRTdHJ1Y3R1cmVkRGF0YS9GYWNpbGl0eS9EZWxldGVGYWNpbGl0eS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/UserManagementStructuredData/Facility/DetailsFacility.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvVXNlck1hbmFnZW1lbnRTdHJ1Y3R1cmVkRGF0YS9GYWNpbGl0eS9EZXRhaWxzRmFjaWxpdHkuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/UserManagementStructuredData/Facility/EditFacility.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvVXNlck1hbmFnZW1lbnRTdHJ1Y3R1cmVkRGF0YS9GYWNpbGl0eS9FZGl0RmFjaWxpdHkuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/UserManagementStructuredData/Facility/ViewFacilities.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvVXNlck1hbmFnZW1lbnRTdHJ1Y3R1cmVkRGF0YS9GYWNpbGl0eS9WaWV3RmFjaWxpdGllcy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/UserManagementStructuredData/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvVXNlck1hbmFnZW1lbnRTdHJ1Y3R1cmVkRGF0YS9JbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/UserManagementStructuredData/Permissions/CreatePermission.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvVXNlck1hbmFnZW1lbnRTdHJ1Y3R1cmVkRGF0YS9QZXJtaXNzaW9ucy9DcmVhdGVQZXJtaXNzaW9uLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/UserManagementStructuredData/Permissions/DeletePermission.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvVXNlck1hbmFnZW1lbnRTdHJ1Y3R1cmVkRGF0YS9QZXJtaXNzaW9ucy9EZWxldGVQZXJtaXNzaW9uLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/UserManagementStructuredData/Permissions/EditPermission.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvVXNlck1hbmFnZW1lbnRTdHJ1Y3R1cmVkRGF0YS9QZXJtaXNzaW9ucy9FZGl0UGVybWlzc2lvbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/UserManagementStructuredData/Permissions/ViewPermissions.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvVXNlck1hbmFnZW1lbnRTdHJ1Y3R1cmVkRGF0YS9QZXJtaXNzaW9ucy9WaWV3UGVybWlzc2lvbnMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/UserManagementStructuredData/Program/CreateProgram.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvVXNlck1hbmFnZW1lbnRTdHJ1Y3R1cmVkRGF0YS9Qcm9ncmFtL0NyZWF0ZVByb2dyYW0uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/UserManagementStructuredData/Program/DeleteProgram.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvVXNlck1hbmFnZW1lbnRTdHJ1Y3R1cmVkRGF0YS9Qcm9ncmFtL0RlbGV0ZVByb2dyYW0uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/UserManagementStructuredData/Program/EditProgram.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvVXNlck1hbmFnZW1lbnRTdHJ1Y3R1cmVkRGF0YS9Qcm9ncmFtL0VkaXRQcm9ncmFtLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/UserManagementStructuredData/Program/ViewPrograms.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvVXNlck1hbmFnZW1lbnRTdHJ1Y3R1cmVkRGF0YS9Qcm9ncmFtL1ZpZXdQcm9ncmFtcy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/UserManagementStructuredData/ProgramFacility/CreateProgramFacility.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvVXNlck1hbmFnZW1lbnRTdHJ1Y3R1cmVkRGF0YS9Qcm9ncmFtRmFjaWxpdHkvQ3JlYXRlUHJvZ3JhbUZhY2lsaXR5LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/UserManagementStructuredData/ProgramFacility/DeleteProgramFacility.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvVXNlck1hbmFnZW1lbnRTdHJ1Y3R1cmVkRGF0YS9Qcm9ncmFtRmFjaWxpdHkvRGVsZXRlUHJvZ3JhbUZhY2lsaXR5LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/UserManagementStructuredData/ProgramFacility/EditProgramFacility.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvVXNlck1hbmFnZW1lbnRTdHJ1Y3R1cmVkRGF0YS9Qcm9ncmFtRmFjaWxpdHkvRWRpdFByb2dyYW1GYWNpbGl0eS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/UserManagementStructuredData/ProgramFacility/ViewProgramFacilities.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvVXNlck1hbmFnZW1lbnRTdHJ1Y3R1cmVkRGF0YS9Qcm9ncmFtRmFjaWxpdHkvVmlld1Byb2dyYW1GYWNpbGl0aWVzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/UserManagementStructuredData/RolePermissions/EditRolePermissions.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvVXNlck1hbmFnZW1lbnRTdHJ1Y3R1cmVkRGF0YS9Sb2xlUGVybWlzc2lvbnMvRWRpdFJvbGVQZXJtaXNzaW9ucy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/UserManagementStructuredData/RolePermissions/ViewRolePermissions.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvVXNlck1hbmFnZW1lbnRTdHJ1Y3R1cmVkRGF0YS9Sb2xlUGVybWlzc2lvbnMvVmlld1JvbGVQZXJtaXNzaW9ucy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/UserManagementStructuredData/Roles/CreateRole.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvVXNlck1hbmFnZW1lbnRTdHJ1Y3R1cmVkRGF0YS9Sb2xlcy9DcmVhdGVSb2xlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/UserManagementStructuredData/Roles/DeleteRole.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvVXNlck1hbmFnZW1lbnRTdHJ1Y3R1cmVkRGF0YS9Sb2xlcy9EZWxldGVSb2xlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/UserManagementStructuredData/Roles/EditRole.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvVXNlck1hbmFnZW1lbnRTdHJ1Y3R1cmVkRGF0YS9Sb2xlcy9FZGl0Um9sZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/UserManagementStructuredData/Roles/ViewRoles.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvVXNlck1hbmFnZW1lbnRTdHJ1Y3R1cmVkRGF0YS9Sb2xlcy9WaWV3Um9sZXMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/UserManagementStructuredData/SecurityQuestions/CreateSecurityQuestion.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvVXNlck1hbmFnZW1lbnRTdHJ1Y3R1cmVkRGF0YS9TZWN1cml0eVF1ZXN0aW9ucy9DcmVhdGVTZWN1cml0eVF1ZXN0aW9uLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/UserManagementStructuredData/SecurityQuestions/DeleteSecurityQuestion.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvVXNlck1hbmFnZW1lbnRTdHJ1Y3R1cmVkRGF0YS9TZWN1cml0eVF1ZXN0aW9ucy9EZWxldGVTZWN1cml0eVF1ZXN0aW9uLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/UserManagementStructuredData/SecurityQuestions/EditSecurityQuestion.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvVXNlck1hbmFnZW1lbnRTdHJ1Y3R1cmVkRGF0YS9TZWN1cml0eVF1ZXN0aW9ucy9FZGl0U2VjdXJpdHlRdWVzdGlvbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/UserManagementStructuredData/SecurityQuestions/ViewSecurityQuestions.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvVXNlck1hbmFnZW1lbnRTdHJ1Y3R1cmVkRGF0YS9TZWN1cml0eVF1ZXN0aW9ucy9WaWV3U2VjdXJpdHlRdWVzdGlvbnMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/UserManagementStructuredData/Users/DetailsUser.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvVXNlck1hbmFnZW1lbnRTdHJ1Y3R1cmVkRGF0YS9Vc2Vycy9EZXRhaWxzVXNlci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/UserManagementStructuredData/Users/EditUser.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvVXNlck1hbmFnZW1lbnRTdHJ1Y3R1cmVkRGF0YS9Vc2Vycy9FZGl0VXNlci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/UserManagementStructuredData/Users/ViewUsers.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvVXNlck1hbmFnZW1lbnRTdHJ1Y3R1cmVkRGF0YS9Vc2Vycy9WaWV3VXNlcnMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/UserManagementStructuredData/UsersInProgram/EditUsersInProgram.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvVXNlck1hbmFnZW1lbnRTdHJ1Y3R1cmVkRGF0YS9Vc2Vyc0luUHJvZ3JhbS9FZGl0VXNlcnNJblByb2dyYW0uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/UserManagementStructuredData/UsersInProgram/ViewUsersInProgram.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvVXNlck1hbmFnZW1lbnRTdHJ1Y3R1cmVkRGF0YS9Vc2Vyc0luUHJvZ3JhbS9WaWV3VXNlcnNJblByb2dyYW0uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/UserManagementStructuredData/UsersInRole/EditUsersInRole.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvVXNlck1hbmFnZW1lbnRTdHJ1Y3R1cmVkRGF0YS9Vc2Vyc0luUm9sZS9FZGl0VXNlcnNJblJvbGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/UserManagementStructuredData/UsersInRole/ViewUsersInRole.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvVXNlck1hbmFnZW1lbnRTdHJ1Y3R1cmVkRGF0YS9Vc2Vyc0luUm9sZS9WaWV3VXNlcnNJblJvbGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/_ViewImports.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvX1ZpZXdJbXBvcnRzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/barrymcclainrx/webstorm/TEST-mcclain-113/HITforISProject-master/IS_Proj_HIT/Views/_ViewStart.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvX1ZpZXdTdGFydC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 

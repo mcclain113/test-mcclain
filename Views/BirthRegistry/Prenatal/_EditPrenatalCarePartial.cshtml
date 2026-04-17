@@ -1,0 +1,666 @@
+@model IS_Proj_HIT.ViewModels.BirthRegistry.PrenatalCareViewModel
+
+<div class="card">
+    <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+        <h4 class="mb-0">
+            <i class="fas fa-heartbeat mr-2"></i>Prenatal Care
+        </h4>
+        @if (ViewBag.Mode == "edit")
+        {
+            <span class="badge badge-warning text-white">Edit Mode</span>
+        }
+    </div>
+    <div class="card-body">
+        <input type="hidden" value="@Model.BirthId" id="Prenatal_BirthId" />
+        <input type="hidden" value="@Model.PrenatalId" id="Prenatal_PrenatalId" />
+
+        <div id="editPrenatalAccordion">
+
+            <!-- SECTION 1: Prenatal Care Information -->
+            <div class="card">
+                <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center" id="edit-prenatal-heading1">
+                    <h5 class="mb-0">
+                        <button class="btn btn-block text-left text-white" type="button"
+                                data-target="#edit-prenatal-collapse1" 
+                                data-toggle="collapse"
+                                aria-expanded="true"
+                                aria-controls="edit-prenatal-collapse1">
+                            <i class="fas fa-calendar-check"></i> 1. Prenatal Care Information
+                        </button>
+                    </h5>
+                    <span class="checkmark accordion-checkmark">&#10004;</span>
+                </div>
+                <div id="edit-prenatal-collapse1" class="collapse show" aria-labelledby="edit-prenatal-heading1" data-parent="@(ViewBag.Mode == "edit" ? "" : "#editPrenatalAccordion")">
+                    <div class="card-body">
+                        <div class="alert-area"></div>
+                        
+                        <div class="form-group">
+                            <label for="DateOfFirstVisit" class="control-label font-weight-bold">Date of First Prenatal Care Visit</label>
+                            <input type="date" 
+                                   id="DateOfFirstVisit"
+                                   name="Prenatal.DateOfFirstVisit" 
+                                   value="@Model.DateOfFirstVisit?.ToString("yyyy-MM-dd")"
+                                   class="form-control validation-trigger date-field"
+                                   data-validation-group="prenatal1"
+                                   @(Model.NoPrenatalCare ? "disabled" : "") />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="DateOfLastVisit" class="control-label font-weight-bold">Date of Last Prenatal Care Visit</label>
+                            <input type="date" 
+                                   id="DateOfLastVisit"
+                                   name="Prenatal.DateOfLastVisit" 
+                                   value="@Model.DateOfLastVisit?.ToString("yyyy-MM-dd")"
+                                   class="form-control date-field" />
+                        </div>
+
+                        <div class="form-group mt-3">
+                            <label for="TotalNumberPrenatalVisits" class="control-label font-weight-bold">Total Number of Prenatal Visits</label>
+                            <input type="number" 
+                                   id="TotalNumberPrenatalVisits"
+                                   name="Prenatal.TotalNumberPrenatalVisits" 
+                                   value="@Model.TotalNumberPrenatalVisits"
+                                   min="0" 
+                                   max="99"
+                                   class="form-control validation-trigger" 
+                                   data-validation-group="prenatal1"
+                                   @(Model.NoPrenatalCare ? "disabled" : "") />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="DescPrenatalCare" class="control-label font-weight-bold">Additional Prenatal Care Details</label>
+                            <textarea id="DescPrenatalCare"
+                                      name="Prenatal.DescPrenatalCare" 
+                                      class="form-control"
+                                      rows="3"
+                                      placeholder="Any additional details about prenatal care...">@Model.DescPrenatalCare</textarea>
+                        </div>
+
+                        <div class="form-check mt-3">
+                            <input type="checkbox" 
+                                   id="no-prenatal-care"
+                                   name="Prenatal.NoPrenatalCare"
+                                   @(Model.NoPrenatalCare ? "checked" : "")
+                                   class="form-check-input validation-trigger"
+                                   data-validation-group="prenatal1" 
+                                   data-mutually-exclusive="true" />
+                            <label class="form-check-label" for="no-prenatal-care">No prenatal care</label>
+                        </div>
+
+                        @if (ViewBag.Mode != "edit")
+                        {
+                            <div class="next-button-container text-right mt-4">
+                                <button type="button" class="btn btn-primary next-accordion-btn"
+                                    data-target-collapse="#edit-prenatal-collapse2" disabled>
+                                    Next <i class="fas fa-arrow-right"></i>
+                                </button>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECTION 2: Mother's Weight & Height -->
+            <div class="card">
+                <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center" id="edit-prenatal-heading2">
+                    <h5 class="mb-0">
+                        <button class="btn btn-block text-left text-white" type="button"
+                                data-target="#edit-prenatal-collapse2" 
+                                data-toggle="collapse"
+                                aria-expanded="@(ViewBag.Mode == "edit" ? "true" : "false")"
+                                aria-controls="edit-prenatal-collapse2">
+                            <i class="fas fa-ruler-vertical"></i> 2. Mother's Weight & Height
+                        </button>
+                    </h5>
+                    <span class="checkmark accordion-checkmark">&#10004;</span>
+                </div>
+                <div id="edit-prenatal-collapse2" class="collapse @(ViewBag.Mode == "edit" ? "show" : "")" aria-labelledby="edit-prenatal-heading2" data-parent="@(ViewBag.Mode == "edit" ? "" : "#editPrenatalAccordion")">
+                    <div class="card-body">
+                        <div class="alert-area"></div>
+                        
+                        <div class="form-group">
+                            <label for="MothersHeightInInches" class="control-label font-weight-bold">Mother's Height (inches)</label>
+                            <input type="number" 
+                                   id="MothersHeightInInches"
+                                   name="Prenatal.MothersHeightInInches" 
+                                   value="@Model.MothersHeightInInches"
+                                   step="0.1" 
+                                   min="36" 
+                                   max="84"
+                                   class="form-control validation-trigger" 
+                                   data-validation-group="prenatal2" 
+                                   placeholder="e.g., 65.5" />
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="PrepregnancyWeightInLbs" class="control-label font-weight-bold">Pre-pregnancy Weight (lbs)</label>
+                            <input type="number" 
+                                   id="PrepregnancyWeightInLbs"
+                                   name="Prenatal.PrepregnancyWeightInLbs" 
+                                   value="@Model.PrepregnancyWeightInLbs"
+                                   step="0.1" 
+                                   min="50" 
+                                   max="500"
+                                   class="form-control validation-trigger" 
+                                   data-validation-group="prenatal2" />
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="WeightAtDeliveryInLbs" class="control-label font-weight-bold">Weight at Delivery (lbs)</label>
+                            <input type="number" 
+                                   id="WeightAtDeliveryInLbs"
+                                   name="Prenatal.WeightAtDeliveryInLbs" 
+                                   value="@Model.WeightAtDeliveryInLbs"
+                                   step="0.1" 
+                                   min="50" 
+                                   max="500"
+                                   class="form-control validation-trigger" 
+                                   data-validation-group="prenatal2" />
+                        </div>
+
+                        @if (ViewBag.Mode != "edit")
+                        {
+                            <div class="next-button-container text-right mt-4">
+                                <button type="button" class="btn btn-primary next-accordion-btn"
+                                    data-target-collapse="#edit-prenatal-collapse3" disabled>
+                                    Next <i class="fas fa-arrow-right"></i>
+                                </button>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECTION 3: Menses -->
+            <div class="card">
+                <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center" id="edit-prenatal-heading3">
+                    <h5 class="mb-0">
+                        <button class="btn btn-block text-left text-white" type="button"
+                                data-target="#edit-prenatal-collapse3" 
+                                data-toggle="collapse"
+                                aria-expanded="@(ViewBag.Mode == "edit" ? "true" : "false")"
+                                aria-controls="edit-prenatal-collapse3">
+                            <i class="fas fa-calendar-alt mr-2"></i>3. Menses
+                        </button>
+                    </h5>
+                    <span class="checkmark accordion-checkmark">&#10004;</span>
+                </div>
+                <div id="edit-prenatal-collapse3" class="collapse @(ViewBag.Mode == "edit" ? "show" : "")" aria-labelledby="edit-prenatal-heading3" data-parent="@(ViewBag.Mode == "edit" ? "" : "#editPrenatalAccordion")">
+                    <div class="card-body">
+                        <div class="alert-area"></div>
+                        
+                        <div class="form-group">
+                            <label for="DateLastPeriod" class="control-label font-weight-bold">Date of Last Normal Menses</label>
+                            <input type="date" 
+                                   id="DateLastPeriod"
+                                   name="Prenatal.DateLastPeriod" 
+                                   value="@Model.DateLastPeriod?.ToString("yyyy-MM-dd")"
+                                   class="form-control validation-trigger date-field"
+                                   data-validation-group="prenatal3" />
+                        </div>
+
+                        @if (ViewBag.Mode != "edit")
+                        {
+                            <div class="next-button-container text-right mt-4">
+                                <button type="button" class="btn btn-primary next-accordion-btn"
+                                    data-target-collapse="#edit-prenatal-collapse4" disabled>
+                                    Next <i class="fas fa-arrow-right"></i>
+                                </button>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECTION 4: Pregnancy History -->
+            <div class="card">
+                <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center" id="edit-prenatal-heading4">
+                    <h5 class="mb-0">
+                        <button class="btn btn-block text-left text-white" type="button"
+                                data-target="#edit-prenatal-collapse4" 
+                                data-toggle="collapse"
+                                aria-expanded="@(ViewBag.Mode == "edit" ? "true" : "false")"
+                                aria-controls="edit-prenatal-collapse4">
+                            <i class="fas fa-history mr-2"></i>4. Pregnancy History
+                        </button>
+                    </h5>
+                    <span class="checkmark accordion-checkmark">&#10004;</span>
+                </div>
+                <div id="edit-prenatal-collapse4" class="collapse @(ViewBag.Mode == "edit" ? "show" : "")" aria-labelledby="edit-prenatal-heading4" data-parent="@(ViewBag.Mode == "edit" ? "" : "#editPrenatalAccordion")">
+                    <div class="card-body">
+                        <div class="alert-area"></div>
+                        
+                        <div class="form-group">
+                            <label for="PrevLiveBirthsAmountStillLiving" class="control-label font-weight-bold">
+                                Number of Previous Live Births Now Living
+                            </label>
+                            <input type="number" 
+                                   id="PrevLiveBirthsAmountStillLiving"
+                                   name="Prenatal.PrevLiveBirthsAmountStillLiving" 
+                                   value="@Model.PrevLiveBirthsAmountStillLiving"
+                                   class="form-control validation-trigger" 
+                                   min="0"
+                                   data-validation-group="prenatal4" />
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="PrevLiveBirthsAmountNotLiving" class="control-label font-weight-bold">Previous live births now deceased</label>
+                            <input type="number" 
+                                   id="PrevLiveBirthsAmountNotLiving"
+                                   name="Prenatal.PrevLiveBirthsAmountNotLiving" 
+                                   value="@Model.PrevLiveBirthsAmountNotLiving"
+                                   class="form-control validation-trigger" 
+                                   min="0"
+                                   data-validation-group="prenatal4" />
+                        </div>
+                        
+                        <div class="form-group mt-3">
+                            <label for="NumberOfOtherPregnancyOutcomes" class="control-label font-weight-bold">Number of Other Pregnancy Outcomes</label>
+                            <input type="number" 
+                                   id="NumberOfOtherPregnancyOutcomes"
+                                   name="Prenatal.NumberOfOtherPregnancyOutcomes" 
+                                   value="@Model.NumberOfOtherPregnancyOutcomes"
+                                   class="form-control validation-trigger" 
+                                   min="0"
+                                   data-validation-group="prenatal4" />
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="DateOfLastLiveBirth" class="control-label font-weight-bold">Date of Last Live Birth</label>
+                            <input type="date" 
+                                   id="DateOfLastLiveBirth"
+                                   name="Prenatal.DateOfLastLiveBirth" 
+                                   value="@Model.DateOfLastLiveBirth?.ToString("yyyy-MM-dd")"
+                                   class="form-control date-field" />
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="DateOfLastOtherPregnancyOutcome" class="control-label font-weight-bold">Date of Last Other Pregnancy Outcome</label>
+                            <input type="date" 
+                                   id="DateOfLastOtherPregnancyOutcome"
+                                   name="Prenatal.DateOfLastOtherPregnancyOutcome" 
+                                   value="@Model.DateOfLastOtherPregnancyOutcome?.ToString("yyyy-MM-dd")"
+                                   class="form-control date-field" />
+                        </div>
+
+                        @if (ViewBag.Mode != "edit")
+                        {
+                            <div class="next-button-container text-right mt-4">
+                                <button type="button" class="btn btn-primary next-accordion-btn"
+                                    data-target-collapse="#edit-prenatal-collapse5" disabled>
+                                    Next <i class="fas fa-arrow-right"></i>
+                                </button>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECTION 5: Risk Factors -->
+            <div class="card">
+                <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center" id="edit-prenatal-heading5">
+                    <h5 class="mb-0">
+                        <button class="btn btn-block text-left text-white" type="button"
+                                data-target="#edit-prenatal-collapse5"
+                                data-toggle="collapse"
+                                aria-expanded="@(ViewBag.Mode == "edit" ? "true" : "false")"
+                                aria-controls="edit-prenatal-collapse5">
+                            <i class="fas fa-exclamation-triangle mr-2"></i>5. Risk Factors
+                        </button>
+                    </h5>
+                    <span class="checkmark accordion-checkmark">&#10004;</span>
+                </div>
+                <div id="edit-prenatal-collapse5" class="collapse @(ViewBag.Mode == "edit" ? "show" : "")" aria-labelledby="edit-prenatal-heading5" data-parent="@(ViewBag.Mode == "edit" ? "" : "#editPrenatalAccordion")">
+                    <div class="card-body">
+                        <div class="alert-area"></div>
+                        
+                        <p class="mb-2">Select all risk factors that apply for this pregnancy.</p>
+                        @foreach (var riskFactor in Model.PregnancyRiskFactors)
+                        {
+                            <div class="form-check">
+                                <input type="checkbox" 
+                                       name="Prenatal.SelectedRiskFactorIds" 
+                                       value="@riskFactor.Value"
+                                       class="form-check-input risk-checkbox validation-trigger" 
+                                       id="risk-@riskFactor.Value"
+                                       data-validation-group="prenatal5"
+                                       @(Model.SelectedRiskFactorIds.Contains(byte.Parse(riskFactor.Value)) ? "checked" : "")
+                                       @(Model.NoRiskFactors ? "disabled" : "") />
+                                <label class="form-check-label" for="risk-@riskFactor.Value">@riskFactor.Text</label>
+                            </div>
+                        }
+
+                        <div class="form-check mt-3">
+                            <input type="checkbox"
+                                   id="edit-infertility"
+                                   name="Prenatal.InfertilityTreatmentReceived"
+                                   @(Model.InfertilityTreatmentReceived ? "checked" : "")
+                                   class="form-check-input risk-checkbox validation-trigger"
+                                   data-validation-group="prenatal5"
+                                   @(Model.NoRiskFactors ? "disabled" : "") />
+                            <label class="form-check-label" for="edit-infertility">Pregnancy resulted from infertility treatment</label>
+                        </div>
+
+                        <div class="form-check mt-2">
+                            <input type="checkbox"
+                                   id="PreviousCesareanDelivery"
+                                   name="Prenatal.PreviousCesareanDelivery"
+                                   @(Model.PreviousCesareanDelivery ? "checked" : "")
+                                   class="form-check-input risk-checkbox validation-trigger"
+                                   data-validation-group="prenatal5" 
+                                   data-special-trigger="cesarean"
+                                   @(Model.NoRiskFactors ? "disabled" : "") />
+                            <label class="form-check-label" for="PreviousCesareanDelivery">Mother had a previous cesarean delivery</label>
+                        </div>
+                        
+                        <div class="form-group ml-4 mt-1 @(Model.PreviousCesareanDelivery ? "" : "d-none")" id="prior-cesarean-group">
+                            <label for="NumberOfPriorCesareanBirths" class="control-label">Number of prior cesareans</label>
+                            <input type="number" 
+                                   id="NumberOfPriorCesareanBirths"
+                                   name="Prenatal.NumberOfPriorCesareanBirths" 
+                                   value="@Model.NumberOfPriorCesareanBirths"
+                                   class="form-control validation-trigger"
+                                   style="width:120px" 
+                                   min="1"
+                                   data-validation-group="prenatal5" />
+                        </div>
+
+                        <div class="form-check mt-4">
+                            <label class="font-weight-bold">Smoking History:</label>
+                            <div class="form-check ml-3">
+                                <input type="checkbox"
+                                       id="SmokingThreeMonthsBeforePregnancy"
+                                       name="Prenatal.SmokingThreeMonthsBeforePregnancy"
+                                       @(Model.SmokingThreeMonthsBeforePregnancy ? "checked" : "")
+                                       class="form-check-input risk-checkbox validation-trigger"
+                                       data-validation-group="prenatal5"
+                                       @(Model.NoRiskFactors ? "disabled" : "") />
+                                <label class="form-check-label" for="SmokingThreeMonthsBeforePregnancy">Smoking 3 months before pregnancy</label>
+                            </div>
+                            <div class="form-check ml-3">
+                                <input type="checkbox"
+                                       id="SmokingFirstTrimester"
+                                       name="Prenatal.SmokingFirstTrimester"
+                                       @(Model.SmokingFirstTrimester ? "checked" : "")
+                                       class="form-check-input risk-checkbox validation-trigger"
+                                       data-validation-group="prenatal5"
+                                       @(Model.NoRiskFactors ? "disabled" : "") />
+                                <label class="form-check-label" for="SmokingFirstTrimester">Smoking first trimester</label>
+                            </div>
+                            <div class="form-check ml-3">
+                                <input type="checkbox"
+                                       id="SmokingSecondTrimester"
+                                       name="Prenatal.SmokingSecondTrimester"
+                                       @(Model.SmokingSecondTrimester ? "checked" : "")
+                                       class="form-check-input risk-checkbox validation-trigger"
+                                       data-validation-group="prenatal5"
+                                       @(Model.NoRiskFactors ? "disabled" : "") />
+                                <label class="form-check-label" for="SmokingSecondTrimester">Smoking second trimester</label>
+                            </div>
+                            <div class="form-check ml-3">
+                                <input type="checkbox"
+                                   id="SmokingThirdTrimester"
+                                   name="Prenatal.SmokingThirdTrimester"
+                                   @(Model.SmokingThirdTrimester ? "checked" : "")
+                                   class="form-check-input risk-checkbox validation-trigger"
+                                   data-validation-group="prenatal5"
+                                   @(Model.NoRiskFactors ? "disabled" : "") />
+                                <label class="form-check-label" for="SmokingThirdTrimester">Smoking third trimester</label>
+                            </div>
+                        </div>
+
+                        <div class="form-check mt-3">
+                            <input type="checkbox"
+                                   id="none-risk"
+                                   name="Prenatal.NoRiskFactors"
+                                   @(Model.NoRiskFactors ? "checked" : "")
+                                   class="form-check-input validation-trigger"
+                                   data-validation-group="prenatal5"
+                                   data-mutually-exclusive="true" />
+                            <label class="form-check-label" for="none-risk">None of the above</label>
+                        </div>
+
+                        @if (ViewBag.Mode != "edit")
+                        {
+                            <div class="next-button-container text-right mt-4">
+                                <button type="button" class="btn btn-primary next-accordion-btn"
+                                    data-target-collapse="#edit-prenatal-collapse6" disabled>
+                                    Next <i class="fas fa-arrow-right"></i>
+                                </button>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECTION 6: Infections -->
+            <div class="card">
+                <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center" id="edit-prenatal-heading6">
+                    <h5 class="mb-0">
+                        <button class="btn btn-block text-left text-white" type="button"
+                                data-target="#edit-prenatal-collapse6"
+                                data-toggle="collapse"
+                                aria-expanded="@(ViewBag.Mode == "edit" ? "true" : "false")"
+                                aria-controls="edit-prenatal-collapse6">
+                            <i class="fas fa-stethoscope"></i> 6. Infections
+                        </button>
+                    </h5>
+                    <span class="checkmark accordion-checkmark">&#10004;</span>
+                </div>
+                <div id="edit-prenatal-collapse6" class="collapse @(ViewBag.Mode == "edit" ? "show" : "")" aria-labelledby="edit-prenatal-heading6" data-parent="@(ViewBag.Mode == "edit" ? "" : "#editPrenatalAccordion")">
+                    <div class="card-body">
+                        <div class="alert-area"></div>
+                        
+                        <p class="mb-2">Select all infections present during pregnancy.</p>
+                        @foreach (var infection in Model.PregnancyInfections)
+                        {
+                            <div class="form-check">
+                                <input type="checkbox" 
+                                       name="Prenatal.SelectedInfectionIds" 
+                                       value="@infection.Value"
+                                       class="form-check-input infection-checkbox validation-trigger"
+                                       id="infection-@infection.Value" 
+                                       data-validation-group="prenatal6"
+                                       @(Model.SelectedInfectionIds.Contains(byte.Parse(infection.Value)) ? "checked" : "")
+                                       @(Model.NoInfections ? "disabled" : "") />
+                                <label class="form-check-label" for="infection-@infection.Value">@infection.Text</label>
+                            </div>
+                        }
+                        
+                        <div class="form-check mt-3">
+                            <input type="checkbox"
+                                   id="none-infection"
+                                   name="Prenatal.NoInfections"
+                                   @(Model.NoInfections ? "checked" : "")
+                                   class="form-check-input validation-trigger"
+                                   data-validation-group="prenatal6"
+                                   data-mutually-exclusive="true" />
+                            <label class="form-check-label" for="none-infection">None of the above</label>
+                        </div>
+
+                        @if (ViewBag.Mode != "edit")
+                        {
+                            <div class="next-button-container text-right mt-4">
+                                <button type="button" class="btn btn-primary next-accordion-btn"
+                                    data-target-collapse="#edit-prenatal-collapse7" disabled>
+                                    Next <i class="fas fa-arrow-right"></i>
+                                </button>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECTION 7: Obstetric Procedures -->
+            <div class="card">
+                <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center" id="edit-prenatal-heading7">
+                    <h5 class="mb-0">
+                        <button class="btn btn-block text-left text-white" type="button"
+                                data-target="#edit-prenatal-collapse7" 
+                                data-toggle="collapse"
+                                aria-expanded="@(ViewBag.Mode == "edit" ? "true" : "false")"
+                                aria-controls="edit-prenatal-collapse7">
+                            <i class="fas fa-procedures mr-2"></i>7. Obstetric Procedures
+                        </button>
+                    </h5>
+                    <span class="checkmark accordion-checkmark">&#10004;</span>
+                </div>
+                <div id="edit-prenatal-collapse7" class="collapse @(ViewBag.Mode == "edit" ? "show" : "")" aria-labelledby="edit-prenatal-heading7" data-parent="@(ViewBag.Mode == "edit" ? "" : "#editPrenatalAccordion")">
+                    <div class="card-body">
+                        <div class="alert-area"></div>
+                        
+                        <p class="mb-2">Select as applicable.</p>
+
+                        <div class="form-check">
+                            <input type="checkbox"
+                                   id="ExternalCephalicVersion"
+                                   name="Prenatal.ExternalCephalicVersion"
+                                   @(Model.ExternalCephalicVersion ? "checked" : "")
+                                   class="form-check-input ob-checkbox validation-trigger"
+                                   data-validation-group="prenatal7" 
+                                   data-special-trigger="ecv"
+                                   @(Model.NoObstetricProcedures ? "disabled" : "") />
+                            <label class="form-check-label" for="ExternalCephalicVersion">External Cephalic Version</label>
+                        </div>
+
+                        <div class="ml-3 mt-2 @(Model.ExternalCephalicVersion ? "" : "d-none")" id="ecv-outcome-group">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input validation-trigger" 
+                                       type="radio"
+                                       name="Prenatal.IsExternalCephalicVersionSuccessful" 
+                                       id="ecv-success" 
+                                       value="true"
+                                       @(Model.IsExternalCephalicVersionSuccessful == true ? "checked" : "")
+                                       data-validation-group="prenatal7" />
+                                <label class="form-check-label" for="ecv-success">Successful</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input validation-trigger" 
+                                       type="radio"
+                                       name="Prenatal.IsExternalCephalicVersionSuccessful" 
+                                       id="ecv-failed" 
+                                       value="false"
+                                       @(Model.IsExternalCephalicVersionSuccessful == false ? "checked" : "")
+                                       data-validation-group="prenatal7" />
+                                <label class="form-check-label" for="ecv-failed">Failed</label>
+                            </div>
+                        </div>
+
+                        <div class="form-check mt-2">
+                            <input type="checkbox"
+                                   id="CervicalCerclageProcedure"
+                                   name="Prenatal.CervicalCerclageProcedure"
+                                   @(Model.CervicalCerclageProcedure ? "checked" : "")
+                                   class="form-check-input ob-checkbox validation-trigger"
+                                   data-validation-group="prenatal7"
+                                   @(Model.NoObstetricProcedures ? "disabled" : "") />
+                            <label class="form-check-label" for="CervicalCerclageProcedure">Cervical cerclage procedure</label>
+                        </div>
+
+                        <div class="form-check mt-2">
+                            <input type="checkbox"
+                                   id="TocolysisProcedure"
+                                   name="Prenatal.TocolysisProcedure"
+                                   @(Model.TocolysisProcedure ? "checked" : "")
+                                   class="form-check-input ob-checkbox validation-trigger"
+                                   data-validation-group="prenatal7"
+                                   @(Model.NoObstetricProcedures ? "disabled" : "") />
+                            <label class="form-check-label" for="TocolysisProcedure">Tocolysis procedure</label>
+                        </div>
+
+                        <div class="form-group mt-3">
+                            <label for="DescInfertilityTreatment" class="control-label font-weight-bold">Infertility Treatment Details</label>
+                            <textarea id="DescInfertilityTreatment"
+                                      name="Prenatal.DescInfertilityTreatment" 
+                                      class="form-control" 
+                                      rows="3" 
+                                      placeholder="Describe infertility treatments if any...">@Model.DescInfertilityTreatment</textarea>
+                        </div>
+
+                        <div class="form-check mt-3">
+                            <input type="checkbox"
+                                   id="none-ob"
+                                   name="Prenatal.NoObstetricProcedures"
+                                   @(Model.NoObstetricProcedures ? "checked" : "")
+                                   class="form-check-input validation-trigger" 
+                                   data-validation-group="prenatal7" 
+                                   data-mutually-exclusive="true" />
+                            <label class="form-check-label" for="none-ob">No obstetrical procedures</label>
+                        </div>
+
+                        @if (ViewBag.Mode != "edit")
+                        {
+                            <div class="next-button-container text-right mt-4">
+                                <button type="button" class="btn btn-primary next-accordion-btn"
+                                    data-target-collapse="#edit-prenatal-collapse8" disabled>
+                                    Next <i class="fas fa-arrow-right"></i>
+                                </button>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECTION 8: Social Services -->
+            <div class="card">
+                <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center" id="edit-prenatal-heading8">
+                    <h5 class="mb-0">
+                        <button class="btn btn-block text-left text-white" type="button"
+                                data-target="#edit-prenatal-collapse8"
+                                data-toggle="collapse"
+                                aria-expanded="@(ViewBag.Mode == "edit" ? "true" : "false")"
+                                aria-controls="edit-prenatal-collapse8">
+                            <i class="fas fa-hands-helping"></i> 8. Social Services
+                        </button>
+                    </h5>
+                    <span class="checkmark accordion-checkmark">&#10004;</span>
+                </div>
+                <div id="edit-prenatal-collapse8" class="collapse @(ViewBag.Mode == "edit" ? "show" : "")" aria-labelledby="edit-prenatal-heading8" data-parent="@(ViewBag.Mode == "edit" ? "" : "#editPrenatalAccordion")">
+                    <div class="card-body">
+                        <div class="alert-area"></div>
+                        
+                        <div class="form-group">
+                            <label class="control-label font-weight-bold">WIC (Women, Infants, and Children) Status</label>
+                            <div class="form-check mt-2">
+                                <input type="radio" 
+                                       name="Prenatal.IsWicRecipient" 
+                                       value="true"
+                                       @(Model.IsWicRecipient == true ? "checked" : "")
+                                       class="form-check-input validation-trigger" 
+                                       data-validation-group="prenatal8" 
+                                       id="wicYes" />
+                                <label class="form-check-label" for="wicYes">Yes - WIC recipient</label>
+                            </div>
+                            <div class="form-check">
+                                <input type="radio" 
+                                       name="Prenatal.IsWicRecipient" 
+                                       value="false"
+                                       @(Model.IsWicRecipient == false ? "checked" : "")
+                                       class="form-check-input validation-trigger" 
+                                       data-validation-group="prenatal8" 
+                                       id="wicNo" />
+                                <label class="form-check-label" for="wicNo">No - Not a WIC recipient</label>
+                            </div>
+                        </div>
+
+                        <div class="next-button-container text-right mt-4">
+                            @if (ViewBag.Mode == "edit")
+                            {
+                                <button type="button" class="btn btn-success btn-lg save-tab-btn">
+                                    <i class="fas fa-save"></i> Save Prenatal Care
+                                </button>
+                            }
+                            else
+                            {
+                                <button type="button" class="btn btn-primary next-tab-btn" id="edit-prenatal-finish" disabled>
+                                    Next: Newborn Details <i class="fas fa-arrow-right"></i>
+                                </button>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

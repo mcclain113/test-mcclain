@@ -1,0 +1,37 @@
+@model IS_Proj_HIT.Entities.PregnancyRiskFactor
+@{
+    ViewBag.Title = "Delete Pregnancy Risk Factor";
+}
+
+<h1>Delete</h1>
+
+<h3>@ViewData["RegularMessage"]</h3>
+<h3 class="error">@ViewData["ErrorMessage"]</h3>
+
+<h4>Pregnancy Risk Factor</h4>
+<hr />
+
+<div class="row">
+    <div class="col-md-10">
+        <form method="post">
+            @Html.AntiForgeryToken()
+            <div class="form-row">
+                
+                <input type="hidden" asp-for="RiskFactorId" value="@Model.RiskFactorId" readonly/>
+
+                <div class="form-group col-sm-6">
+                    <label asp-for="RiskFactorName" class="control-label">Risk Factor Name</label>
+                    <input asp-for="RiskFactorName" class="form-control" />
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <a asp-controller="BirthRegistryStructuredData" asp-action="ViewPregnancyRiskFactors" class="btn btn-outline-danger">Discard Changes</a>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Delete Item" class="ml-3 btn btn-primary" />
+                </div>
+            </div>            
+        </form>
+    </div>
+</div>

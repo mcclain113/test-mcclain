@@ -1,0 +1,128 @@
+@{
+    ViewBag.Title = "Birth Registry";
+    var userPermissions = ViewData["UserPermissions"] as List<string>;
+    var requiredUserManagementPermissions = new[]{"StructuredDataAdd","StructuredDataEdit","StructuredDataDelete","StructuredDataView"};
+}
+
+<div class="row my-3">
+    <h3>
+        <a class="btn btn-primary" asp-controller="Administration" asp-action="Index">
+            <i class="fa fa-arrow-left "></i>
+        </a>
+        Birth Registry Data Entry
+    </h3>
+</div>
+
+<div class="container">
+    <div class="row">
+        @if(userPermissions.Any(permission => requiredUserManagementPermissions.Contains(permission)))
+        {
+            <div class="col-sm-4 col-lg-3 mb-3">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <a class="btn btn-outline-primary" asp-controller="BirthRegistryStructuredData" asp-action="ViewAbnormalConditions">Abnormal Conditions</a>
+                    </div>
+                </div>
+            </div>
+        }
+
+        @if(userPermissions.Any(permission => requiredUserManagementPermissions.Contains(permission)))
+        {
+            <div class="col-sm-4 col-lg-3 mb-3">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <a class="btn btn-outline-primary" disabled  asp-controller="BirthRegistryStructuredData" asp-action="ViewBirthplaceTypes">Birthplace Types</a>
+                    </div>
+                </div>
+            </div>
+        }
+
+        @if(userPermissions.Any(permission => requiredUserManagementPermissions.Contains(permission)))
+        {
+            <div class="col-sm-4 col-lg-3 mb-3">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <a class="btn btn-outline-primary"  disabled asp-controller="BirthRegistryStructuredData" asp-action="ViewCharacteristicsOfLabors">Characteristics of Labor</a>
+                    </div>
+                </div>
+            </div>
+        }
+
+        @if(userPermissions.Any(permission => requiredUserManagementPermissions.Contains(permission)))
+        {
+            <div class="col-sm-4 col-lg-3 mb-3">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <a class="btn btn-outline-primary"  disabled asp-controller="BirthRegistryStructuredData" asp-action="ViewCongenitalAnomalies">Congenital Anomalies</a>
+                    </div>
+                </div>
+            </div>
+        }
+
+        @if(userPermissions.Any(permission => requiredUserManagementPermissions.Contains(permission)))
+        {
+            <div class="col-sm-4 col-lg-3 mb-3">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <a class="btn btn-outline-primary" disabled  asp-controller="BirthRegistryStructuredData" asp-action="ViewFetalPresentationAtBirths">Fetal Presentations at Birth</a>
+                    </div>
+                </div>
+            </div>
+        }
+
+        @if(userPermissions.Any(permission => requiredUserManagementPermissions.Contains(permission)))
+        {
+            <div class="col-sm-4 col-lg-3 mb-3">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <a class="btn btn-outline-primary"  disabled asp-controller="BirthRegistryStructuredData" asp-action="ViewFinalRoutesAndMethodOfDeliveries">Final Routes and Methods of Delivery</a>
+                    </div>
+                </div>
+            </div>
+        }
+
+        @if(userPermissions.Any(permission => requiredUserManagementPermissions.Contains(permission)))
+        {
+            <div class="col-sm-4 col-lg-3 mb-3">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <a class="btn btn-outline-primary" disabled  asp-controller="BirthRegistryStructuredData" asp-action="ViewMaternalMorbidities">Maternal Morbidities</a>
+                    </div>
+                </div>
+            </div>
+        }
+
+        @if(userPermissions.Any(permission => requiredUserManagementPermissions.Contains(permission)))
+        {
+            <div class="col-sm-4 col-lg-3 mb-3">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <a class="btn btn-outline-primary" disabled  asp-controller="BirthRegistryStructuredData" asp-action="ViewOnsetOfLabors">Onset of Labors</a>
+                    </div>
+                </div>
+            </div>
+        }
+
+        @if(userPermissions.Any(permission => requiredUserManagementPermissions.Contains(permission)))
+        {
+            <div class="col-sm-4 col-lg-3 mb-3">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <a class="btn btn-outline-primary" disabled  asp-controller="BirthRegistryStructuredData" asp-action="ViewPregnancyInfections">Pregnancy Infections</a>
+                    </div>
+                </div>
+            </div>
+        }
+
+        @if(userPermissions.Any(permission => requiredUserManagementPermissions.Contains(permission)))
+        {
+            <div class="col-sm-4 col-lg-3 mb-3">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <a class="btn btn-outline-primary" disabled asp-controller="BirthRegistryStructuredData" asp-action="ViewPregnancyRiskFactors">PregnancyRiskFactors</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

@@ -1,0 +1,62 @@
+@model List<IS_Proj_HIT.Entities.NoteType>
+
+@{
+    ViewData["Title"] = "Note Types";
+}
+
+<div class="row my-3">
+<h3>
+    <a class="btn btn-primary" asp-controller="PhysicianDocsStructuredData" asp-action="Index">
+        <i class="fa fa-arrow-left "></i>
+    </a>
+    Note Types
+</h3>
+</div>
+
+<p>
+    <a class="btn btn-primary" asp-controller="PhysicianDocsStructuredData" asp-action="CreateNoteType">Create New</a>
+</p>
+
+<table class="stripe nowrap" id="noteTypeTable">
+    <thead>
+        <tr>
+            <th>
+                Priority Name
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var noteType in Model)
+        {
+            <tr>
+                <td>
+                    @noteType.NoteType1
+                </td>
+
+                <td>
+                    <a class="btn btn-primary" asp-controller="PhysicianDocsStructuredData" asp-action="EditNoteType" asp-route-id="@noteType.NoteTypeId">Edit</a>
+                    <a class="btn btn-danger" asp-controller="PhysicianDocsStructuredData" asp-action="DeleteNoteType" asp-route-id="@noteType.NoteTypeId">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section scripts{
+    <script>
+        // Creates DataTable
+        // DataTable Documentation found here: https://datatables.net/
+        $(function () {
+            $('#noteTypeTable').DataTable({
+                columns: [null, { orderable: false }],
+                order: [[0, 'asc']],
+                pageLength: 10,
+                searching: true,
+                language: {
+                    emptyTable: 'None found.'
+                }
+            });
+        });
+    </script>
+}

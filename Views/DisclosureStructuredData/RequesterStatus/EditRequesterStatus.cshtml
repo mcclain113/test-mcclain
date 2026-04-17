@@ -1,0 +1,47 @@
+@model IS_Proj_HIT.ViewModels.DisclosureStructuredData.DisclosureStructuredDataViewModel
+@{
+    ViewBag.Title = "Edit Requester Status";
+}
+
+<h1>Edit</h1>
+
+<h4>Requester Status</h4>
+<hr />
+
+<div class="row">
+    <div class="col-md-10">
+        <form method="post">
+            @Html.AntiForgeryToken()
+            <div class="form-row">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="RequesterStatus.RequesterStatusId" value="@Model.RequesterStatus.RequesterStatusId" readonly/>
+
+                <div class="form-group col-sm-2">
+                    <label asp-for="RequesterStatus.RequesterStatusId" class="control-label">Id</label>
+                    <input asp-for="RequesterStatus.RequesterStatusId" class="form-control" maxlength="2" disabled/>
+                </div>
+                
+                <div class="form-group col-sm-4">
+                    <label asp-for="RequesterStatus.RequesterStatus1" class="control-label">Requester Status Name</label>
+                    <input asp-for="RequesterStatus.RequesterStatus1" class="form-control" maxlength="20" required />
+                    <span asp-validation-for="RequesterStatus.RequesterStatus1" class="text-danger"></span>
+                </div>
+                <div class="form-group col-sm-6">
+                    <label asp-for="RequesterStatus.RequesterStatusDescription" class="control-label">Requester Status Description</label>
+                    <input asp-for="RequesterStatus.RequesterStatusDescription" class="form-control" maxlength="100" required />
+                    <span asp-validation-for="RequesterStatus.RequesterStatusDescription" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <a asp-controller="DisclosureStructuredData" asp-action="ViewRequesterStatuses" class="btn btn-outline-danger">Discard Changes</a>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Save Changes" class="ml-3 btn btn-primary" />
+                </div>
+            </div>            
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

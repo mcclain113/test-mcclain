@@ -1,0 +1,47 @@
+@model IS_Proj_HIT.ViewModels.DisclosureStructuredData.DisclosureStructuredDataViewModel
+@{
+    ViewBag.Title = "Edit Request Priority";
+}
+
+<h1>Edit</h1>
+
+<h4>Request Priority</h4>
+<hr />
+
+<div class="row">
+    <div class="col-md-10">
+        <form method="post">
+            @Html.AntiForgeryToken()
+            <div class="form-row">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="RequestPriority.PriorityId" value="@Model.RequestPriority.PriorityId" readonly/>
+
+                <div class="form-group col-sm-2">
+                    <label asp-for="RequestPriority.PriorityId" class="control-label">Id</label>
+                    <input asp-for="RequestPriority.PriorityId" class="form-control" maxlength="20" disabled/>
+                </div>
+                
+                <div class="form-group col-sm-4">
+                    <label asp-for="RequestPriority.RequestPriority1" class="control-label">Request Priority</label>
+                    <input asp-for="RequestPriority.RequestPriority1" class="form-control" maxlength="20" required />
+                    <span asp-validation-for="RequestPriority.RequestPriority1" class="text-danger"></span>
+                </div>
+                <div class="form-group col-sm-6">
+                    <label asp-for="RequestPriority.PriorityDescription" class="control-label">Priority Description</label>
+                    <input asp-for="RequestPriority.PriorityDescription" class="form-control" maxlength="100" required />
+                    <span asp-validation-for="RequestPriority.PriorityDescription" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <a asp-controller="DisclosureStructuredData" asp-action="ViewRequestPriorities" class="btn btn-outline-danger">Discard Changes</a>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Save Changes" class="ml-3 btn btn-primary" />
+                </div>
+            </div>            
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,95 @@
+@model List<IS_Proj_HIT.Entities.OrderInfo>
+
+@{
+    ViewData["Title"] = "Encounter Orders";
+    var userPermissions = ViewData["UserPermissions"] as List<string>;
+}
+
+<partial name="PatientBannerPartial" model="ViewBag.Patient" />
+<partial name="_EncounterMenu" model="ViewBag.Encounter"/>
+    
+<div class="card">
+    <div class="card-header bg-primary text-white">
+        <h4>
+            Orders
+         @if (userPermissions != null && (userPermissions.Contains("OrdersAdd")) )
+         {
+             <a class="btn btn-create float-right" 
+                asp-controller="Order" 
+                asp-action="CreateOrder" 
+                asp-route-encounterId="@ViewBag.EncounterId" asp-route-Mrn="@ViewBag.Patient.Mrn">
+                <i class="fas fa-plus"></i> Add New Order</a>
+         }
+        </h4>
+    </div>
+    <div class="card-body bg-white">
+        <div class="container">
+            <table class="stripe nowrap table-striped" id="ordersTable">
+                <thead>
+                    <tr>
+                        <th>Order Date</th>
+                        <th>Order Type</th>
+                        <th>Ordering Physician</th>
+                        <th>Status</th>
+                        <th>Completed Date</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.OrderDate</td>
+                            <td>@item.OrderType.OrderName</td>
+                            <td>@item.OrderingProvider.FirstName @item.OrderingProvider.LastName</td>
+                            <td>@(item.IsOrderComplete ? "Complete" : "In progress")</td>
+                            <td>@(item.OrderCompletedDateTime.HasValue ? item.OrderCompletedDateTime : "Active")</td>
+                            <td>
+                                @if (userPermissions != null && (userPermissions.Contains("OrdersView")) )
+                                {
+                                    <a class="btn btn-info" asp-controller="Order" asp-action="ViewOrder" asp-route-orderId="@item.OrderInfoId" asp-route-encounterId="@item.Encounter.EncounterId">Details</a>
+                                }
+                                @if (userPermissions != null && (userPermissions.Contains("OrdersEdit")) )
+                                {
+                                    <a class="btn btn-primary" asp-controller="Order" asp-action="EditOrder" asp-route-id="@item.OrderInfoId">Edit</a>
+                                }
+                                @if (userPermissions != null && (userPermissions.Contains("OrdersDelete")) )
+                                {
+                                    <a class="btn btn-danger" asp-controller="Order" asp-action="DeleteOrder" asp-route-id="@item.OrderInfoId">Delete</a>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@if (userPermissions != null && (userPermissions.Contains("PatientView")) )
+{
+    <a asp-controller="Patient"
+        asp-action="ViewPatientDetails"
+        asp-route-id="@ViewBag.Patient.Mrn" 
+        class="btn btn-nav mt-2 ml-2 m-l-1Patient Details">
+        View Patient
+    </a>
+}
+
+@section scripts{
+    <script>
+        // DataTable Documentation found here: https://datatables.net/
+        $(document).ready(function () {
+            // Creates DataTable
+            $('#ordersTable').DataTable({
+                columns: [null, null, null, null, null, { orderable: false }],
+                order: [[0, 'asc']],
+                pageLength: 10,
+                searching: true,
+                language: {
+                    emptyTable: 'No Orders have been created for this patient.'
+                }
+            });
+        });
+    </script>
+}

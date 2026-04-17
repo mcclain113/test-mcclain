@@ -1,0 +1,51 @@
+@model IS_Proj_HIT.Entities.OnsetOfLabor
+@{
+    ViewBag.Title = "Edit Onset Of Labor";
+}
+
+<h1>Edit</h1>
+
+<h4>Onset Of Labor</h4>
+<hr />
+
+<div class="row">
+    <div class="col-md-10">
+        <form method="post">
+            @Html.AntiForgeryToken()
+            <div class="form-row">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="OnsetOfLaborId" value="@Model.OnsetOfLaborId" readonly/>
+                <div class="form-group col-sm-6">
+                    <label asp-for="OnsetOfLaborName" class="control-label">Onset Of Labor Name</label>
+                    <input asp-for="OnsetOfLaborName" 
+                        class="form-control" maxlength="50" required
+                        placeholder="Example:  Assisted ventilation..." />
+                    <span asp-validation-for="OnsetOfLaborName" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-sm-12">
+                    <label asp-for="OnsetOfLaborDescription" class="control-label">Onset Of Labor Description</label>
+                    <textarea asp-for="OnsetOfLaborDescription" 
+                        class="form-control" maxlength="200"
+                        placeholder="Example:  Infant given manual breaths..." ></textarea>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <input type="submit" value="Save Changes" class="btn btn-primary" />
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<div>
+    <a asp-controller="BirthRegistryStructuredData" asp-action="ViewOnsetOfLabors">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

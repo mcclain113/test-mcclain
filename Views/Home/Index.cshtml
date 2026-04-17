@@ -1,0 +1,135 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+@model IEnumerable<IS_Proj_HIT.Entities.Ethnicity>
+@{
+    ViewData["Title"] = "Home Page";
+    var userPermissions = ViewData["UserPermissions"] as List<string>;
+}
+
+<style>
+    .no-wrap {
+        white-space: nowrap; /* Prevents text from wrapping */
+    }
+    .card-content { 
+        display: flex; 
+        align-items: center; 
+        justify-content: center; 
+        text-align: center; 
+        min-height: 75px; /* Ensures a minimum height for cards */ 
+        padding: 1rem; /* Adds padding to ensure content fits within the card */
+        font-size: 1.25em; /* Adjusting the font size */
+        } 
+    .card-content i { 
+        margin-right: 0.75rem; /* Ensures appropriate spacing between icon and text */ 
+        }
+    .card {
+        flex: 1 1 auto; /* Ensures the cards grow and shrink as needed */
+        min-width: 315px; /* Sets a minimum width for the card to help keep the icon and text always within the card boundary */
+    }
+</style>
+
+<h3 class="error">@ViewData["ErrorMessage"]</h3>
+<br />
+@if (SignInManager.IsSignedIn(User))
+{
+    <div class="container">
+            @if (TempData["PatientSuccess"] != null)
+            {
+                <div class="alert alert-success">
+                    @TempData["PatientSuccess"]
+                </div>
+            }
+            <div class="row">
+                <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-4 col-xxl-3 mb-3">
+                    <div class="card bg-primary h-100">
+                        <div class="card-content no-wrap">
+                            <a class="page-link text-white d-block w-100 d-flex align-items-center justify-content-center" asp-controller="Patient" asp-action="PatientSearch">
+                                <i class="fas fa-search"></i>
+                                Patient Search
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-4 col-xxl-3 mb-3">
+                    <div class="card bg-primary h-100">
+                        <div class="card-content no-wrap">
+                            <a class="page-link text-white d-block w-100 d-flex align-items-center justify-content-center" asp-controller="Encounter" asp-action="CheckedIn">
+                                <i class="fas fa-users"></i>
+                                Checked in Patients
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                @if (userPermissions != null && (userPermissions.Contains("DisclosureRequestView") ) )
+                {
+                    <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-4 col-xxl-3 mb-3">
+                        <div class="card bg-primary h-100">
+                            <div class="card-content no-wrap">
+                                <a class="page-link text-white d-block w-100 d-flex align-items-center justify-content-center" asp-controller="Disclosure" asp-action="RequestList">
+                                    <i class="fas fa-list"></i>
+                                    Disclosures
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                }
+                @if (userPermissions != null && (userPermissions.Contains("BirthRegistryView") ) )
+                {
+                    <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-4 col-xxl-3 mb-3">
+                        <div class="card bg-primary h-100">
+                            <div class="card-content no-wrap">
+                                <a class="page-link text-white d-block w-100 d-flex align-items-center justify-content-center" asp-controller="BirthRegistry" asp-action="Index">
+                                    <i class="fas fa-seedling"></i>
+                                    Birth Registry
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                }
+            
+        @if (userPermissions != null && (userPermissions.Contains("RevenueCycleView") ) )
+        {
+        <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-4 col-xxl-3 mb-3">
+            <div class="card bg-primary h-100">
+                <div class="card-content no-wrap">
+                    <a class="page-link text-white d-block w-100 d-flex align-items-center justify-content-center" asp-controller="RevenueCycle" asp-action="Index">
+                        <i class="fas fa-money-bill"></i>
+                        Revenue Cycle
+                    </a>
+                </div>
+            </div>
+        </div>
+        }
+        @if (userPermissions != null && (userPermissions.Contains("ReportHubView") ) )
+        {
+        <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-4 col-xxl-3 mb-3">
+            <div class="card bg-primary h-100">
+                <div class="card-content no-wrap">
+                    <a class="page-link text-white d-block w-100 d-flex align-items-center justify-content-center" asp-controller="ReportHub" asp-action="Index">
+                        <i class="fas fa-solid fa-clipboard"></i>
+                        Report Hub
+                    </a>
+                </div>
+            </div>
+        </div>
+        }
+            </div>
+    </div>
+}
+else
+{
+    <div class="card-group text-center p-2 container text-white">
+    <div class="card bg-primary p-3 row">
+        <h2>Welcome!</h2>
+        <hr />
+        <h3>
+            Please
+            <a asp-controller="Account" asp-action="Login">Log in</a>
+            or
+            <a asp-controller="Account" asp-action="Register">Create an Account</a>
+            to continue.
+        </h3>
+    </div>
+</div>
+}

@@ -1,0 +1,27 @@
+@{
+    ViewBag.Title = "Add Encounter - Error";
+}
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-4 col-sm-12">
+            <div class="row justify-content-center">
+                <h1 class="text-danger">@ViewData["Title"]</h1>
+            </div>
+            <div class="row justify-content-center">
+                <p class="text-danger">The patient for which you are attempting to create an encounter is deceased. </p>
+            </div>
+            <div class="row justify-content-center">
+                <p class="text-danger">Please verify that the correct patient has been selected and if so verify the patient’s 
+                expiration status and update it as needed in order to create a new encounter.</p>
+            </div>
+            
+            <div class="row justify-content-center">
+                <a href="javascript: history.go(-1)"
+                    class="btn btn-outline-primary m-l-1Patient Details">
+                    <i class="fas fa-arrow-left"></i> Return
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

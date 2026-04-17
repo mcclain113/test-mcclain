@@ -1,0 +1,52 @@
+@model IS_Proj_HIT.ViewModels.RevenueStructuredDataViewModel
+@{
+    ViewBag.Title = "Edit Revenue Code";
+}
+
+<h1>Edit</h1>
+
+<h4>Revenue Code</h4>
+<hr />
+
+<div class="row">
+    <div class="col-md-10">
+        <form method="post">
+            @Html.AntiForgeryToken()
+            <div class="form-row">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="RevenueCode.RevenueCodeID" value="@Model.RevenueCode.RevenueCodeID" readonly />
+                <div class="form-group col-sm-2">
+                    <label asp-for="RevenueCode.RevenueCodeID" class="control-label">Code Id</label>
+                    <input asp-for="RevenueCode.RevenueCodeID" 
+                        class="form-control" maxlength="4" disabled/>
+                </div>
+                <div class="form-group col-sm-4">
+                    <label asp-for="RevenueCode.ShortDescription" class="control-label">Short Description</label>
+                    <input asp-for="RevenueCode.ShortDescription" 
+                        class="form-control" maxlength="60" required />
+                    <span asp-validation-for="RevenueCode.ShortDescription" class="text-danger"></span>
+                </div>
+                <div class="form-group col-sm-6">
+                    <label asp-for="RevenueCode.LongDescription" class="control-label">Long Description</label>
+                    <input asp-for="RevenueCode.LongDescription" 
+                        class="form-control" maxlength="200" />
+                    <span asp-validation-for="RevenueCode.LongDescription" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <input type="submit" value="Edit" class="btn btn-primary" />
+                </div>
+
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<div>
+    <a asp-controller="RevenueStructuredData" asp-action="ViewRevenueCodes">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
